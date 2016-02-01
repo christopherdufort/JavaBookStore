@@ -12,7 +12,7 @@ public class ReviewsBean {
     private int review_id;
     private String isbn;
     private LocalDate date_submitted;
-    private int client_id;
+    private int user_id;
     private int rating;
     private int approval_id;
     private String review_title;
@@ -27,7 +27,7 @@ public class ReviewsBean {
         this.review_id = review_id;
         this.isbn = isbn;
         this.date_submitted = date_submitted;
-        this.client_id = client_id;
+        this.user_id = client_id;
         this.rating = rating;
         this.approval_id = approval_id;
         this.review_title = review_title;
@@ -59,11 +59,11 @@ public class ReviewsBean {
     }
 
     public int getClient_id() {
-        return client_id;
+        return user_id;
     }
 
     public void setClient_id(int client_id) {
-        this.client_id = client_id;
+        this.user_id = client_id;
     }
 
     public int getRating() {
@@ -104,7 +104,7 @@ public class ReviewsBean {
         hash = 89 * hash + this.review_id;
         hash = 89 * hash + Objects.hashCode(this.isbn);
         hash = 89 * hash + Objects.hashCode(this.date_submitted);
-        hash = 89 * hash + this.client_id;
+        hash = 89 * hash + this.user_id;
         hash = 89 * hash + this.rating;
         hash = 89 * hash + this.approval_id;
         hash = 89 * hash + Objects.hashCode(this.review_title);
@@ -127,7 +127,7 @@ public class ReviewsBean {
         if (this.review_id != other.review_id) {
             return false;
         }
-        if (this.client_id != other.client_id) {
+        if (this.user_id != other.user_id) {
             return false;
         }
         if (this.rating != other.rating) {
