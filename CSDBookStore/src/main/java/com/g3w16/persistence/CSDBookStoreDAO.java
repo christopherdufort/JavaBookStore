@@ -40,7 +40,11 @@ public interface CSDBookStoreDAO {
     
     public int deleteInvoiceDetail (InvoiceBean invoice) throws SQLException; 
     
-     //review --xin
+     /**
+     * CRUD method for Review table
+     * @author Xin Ma
+     * @version 0.0.6
+     */
     public int createReview(ReviewBean reviewBean) throws SQLException;
     public ReviewBean getReviewById(int review_id) throws SQLException;
     public List<ReviewBean> getReviewByUserId(int user_id) throws SQLException;

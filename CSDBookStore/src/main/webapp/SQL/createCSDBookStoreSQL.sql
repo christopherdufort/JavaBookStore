@@ -137,7 +137,7 @@ DROP TABLE IF EXISTS review;
 CREATE TABLE review (
     review_id INT NOT NULL AUTO_INCREMENT,
     isbn VARCHAR(14),
-    date_submitted DATE,
+    date_submitted TIMESTAMP,
     user_id INT,
     rating INT,
     approval_id INT,

@@ -23,7 +23,7 @@ public class ReviewBean {
         this(-1,"",null,-1,-1,-1,"","");
     }
 
-    public ReviewBean(int review_id, String isbn, LocalDateTime date_submitted, int client_id, int rating, int approval_id, String review_title, String review_text) {
+    public ReviewBean(final int review_id,final String isbn, final LocalDateTime date_submitted, final int client_id,final int rating,final int approval_id,final String review_title,final String review_text) {
         super();
         this.review_id = review_id;
         this.isbn = isbn;
@@ -39,7 +39,7 @@ public class ReviewBean {
         return review_id;
     }
 
-    public void setReview_id(int review_id) {
+    public void setReview_id(final int review_id) {
         this.review_id = review_id;
     }
 
@@ -47,7 +47,7 @@ public class ReviewBean {
         return isbn;
     }
 
-    public void setIsbn(String isbn) {
+    public void setIsbn(final String isbn) {
         this.isbn = isbn;
     }
 
@@ -55,7 +55,7 @@ public class ReviewBean {
         return date_submitted;
     }
 
-    public void setDate_submitted(LocalDateTime date_submitted) {
+    public void setDate_submitted(final LocalDateTime date_submitted) {
         this.date_submitted = date_submitted;
     }
 
@@ -63,7 +63,7 @@ public class ReviewBean {
         return user_id;
     }
 
-    public void setUser_id(int client_id) {
+    public void setUser_id(final int client_id) {
         this.user_id = client_id;
     }
 
@@ -71,7 +71,7 @@ public class ReviewBean {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(final int rating) {
         this.rating = rating;
     }
 
@@ -79,7 +79,7 @@ public class ReviewBean {
         return approval_id;
     }
 
-    public void setApproval_id(int approval_id) {
+    public void setApproval_id(final int approval_id) {
         this.approval_id = approval_id;
     }
 
@@ -87,7 +87,7 @@ public class ReviewBean {
         return review_title;
     }
 
-    public void setReview_title(String review_title) {
+    public void setReview_title(final String review_title) {
         this.review_title = review_title;
     }
 
@@ -95,7 +95,7 @@ public class ReviewBean {
         return review_text;
     }
 
-    public void setReview_text(String review_text) {
+    public void setReview_text(final String review_text) {
         this.review_text = review_text;
     }
 

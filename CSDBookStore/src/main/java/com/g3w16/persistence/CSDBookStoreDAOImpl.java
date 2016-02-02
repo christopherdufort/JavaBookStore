@@ -81,8 +81,10 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
     }
 
     /**
+     * CRUD method for Review table
      *
      * @author Xin Ma
+     * @version 0.0.6
      */
     @Override
     public int createReview(ReviewBean reviewBean) throws SQLException {
@@ -107,6 +109,12 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
         return result;
     }
 
+    /**
+     * CRUD method for Review table
+     *
+     * @author Xin Ma
+     * @version 0.0.6
+     */
     @Override
     public ReviewBean getReviewById(int review_id) throws SQLException {
         ReviewBean reviewBean = new ReviewBean();
@@ -125,6 +133,12 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
         return reviewBean;
     }
 
+    /**
+     * CRUD method for Review table
+     *
+     * @author Xin Ma
+     * @version 0.0.6
+     */
     @Override
     public List<ReviewBean> getReviewByUserId(int user_id) throws SQLException {
         List<ReviewBean> reviewList = new ArrayList<>();
@@ -143,6 +157,12 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
         return reviewList;
     }
 
+    /**
+     * CRUD method for Review table
+     *
+     * @author Xin Ma
+     * @version 0.0.6
+     */
     @Override
     public List<ReviewBean> getReviewByDateSubmitted(LocalDateTime date_submitted) throws SQLException {
         List<ReviewBean> reviewList = new ArrayList<>();
@@ -161,6 +181,12 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
         return reviewList;
     }
 
+    /**
+     * CRUD method for Review table
+     *
+     * @author Xin Ma
+     * @version 0.0.6
+     */
     @Override
     public List<ReviewBean> getReviewByApprovalId(int approval_id) throws SQLException {
         List<ReviewBean> reviewList = new ArrayList<>();
@@ -179,6 +205,12 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
         return reviewList;
     }
 
+    /**
+     * CRUD method for Review table
+     *
+     * @author Xin Ma
+     * @version 0.0.6
+     */
     @Override
     public List<ReviewBean> getReviewByIsbn(String isbn) throws SQLException {
         List<ReviewBean> reviewList = new ArrayList<>();
@@ -197,6 +229,12 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
         return reviewList;
     }
 
+    /**
+     * CRUD method for Review table
+     *
+     * @author Xin Ma
+     * @version 0.0.6
+     */
     @Override
     public int updateReview(ReviewBean reviewBean) throws SQLException {
         int result = 0;
@@ -217,6 +255,12 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
         return result;
     }
 
+    /**
+     * CRUD method for Review table
+     *
+     * @author Xin Ma
+     * @version 0.0.6
+     */
     @Override
     public int deleteReviewByReviewId(int review_id) throws SQLException {
         int result = 0;
@@ -236,6 +280,12 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
         return result;
     }
 
+    /**
+     * CRUD method for Review table
+     *
+     * @author Xin Ma
+     * @version 0.0.6
+     */
     @Override
     public int deleteReviewByUserId(int user_id) throws SQLException {
         int result = 0;
@@ -243,25 +293,71 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
         if (reviewList == null) {
             throw new IllegalArgumentException("Can not update, this review does not exist.");
         } else {
-
+            String query = "DELETE FROM review WHERE user_id=? ";
+            try (Connection connection = CSDBookStoreSource.getConnection();
+                    PreparedStatement pStatement = connection
+                    .prepareStatement(query);) {
+                pStatement.setInt(1, user_id);
+                result = pStatement.executeUpdate();
+            }
         }
         return result;
     }
 
+    /**
+     * CRUD method for Review table
+     *
+     * @author Xin Ma
+     * @version 0.0.6
+     */
     @Override
     public int deleteReviewByIsbn(String isbn) throws SQLException {
         int result = 0;
-
+        List<ReviewBean> reviewList = getReviewByIsbn(isbn);
+        if (reviewList == null) {
+            throw new IllegalArgumentException("Can not update, this review does not exist.");
+        } else {
+            String query = "DELETE FROM review WHERE isbn=? ";
+            try (Connection connection = CSDBookStoreSource.getConnection();
+                    PreparedStatement pStatement = connection
+                    .prepareStatement(query);) {
+                pStatement.setString(1, isbn);
+                result = pStatement.executeUpdate();
+            }
+        }
         return result;
     }
 
+    /**
+     * CRUD method for Review table
+     *
+     * @author Xin Ma
+     * @version 0.0.6
+     */
     @Override
     public int deleteReviewByDateSubmitted(LocalDateTime date_submitted) throws SQLException {
         int result = 0;
-
+        List<ReviewBean> reviewList = getReviewByDateSubmitted(date_submitted);
+        if (reviewList == null) {
+            throw new IllegalArgumentException("Can not update, this review does not exist.");
+        } else {
+            String query = "DELETE FROM review WHERE date_submitted=? ";
+            try (Connection connection = CSDBookStoreSource.getConnection();
+                    PreparedStatement pStatement = connection
+                    .prepareStatement(query);) {
+                pStatement.setTimestamp(1, Timestamp.valueOf(date_submitted));
+                result = pStatement.executeUpdate();
+            }
+        }
         return result;
     }
 
+    /**
+     * CRUD method for Review table
+     *
+     * @author Xin Ma
+     * @version 0.0.6
+     */
     private ReviewBean createReviewBeanObject(ResultSet resultSet) throws SQLException {
         ReviewBean reviewBean = new ReviewBean();
         reviewBean.setReview_id(resultSet.getInt("review_id"));
