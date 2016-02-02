@@ -1,30 +1,29 @@
 package com.g3w16.beans;
 
-import java.time.LocalDate;
+
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
- * @author Xin Ma
- * @author Christopher Dufort
- * @version 0.0.4 - Last modified 2/2/2016
- * @since 0.0.1 
+ * @author Xin
+ *
  */
-public class ReviewsBean {
+public class ReviewBean {
 
     private int review_id;
     private String isbn;
-    private LocalDate date_submitted;
+    private LocalDateTime date_submitted;
     private int user_id;
     private int rating;
     private int approval_id;
     private String review_title;
     private String review_text;
 
-    public ReviewsBean() {
+    public ReviewBean() {
         this(-1,"",null,-1,-1,-1,"","");
     }
 
-    public ReviewsBean(final int review_id, final String isbn, final LocalDate date_submitted,final int client_id,final int rating,final int approval_id,final String review_title,final String review_text) {
+    public ReviewBean(int review_id, String isbn, LocalDateTime date_submitted, int client_id, int rating, int approval_id, String review_title, String review_text) {
         super();
         this.review_id = review_id;
         this.isbn = isbn;
@@ -40,7 +39,7 @@ public class ReviewsBean {
         return review_id;
     }
 
-    public void setReview_id(final int review_id) {
+    public void setReview_id(int review_id) {
         this.review_id = review_id;
     }
 
@@ -48,23 +47,23 @@ public class ReviewsBean {
         return isbn;
     }
 
-    public void setIsbn(final String isbn) {
+    public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
 
-    public LocalDate getDate_submitted() {
+    public LocalDateTime getDate_submitted() {
         return date_submitted;
     }
 
-    public void setDate_submitted(final LocalDate date_submitted) {
+    public void setDate_submitted(LocalDateTime date_submitted) {
         this.date_submitted = date_submitted;
     }
 
-    public int getClient_id() {
+    public int getUser_id() {
         return user_id;
     }
 
-    public void setClient_id(final int client_id) {
+    public void setUser_id(int client_id) {
         this.user_id = client_id;
     }
 
@@ -72,7 +71,7 @@ public class ReviewsBean {
         return rating;
     }
 
-    public void setRating(final int rating) {
+    public void setRating(int rating) {
         this.rating = rating;
     }
 
@@ -80,7 +79,7 @@ public class ReviewsBean {
         return approval_id;
     }
 
-    public void setApproval_id(final int approval_id) {
+    public void setApproval_id(int approval_id) {
         this.approval_id = approval_id;
     }
 
@@ -88,7 +87,7 @@ public class ReviewsBean {
         return review_title;
     }
 
-    public void setReview_title(final String review_title) {
+    public void setReview_title(String review_title) {
         this.review_title = review_title;
     }
 
@@ -96,7 +95,7 @@ public class ReviewsBean {
         return review_text;
     }
 
-    public void setReview_text(final String review_text) {
+    public void setReview_text(String review_text) {
         this.review_text = review_text;
     }
 
@@ -125,7 +124,7 @@ public class ReviewsBean {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final ReviewsBean other = (ReviewsBean) obj;
+        final ReviewBean other = (ReviewBean) obj;
         if (this.review_id != other.review_id) {
             return false;
         }

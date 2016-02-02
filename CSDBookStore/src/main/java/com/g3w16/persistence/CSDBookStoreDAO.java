@@ -8,8 +8,11 @@ package com.g3w16.persistence;
 import com.g3w16.beans.InvoiceBean;
 import com.g3w16.beans.InvoiceDetailBean;
 import com.g3w16.beans.RegisteredUser;
+import com.g3w16.beans.ReviewBean;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -36,5 +39,18 @@ public interface CSDBookStoreDAO {
     public ArrayList<InvoiceBean> findInvoiceDetailsBasedOnInvoice(InvoiceBean invoice) throws SQLException; 
     
     public int deleteInvoiceDetail (InvoiceBean invoice) throws SQLException; 
+    
+     //review --xin
+    public int createReview(ReviewBean reviewBean) throws SQLException;
+    public ReviewBean getReviewById(int review_id) throws SQLException;
+    public List<ReviewBean> getReviewByUserId(int user_id) throws SQLException;
+    public List<ReviewBean> getReviewByDateSubmitted(LocalDateTime date_submitted) throws SQLException;
+    public List<ReviewBean> getReviewByApprovalId(int approval_id) throws SQLException;
+    public List<ReviewBean> getReviewByIsbn(String isbn) throws SQLException;
+    public int updateReview(ReviewBean reviewBean) throws SQLException;
+    public int deleteReviewByReviewId(int review_id) throws SQLException;
+    public int deleteReviewByUserId(int user_id) throws SQLException;
+    public int deleteReviewByIsbn(String isbn) throws SQLException;
+    public int deleteReviewByDateSubmitted(LocalDateTime date_submitted) throws SQLException;
 }
 

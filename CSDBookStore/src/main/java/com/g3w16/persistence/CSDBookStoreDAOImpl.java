@@ -8,14 +8,27 @@ package com.g3w16.persistence;
 import com.g3w16.beans.InvoiceBean;
 import com.g3w16.beans.InvoiceDetailBean;
 import com.g3w16.beans.RegisteredUser;
+import com.g3w16.beans.ReviewBean;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.Resource;
+import javax.sql.DataSource;
 
-/**
- *
- * @author 1232046
- */
-public class CSDBookStoreDAOImpl implements CSDBookStoreDAO{
+public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
+
+    @Resource(name = "java:app/jdbc/CSDBookStore")
+    private DataSource CSDBookStoreSource;
+
+    public CSDBookStoreDAOImpl() {
+        super();
+    }
 
     @Override
     public int createInvoice(RegisteredUser user) throws SQLException {
@@ -66,8 +79,200 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO{
     public int deleteInvoiceDetail(InvoiceBean invoice) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-        
-   
 
+    /**
+     *
+     * @author Xin Ma
+     */
+    @Override
+    public int createReview(ReviewBean reviewBean) throws SQLException {
+        int result = 0;
+        String query = "INSERT INTO review (isbn, date_submitted, client_id, rating, approval_id, review_title, review_text) VALUES(?,?,?,?,?,?,?)";
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement pStatement = connection
+                .prepareStatement(query, Statement.RETURN_GENERATED_KEYS);) {
+            pStatement.setString(1, reviewBean.getIsbn());
+            pStatement.setTimestamp(2, Timestamp.valueOf(reviewBean.getDate_submitted()));
+            pStatement.setInt(3, reviewBean.getUser_id());
+            pStatement.setInt(4, reviewBean.getRating());
+            pStatement.setInt(5, reviewBean.getApproval_id());
+            pStatement.setString(6, reviewBean.getReview_title());
+            pStatement.setString(7, reviewBean.getReview_text());
+            result = pStatement.executeUpdate();
+            ResultSet resultSet = pStatement.getGeneratedKeys();
+            if (resultSet.next()) {
+                reviewBean.setReview_id(resultSet.getInt(1));
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public ReviewBean getReviewById(int review_id) throws SQLException {
+        ReviewBean reviewBean = new ReviewBean();
+        String query = "SELECT * FROM review WHERE review_id=?";
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement pStatement = connection
+                .prepareStatement(query);) {
+            pStatement.setInt(1, review_id);
+
+            try (ResultSet resultSet = pStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    reviewBean = createReviewBeanObject(resultSet);
+                }
+            }
+        }
+        return reviewBean;
+    }
+
+    @Override
+    public List<ReviewBean> getReviewByUserId(int user_id) throws SQLException {
+        List<ReviewBean> reviewList = new ArrayList<>();
+        String query = "SELECT * FROM review WHERE user_id=?";
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement pStatement = connection
+                .prepareStatement(query);) {
+            pStatement.setInt(1, user_id);
+
+            try (ResultSet resultSet = pStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    reviewList.add(createReviewBeanObject(resultSet));
+                }
+            }
+        }
+        return reviewList;
+    }
+
+    @Override
+    public List<ReviewBean> getReviewByDateSubmitted(LocalDateTime date_submitted) throws SQLException {
+        List<ReviewBean> reviewList = new ArrayList<>();
+        String query = "SELECT * FROM review WHERE date_submitted=?";
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement pStatement = connection
+                .prepareStatement(query);) {
+            pStatement.setTimestamp(1, Timestamp.valueOf(date_submitted));
+
+            try (ResultSet resultSet = pStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    reviewList.add(createReviewBeanObject(resultSet));
+                }
+            }
+        }
+        return reviewList;
+    }
+
+    @Override
+    public List<ReviewBean> getReviewByApprovalId(int approval_id) throws SQLException {
+        List<ReviewBean> reviewList = new ArrayList<>();
+        String query = "SELECT * FROM review WHERE approval_id=?";
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement pStatement = connection
+                .prepareStatement(query);) {
+            pStatement.setInt(1, approval_id);
+
+            try (ResultSet resultSet = pStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    reviewList.add(createReviewBeanObject(resultSet));
+                }
+            }
+        }
+        return reviewList;
+    }
+
+    @Override
+    public List<ReviewBean> getReviewByIsbn(String isbn) throws SQLException {
+        List<ReviewBean> reviewList = new ArrayList<>();
+        String query = "SELECT * FROM review WHERE isbn=?";
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement pStatement = connection
+                .prepareStatement(query);) {
+            pStatement.setString(1, isbn);
+
+            try (ResultSet resultSet = pStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    reviewList.add(createReviewBeanObject(resultSet));
+                }
+            }
+        }
+        return reviewList;
+    }
+
+    @Override
+    public int updateReview(ReviewBean reviewBean) throws SQLException {
+        int result = 0;
+        ReviewBean found = getReviewById(reviewBean.getReview_id());
+        if (found == null) {
+            throw new IllegalArgumentException("Can not update, this review does not exist.");
+        } else {
+            String query = "UPDATE review SET approval_id = ? WHERE review_id = ? ";
+
+            try (Connection connection = CSDBookStoreSource.getConnection();
+                    PreparedStatement pStatement = connection
+                    .prepareStatement(query);) {
+                pStatement.setInt(1, reviewBean.getApproval_id());
+                pStatement.setInt(2, reviewBean.getReview_id());
+                result = pStatement.executeUpdate();
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public int deleteReviewByReviewId(int review_id) throws SQLException {
+        int result = 0;
+        ReviewBean found = getReviewById(review_id);
+        if (found == null) {
+            throw new IllegalArgumentException("Can not update, this review does not exist.");
+        } else {
+            String query = "DELETE FROM review WHERE review_id=? ";
+
+            try (Connection connection = CSDBookStoreSource.getConnection();
+                    PreparedStatement pStatement = connection
+                    .prepareStatement(query);) {
+                pStatement.setInt(1, review_id);
+                result = pStatement.executeUpdate();
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public int deleteReviewByUserId(int user_id) throws SQLException {
+        int result = 0;
+        List<ReviewBean> reviewList = getReviewByUserId(user_id);
+        if (reviewList == null) {
+            throw new IllegalArgumentException("Can not update, this review does not exist.");
+        } else {
+
+        }
+        return result;
+    }
+
+    @Override
+    public int deleteReviewByIsbn(String isbn) throws SQLException {
+        int result = 0;
+
+        return result;
+    }
+
+    @Override
+    public int deleteReviewByDateSubmitted(LocalDateTime date_submitted) throws SQLException {
+        int result = 0;
+
+        return result;
+    }
+
+    private ReviewBean createReviewBeanObject(ResultSet resultSet) throws SQLException {
+        ReviewBean reviewBean = new ReviewBean();
+        reviewBean.setReview_id(resultSet.getInt("review_id"));
+        reviewBean.setDate_submitted(resultSet.getTimestamp("date_submitted").toLocalDateTime());
+        reviewBean.setUser_id(resultSet.getInt("user_id"));
+        reviewBean.setIsbn(resultSet.getString("isbn"));
+        reviewBean.setRating(resultSet.getInt("rating"));
+        reviewBean.setApproval_id(resultSet.getInt("approval_id"));
+        reviewBean.setReview_title(resultSet.getString("review_title"));
+        reviewBean.setReview_text(resultSet.getString("review_text"));
+        return reviewBean;
+    }
 
 }
