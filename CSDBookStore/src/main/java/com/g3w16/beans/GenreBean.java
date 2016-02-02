@@ -10,12 +10,13 @@ package com.g3w16.beans;
  * @author jesuisnuageux
  */
 public class GenreBean {
+    private Integer id;
     private String name;
 
     public GenreBean() {
     }
 
-    public GenreBean(final String name) {
+    public GenreBean(final Integer id, final String name) {
         this.name = name;
     }
 
@@ -26,4 +27,13 @@ public class GenreBean {
     public void setName(final String name) {
         this.name = name;
     }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+    
 }

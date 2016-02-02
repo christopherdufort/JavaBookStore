@@ -10,11 +10,12 @@ package com.g3w16.beans;
  * @author jesuisnuageux
  */
 public class AuthorBean {
+    private Integer id;
     private String name;
 
     public AuthorBean(){}
     
-    public AuthorBean(final String name) {
+    public AuthorBean(final Integer id, final String name) {
         this.name = name;
     }
 
@@ -25,5 +26,13 @@ public class AuthorBean {
     public void setName(final String name) {
         this.name = name;
     }
-       
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+    
 }

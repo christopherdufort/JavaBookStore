@@ -10,7 +10,7 @@ import java.util.Date;
  * @since 0.0.1 - Originally written 25/01/2016.
  */
 public class BookBean {
-    
+    private Integer id;
     private String isbn;
     private String title;
     private String publisher;
@@ -31,8 +31,9 @@ public class BookBean {
     public BookBean(){
     }
 
-    public BookBean(final String isbn, final String title, final String publisher, final Integer pages, final String path_img_original, final String path_img_small, final Integer wholesale_price, final Integer list_price, final Integer sale_price, final Date date_of_entrance, final boolean removal_status, final String synopsis) {
+    public BookBean(final Integer id, final String isbn, final String title, final String publisher, final Integer pages, final String path_img_original, final String path_img_small, final Integer wholesale_price, final Integer list_price, final Integer sale_price, final Date date_of_entrance, final boolean removal_status, final String synopsis) {
         super();
+        this.id = id;
         this.isbn = isbn;
         this.title = title;
         this.publisher = publisher;
@@ -48,6 +49,14 @@ public class BookBean {
         this.authors = new ArrayList<String>();
         this.genres = new ArrayList<String>();
         this.formats = new ArrayList<String>();
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
     
     public String getIsbn() {

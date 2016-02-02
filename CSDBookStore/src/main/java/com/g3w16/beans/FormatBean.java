@@ -10,13 +10,22 @@ package com.g3w16.beans;
  * @author jesuisnuageux
  */
 public class FormatBean {
+    private Integer id;
     private String extension;
 
     public FormatBean() {
     }
 
-    public FormatBean(final String extension) {
+    public FormatBean(final Integer id, final String extension) {
         this.extension = extension;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getExtension() {
