@@ -4,11 +4,14 @@
 package com.g3w16.beans;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
- *
  * @author Rita Lazaar
+ * @author Christopher Dufort
+ * @version 0.0.4 - Last modified 2/2/2016
+ * @since 0.0.1
  */
 public class InvoiceBean {
 
@@ -20,12 +23,13 @@ public class InvoiceBean {
     private double GST;
     private double HST;
     private double TotalGrossValueOfSale;
+    private ArrayList<InvoiceDetailBean> details;
 
     public InvoiceBean() {
 
     }
 
-    public InvoiceBean(int SaleNumber, LocalDateTime SaleDate, int ClientNumber, double TotalNetValueOfSale, double PST, double GST, double HST, double TotalGrossValueOfSale) {
+    public InvoiceBean(final int SaleNumber, final LocalDateTime SaleDate, final int ClientNumber,final double TotalNetValueOfSale,final double PST,final double GST, final double HST,final double TotalGrossValueOfSale) {
         this.SaleNumber = SaleNumber;
         this.SaleDate = SaleDate;
         this.ClientNumber = ClientNumber;

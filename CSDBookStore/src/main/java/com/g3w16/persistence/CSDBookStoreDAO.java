@@ -5,6 +5,12 @@
  */
 package com.g3w16.persistence;
 
+import com.g3w16.beans.InvoiceBean;
+import com.g3w16.beans.InvoiceDetailBean;
+import com.g3w16.beans.RegisteredUser;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 /**
  *
  * @author Rita Lazaar

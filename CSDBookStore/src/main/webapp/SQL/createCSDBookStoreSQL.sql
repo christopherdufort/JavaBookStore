@@ -1,11 +1,13 @@
+--Author Xin
 DROP DATABASE IF EXISTS CSDBookStore;
 CREATE DATABASE CSDBookStore;
-
+--Author Xin
 GRANT ALL ON CSDBookStore.* TO g3w16@"%" IDENTIFIED BY "g3w16";
 GRANT ALL ON CSDBookStore.* TO g3w16@"localhost" IDENTIFIED BY "g3w16";
-
+--Author Xin
 USE CSDBookStore;
 
+--Author Jonas & Chris
 DROP TABLE IF EXISTS book_format;
 DROP TABLE IF EXISTS format;
 DROP TABLE IF EXISTS book_genre;
@@ -14,6 +16,7 @@ DROP TABLE IF EXISTS book_author;
 DROP TABLE IF EXISTS author;
 DROP TABLE IF EXISTS book;
 
+--Author Jonas & Chris
 CREATE TABLE book(
     book_id INT(6) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     isbn VARCHAR(14) NOT NULL UNIQUE,
@@ -30,11 +33,13 @@ CREATE TABLE book(
     synopsis MEDIUMTEXT
 )ENGINE=InnoDB;
 
+--Author Jonas & Chris
 CREATE TABLE author(
     author_id INT(6) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     author_name VARCHAR(30) NOT NULL
 )ENGINE=InnoDB;
 
+--Author Jonas & Chris
 CREATE TABLE book_author(
     book_id INT(6) NOT NULL,
     author_id INT(6) NOT NULL,
@@ -43,11 +48,13 @@ CREATE TABLE book_author(
     CONSTRAINT book_author_author_id_fk FOREIGN KEY (author_id) REFERENCES author(author_id) ON DELETE CASCADE
 )ENGINE=InnoDB;
 
+--Author Jonas & Chris
 CREATE TABLE genre(
     genre_id INT(3) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     genre_name VARCHAR(30) NOT NULL
 )ENGINE=InnoDB;
 
+--Author Jonas & Chris
 CREATE TABLE book_genre(
     book_id INT(6) NOT NULL,
     genre_id INT(3) NOT NULL,
@@ -56,11 +63,13 @@ CREATE TABLE book_genre(
     CONSTRAINT book_genre_subgenre_id_fk FOREIGN KEY (genre_id) REFERENCES genre(genre_id) ON DELETE CASCADE
 )ENGINE=InnoDB;
 
+--Author Jonas & Chris
 CREATE TABLE format(
     format_id INT(6) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     extension VARCHAR(7) NOT NULL UNIQUE
 )ENGINE=InnoDB;
 
+--Author Jonas & Chris
 CREATE TABLE book_format(
     book_id INT(6) NOT NULL,
     format_id INT(6) NOT NULL,
@@ -69,16 +78,18 @@ CREATE TABLE book_format(
     CONSTRAINT format_id_fk FOREIGN KEY (format_id) REFERENCES format(format_id) ON DELETE CASCADE
 )ENGINE=InnoDB;
 
-
+--Author Joey
 DROP TABLE IF EXISTS registered_user;
 DROP TABLE IF EXISTS province;
 DROP TABLE IF EXISTS title;
 
+--Author Joey
 CREATE TABLE title (
     title_id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(10) NOT NULL
 )ENGINE=InnoDB;
 
+--Author Joey
 CREATE TABLE province (
     province_id INT AUTO_INCREMENT PRIMARY KEY,
     province VARCHAR(30) NOT NULL,
@@ -87,6 +98,7 @@ CREATE TABLE province (
     hst DECIMAL(12,2)
 )ENGINE=InnoDB;
 
+--Author Joey
 CREATE TABLE registered_user (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     email_address VARCHAR(50) NOT NULL UNIQUE,
@@ -112,7 +124,7 @@ CREATE TABLE registered_user (
 )ENGINE=InnoDB;
 
 
-
+--Author Xin
 DROP TABLE IF EXISTS approval;
 CREATE TABLE approval (
     approval_id INT NOT NULL AUTO_INCREMENT,
@@ -120,6 +132,7 @@ CREATE TABLE approval (
     PRIMARY KEY  (approval_id)
 ) ENGINE=InnoDB;
 
+-- Author Xin
 DROP TABLE IF EXISTS review;
 CREATE TABLE review (
     review_id INT NOT NULL AUTO_INCREMENT,
@@ -136,7 +149,7 @@ CREATE TABLE review (
     CONSTRAINT client_id_FK FOREIGN KEY (user_id) REFERENCES registered_user (user_id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
-
+--Author Rita
 DROP TABLE IF EXISTS invoice;
 CREATE TABLE IF NOT EXISTS invoice (
     sale_number int(11) NOT NULL AUTO_INCREMENT,
@@ -151,7 +164,8 @@ CREATE TABLE IF NOT EXISTS invoice (
     KEY client_number_index (client_number)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
-DROP TABLE IF EXISTS invoicedetails;
+--Author Rita
+DROP TABLE IF EXISTS invoice_details;
 CREATE TABLE IF NOT EXISTS invoicedetails (
     invoice_detail_id int(11) NOT NULL AUTO_INCREMENT,
     sale_number int(11) NOT NULL,
@@ -161,7 +175,7 @@ CREATE TABLE IF NOT EXISTS invoicedetails (
     PRIMARY KEY (invoice_detail_id)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
-
+--Author Chris
 DROP TABLE IF EXISTS survey;
 CREATE TABLE survey(
     survey_id INT(6) NOT NULL AUTO_INCREMENT PRIMARY KEY,

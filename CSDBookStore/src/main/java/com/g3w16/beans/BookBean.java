@@ -4,26 +4,52 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * Created by jesuisnuageux on 25/01/2016.
+ * @author Jonas Faure
+ * @author Christopher Dufort
+ * @version 0.0.4 - Last modified 2/2/2016
+ * @since 0.0.1 - Originally written 25/01/2016.
  */
 public class BookBean {
-    String isbn;
-    String title;
-    String publisher;
-    Integer pages;
-    String path_img_original;
-    String path_img_small;
-    Integer wholesale_price;
-    Integer list_price;
-    Integer sale_price;
-    Date date_of_entrance;
-    boolean removal_status;
-    String synopsis;
+    
+    private String isbn;
+    private String title;
+    private String publisher;
+    private Integer pages;
+    private String path_img_original;
+    private String path_img_small;
+    private Integer wholesale_price;
+    private Integer list_price;
+    private Integer sale_price;
+    private Date date_of_entrance;
+    private boolean removal_status;
+    private String synopsis;
 
-    ArrayList<String> authors;
-    ArrayList<String> genres;
-    ArrayList<String> format;
+    private ArrayList<String> authors;
+    private ArrayList<String> genres;
+    private ArrayList<String> formats;
 
+    public BookBean(){
+    }
+
+    public BookBean(final String isbn, final String title, final String publisher, final Integer pages, final String path_img_original, final String path_img_small, final Integer wholesale_price, final Integer list_price, final Integer sale_price, final Date date_of_entrance, final boolean removal_status, final String synopsis) {
+        super();
+        this.isbn = isbn;
+        this.title = title;
+        this.publisher = publisher;
+        this.pages = pages;
+        this.path_img_original = path_img_original;
+        this.path_img_small = path_img_small;
+        this.wholesale_price = wholesale_price;
+        this.list_price = list_price;
+        this.sale_price = sale_price;
+        this.date_of_entrance = date_of_entrance;
+        this.removal_status = removal_status;
+        this.synopsis = synopsis;
+        this.authors = new ArrayList<String>();
+        this.genres = new ArrayList<String>();
+        this.formats = new ArrayList<String>();
+    }
+    
     public String getIsbn() {
         return isbn;
     }
@@ -119,28 +145,38 @@ public class BookBean {
     public void setSynopsis(String synopsis) {
         this.synopsis = synopsis;
     }
-
+    
+    /**
+     * There is no set when working with collections. When you get the ArrayList
+     * you can add elements to it. A set method implies changing the current
+     * ArrayList for another ArrayList and this is something we rarely do with
+     * collections.
+     * @return 
+     */
     public ArrayList<String> getAuthors() {
         return authors;
     }
 
-    public void setAuthors(ArrayList<String> authors) {
-        this.authors = authors;
-    }
-
+    /**
+     * There is no set when working with collections. When you get the ArrayList
+     * you can add elements to it. A set method implies changing the current
+     * ArrayList for another ArrayList and this is something we rarely do with
+     * collections.
+     * @return 
+     */
     public ArrayList<String> getGenres() {
         return genres;
     }
 
-    public void setGenres(ArrayList<String> genres) {
-        this.genres = genres;
+    /**
+     * There is no set when working with collections. When you get the ArrayList
+     * you can add elements to it. A set method implies changing the current
+     * ArrayList for another ArrayList and this is something we rarely do with
+     * collections.
+     * @return 
+     */
+    public ArrayList<String> getFormats() {
+        return formats;
     }
 
-    public ArrayList<String> getFormat() {
-        return format;
-    }
-
-    public void setFormat(ArrayList<String> format) {
-        this.format = format;
-    }
 }
