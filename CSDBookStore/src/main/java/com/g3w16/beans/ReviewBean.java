@@ -19,7 +19,7 @@ public class ReviewBean {
     private String review_title;
     private String review_text;
 
-    public ReviewBean() {
+    public ReviewBean() { 
         this(-1,"",null,-1,-1,-1,"","");
     }
 
