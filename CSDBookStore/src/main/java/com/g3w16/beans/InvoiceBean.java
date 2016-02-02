@@ -5,6 +5,7 @@ package com.g3w16.beans;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * @author Rita Lazaar
@@ -103,7 +104,59 @@ public class InvoiceBean {
         this.TotalGrossValueOfSale = TotalGrossValueOfSale;
     }
 
-    public final ArrayList<InvoiceDetailBean> getDetails() {
-        return details;
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 37 * hash + this.SaleNumber;
+        hash = 37 * hash + Objects.hashCode(this.SaleDate);
+        hash = 37 * hash + this.ClientNumber;
+        hash = 37 * hash + (int) (Double.doubleToLongBits(this.TotalNetValueOfSale) ^ (Double.doubleToLongBits(this.TotalNetValueOfSale) >>> 32));
+        hash = 37 * hash + (int) (Double.doubleToLongBits(this.PST) ^ (Double.doubleToLongBits(this.PST) >>> 32));
+        hash = 37 * hash + (int) (Double.doubleToLongBits(this.GST) ^ (Double.doubleToLongBits(this.GST) >>> 32));
+        hash = 37 * hash + (int) (Double.doubleToLongBits(this.HST) ^ (Double.doubleToLongBits(this.HST) >>> 32));
+        hash = 37 * hash + (int) (Double.doubleToLongBits(this.TotalGrossValueOfSale) ^ (Double.doubleToLongBits(this.TotalGrossValueOfSale) >>> 32));
+        return hash;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final InvoiceBean other = (InvoiceBean) obj;
+        if (this.SaleNumber != other.SaleNumber) {
+            return false;
+        }
+        if (this.ClientNumber != other.ClientNumber) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.TotalNetValueOfSale) != Double.doubleToLongBits(other.TotalNetValueOfSale)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.PST) != Double.doubleToLongBits(other.PST)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.GST) != Double.doubleToLongBits(other.GST)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.HST) != Double.doubleToLongBits(other.HST)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.TotalGrossValueOfSale) != Double.doubleToLongBits(other.TotalGrossValueOfSale)) {
+            return false;
+        }
+        if (!Objects.equals(this.SaleDate, other.SaleDate)) {
+            return false;
+        }
+        return true;
+    }
+
+    
+    
 }

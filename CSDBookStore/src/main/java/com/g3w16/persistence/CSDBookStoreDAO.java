@@ -5,10 +5,36 @@
  */
 package com.g3w16.persistence;
 
+import com.g3w16.beans.InvoiceBean;
+import com.g3w16.beans.InvoiceDetailBean;
+import com.g3w16.beans.RegisteredUser;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 /**
  *
- * @author 1232046
+ * @author Rita Lazaar
  */
 public interface CSDBookStoreDAO {
     
+    public int createInvoice(RegisteredUser user) throws SQLException;
+    
+    public ArrayList<InvoiceBean> findAllInvoices() throws SQLException;
+    
+    public ArrayList<InvoiceBean> findAllInvoicesBasedOnUser() throws SQLException;
+    
+    public InvoiceBean findInvoiceById(InvoiceBean invoice) throws SQLException;
+    
+    public int deleteInvoice (InvoiceBean invoice) throws SQLException; 
+    
+    public int createInvoiceDetails(InvoiceBean invoice) throws SQLException;
+    
+    public ArrayList<InvoiceDetailBean> findAllInvoiceDetails() throws SQLException;
+    
+    public InvoiceBean findInvoiceDetailById(InvoiceDetailBean invoice) throws SQLException;
+    
+    public ArrayList<InvoiceBean> findInvoiceDetailsBasedOnInvoice(InvoiceBean invoice) throws SQLException; 
+    
+    public int deleteInvoiceDetail (InvoiceBean invoice) throws SQLException; 
 }
+

@@ -59,7 +59,7 @@ CREATE TABLE book_genre(
     book_id INT(6) NOT NULL,
     genre_id INT(3) NOT NULL,
     PRIMARY KEY (book_id, genre_id),
-    CONSTRAINT book_genre_book_id_fk FOREIGN KEY (book_id)	REFERENCES book(book_id) ON DELETE CASCADE,
+    CONSTRAINT book_genre_book_id_fk FOREIGN KEY (book_id)REFERENCES book(book_id) ON DELETE CASCADE,
     CONSTRAINT book_genre_subgenre_id_fk FOREIGN KEY (genre_id) REFERENCES genre(genre_id) ON DELETE CASCADE
 )ENGINE=InnoDB;
 
@@ -162,7 +162,7 @@ CREATE TABLE IF NOT EXISTS invoice (
     total_gross_value_of_sale decimal(12,2) DEFAULT NULL,
     PRIMARY KEY (sale_number),
     KEY client_number_index (client_number)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 --Author Rita
 DROP TABLE IF EXISTS invoice_details;
