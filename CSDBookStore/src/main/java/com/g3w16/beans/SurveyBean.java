@@ -5,9 +5,11 @@
  */
 package com.g3w16.beans;
 
+import java.util.Objects;
+
 /**
  * @author Christopher Dufort
- * @version 0.0.2 - Last modified 2/2/2016
+ * @version 0.0.4 - Last modified 2/2/2016
  * @since 0.0.2 -Originally written 2/2/2016
  */
 public class SurveyBean {
@@ -141,8 +143,55 @@ public class SurveyBean {
         this.answerDefault = answerDefault;
     }
     
-    
-    
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 67 * hash + this.surveyId;
+        hash = 67 * hash + Objects.hashCode(this.question);
+        hash = 67 * hash + Objects.hashCode(this.answerOne);
+        hash = 67 * hash + Objects.hashCode(this.answerTwo);
+        hash = 67 * hash + Objects.hashCode(this.answerThree);
+        hash = 67 * hash + Objects.hashCode(this.answerDefault);
+        return hash;
+    }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final SurveyBean other = (SurveyBean) obj;
+        if (this.surveyId != other.surveyId) {
+            return false;
+        }
+        if (!Objects.equals(this.question, other.question)) {
+            return false;
+        }
+        if (!Objects.equals(this.answerOne, other.answerOne)) {
+            return false;
+        }
+        if (!Objects.equals(this.answerTwo, other.answerTwo)) {
+            return false;
+        }
+        if (!Objects.equals(this.answerThree, other.answerThree)) {
+            return false;
+        }
+        if (!Objects.equals(this.answerDefault, other.answerDefault)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "SurveyBean{" + "surveyId=" + surveyId + ", question=" + question + ", answerOne=" + answerOne + ", answerTwo=" + answerTwo + ", answerThree=" + answerThree + ", answerDefault=" + answerDefault + '}';
+    }
     
+        
 }

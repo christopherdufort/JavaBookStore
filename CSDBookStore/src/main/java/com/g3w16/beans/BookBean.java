@@ -4,9 +4,13 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * Created by jesuisnuageux on 25/01/2016.
+ * @author Jonas Faure
+ * @author Christopher Dufort
+ * @version 0.0.4 - Last modified 2/2/2016
+ * @since 0.0.1 - Originally written 25/01/2016.
  */
 public class BookBean {
+    
     private String isbn;
     private String title;
     private String publisher;
@@ -24,9 +28,11 @@ public class BookBean {
     private ArrayList<String> genres;
     private ArrayList<String> formats;
 
-    public BookBean(){}
+    public BookBean(){
+    }
 
     public BookBean(final String isbn, final String title, final String publisher, final Integer pages, final String path_img_original, final String path_img_small, final Integer wholesale_price, final Integer list_price, final Integer sale_price, final Date date_of_entrance, final boolean removal_status, final String synopsis) {
+        super();
         this.isbn = isbn;
         this.title = title;
         this.publisher = publisher;
@@ -139,15 +145,36 @@ public class BookBean {
     public void setSynopsis(String synopsis) {
         this.synopsis = synopsis;
     }
-
+    
+    /**
+     * There is no set when working with collections. When you get the ArrayList
+     * you can add elements to it. A set method implies changing the current
+     * ArrayList for another ArrayList and this is something we rarely do with
+     * collections.
+     * @return 
+     */
     public ArrayList<String> getAuthors() {
         return authors;
     }
 
+    /**
+     * There is no set when working with collections. When you get the ArrayList
+     * you can add elements to it. A set method implies changing the current
+     * ArrayList for another ArrayList and this is something we rarely do with
+     * collections.
+     * @return 
+     */
     public ArrayList<String> getGenres() {
         return genres;
     }
 
+    /**
+     * There is no set when working with collections. When you get the ArrayList
+     * you can add elements to it. A set method implies changing the current
+     * ArrayList for another ArrayList and this is something we rarely do with
+     * collections.
+     * @return 
+     */
     public ArrayList<String> getFormats() {
         return formats;
     }

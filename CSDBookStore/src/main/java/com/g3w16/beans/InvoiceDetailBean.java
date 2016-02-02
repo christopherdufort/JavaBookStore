@@ -6,8 +6,10 @@
 package com.g3w16.beans;
 
 /**
- *
- * @author rpro
+ * @author Rita Lazaar
+ * @author Christopher Dufort
+ * @version 0.0.4 - Last modified 2/2/2016
+ * @since 0.0.1
  */
 public class InvoiceDetailBean {
     
@@ -16,7 +18,10 @@ public class InvoiceDetailBean {
   private String ISBN;
   private double BookPrice;
 
-    public InvoiceDetailBean(int InvoiceDetailId, int SaleNumber, String ISBN, double BookPrice) {
+    public InvoiceDetailBean(){
+        
+    }
+    public InvoiceDetailBean(final int InvoiceDetailId, final int SaleNumber, final String ISBN, final double BookPrice) {
         this.InvoiceDetailId = InvoiceDetailId;
         this.SaleNumber = SaleNumber;
         this.ISBN = ISBN;

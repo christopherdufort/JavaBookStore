@@ -1,5 +1,10 @@
 package com.g3w16.beans;
 
+/**
+ * @author Giuseppe Campanelli	
+ * @version 0.0.4 - Last modified 2/2/2016
+ * @since 0.0.1 
+ */
 public class RegisteredUser {
 
     private int clientNumber;
