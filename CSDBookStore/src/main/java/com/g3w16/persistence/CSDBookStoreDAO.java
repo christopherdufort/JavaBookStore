@@ -40,21 +40,104 @@ public interface CSDBookStoreDAO {
     
     public int deleteInvoiceDetail (InvoiceBean invoice) throws SQLException; 
     
-     /**
+    /**
      * CRUD method for Review table
      * @author Xin Ma
      * @version 0.0.6
+     * @param reviewBean
+     * @return 
+     * @throws java.sql.SQLException
      */
     public int createReview(ReviewBean reviewBean) throws SQLException;
+    /**
+     * CRUD method for Review table
+     * @author Xin Ma
+     * @version 0.0.6
+     * @param review_id
+     * @return
+     * @throws SQLException 
+     */
     public ReviewBean getReviewById(int review_id) throws SQLException;
+    /**
+     * CRUD method for Review table
+     * @author Xin Ma
+     * @version 0.0.6
+     * @param user_id
+     * @return
+     * @throws SQLException 
+     */
     public List<ReviewBean> getReviewByUserId(int user_id) throws SQLException;
+    /**
+     * CRUD method for Review table
+     * @author Xin Ma
+     * @version 0.0.6
+     * @param date_submitted
+     * @return
+     * @throws SQLException 
+     */
     public List<ReviewBean> getReviewByDateSubmitted(LocalDateTime date_submitted) throws SQLException;
+    /**
+     * CRUD method for Review table
+     * @author Xin Ma
+     * @version 0.0.6
+     * @param approval_id
+     * @return
+     * @throws SQLException 
+     */
     public List<ReviewBean> getReviewByApprovalId(int approval_id) throws SQLException;
+    /**
+     * CRUD method for Review table
+     * @author Xin Ma
+     * @version 0.0.6
+     * @param isbn
+     * @return
+     * @throws SQLException 
+     */
     public List<ReviewBean> getReviewByIsbn(String isbn) throws SQLException;
+    /**
+     * CRUD method for Review table
+     * @author Xin Ma
+     * @version 0.0.6
+     * @param reviewBean
+     * @return
+     * @throws SQLException 
+     */
     public int updateReview(ReviewBean reviewBean) throws SQLException;
+    /**
+     * CRUD method for Review table
+     * @author Xin Ma
+     * @version 0.0.6
+     * @param review_id
+     * @return
+     * @throws SQLException 
+     */
     public int deleteReviewByReviewId(int review_id) throws SQLException;
+    /**
+     * CRUD method for Review table
+     * @author Xin Ma
+     * @version 0.0.6
+     * @param user_id
+     * @return
+     * @throws SQLException 
+     */
     public int deleteReviewByUserId(int user_id) throws SQLException;
+    /**
+     * CRUD method for Review table
+     * @author Xin Ma
+     * @version 0.0.6
+     * @param isbn
+     * @return
+     * @throws SQLException 
+     */
     public int deleteReviewByIsbn(String isbn) throws SQLException;
+    /**
+     * CRUD method for Review table
+     * @author Xin Ma
+     * @version 0.0.6
+     * @param date_submitted
+     * @return
+     * @throws SQLException 
+     */
     public int deleteReviewByDateSubmitted(LocalDateTime date_submitted) throws SQLException;
 }
 
