@@ -139,26 +139,26 @@ CREATE TABLE review (
 
 DROP TABLE IF EXISTS invoice;
 CREATE TABLE IF NOT EXISTS invoice (
-    SaleNumber int(11) NOT NULL AUTO_INCREMENT,
-    SaleDate datetime,
-    ClientNumber int(11) NOT NULL,
-    TotalNetValueOfSale decimal(12,2) DEFAULT NULL,
-    PST decimal(12,2),
-    GST decimal(12,2) ,
-    HST decimal(12,2),
-    TotalGrossValueOfSale decimal(12,2) DEFAULT NULL,
-    PRIMARY KEY (SaleNumber),
-    KEY ClientNumber_index (ClientNumber)
+    sale_number int(11) NOT NULL AUTO_INCREMENT,
+    sale_date datetime,
+    client_number int(11) NOT NULL,
+    total_net_value_of_sale decimal(12,2) DEFAULT NULL,
+    pst decimal(12,2),
+    gst decimal(12,2) ,
+    hst decimal(12,2),
+    total_gross_value_of_sale decimal(12,2) DEFAULT NULL,
+    PRIMARY KEY (sale_number),
+    KEY client_number_index (client_number)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 DROP TABLE IF EXISTS invoicedetails;
 CREATE TABLE IF NOT EXISTS invoicedetails (
-    InvoiceDetail_Id int(11) NOT NULL AUTO_INCREMENT,
-    SaleNumber int(11) NOT NULL,
-    ISBN varchar(25) NOT NULL,
-    BookPrice decimal(12,2),
+    invoice_detail_id int(11) NOT NULL AUTO_INCREMENT,
+    sale_number int(11) NOT NULL,
+    isbn varchar(25) NOT NULL,
+    book_price decimal(12,2),
     quantity INT(2) NOT NULL,
-    PRIMARY KEY (InvoiceDetail_Id)
+    PRIMARY KEY (invoice_detail_id)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 
