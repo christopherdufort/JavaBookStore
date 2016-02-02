@@ -85,6 +85,9 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      *
      * @author Xin Ma
      * @version 0.0.6
+     * @param reviewBean
+     * @return 
+     * @throws java.sql.SQLException
      */
     @Override
     public int createReview(ReviewBean reviewBean) throws SQLException {
@@ -114,6 +117,9 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      *
      * @author Xin Ma
      * @version 0.0.6
+     * @param review_id
+     * @return 
+     * @throws java.sql.SQLException 
      */
     @Override
     public ReviewBean getReviewById(int review_id) throws SQLException {
@@ -138,6 +144,9 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      *
      * @author Xin Ma
      * @version 0.0.6
+     * @param user_id
+     * @return 
+     * @throws java.sql.SQLException 
      */
     @Override
     public List<ReviewBean> getReviewByUserId(int user_id) throws SQLException {
@@ -162,6 +171,9 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      *
      * @author Xin Ma
      * @version 0.0.6
+     * @param date_submitted
+     * @return 
+     * @throws java.sql.SQLException
      */
     @Override
     public List<ReviewBean> getReviewByDateSubmitted(LocalDateTime date_submitted) throws SQLException {
@@ -186,6 +198,9 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      *
      * @author Xin Ma
      * @version 0.0.6
+     * @param approval_id
+     * @return 
+     * @throws java.sql.SQLException
      */
     @Override
     public List<ReviewBean> getReviewByApprovalId(int approval_id) throws SQLException {
@@ -210,6 +225,9 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      *
      * @author Xin Ma
      * @version 0.0.6
+     * @param isbn
+     * @return 
+     * @throws java.sql.SQLException 
      */
     @Override
     public List<ReviewBean> getReviewByIsbn(String isbn) throws SQLException {
@@ -234,6 +252,9 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      *
      * @author Xin Ma
      * @version 0.0.6
+     * @param reviewBean
+     * @return 
+     * @throws java.sql.SQLException 
      */
     @Override
     public int updateReview(ReviewBean reviewBean) throws SQLException {
@@ -260,6 +281,9 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      *
      * @author Xin Ma
      * @version 0.0.6
+     * @param review_id
+     * @return 
+     * @throws java.sql.SQLException
      */
     @Override
     public int deleteReviewByReviewId(int review_id) throws SQLException {
@@ -285,6 +309,9 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      *
      * @author Xin Ma
      * @version 0.0.6
+     * @param user_id
+     * @return 
+     * @throws java.sql.SQLException
      */
     @Override
     public int deleteReviewByUserId(int user_id) throws SQLException {
@@ -309,6 +336,9 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      *
      * @author Xin Ma
      * @version 0.0.6
+     * @param isbn
+     * @return 
+     * @throws java.sql.SQLException
      */
     @Override
     public int deleteReviewByIsbn(String isbn) throws SQLException {
@@ -333,6 +363,9 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      *
      * @author Xin Ma
      * @version 0.0.6
+     * @param date_submitted
+     * @return 
+     * @throws java.sql.SQLException
      */
     @Override
     public int deleteReviewByDateSubmitted(LocalDateTime date_submitted) throws SQLException {
