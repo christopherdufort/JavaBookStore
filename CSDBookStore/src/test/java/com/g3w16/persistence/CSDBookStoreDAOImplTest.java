@@ -203,9 +203,16 @@ public class CSDBookStoreDAOImplTest {
     @Test
     public void testCreateReview() throws Exception {
         System.out.println("createReview");
-        ReviewBean reviewBean = null;
+        ReviewBean reviewBean = new ReviewBean();
+        reviewBean.setDate_submitted(LocalDateTime.now());
+        reviewBean.setIsbn("978-1501104565");
+        reviewBean.setApproval_id(1);
+        reviewBean.setRating(4);
+        reviewBean.setUser_id(1);
+        reviewBean.setReview_text("good book");
+        reviewBean.setReview_title("perfect");
         CSDBookStoreDAOImpl instance = new CSDBookStoreDAOImpl();
-        int expResult = 0;
+        int expResult = 1;
         int result = instance.createReview(reviewBean);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
