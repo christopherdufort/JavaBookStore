@@ -37,7 +37,7 @@ import static org.junit.Assert.*;
  */
 public class CSDBookStoreDAOImplTest {
     
-    @Resource(name = "java:app/jdbc/CSDBookStore")
+    @Resource(name = "java:app/jdbc/g3w16")
     private DataSource ds;
 
     @Inject

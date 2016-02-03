@@ -26,7 +26,7 @@ import javax.sql.DataSource;
 //@RequestScoped
 public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
 
-    @Resource(name = "java:app/jdbc/CSDBookStore")
+    @Resource(name = "java:app/jdbc/g3w16")
     private DataSource CSDBookStoreSource;
 
     public CSDBookStoreDAOImpl() {
