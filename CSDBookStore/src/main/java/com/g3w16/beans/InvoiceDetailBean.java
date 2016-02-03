@@ -10,7 +10,7 @@ import java.util.Objects;
 /**
  * @author Rita Lazaar
  * @author Christopher Dufort
- * @version 0.0.4 - Last modified 2/2/2016
+ * @version 0.0.5 - Last modified 2/3/2016
  * @since 0.0.1
  */
 public class InvoiceDetailBean {
