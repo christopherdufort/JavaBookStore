@@ -4,6 +4,7 @@ CREATE DATABASE CSDBookStore;
 --Author Xin
 GRANT ALL ON CSDBookStore.* TO g3w16@"%" IDENTIFIED BY "g3w16";
 GRANT ALL ON CSDBookStore.* TO g3w16@"localhost" IDENTIFIED BY "g3w16";
+
 --Author Xin
 USE CSDBookStore;
 
