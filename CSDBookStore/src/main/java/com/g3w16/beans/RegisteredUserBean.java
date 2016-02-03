@@ -5,7 +5,7 @@ package com.g3w16.beans;
  * @version 0.0.4 - Last modified 2/2/2016
  * @since 0.0.1 
  */
-public class RegisteredUser {
+public class RegisteredUserBean {
 
     private int clientNumber;
     private String emailAddress;
@@ -17,7 +17,7 @@ public class RegisteredUser {
     private String addressOne;
     private String addressTwo;
     private String city;
-    private String province;
+    private ProvinceBean province;
     private String country;
     private String postalCode;
     private String homePhone;
@@ -26,7 +26,8 @@ public class RegisteredUser {
     private boolean isManager;
     private boolean isActive;
 
-    public RegisteredUser() {
+    public RegisteredUserBean() { 
+        super();
         clientNumber = 0;
         emailAddress = "";
         password = "";
@@ -37,7 +38,7 @@ public class RegisteredUser {
         addressOne = "";
         addressTwo = "";
         city = "";
-        province = "";
+        province = new ProvinceBean();
         country = "";
         postalCode = "";
         homePhone = "";
@@ -47,11 +48,12 @@ public class RegisteredUser {
         isActive = true;
     }
 
-    public RegisteredUser(final int clientNumber, final String emailAddress, final String password,
+    public RegisteredUserBean(final int clientNumber, final String emailAddress, final String password,
             final String title, final String firstName, final String lastName, final String companyName,
-            final String addressOne, final String addressTwo, final String city, final String province,
+            final String addressOne, final String addressTwo, final String city, final ProvinceBean province,
             final String country, final String postalCode, final String homePhone, final String cellPhone,
             final String lastSearchGenre, final boolean isManager, final boolean isActive) {
+        super();
         this.clientNumber = clientNumber;
         this.emailAddress = emailAddress;
         this.password = password;
@@ -152,11 +154,11 @@ public class RegisteredUser {
         return city;
     }
 
-    public void setProvince(final String province) {
+    public void setProvince(final ProvinceBean province) {
         this.province = province;
     }
 
-    public String getProvince() {
+    public ProvinceBean getProvince() {
         return province;
     }
 
@@ -209,7 +211,7 @@ public class RegisteredUser {
     }
 
     public void setIsActive(final boolean isActive) {
-        this.lastSearchGenre = lastSearchGenre;
+        this.isActive = isActive;
     }
 
     public boolean getIsActive() {

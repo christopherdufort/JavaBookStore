@@ -7,7 +7,7 @@ package com.g3w16.persistence;
 
 import com.g3w16.beans.InvoiceBean;
 import com.g3w16.beans.InvoiceDetailBean;
-import com.g3w16.beans.RegisteredUser;
+import com.g3w16.beans.RegisteredUserBean;
 import com.g3w16.beans.ReviewBean;
 import com.g3w16.beans.SurveyBean;
 import java.sql.Connection;
@@ -34,7 +34,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
     }
 
     @Override
-    public int createInvoice(RegisteredUser user) throws SQLException {
+    public int createInvoice(RegisteredUserBean user) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

@@ -7,7 +7,7 @@ package com.g3w16.persistence;
 
 import com.g3w16.beans.InvoiceBean;
 import com.g3w16.beans.InvoiceDetailBean;
-import com.g3w16.beans.RegisteredUser;
+import com.g3w16.beans.RegisteredUserBean;
 import com.g3w16.beans.ReviewBean;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -20,7 +20,7 @@ import java.util.List;
  */
 public interface CSDBookStoreDAO {
     
-    public int createInvoice(RegisteredUser user) throws SQLException;
+    public int createInvoice(RegisteredUserBean user) throws SQLException;
     
     public ArrayList<InvoiceBean> findAllInvoices() throws SQLException;
     
