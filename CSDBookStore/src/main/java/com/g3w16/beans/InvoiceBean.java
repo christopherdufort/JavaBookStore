@@ -17,26 +17,22 @@ public class InvoiceBean {
 
     private int SaleNumber;
     private LocalDateTime SaleDate;
-    private int ClientNumber;
+    private int UserNumber;
     private double TotalNetValueOfSale;
-    private double PST;
-    private double GST;
-    private double HST;
+    
     private double TotalGrossValueOfSale;
+    
     private ArrayList<InvoiceDetailBean> details;
 
     public InvoiceBean() {
 
     }
 
-    public InvoiceBean(final int SaleNumber, final LocalDateTime SaleDate, final int ClientNumber,final double TotalNetValueOfSale,final double PST,final double GST, final double HST,final double TotalGrossValueOfSale) {
+    public InvoiceBean(final int SaleNumber, final LocalDateTime SaleDate, final int UserNumber,final double TotalNetValueOfSale,final double TotalGrossValueOfSale) {
         this.SaleNumber = SaleNumber;
         this.SaleDate = SaleDate;
-        this.ClientNumber = ClientNumber;
+        this.UserNumber = UserNumber;
         this.TotalNetValueOfSale = TotalNetValueOfSale;
-        this.PST = PST;
-        this.GST = GST;
-        this.HST = HST;
         this.TotalGrossValueOfSale = TotalGrossValueOfSale;
     }
 
@@ -56,12 +52,12 @@ public class InvoiceBean {
         this.SaleDate = SaleDate;
     }
 
-    public final int getClientNumber() {
-        return ClientNumber;
+    public final int getUserNumber() {
+        return UserNumber;
     }
 
-    public void setClientNumber(final int ClientNumber) {
-        this.ClientNumber = ClientNumber;
+    public void setUserNumber(final int UserNumber) {
+        this.UserNumber = UserNumber;
     }
 
     public final double getTotalNetValueOfSale() {
@@ -72,30 +68,7 @@ public class InvoiceBean {
         this.TotalNetValueOfSale = TotalNetValueOfSale;
     }
 
-    public final double getPST() {
-        return PST;
-    }
-
-    public void setPST(final double PST) {
-        this.PST = PST;
-    }
-
-    public final double getGST() {
-        return GST;
-    }
-
-    public void setGST(final double GST) {
-        this.GST = GST;
-    }
-
-    public final double getHST() {
-        return HST;
-    }
-
-    public void setHST(final double HST) {
-        this.HST = HST;
-    }
-
+    
     public final double getTotalGrossValueOfSale() {
         return TotalGrossValueOfSale;
     }
@@ -109,11 +82,9 @@ public class InvoiceBean {
         int hash = 3;
         hash = 37 * hash + this.SaleNumber;
         hash = 37 * hash + Objects.hashCode(this.SaleDate);
-        hash = 37 * hash + this.ClientNumber;
+        hash = 37 * hash + this.UserNumber;
         hash = 37 * hash + (int) (Double.doubleToLongBits(this.TotalNetValueOfSale) ^ (Double.doubleToLongBits(this.TotalNetValueOfSale) >>> 32));
-        hash = 37 * hash + (int) (Double.doubleToLongBits(this.PST) ^ (Double.doubleToLongBits(this.PST) >>> 32));
-        hash = 37 * hash + (int) (Double.doubleToLongBits(this.GST) ^ (Double.doubleToLongBits(this.GST) >>> 32));
-        hash = 37 * hash + (int) (Double.doubleToLongBits(this.HST) ^ (Double.doubleToLongBits(this.HST) >>> 32));
+       
         hash = 37 * hash + (int) (Double.doubleToLongBits(this.TotalGrossValueOfSale) ^ (Double.doubleToLongBits(this.TotalGrossValueOfSale) >>> 32));
         return hash;
     }
@@ -133,21 +104,13 @@ public class InvoiceBean {
         if (this.SaleNumber != other.SaleNumber) {
             return false;
         }
-        if (this.ClientNumber != other.ClientNumber) {
+        if (this.UserNumber != other.UserNumber) {
             return false;
         }
         if (Double.doubleToLongBits(this.TotalNetValueOfSale) != Double.doubleToLongBits(other.TotalNetValueOfSale)) {
             return false;
         }
-        if (Double.doubleToLongBits(this.PST) != Double.doubleToLongBits(other.PST)) {
-            return false;
-        }
-        if (Double.doubleToLongBits(this.GST) != Double.doubleToLongBits(other.GST)) {
-            return false;
-        }
-        if (Double.doubleToLongBits(this.HST) != Double.doubleToLongBits(other.HST)) {
-            return false;
-        }
+       
         if (Double.doubleToLongBits(this.TotalGrossValueOfSale) != Double.doubleToLongBits(other.TotalGrossValueOfSale)) {
             return false;
         }

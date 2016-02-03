@@ -21,6 +21,11 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 
+/**
+ *
+ * @author Rita Lazaar
+ * @version : 0.0.3
+ */
 public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
 
     @Resource(name = "java:app/jdbc/CSDBookStore")
@@ -30,54 +35,366 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
         super();
     }
 
+    /**
+     *
+     * This method allows to create a new invoice.
+     *
+     * @author Rita Lazaar
+     * @param invoice
+     * @return
+     * @throws SQLException
+     */
     @Override
-    public int createInvoice(RegisteredUser user) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int createInvoice(InvoiceBean invoice) throws SQLException {
+
+        int result = 0;
+
+        String createInvoice = "INSERT INTO invoice ( sale_date, user_number, total_net_value_sale, total_gross_value_sale) VALUES (  ?, ?, ?,?);";
+
+        try (Connection conn = CSDBookStoreSource.getConnection();
+                PreparedStatement ps = conn.prepareStatement(createInvoice)) {
+
+            ps.setTimestamp(1, Timestamp.valueOf(invoice.getSaleDate()));
+            ps.setInt(2, invoice.getUserNumber());
+            ps.setDouble(3, invoice.getTotalNetValueOfSale());
+
+//            ps.setDouble(4, invoice.getPST());
+//            ps.setDouble(5, invoice.getGST());
+//            ps.setDouble(5, invoice.getHST());
+            ps.setDouble(6, invoice.getTotalGrossValueOfSale());
+
+            result = ps.executeUpdate();
+
+        }
+
+        return result;
+
     }
 
+    /**
+     * This method allows to find all invoices existing in database.
+     *
+     * @author Rita Lazaar
+     * @return
+     * @throws SQLException
+     */
     @Override
-    public ArrayList<InvoiceBean> findAllInvoices() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<InvoiceBean> findAllInvoices() throws SQLException {
+        List<InvoiceBean> invoices = new ArrayList<>();
+
+        String select = "SELECT sale_number, sale_date, user_number, total_net_value_sale, total_gross_value_sale FROM invoice;";
+
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement ps = connection.prepareStatement(select);
+                ResultSet resultSet = ps.executeQuery()) {
+
+            while (resultSet.next()) {
+                InvoiceBean invoice = new InvoiceBean();
+                invoice.setSaleNumber(resultSet.getInt("sale_number"));
+                invoice.setSaleDate(resultSet.getTimestamp("sale_date").toLocalDateTime());
+                invoice.setUserNumber(resultSet.getInt("user_number"));
+                invoice.setTotalNetValueOfSale(resultSet.getDouble("total_net_value_sale"));
+
+                // delete the taxes 
+//                invoice.setPST(resultSet.getDouble("PST"));
+//                invoice.setGST(resultSet.getDouble("GST"));
+//                invoice.setHST(resultSet.getDouble("HST"));
+                invoice.setTotalGrossValueOfSale(resultSet.getDouble("total_gross_value_sale"));
+
+                invoices.add(invoice);
+
+            }
+
+        }
+        return invoices;
     }
 
+    /**
+     *
+     * This method allows to find all invoices related to a specific user.
+     *
+     * @author Rita Lazaar
+     * @param userNumber
+     * @return
+     * @throws SQLException
+     */
     @Override
-    public ArrayList<InvoiceBean> findAllInvoicesBasedOnUser() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<InvoiceBean> findAllInvoicesBasedOnUser(int userNumber) throws SQLException {
+
+        List<InvoiceBean> invoices = new ArrayList<>();
+
+        String select = "SELECT sale_number, sale_date, user_number, total_net_value_sale, total_gross_value_sale FROM invoice WHERE user_number = ?;";
+
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement ps = connection.prepareStatement(select);) {
+
+            ps.setInt(1, userNumber);
+
+            try (ResultSet resultSet = ps.executeQuery()) {
+
+                while (resultSet.next()) {
+
+                    InvoiceBean invoice = new InvoiceBean();
+                    invoice.setSaleNumber(resultSet.getInt("sale_number"));
+                    invoice.setSaleDate(resultSet.getTimestamp("sale_date").toLocalDateTime());
+                    invoice.setUserNumber(resultSet.getInt("user_number"));
+                    invoice.setTotalNetValueOfSale(resultSet.getDouble("total_net_value_sale"));
+
+                    //delete the taxes 
+//                invoice.setPST(resultSet.getDouble("PST"));
+//                invoice.setGST(resultSet.getDouble("GST"));
+//                invoice.setHST(resultSet.getDouble("HST"));
+                    //
+                    invoice.setTotalGrossValueOfSale(resultSet.getDouble("total_gross_value_sale"));
+
+                    invoices.add(invoice);
+                }
+            }
+
+        }
+        return invoices;
     }
 
+    /**
+     *
+     * This method allows to find one invoice based on its id.
+     *
+     * @author Rita Lazaar
+     * @param saleNumber
+     * @return
+     * @throws SQLException
+     */
     @Override
-    public InvoiceBean findInvoiceById(InvoiceBean invoice) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public InvoiceBean findInvoiceById(int id) throws SQLException {
+
+        InvoiceBean invoice = new InvoiceBean();
+
+        String select = "SELECT sale_number, sale_date, user_number, total_net_value_sale, total_gross_value_sale FROM invoice WHERE sale_number = ?;";
+
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement ps = connection.prepareStatement(select);) {
+
+            ps.setInt(1, id);
+
+            try (ResultSet resultSet = ps.executeQuery()) {
+
+                if (resultSet.next()) {
+
+                    invoice.setSaleNumber(resultSet.getInt("sale_number"));
+                    invoice.setSaleDate(resultSet.getTimestamp("sale_date").toLocalDateTime());
+                    invoice.setUserNumber(resultSet.getInt("user_number"));
+                    invoice.setTotalNetValueOfSale(resultSet.getDouble("total_net_value_sale"));
+
+                    //delete the taxes 
+//                invoice.setPST(resultSet.getDouble("PST"));
+//                invoice.setGST(resultSet.getDouble("GST"));
+//                invoice.setHST(resultSet.getDouble("HST"));
+                    //
+                    invoice.setTotalGrossValueOfSale(resultSet.getDouble("total_gross_value_sale"));
+
+                }
+            }
+
+        }
+        return invoice;
     }
 
+    /**
+     *
+     * This method allows to delete an invoice, if needed.
+     *
+     * @author Rita Lazaar
+     * @param saleNumber
+     * @return
+     * @throws SQLException
+     */
     @Override
-    public int deleteInvoice(InvoiceBean invoice) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int deleteInvoice(int saleNumber) throws SQLException {
+        int result = 0;
+
+        String delete = "DELETE FROM invoice WHERE sale_number = ?";
+
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement ps = connection.prepareStatement(delete);) {
+            ps.setInt(1, saleNumber);
+            result = ps.executeUpdate();
+        }
+        return result;
     }
 
+    /**
+     *
+     * This method allows to create the details related to an invoice. This thus
+     * represents one item in the order and its information.
+     *
+     * @author Rita Lazaar
+     * @param invoiceDetail
+     *
+     * @return
+     * @throws SQLException
+     */
     @Override
-    public int createInvoiceDetails(InvoiceBean invoice) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int createInvoiceDetails(InvoiceDetailBean invoiceDetail) throws SQLException {
+
+        int result = 0;
+
+        String createInvoice = "INSERT INTO invoicedetails (invoicedetail_id, sale_number, ISBN, book_price, PST, GST,  HST) VALUES (?, ?, ?, ?,?, ?, ?);";
+
+        try (Connection conn = CSDBookStoreSource.getConnection();
+                PreparedStatement ps = conn.prepareStatement(createInvoice)) {
+
+            ps.setInt(1, invoiceDetail.getInvoiceDetailId());
+            ps.setInt(2, invoiceDetail.getSaleNumber());
+            ps.setString(3, invoiceDetail.getISBN());
+            ps.setDouble(4, invoiceDetail.getBookPrice());
+            ps.setDouble(5, invoiceDetail.getPST());
+            ps.setDouble(6, invoiceDetail.getGST());
+            ps.setDouble(7, invoiceDetail.getHST());
+
+            result = ps.executeUpdate();
+
+        }
+
+        return result;
     }
 
+    /**
+     *
+     * This method allows to find all invoice details existing in the database.
+     *
+     * @author Rita Lazaar
+     * @return @throws SQLException
+     */
     @Override
-    public ArrayList<InvoiceDetailBean> findAllInvoiceDetails() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<InvoiceDetailBean> findAllInvoiceDetails() throws SQLException {
+        List<InvoiceDetailBean> invoiceDetails = new ArrayList<>();
+
+        String select = "SELECT invoicedetail_id, sale_number, ISBN, book_price, PST, GST,HST FROM invoicedetails;";
+
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement ps = connection.prepareStatement(select);
+                ResultSet resultSet = ps.executeQuery()) {
+
+            while (resultSet.next()) {
+                InvoiceDetailBean invoiceDetail = new InvoiceDetailBean();
+                invoiceDetail.setSaleNumber(resultSet.getInt("sale_number"));
+                invoiceDetail.setISBN(resultSet.getString("ISBN"));
+                invoiceDetail.setBookPrice(resultSet.getDouble("book_price"));
+                invoiceDetail.setPST(resultSet.getDouble("PST"));
+                invoiceDetail.setGST(resultSet.getDouble("GST"));
+                invoiceDetail.setHST(resultSet.getDouble("HST"));
+
+                invoiceDetails.add(invoiceDetail);
+            }
+        }
+
+        return invoiceDetails;
     }
 
+    /**
+     *
+     * This method allows to find an invoice detail, or item, based on its id.
+     *
+     * @author Rita Lazaar
+     * @param id
+     * @return
+     * @throws SQLException
+     */
     @Override
-    public InvoiceBean findInvoiceDetailById(InvoiceDetailBean invoice) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public InvoiceDetailBean findInvoiceDetailById(int id) throws SQLException {
+
+        InvoiceDetailBean invoiceD = new InvoiceDetailBean();
+
+        String select = "SELECT invoicedetail_id, sale_number, ISBN, book_price, PST, GST, HST FROM invoicedetails WHERE invoicedetail_id = ?;";
+
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement ps = connection.prepareStatement(select);) {
+
+            ps.setInt(1, id);
+
+            try (ResultSet resultSet = ps.executeQuery()) {
+
+                if (resultSet.next()) {
+
+                    invoiceD.setSaleNumber(resultSet.getInt("sale_number"));
+                    invoiceD.setISBN(resultSet.getString("ISBN"));
+                    invoiceD.setBookPrice(resultSet.getDouble("book_price"));
+                    invoiceD.setPST(resultSet.getDouble("PST"));
+                    invoiceD.setGST(resultSet.getDouble("GST"));
+                    invoiceD.setHST(resultSet.getDouble("HST"));
+                    //
+
+                }
+            }
+
+        }
+        return invoiceD;
     }
 
+    /**
+     *
+     * This method allows to find all invoice details based on the invoice
+     * number.
+     *
+     * @author Rita Lazaar
+     * @param saleNumber
+     * @return
+     * @throws SQLException
+     */
     @Override
-    public ArrayList<InvoiceBean> findInvoiceDetailsBasedOnInvoice(InvoiceBean invoice) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<InvoiceDetailBean> findInvoiceDetailsBasedOnInvoice(int saleNumber) throws SQLException {
+
+        List<InvoiceDetailBean> invoiceDetails = new ArrayList<>();
+
+        String select = "SELECT invoicedetail_id, sale_number, ISBN, book_price, PST, GST,HST FROM invoicedetails WHERE sale_number =? ;";
+
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement ps = connection.prepareStatement(select);) {
+
+            ps.setInt(1, saleNumber);
+
+            try (ResultSet resultSet = ps.executeQuery()) {
+
+                while (resultSet.next()) {
+
+                    InvoiceDetailBean invoiceDetail = new InvoiceDetailBean();
+                    invoiceDetail.setSaleNumber(resultSet.getInt("sale_number"));
+                    invoiceDetail.setISBN(resultSet.getString("ISBN"));
+                    invoiceDetail.setBookPrice(resultSet.getDouble("book_price"));
+                    invoiceDetail.setPST(resultSet.getDouble("PST"));
+                    invoiceDetail.setGST(resultSet.getDouble("GST"));
+                    invoiceDetail.setHST(resultSet.getDouble("HST"));
+
+                    invoiceDetails.add(invoiceDetail);
+                }
+            }
+
+        }
+
+        return invoiceDetails;
     }
 
+    /**
+     * This method allows to delete the invoice detail based on its id.
+     *
+     * @author Rita Lazaar
+     * @param id
+     * @return
+     * @throws SQLException
+     */
     @Override
-    public int deleteInvoiceDetail(InvoiceBean invoice) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int deleteInvoiceDetail(int id) throws SQLException {
+       
+        int result = 0;
+
+        String delete = "DELETE FROM invoicedetails WHERE invoicedetail_id = ?";
+
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement ps = connection.prepareStatement(delete);) {
+            ps.setInt(1, id);
+            result = ps.executeUpdate();
+        }
+        return result;
     }
 
     /**
@@ -86,7 +403,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      * @author Xin Ma
      * @version 0.0.6
      * @param reviewBean
-     * @return 
+     * @return
      * @throws java.sql.SQLException
      */
     @Override
@@ -118,8 +435,8 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      * @author Xin Ma
      * @version 0.0.6
      * @param review_id
-     * @return 
-     * @throws java.sql.SQLException 
+     * @return
+     * @throws java.sql.SQLException
      */
     @Override
     public ReviewBean getReviewById(int review_id) throws SQLException {
@@ -145,8 +462,8 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      * @author Xin Ma
      * @version 0.0.6
      * @param user_id
-     * @return 
-     * @throws java.sql.SQLException 
+     * @return
+     * @throws java.sql.SQLException
      */
     @Override
     public List<ReviewBean> getReviewByUserId(int user_id) throws SQLException {
@@ -172,7 +489,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      * @author Xin Ma
      * @version 0.0.6
      * @param date_submitted
-     * @return 
+     * @return
      * @throws java.sql.SQLException
      */
     @Override
@@ -199,7 +516,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      * @author Xin Ma
      * @version 0.0.6
      * @param approval_id
-     * @return 
+     * @return
      * @throws java.sql.SQLException
      */
     @Override
@@ -226,8 +543,8 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      * @author Xin Ma
      * @version 0.0.6
      * @param isbn
-     * @return 
-     * @throws java.sql.SQLException 
+     * @return
+     * @throws java.sql.SQLException
      */
     @Override
     public List<ReviewBean> getReviewByIsbn(String isbn) throws SQLException {
@@ -253,8 +570,8 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      * @author Xin Ma
      * @version 0.0.6
      * @param reviewBean
-     * @return 
-     * @throws java.sql.SQLException 
+     * @return
+     * @throws java.sql.SQLException
      */
     @Override
     public int updateReview(ReviewBean reviewBean) throws SQLException {
@@ -282,7 +599,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      * @author Xin Ma
      * @version 0.0.6
      * @param review_id
-     * @return 
+     * @return
      * @throws java.sql.SQLException
      */
     @Override
@@ -310,7 +627,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      * @author Xin Ma
      * @version 0.0.6
      * @param user_id
-     * @return 
+     * @return
      * @throws java.sql.SQLException
      */
     @Override
@@ -337,7 +654,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      * @author Xin Ma
      * @version 0.0.6
      * @param isbn
-     * @return 
+     * @return
      * @throws java.sql.SQLException
      */
     @Override
@@ -364,7 +681,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      * @author Xin Ma
      * @version 0.0.6
      * @param date_submitted
-     * @return 
+     * @return
      * @throws java.sql.SQLException
      */
     @Override

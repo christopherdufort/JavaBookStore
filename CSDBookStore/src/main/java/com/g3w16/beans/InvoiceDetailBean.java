@@ -19,15 +19,22 @@ public class InvoiceDetailBean {
   private int SaleNumber;
   private String ISBN;
   private double BookPrice;
+  private double PST;
+  private double GST;
+  private double HST;
 
     public InvoiceDetailBean(){
         
     }
-    public InvoiceDetailBean(final int InvoiceDetailId, final int SaleNumber, final String ISBN, final double BookPrice) {
+    public InvoiceDetailBean(final int InvoiceDetailId, final int SaleNumber, final String ISBN, final double BookPrice, final double PST,final double GST, final double HST) {
+       
         this.InvoiceDetailId = InvoiceDetailId;
         this.SaleNumber = SaleNumber;
         this.ISBN = ISBN;
         this.BookPrice = BookPrice;
+        this.PST = PST;
+        this.GST = GST;
+        this.HST = HST;
     }
 
     public final int getInvoiceDetailId() {
@@ -61,6 +68,30 @@ public class InvoiceDetailBean {
     public void setBookPrice(final double BookPrice) {
         this.BookPrice = BookPrice;
     }
+    
+    public final double getPST() {
+        return PST;
+    }
+
+    public void setPST(final double PST) {
+        this.PST = PST;
+    }
+
+    public final double getGST() {
+        return GST;
+    }
+
+    public void setGST(final double GST) {
+        this.GST = GST;
+    }
+
+    public final double getHST() {
+        return HST;
+    }
+
+    public void setHST(final double HST) {
+        this.HST = HST;
+    }
 
     @Override
     public int hashCode() {
@@ -69,6 +100,10 @@ public class InvoiceDetailBean {
         hash = 59 * hash + this.SaleNumber;
         hash = 59 * hash + Objects.hashCode(this.ISBN);
         hash = 59 * hash + (int) (Double.doubleToLongBits(this.BookPrice) ^ (Double.doubleToLongBits(this.BookPrice) >>> 32));
+       
+        hash = 37 * hash + (int) (Double.doubleToLongBits(this.PST) ^ (Double.doubleToLongBits(this.PST) >>> 32));
+        hash = 37 * hash + (int) (Double.doubleToLongBits(this.GST) ^ (Double.doubleToLongBits(this.GST) >>> 32));
+        hash = 37 * hash + (int) (Double.doubleToLongBits(this.HST) ^ (Double.doubleToLongBits(this.HST) >>> 32));
         return hash;
     }
 
@@ -90,6 +125,17 @@ public class InvoiceDetailBean {
         if (this.SaleNumber != other.SaleNumber) {
             return false;
         }
+       
+         if (Double.doubleToLongBits(this.PST) != Double.doubleToLongBits(other.PST)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.GST) != Double.doubleToLongBits(other.GST)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.HST) != Double.doubleToLongBits(other.HST)) {
+            return false;
+        }
+        
         if (Double.doubleToLongBits(this.BookPrice) != Double.doubleToLongBits(other.BookPrice)) {
             return false;
         }
