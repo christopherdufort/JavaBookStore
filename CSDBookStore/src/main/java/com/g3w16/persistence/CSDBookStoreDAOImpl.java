@@ -7,8 +7,9 @@ package com.g3w16.persistence;
 
 import com.g3w16.beans.InvoiceBean;
 import com.g3w16.beans.InvoiceDetailBean;
-import com.g3w16.beans.RegisteredUser;
+import com.g3w16.beans.RegisteredUserBean;
 import com.g3w16.beans.ReviewBean;
+import com.g3w16.beans.SurveyBean;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,9 +27,11 @@ import javax.sql.DataSource;
  * @author Rita Lazaar
  * @version : 0.0.3
  */
+//@Named
+//@RequestScoped
 public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
 
-    @Resource(name = "java:app/jdbc/CSDBookStore")
+    @Resource(name = "java:app/jdbc/g3w16")
     private DataSource CSDBookStoreSource;
 
     public CSDBookStoreDAOImpl() {
@@ -719,6 +722,50 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
         reviewBean.setReview_title(resultSet.getString("review_title"));
         reviewBean.setReview_text(resultSet.getString("review_text"));
         return reviewBean;
+    }
+    
+    
+    /**
+     * Survey table select by id.
+     * Retrieve one record from the given table based on the primary key
+     * 
+     * @author Christopher Dufort
+     * @version 0.0.7 - last modified 2/3/2016
+     * @param id
+     * @return the Survey object
+     */
+    public SurveyBean findById(int id) throws SQLException{
+        //If there is no record with the requested id, null object will be returned.
+        
+        SurveyBean surveyBean = null;
+        
+        String selectQuery = "SELECT survey_id, question, answer_one, answer_two, answer_three, answer_default FROM survey WHERE ID=?";
+       
+        // Using try with resources, available since Java 1.7
+        // Class that implement the Closable interface created in the
+        // parenthesis () will be closed when the block ends.
+        try(Connection connection = CSDBookStoreSource.getConnection();
+            // You must use PreparedStatements to guard against SQL Injection
+            PreparedStatement prepStatement = connection.prepareStatement(selectQuery);) {
+            // Only object creation statements can be in the parenthesis so
+            // first try-with-resources block ends
+            prepStatement.setInt(1,id);
+            // A new try-with-resources block for creating the ResultSet object
+            
+            try (ResultSet resultSet = prepStatement.executeQuery()){
+                
+                if (resultSet.next()) {
+                    surveyBean = new SurveyBean();
+                    
+                    surveyBean.setSurveyId(id);
+                    surveyBean.setAnswerOne(resultSet.getString("answer_one"));
+                    surveyBean.setAnswerTwo(resultSet.getString("answer_two"));
+                    surveyBean.setAnswerThree(resultSet.getString("answer_three"));
+                    surveyBean.setAnswerDefault(resultSet.getString("answer_default"));
+                }
+            }
+        }
+        return surveyBean;
     }
 
 }
