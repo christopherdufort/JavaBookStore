@@ -20,6 +20,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
 import javax.sql.DataSource;
 
 /**
@@ -27,8 +29,8 @@ import javax.sql.DataSource;
  * @author Rita Lazaar
  * @version : 0.0.3
  */
-//@Named
-//@RequestScoped
+@Named
+@RequestScoped
 public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
 
     @Resource(name = "java:app/jdbc/g3w16")

@@ -1,11 +1,11 @@
 --Author Xin
---DROP DATABASE IF EXISTS CSDBookStore;
---CREATE DATABASE CSDBookStore;
+DROP DATABASE IF EXISTS CSDBookStore;
+CREATE DATABASE CSDBookStore;
 --Author Xin
 --GRANT ALL ON CSDBookStore.* TO g3w16@"%" IDENTIFIED BY "g3w16";
 --GRANT ALL ON CSDBookStore.* TO g3w16@"localhost" IDENTIFIED BY "g3w16";
 --Author Xin
-USE g3w16;
+USE CSDBookStore;
 
 --Author Jonas & Chris
 DROP TABLE IF EXISTS book_format;

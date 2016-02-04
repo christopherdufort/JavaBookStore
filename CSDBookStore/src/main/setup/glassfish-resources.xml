@@ -34,6 +34,6 @@
                         wrap-jdbc-objects="false">
     <property name="URL" value="jdbc:mysql://localhost:3306/g3w16?zeroDateTimeBehavior=convertToNull"/>
     <property name="User" value="g3w16"/>
-    <property name="Password" value="sofa3brick"/>
+    <property name="Password" value="g3w16"/>
   </jdbc-connection-pool>
 </resources>
