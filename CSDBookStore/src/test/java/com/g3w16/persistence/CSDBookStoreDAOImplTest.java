@@ -33,7 +33,8 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author 1232046
+ * @author Rita Lazaar
+ * @version 0.0.1
  */
 public class CSDBookStoreDAOImplTest {
     
@@ -51,12 +52,17 @@ public class CSDBookStoreDAOImplTest {
     @Test
     public void testCreateInvoice() throws Exception {
         System.out.println("createInvoice");
-        RegisteredUser user = null;
-        int expResult = 0;
-        int result = csdBookStoreDAO.createInvoice(user);
+        
+        InvoiceBean invoice = new InvoiceBean();
+        invoice.setSaleNumber(1);
+        invoice.setSaleDate(LocalDateTime.now());
+        invoice.setTotalGrossValueOfSale(15.99);
+        invoice.setTotalNetValueOfSale(13.99);
+        
+        int expResult = 1;
+        int result = csdBookStoreDAO.createInvoice(invoice);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -65,6 +71,7 @@ public class CSDBookStoreDAOImplTest {
     @Test
     public void testFindAllInvoices() throws Exception {
         System.out.println("findAllInvoices");
+        
         CSDBookStoreDAOImpl instance = new CSDBookStoreDAOImpl();
         ArrayList<InvoiceBean> expResult = null;
         ArrayList<InvoiceBean> result = csdBookStoreDAO.findAllInvoices();
