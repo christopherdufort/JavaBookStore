@@ -22,37 +22,24 @@ public class RegisteredUserBean {
     private String postalCode;
     private String homePhone;
     private String cellPhone;
-    private String lastSearchGenre;
     private boolean isManager;
     private boolean isActive;
 
-    public RegisteredUserBean() { 
-        super();
-        clientNumber = 0;
-        emailAddress = "";
-        password = "";
-        title = "";
-        firstName = "";
-        lastName = "";
-        companyName = "";
-        addressOne = "";
-        addressTwo = "";
-        city = "";
-        province = new ProvinceBean();
-        country = "";
-        postalCode = "";
-        homePhone = "";
-        cellPhone = "";
-        lastSearchGenre = "";
-        isManager = false;
-        isActive = true;
+    public RegisteredUserBean() {
+        this(0, "", "", "", "", "", "", "", "", "",
+                new ProvinceBean(), "", "", "", "", false, true);
+    }
+    
+    public RegisteredUserBean(final String emailAddress, final String password) { 
+        this(0, "", emailAddress, password, "", "", "", "", "", "",
+                new ProvinceBean(), "", "", "", "", false, true);
     }
 
     public RegisteredUserBean(final int clientNumber, final String emailAddress, final String password,
             final String title, final String firstName, final String lastName, final String companyName,
             final String addressOne, final String addressTwo, final String city, final ProvinceBean province,
             final String country, final String postalCode, final String homePhone, final String cellPhone,
-            final String lastSearchGenre, final boolean isManager, final boolean isActive) {
+            final boolean isManager, final boolean isActive) {
         super();
         this.clientNumber = clientNumber;
         this.emailAddress = emailAddress;
@@ -69,7 +56,6 @@ public class RegisteredUserBean {
         this.postalCode = postalCode;
         this.homePhone = homePhone;
         this.cellPhone = cellPhone;
-        this.lastSearchGenre = lastSearchGenre;
         this.isManager = isManager;
         this.isActive = isActive;
     }
@@ -192,14 +178,6 @@ public class RegisteredUserBean {
 
     public String getCellPhone() {
         return cellPhone;
-    }
-
-    public void setLastSearchGenre(final String lastSearchGenre) {
-        this.lastSearchGenre = lastSearchGenre;
-    }
-
-    public String getLastSearchGenre() {
-        return lastSearchGenre;
     }
 
     public void setIsManager(final boolean isManager) {
