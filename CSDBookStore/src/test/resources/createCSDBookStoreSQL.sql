@@ -1,11 +1,11 @@
 --Author Xin
-DROP DATABASE IF EXISTS CSDBookStore;
-CREATE DATABASE CSDBookStore;
+--DROP DATABASE IF EXISTS CSDBookStore;
+--CREATE DATABASE CSDBookStore;
 --Author Xin
 --GRANT ALL ON CSDBookStore.* TO g3w16@"%" IDENTIFIED BY "g3w16";
 --GRANT ALL ON CSDBookStore.* TO g3w16@"localhost" IDENTIFIED BY "g3w16";
 --Author Xin
-USE CSDBookStore;
+USE g3w16;
 
 --Author Jonas & Chris
 DROP TABLE IF EXISTS book_format;
@@ -150,30 +150,53 @@ CREATE TABLE review (
 ) ENGINE=InnoDB;
 
 --Author Rita
+
 DROP TABLE IF EXISTS invoice;
 CREATE TABLE IF NOT EXISTS invoice (
-    sale_number int(11) NOT NULL AUTO_INCREMENT,
-    sale_date datetime,
-    client_number int(11) NOT NULL,
-    total_net_value_of_sale decimal(12,2) DEFAULT NULL,
-    pst decimal(12,2),
-    gst decimal(12,2) ,
-    hst decimal(12,2),
-    total_gross_value_of_sale decimal(12,2) DEFAULT NULL,
-    PRIMARY KEY (sale_number),
-    KEY client_number_index (client_number)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
+  sale_number int(11) NOT NULL AUTO_INCREMENT,
+  sale_date datetime DEFAULT NULL,
+  user_number int(11) NOT NULL,
+  total_net_value_of_sale decimal(12,2) DEFAULT NULL,
+  total_gross_value_of_sale decimal(12,2) DEFAULT NULL,
+  PRIMARY KEY (sale_number),
+  KEY user_number_index (user_number)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+INSERT INTO invoice (sale_number, sale_date, user_number, total_net_value_of_sale, total_gross_value_of_sale) VALUES
+(1, '2016-02-01 00:00:00', 1231, '16.31', '18.45'),
+(2, '2016-02-02 00:00:00', 1231, '20.56', '24.12'),
+(3, '2016-02-03 00:00:00', 1231, '48.87', '62.12'),
+(4, '2016-02-04 00:00:00', 1234, '20.56', '24.12'),
+(5, '2016-02-05 00:00:00', 1234, '8.74', '9.81'),
+(6, '2016-02-06 00:00:00', 1334, '9.99', '13.28');
 
 --Author Rita
+
 DROP TABLE IF EXISTS invoice_details;
-CREATE TABLE IF NOT EXISTS invoicedetails (
-    invoice_detail_id int(11) NOT NULL AUTO_INCREMENT,
-    sale_number int(11) NOT NULL,
-    isbn varchar(25) NOT NULL,
-    book_price decimal(12,2),
-    quantity INT(2) NOT NULL,
-    PRIMARY KEY (invoice_detail_id)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
+CREATE TABLE IF NOT EXISTS invoice_details (
+  invoice_detail_id int(11) NOT NULL AUTO_INCREMENT,
+  sale_number int(11) NOT NULL,
+  isbn varchar(25) NOT NULL,
+  pst decimal(12,2) DEFAULT NULL,
+  gst decimal(12,2) DEFAULT NULL,
+  hst decimal(12,2) DEFAULT NULL,
+  book_price decimal(12,2) DEFAULT NULL,
+  quantity int(2) NOT NULL,
+  PRIMARY KEY (invoice_detail_id),
+  KEY invoice_fk (sale_number)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+INSERT INTO invoice_details (invoice_detail_id, sale_number, isbn, pst, gst, hst, book_price, quantity) VALUES
+(1, 1, '978-0894864025', '1.63', '0.82', '0.00', '16.31', 1),
+(2, 1, '978-1582705248', '2.05', '1.03', '0.00', '20.56', 1),
+(3, 3, '978-1101902639', '4.87', '2.44', '0.00', '16.29', 3),
+(4, 4, '978-1582705248', '2.05', '1.03', '0.00', '20.56', 1),
+(5, 5, '978-0451205360', '0.87', '0.44', '0.00', '8.74', 1);
+
+
+ALTER TABLE invoice_details
+ADD CONSTRAINT invoice_fk FOREIGN KEY (sale_number) 
+REFERENCES invoice (sale_number) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --Author Chris
 DROP TABLE IF EXISTS survey;
