@@ -525,7 +525,7 @@ public interface CSDBookStoreDAO {
      * @return 
      * @throws SQLException
      */
-    public int getAllGenre()throws SQLException;
+    public List<GenreBean>  getAllGenre()throws SQLException;
     
     /**
      * CRUD method for Genre table
@@ -536,5 +536,5 @@ public interface CSDBookStoreDAO {
      * @return 
      * @throws SQLException
      */
-    public int getGenreByBook(BookBean book)throws SQLException;
+    public List<GenreBean> getGenreByBook(BookBean book)throws SQLException;
 }
