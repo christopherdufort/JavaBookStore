@@ -77,7 +77,6 @@ CREATE TABLE book_format(
     CONSTRAINT format_id_fk FOREIGN KEY (format_id) REFERENCES format(format_id) ON DELETE CASCADE
 )ENGINE=InnoDB;
 
-
 --Author Joey
 DROP TABLE IF EXISTS registered_user;
 DROP TABLE IF EXISTS province;
