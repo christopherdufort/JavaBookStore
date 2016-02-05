@@ -16,6 +16,7 @@ DROP TABLE IF EXISTS book_author;
 DROP TABLE IF EXISTS author;
 DROP TABLE IF EXISTS book;
 
+
 --Author Jonas & Chris
 CREATE TABLE book(
     book_id INT(6) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -102,7 +103,7 @@ CREATE TABLE province (
 CREATE TABLE registered_user (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     email_address VARCHAR(50) NOT NULL UNIQUE,
-    password VARCHAR(15) NOT NULL,
+    password VARCHAR(25) NOT NULL,
     title_id INT,
     first_name VARCHAR(25),
     last_name VARCHAR(25),
@@ -115,12 +116,10 @@ CREATE TABLE registered_user (
     postal_code VARCHAR(10),
     home_phone VARCHAR(25),
     cell_phone VARCHAR(25),
-    last_search_genre INT(6),
     manager boolean DEFAULT FALSE,
     active boolean DEFAULT TRUE,
     FOREIGN KEY (title_id) REFERENCES title(title_id),
-    FOREIGN KEY (province_id) REFERENCES province(province_id),
-    FOREIGN KEY (last_search_genre) REFERENCES genre(genre_id)
+    FOREIGN KEY (province_id) REFERENCES province(province_id)
 )ENGINE=InnoDB;
 
 
@@ -209,6 +208,19 @@ CREATE TABLE survey(
     answer_default VARCHAR(50) NOT NULL
 )ENGINE=InnoDB;
 
+--Author Chris
+DROP TABLE IF EXISTS ad;
+CREATE TABLE ad(
+    ad_id INT(6) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    ad_filename VARCHAR(100) NOT NULL UNIQUE
+)ENGINE=InnoDB;
+
+--Author Chris
+DROP TABLE IF EXISTS news_feed;
+CREATE TABLE news_feed(
+    news_feed_id INT(6) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    news_feed_link VARCHAR(200) NOT NULL UNIQUE
+)ENGINE=InnoDB;
 
 INSERT INTO book VALUES (NULL, "978-1305635166", "Microelectronic Circuits: Analysis and Design", "Thomson-Engineering", "2016-01-11", 1360, 150, 317.95, 309.08, "2016-01-30", TRUE, 0, "'Take a ''breadth-first'' approach to learning electronics with a strong emphasis on design and simulation in MICROELECTRONIC CIRCUITS: ANALYSIS AND DESIGN, 3E. This book introduces the general characteristics of circuits (ICs) to prepare you to effectively use circuit design and analysis techniques. The author then offers a more detailed study of devices and circuits and how they operate within ICs. Important circuits are analyzed in worked-out examples to introduce basic techniques and emphasize the effects of parameter variations. More than half of the problems and examples concentrate on design and use software tools extensively. You learn to apply theory to real-world design problems as you master computer simulations for testing and verifying your designs'");
 INSERT INTO book VALUES (NULL, "978-1608877119", "The Art of XCOM 2", "Insight Editions", "2016-01-22", 192, 25, 56.95, 50.68, "2016-01-30", TRUE, 0, "From the developer behind the Civilization series, XCOM is an award-winning, deeply engrossing strategy game. With the Earth under attack by a super-advanced alien race, players command an elite paramilitary organization called XCOM to repel the extraterrestrial offensive and defend humanity. In The Art of XCOM 2, readers get a behind-the-scenes look at the incredible concept art created for the series and hear from key developers and artists about the challenges, secrets, and rewards of creating this landmark series.");
@@ -314,6 +326,12 @@ INSERT INTO book VALUES (NULL, "B00PFXLEMK", "Woman with a Secret", "William Mor
 INSERT INTO book VALUES (NULL, "B00H3QQGV6", "Ready to Kill (The Nathan McBride Series Book 4)", "Thomas & Mercer", "2014-04-29", 348, 7.26, 7.26, 7.26, "2016-01-30", TRUE, 0, "'When a mysterious note referencing a top-secret US operation is tossed over the wall of the embassy in Nicaragua, Nathan McBride and his old pal Harv are called out of retirement by CIA Director Rebecca Cantrell and sent to Central America. Cantrell wants the situation resolved quickly and knows that Nathan is the man to do it,  after all, he has a history with the place. The jungle he and Harv are about to land in is the same one that Nathan barely escaped with his life decades before, an ordeal that left him physically and psychologically scarred. To make it out alive a second time, Nathan will have to face down his own demons and square off with a ruthless killer who learned from the best, Nathan himself. '");
 INSERT INTO book VALUES (NULL, "B00R04MDAE", "Make Me", "Delacorte Press", "2015-09-08", 417, 15.99, 15.99, 15.99, "2016-01-30", TRUE, 0, "'?Why is this town called Mother?s Rest?? That?s all Reacher wants to know. But no one will tell him. It?s a tiny place hidden in a thousand square miles of wheat fields, with a railroad stop, and sullen and watchful people, and a worried woman named Michelle Chang, who mistakes him for someone else: her missing partner in a private investigation she thinks must have started small and then turned lethal. Reacher has no particular place to go, and all the time in the world to get there, and there?s something about Chang . . . so he teams up with her and starts to ask around. He thinks: How bad can this thing be? But before long he?s plunged into a desperate race through LA, Chicago, Phoenix, and San Francisco, and through the hidden parts of the internet, up against thugs and assassins every step of the way?right back to where he started, in Mother?s Rest, where he must confront the worst nightmare he could imagine. Walking away would have been easier. But as always, Reacher?s rule is: If you want me to stop, you?re going to have to make me.'");
 
+INSERT INTO title (title) VALUES ('Mr.');
+INSERT INTO title (title) VALUES ('Ms.');
+INSERT INTO title (title) VALUES ('Mrs.');
+INSERT INTO title (title) VALUES ('Miss.');
+INSERT INTO title (title) VALUES ('Dr.');
+
 INSERT INTO province (province, gst, pst) VALUES ('Quebec', 5, 9.975);
 INSERT INTO province (province, gst, hst) VALUES ('Ontario', 5, 8);
 INSERT INTO province (province, gst, hst) VALUES ('New Brunswick', 5, 8);
@@ -328,7 +346,37 @@ INSERT INTO province (province, gst) VALUES ('Yukon', 5);
 INSERT INTO province (province, gst) VALUES ('Northwest Territories', 5);
 INSERT INTO province (province, gst) VALUES ('Nunavut', 5);
 
-INSERT INTO registered_user (email_address, password) VALUES ('nader@bater.alternader', 'nader');
+INSERT INTO `registered_user` (`title`, `last_name`, `first_name`, `company_name`, `address_one`, `address_two`, `city`, `province`, `country`, `postal_code`, `home_phone`, `cell_phone`, `email_address`, `password`, `manager`, `active`) VALUES
+(1, 'Cummerata', 'Felicia', 'Dawson College', '3456 Sherbrooke west', NULL, 'Montreal', '1', 'Canada', 'H4B1N1', '514-123-1234', '514-235-8924', 'abc123@gmail.com', 'abc123', false, true),
+(3, 'Grayce', 'Grayce', 'Mcgill University', '5658 Fielding', NULL, 'Montreal ', '1', 'Canada', 'H3F2N4', '514-369-5689', '514-566-7415', 'cde456@gmail.com', 'cde456', false, true),
+(2, 'Lucinda', 'Hintz', 'Concrodia University', '5689 Newman', NULL, 'Lasalle', '1', 'Canada', 'H2T4N8', NULL, '514-569-7777', 'fgh111@hotmail.com', 'fgh111', false, true),
+(5, 'Jamal', 'Hartmann', 'IBM', '8996 Milan', NULL, 'Brossade', '1', 'Canada', 'H5J2N2', NULL, '514-996-4452', 'jik345@facebook.com', 'jik345', false, true),
+(5, 'Brennan', 'Muller', 'HP', '896  Avenue Wood', NULL, 'Montreal ', '1', 'Canada', 'H8G9D3', '514-566-8912', NULL, 'lop999@cloud.com', 'lop999', false, true),
+(1, 'Christodoulopoulos', 'Dimitri', '-', '123 Maple Street', '-', 'Montreal', '1', 'Canada', 'H8E 4Y2', '(514)-234-3521', '(514)-938-1345', 'dchristodoulopoulos@gmail.com', 'chrissocool1', false, true),
+(1, 'Gallan', 'Chris', '-', '253 Cobalt Drive', '-', 'Vancouver', '10', 'Canada', 'R3N 3G9', '(604)-499-2495', '-', 'christhegamer@outlook.com', 'v1d30gam35', false, true),
+(2, 'Flemming', 'Jessica', '-', '1080 Belview Road', '-', 'Toronto', '2', 'Canada', 'Y9F 8T8', '(416)-136-1245', '(416)-889-8889', 'jessicaflemming@yahoo.com', 'flem', false, true),
+(1, 'Terry', 'George', 'Terry Inc.', '45 Bell Air Street', '-', 'Ottowa', '2', 'Canada', 'W1T 3R4', '-', '(343)-535-7647', 'terryincorporated@hotmail.com', 'terryforpres', false, true),
+(1, 'Draxler', 'Julian', '-', '974 Compton Drive', '834 Emirate Road', 'Edmonton', '9', 'Canada', 'Q4R 3E2', '(780)-123-5553', '(780)-484-3682', 'soccerfan1000@gmail.com', 'aresenal123', false, true),
+(2, 'MacKinnon', 'Michelle', 'York University', '4700 Keele St', NULL, 'Toronto', '1', 'Canada', ' M3J 1P3', '416 -736-2100', '416-736-5177', 'michelle.mackinnon@yorku.ca', 'lolipop626', false, true),
+(1, 'Fortin', 'Alexandre', 'Remax', '11104 Montée Sainte-Marianne', NULL, 'Mirabel', '1', 'Canada', 'J7J 2N4', '450-475-0911', '514-549-9468', 'alexandre.fortin@remaxquebec.com', 'downbutnotout23', false, true),
+(5, 'Forlini', 'Anna', 'Vancouver General', '899 W 12th Ave', NULL, 'Vancouver', '10', 'Canada', 'V5Z 1M9', '604-875-4111', '604-875-4073', 'anna.forlini@vgh.ca', 'nevergoingtogiveyouup12', false, true),
+(1, 'Bingham', 'Richard', 'Canadian Forces', '3rd Canadian Division Support Base Edmonton', 'PO Box 10500 Station Forces ', 'Edmonton', '9', 'Canada', 'T5J 4J5', '780-973-4011', NULL, 'richard_bingham@caf.ca', 'pastwords', false, true),
+(1, 'Dufort', 'Christopher', 'Dawson College', '3040 Rue Sherbrooke O', '4001 de Maisonneuve West', 'Montreal', '1', 'Canada', 'H3Z 1A4', '514-931-8731', '514 933-1234', 'christopher.dufort@dawsoncollege.qc.ca', 'password', true, true),
+(1, 'Campanelli', 'Giuseppe', 'Dawson College', '3040 Rue Sherbrooke O', '4001 de Maisonneuve West', 'Montreal', '1', 'Canada', 'H3Z 1A4', '514-931-8731', '514 933-1234', 'acmilanfanforever@gmail.com', 'password', true, true),
+(1, 'Lazaar', 'Rita', 'Dawson College', '3040 Rue Sherbrooke O', '4001 de Maisonneuve West', 'Montreal', '1', 'Canada', 'H3Z 1A4', '514-931-8731', '514 933-1234', 'rita.lazr@gmail.com', 'password', true, true),
+(1, 'Dufort', 'Christopher', 'Dawson College', '3040 Rue Sherbrooke O', '4001 de Maisonneuve West', 'Montreal', '1', 'Canada', 'H3Z 1A4', '514-931-8731', '514 933-1234', 'maxin911.ca@gmail.com', 'password', true, true),
+(1, 'Xin', 'Ma', 'None', '4323, rue Sainte Catherine', NULL, 'Montreal', '1', 'Canada', 'HZ2 323', '(514) 436 4345', '+34644334455', 'jsmith@gmail.com', 'jcool', false, true),
+(4, 'Lam', 'Charlotte', 'None', '634, rue Maisonneuve', NULL, 'Montreal', '1', 'Canada', 'H3Z 233', '(514) 323 4223', '+34345343445', 'clam@gmail.com', 'clam man', false, true),
+(1, 'Martin', 'Pierre', 'Couette Corporation', '3234, rue Ontario E', NULL, 'Montreal', '1', 'Canada', 'H5Z 232', '(514) 323 3243', '+34545663453', 'pmartin@gmail.com', 'the martian', false, true),
+(1, 'Faure', 'Jonas', 'None', '8, rue Saint Lucien', NULL, 'Ottawa', 'Canada', '2', '60000', '+33344543532', '+33744334455', 'jonas.faure.etu@gmail.com', 'password', true, true),
+(4, 'Roy', 'Charles', 'JCDZ', '1, Air India Road', NULL, 'Toronto', 'Canada', '2', '400032', '+64343433442', '+67653546434', 'petitchatontropmignon@gmail.com', 'petitpassword', false, true),
+(1, 'Consumer', 'Dawson', 'Dawson College', '3040 Rue Sherbrooke O', NULL, 'Montreal', '1', 'Canada', 'H3Z 1A4', '514-931-8731', '514 933-1234', 'cst.send@gmail.com', 'dawsoncollege', false, true),
+(1, 'Manager', 'Dawson', 'Dawson College', '3040 Rue Sherbrooke O', NULL, 'Montreal', '1', 'Canada', 'H3Z 1A4', '514-931-8731', '514 933-1234', 'cst.receive@gmail.com', 'collegedawson', true, true),
+(1, 'Crowne', 'Michael', 'FutureShop', '123 Something', '—', 'Montreal', '1', 'Canada', 'H3H3O0', '514-235-5435', '514-235-5423', 'abc@gmail.com', '123456', false, true),
+(1, 'McLaughlin', 'John', 'BestBuy', '24454 Where St.', '—', 'Montreal', '1', 'Canada', 'K3N3X6', '514-534-5365', '514-534-5332', 'something@gmail.com', '123456abc', false, true),
+(1, 'Tremblay', 'Matthew', '—', '43 Amazing St.', '—', 'Montreal', '1', 'Canada', 'M4N6L3', '514-978-4565', '514-978-4545', 'email1@gmail.com', '123abc456', false, true),
+(3, 'Cartwright', 'Sylvia', '—', '98 County St.', '432 Bob St.', 'Quebec', '1', 'Canada', 'M3M5FK', '418-543-6787', '418-543-6487', 'rew@gmail.com', 'something1', false, true),
+(3, 'Shackleton', 'Ashley', 'Dawson College', '234 NewAddress St.', '—', 'Quebec', '1', 'Canada', 'H1S1R9', '418-434-6542', '418-434-6122', 'ash_ley@gmail.com', 'dawsoncollege', false, true);
 
 INSERT INTO approval VALUES (NULL, 'Approved'),(NULL, 'Pending'),(NULL,'Denied');
 

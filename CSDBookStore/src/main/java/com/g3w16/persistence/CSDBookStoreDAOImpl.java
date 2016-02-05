@@ -1013,7 +1013,8 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      * @param id
      * @return the Survey object
      */
-    public SurveyBean findById(int id) throws SQLException {
+    @Override
+    public SurveyBean findSurveyById(int id) throws SQLException {
         //If there is no record with the requested id, null object will be returned.
 
         SurveyBean surveyBean = null;

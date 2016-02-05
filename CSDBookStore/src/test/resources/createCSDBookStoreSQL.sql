@@ -1,10 +1,8 @@
---Author Xin
---DROP DATABASE IF EXISTS CSDBookStore;
---CREATE DATABASE CSDBookStore;
---Author Xin
---GRANT ALL ON CSDBookStore.* TO g3w16@"%" IDENTIFIED BY "g3w16";
---GRANT ALL ON CSDBookStore.* TO g3w16@"localhost" IDENTIFIED BY "g3w16";
---Author Xin
+--Author Chris
+--DROP DATABASE IF EXISTS g3w16;
+--CREATE DATABASE g3w16;
+--RANT ALL ON g3w16.* TO g3w16@"%" IDENTIFIED BY "sofa3brick";
+--GRANT ALL ON g3w16.* TO g3w16@"localhost" IDENTIFIED BY "sofa3brick";
 USE g3w16;
 
 --Author Jonas & Chris
@@ -78,6 +76,7 @@ CREATE TABLE book_format(
     CONSTRAINT book_id_fk FOREIGN KEY (book_id) REFERENCES book(book_id) ON DELETE CASCADE,
     CONSTRAINT format_id_fk FOREIGN KEY (format_id) REFERENCES format(format_id) ON DELETE CASCADE
 )ENGINE=InnoDB;
+
 
 --Author Joey
 DROP TABLE IF EXISTS registered_user;

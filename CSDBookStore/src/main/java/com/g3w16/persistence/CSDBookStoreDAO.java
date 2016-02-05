@@ -482,7 +482,7 @@ public interface CSDBookStoreDAO {
      * @param id
      * @return the Survey object
      */
-    public SurveyBean findById(int id) throws SQLException;
+    public SurveyBean findSurveyById(int id) throws SQLException;
     
     /**
      * CRUD method for Genre table

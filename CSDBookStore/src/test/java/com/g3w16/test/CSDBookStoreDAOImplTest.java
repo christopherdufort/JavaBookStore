@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.g3w16.persistence;
+package com.g3w16.test;
 
+import com.g3w16.beans.AdBean;
 import com.g3w16.beans.AuthorBean;
 import com.g3w16.beans.BookBean;
 import com.g3w16.beans.FormatBean;
@@ -15,6 +16,8 @@ import com.g3w16.beans.ProvinceBean;
 import com.g3w16.beans.RegisteredUserBean;
 import com.g3w16.beans.ReviewBean;
 import com.g3w16.beans.SurveyBean;
+import com.g3w16.persistence.CSDBookStoreDAOImpl;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -45,9 +48,11 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
+ * @author Xin Ma
  * @author Rita Lazaar
- * @version 0.0.1
+ * @author Christopher Dufort
+ * @version 0.1.2
+ * @since 0.0.1
  */
 public class CSDBookStoreDAOImplTest {
     
@@ -70,19 +75,20 @@ public class CSDBookStoreDAOImplTest {
         final WebArchive webArchive = ShrinkWrap.create(WebArchive.class)
                 .setWebXML(new File("src/main/webapp/WEB-INF/web.xml"))
                 .addPackage(CSDBookStoreDAOImpl.class.getPackage())
-//                .addPackage(AuthorBean.class.getPackage())
-//                .addPackage(BookBean.class.getPackage())
-//                .addPackage(FormatBean.class.getPackage())
-//                .addPackage(GenreBean.class.getPackage())
-//                .addPackage(InvoiceBean.class.getPackage())
-//                .addPackage(InvoiceDetailBean.class.getPackage())
-//                .addPackage(ProvinceBean.class.getPackage())
-//                .addPackage(RegisteredUserBean.class.getPackage())
-//                .addPackage(ReviewBean.class.getPackage())
-//                .addPackage(SurveyBean.class.getPackage())
-//                .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
+                .addPackage(AdBean.class.getPackage())
+                //.addPackage(AuthorBean.class.getPackage())
+                //.addPackage(BookBean.class.getPackage())
+                //.addPackage(FormatBean.class.getPackage())
+                //.addPackage(GenreBean.class.getPackage())
+                //.addPackage(InvoiceBean.class.getPackage())
+                //.addPackage(InvoiceDetailBean.class.getPackage())
+                //.addPackage(ProvinceBean.class.getPackage())
+                //.addPackage(RegisteredUserBean.class.getPackage())
+                //.addPackage(ReviewBean.class.getPackage())
+               // .addPackage(SurveyBean.class.getPackage())
+                .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addAsWebInfResource(new File("src/main/setup/glassfish-resources.xml"), "glassfish-resources.xml")
-                .addAsResource("createFishMySQL.sql")
+                .addAsResource("createCSDBookStoreSQL.sql")
                 .addAsLibraries(dependencies);
 
         return webArchive;
@@ -91,14 +97,14 @@ public class CSDBookStoreDAOImplTest {
     private DataSource ds;
 
     @Inject
-    private CSDBookStoreDAOImpl csdBookStoreDAO;
+    private CSDBookStoreDAOImpl csdBookStoreDAOImpl;
 
  
     @Test
-     public void should_find_all_fish() throws SQLException {
+    public void find_first_survey() throws SQLException {
         //long t = System.nanoTime();
-        List<ReviewBean> lfd = csdBookStoreDAO.getReviewByUserId(1);
-        assertThat(lfd).hasSize(50);
+        SurveyBean firstSurvey = csdBookStoreDAOImpl.findSurveyById(1);
+        assertThat(firstSurvey.getQuestion()).isEqualTo("What is your favorite type of book?");
         //double seconds = (double)(System.nanoTime() - t) / 1000000000.0;
         //System.out.println("Completed JDBC and Servlet : " + seconds + " seconds.");
     }
@@ -120,7 +126,7 @@ public class CSDBookStoreDAOImplTest {
             e.printStackTrace();
             throw new RuntimeException("Failed seeding database", e);
         }
-        //System.out.println("Seeding works");
+        System.out.println("Seeding works");
 
     }
 
