@@ -7,7 +7,7 @@ package com.g3w16.beans;
  */
 public class RegisteredUserBean {
 
-    private int clientNumber;
+    private int clientId;
     private String emailAddress;
     private String password;
     private String title;
@@ -35,13 +35,13 @@ public class RegisteredUserBean {
                 new ProvinceBean(), "", "", "", "", false, true);
     }
 
-    public RegisteredUserBean(final int clientNumber, final String emailAddress, final String password,
+    public RegisteredUserBean(final int clientId, final String emailAddress, final String password,
             final String title, final String firstName, final String lastName, final String companyName,
             final String addressOne, final String addressTwo, final String city, final ProvinceBean province,
             final String country, final String postalCode, final String homePhone, final String cellPhone,
             final boolean isManager, final boolean isActive) {
         super();
-        this.clientNumber = clientNumber;
+        this.clientId = clientId;
         this.emailAddress = emailAddress;
         this.password = password;
         this.title = title;
@@ -60,12 +60,12 @@ public class RegisteredUserBean {
         this.isActive = isActive;
     }
 
-    public void setClientNumber(final int clientNumber) {
-        this.clientNumber = clientNumber;
+    public void setClientId(final int clientId) {
+        this.clientId = clientId;
     }
 
-    public int getClientNumber() {
-        return clientNumber;
+    public int getClientId() {
+        return clientId;
     }
 
     public void setEmailAddress(final String emailAddress) {

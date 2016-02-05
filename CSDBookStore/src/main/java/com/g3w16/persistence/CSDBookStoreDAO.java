@@ -11,7 +11,6 @@ import com.g3w16.beans.RegisteredUserBean;
 import com.g3w16.beans.ReviewBean;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,6 +19,117 @@ import java.util.List;
  * @version : 0.0.2
  */
 public interface CSDBookStoreDAO {
+    
+    /**
+     *
+     * This method gets all the provinces.
+     *
+     * @author Giuseppe Campanelli
+     * @return list of all provinces
+     * @throws SQLException
+     */
+    public List<ProvinceBean> findAllProvinces() throws SQLException;
+    
+    /**
+     *
+     * This method gets a province bean by name.
+     *
+     * @author Giuseppe Campanelli
+     * @param province province name to get bean of
+     * @return province bean
+     * @throws SQLException
+     */
+    public ProvinceBean findProvinceByName(final String province) throws SQLException;
+    
+    /**
+     *
+     * This method gets all titles.
+     *
+     * @author Giuseppe Campanelli
+     * @return list of all titles
+     * @throws SQLException
+     */
+    public List<String> findAllTitles() throws SQLException;
+    
+    
+    /**
+     *
+     * This method gets a province bean by name.
+     *
+     * @author Giuseppe Campanelli
+     * @param emailAddress email of user
+     * @param password pass of user
+     * @throws SQLException
+     */
+    public int createRegisteredUser(String emailAddress, String password) throws SQLException;
+    
+    /**
+     *
+     * This method gets all the registered users.
+     *
+     * @author Giuseppe Campanelli
+     * @return list of all users
+     * @throws SQLException
+     */
+    public List<RegisteredUserBean> findAllUsers() throws SQLException;
+    
+    /**
+     *
+     * This method gets a user by id.
+     *
+     * @author Giuseppe Campanelli
+     * @param id id of user to get
+     * @return registered user bean
+     * @throws SQLException
+     */
+    public RegisteredUserBean findUserById(final int id) throws SQLException;
+    
+    /**
+     *
+     * This method updates a users account status.
+     *
+     * @author Giuseppe Campanelli
+     * @param id id of the user
+     * @param isActive account status
+     * @throws SQLException
+     */
+    public int setAccountStatus(final int id, final boolean isActive) throws SQLException;
+    
+    /**
+     *
+     * This method updates a users manager status.
+     *
+     * This method gets a
+     * @author Giuseppe Campanelli
+     * @param id id of the user
+     * @param isManager manager status
+     * @throws SQLException
+     */
+    public int setManagerStatus(final int id, final boolean isManager) throws SQLException;
+    
+    /**
+     *
+     * This method updates a users billing info.
+     *
+     * @author Giuseppe Campanelli
+     * @param updatedUser user to update
+     * @param titleIndex index position in list box which matches db position
+     * @param provinceIndex index position in list box which matches db position
+     * @return rows affected
+     * @throws SQLException
+     */
+    public int updateUserBilling(RegisteredUserBean updatedUser, int titleIndex, int provinceIndex) throws SQLException;
+    
+    /**
+     *
+     * This method updates a users password.
+     *
+     * @author Giuseppe Campanelli
+     * @param id id of the user
+     * @param password new password
+     * @throws SQLException
+     */
+    public int updateUserPassword(final int id, final String password) throws SQLException;
 
     /**
      *

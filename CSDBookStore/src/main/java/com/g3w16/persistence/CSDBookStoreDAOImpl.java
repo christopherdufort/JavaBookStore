@@ -39,6 +39,278 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
     public CSDBookStoreDAOImpl() {
         super();
     }
+    
+    /**
+     *
+     * This method gets all the provinces.
+     *
+     * @author Giuseppe Campanelli
+     * @return list of all provinces
+     * @throws SQLException
+     */
+    public List<ProvinceBean> findAllProvinces() throws SQLException {
+        List<ProvinceBean> provinces = new ArrayList<>();
+
+        String select = "SELECT name, gst, pst, hst FROM province;";
+
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement ps = connection.prepareStatement(select);
+                ResultSet resultSet = ps.executeQuery()) {
+
+            while (resultSet.next()) {
+                ProvinceBean province = new ProvinceBean();
+                province.setName(resultSet.getString("name"));
+                province.setGst(resultSet.getDouble("gst"));
+                province.setPst(resultSet.getDouble("pst"));
+                province.setHst(resultSet.getDouble("hst"));
+
+                provinces.add(province);
+            }
+        }
+        return provinces;
+    }
+    
+    /**
+     *
+     * This method gets a province bean by name.
+     *
+     * @author Giuseppe Campanelli
+     * @param province province name to get bean of
+     * @return province bean
+     * @throws SQLException
+     */
+    public ProvinceBean findProvinceByName(String province) throws SQLException {
+        ProvinceBean province = new ProvinceBean();
+
+        String select = "SELECT name, gst, pst, hst FROM province WHERE name = ?;";
+
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement ps = connection.prepareStatement(select);
+                ps.setString(1, name);
+                ResultSet resultSet = ps.executeQuery()) {
+
+            if (resultSet.next()) {
+                province.setName(resultSet.getString("name"));
+                province.setGst(resultSet.getDouble("gst"));
+                province.setPst(resultSet.getDouble("pst"));
+                province.setHst(resultSet.getDouble("hst"));
+            }
+        }
+        return province;
+    }
+    
+    /**
+     *
+     * This method gets all titles.
+     *
+     * @author Giuseppe Campanelli
+     * @return list of all titles
+     * @throws SQLException
+     */
+    public List<String> findAllTitles() throws SQLException {
+        List<String> titles = new ArrayList<>();
+
+        String select = "SELECT title FROM title;";
+
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement ps = connection.prepareStatement(select);
+                ResultSet resultSet = ps.executeQuery()) {
+
+            while (resultSet.next()) {
+                titles.add(resultSet.getString("title"));
+            }
+        }
+        return titles;
+    }
+    
+    
+    /**
+     *
+     * This method gets a province bean by name.
+     *
+     * @author Giuseppe Campanelli
+     * @param emailAddress email of user
+     * @param password pass of user
+     * @return last id inserted
+     * @throws SQLException
+     */
+    public int createRegisteredUser(String emailAddress, String password) throws SQLException {
+            int result = 0;
+
+            String createRegisteredUser = "INSERT INTO user (email_address, password) VALUES (?, ?);";
+
+            try (Connection conn = CSDBookStoreSource.getConnection();
+                PreparedStatement ps = conn.prepareStatement(createRegisteredUser)) {
+
+                ps.setString(1, emailAddress);
+                ps.setString(2, password);
+
+                result = ps.executeUpdate();
+            }
+        return result;
+    }
+    
+    /**
+     *
+     * This method gets all the registered users.
+     *
+     * @author Giuseppe Campanelli
+     * @return list of all users
+     * @throws SQLException
+     */
+    public List<RegisteredUserBean> findAllUsers() throws SQLException {
+        List<RegisteredUserBean> users = new ArrayList<>();
+        
+        String select = "SELECT user_id, email_address, password, title_id, first_name, last_name, "
+                + "company_name, address_one, address_two, city, province_id, country, postal_code, "
+                + "home_phone, cell_phone, manager, active FROM registered_user;";
+
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement ps = connection.prepareStatement(select);
+                ResultSet resultSet = ps.executeQuery()) {
+
+            while (resultSet.next()) {
+                user = createUser(resultSet);
+                users.add(user);
+            }
+        }
+        return users;
+    }
+    
+    /**
+     *
+     * This method gets a user by id.
+     *
+     * @author Giuseppe Campanelli
+     * @param id id of user to get
+     * @return registered user bean
+     * @throws SQLException
+     */
+    public RegisteredUserBean findUserById(int id) throws SQLException {
+        RegisteredUserBean user = new RegisteredUserBean();
+        
+        String select = "SELECT user_id, email_address, password, title_id, first_name, last_name, "
+                + "company_name, address_one, address_two, city, province_id, country, postal_code, "
+                + "home_phone, cell_phone, manager, active FROM registered_user WHERE user_id = ?;";
+
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement ps = connection.prepareStatement(select);
+                ps.setInt(1, id);
+                ResultSet resultSet = ps.executeQuery()) {
+
+            if (resultSet.next()) {
+                user = createUser(resultSet);
+            }
+        }
+        return user;
+    }
+    
+    /**
+     *
+     * This method updates a users account status.
+     *
+     * @author Giuseppe Campanelli
+     * @param id id of the user
+     * @param isActive account status
+     * @return rows affected
+     * @throws SQLException
+     */
+    public int setAccountStatus(int id, boolean isActive) throws SQLException {
+        int result = 0;
+        String update = "UPDATE user SET active = ? WHERE user_id = ? ";
+
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement ps = connection.prepareStatement(update);) {
+            ps.setInt(1, isActive);
+            ps.setInt(2, id);
+            result = ps.executeUpdate();
+         }
+        return result;
+    }
+    
+    /**
+     *
+     * This method updates a users manager status.
+     *
+     * This method gets a
+     * @author Giuseppe Campanelli
+     * @param id id of the user
+     * @param isManager manager status
+     * @return rows affected
+     * @throws SQLException
+     */
+    public int setManagerStatus(int id, boolean isManager) throws SQLException {
+        int result = 0;
+        String update = "UPDATE user SET manager = ? WHERE user_id = ? ";
+
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement ps = connection.prepareStatement(update);) {
+            ps.setInt(1, isManager);
+            ps.setInt(2, id);
+            result = ps.executeUpdate();
+        }
+        return result;
+    }
+    
+    /**
+     *
+     * This method updates a users billing info.
+     *
+     * @author Giuseppe Campanelli
+     * @param updatedUser user to update
+     * @param titleIndex index position in list box which matches db position
+     * @param provinceIndex index position in list box which matches db position
+     * @return rows affected
+     * @throws SQLException
+     */
+    public int updateUserBilling(RegisteredUserBean updatedUser, int titleIndex, int provinceIndex) throws SQLException {
+        int result = 0;
+        String update = "UPDATE user SET title_id = ?, first_name = ?, last_name = ?, company_name = ?, "
+                + "address_one = ?, address_two = ?, city = ?, province_id = ?, country = ?, "
+                + "postal_code = ?, home_phone = ?, cell_phone = ? WHERE user_id = ? ";
+        
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement ps = connection.prepareStatement(update);) {
+            ps.setInt(1, titleIndex);
+            ps.setInt(2, updatedUser.getFirstNamre());
+            ps.setInt(3, updatedUser.getLastName());
+            ps.setInt(4, updatedUser.getCompanyName());
+            ps.setInt(5, updatedUser.getAddressOne());
+            ps.setInt(6, updatedUser.getAddressTwo());
+            ps.setInt(7, updatedUser.getCity());
+            ps.setInt(8, provinceIndex);
+            ps.setInt(9, updatedUser.getCountry());
+            ps.setInt(10, updatedUser.getPostalCode());
+            ps.setInt(11, updatedUser.getHomePhone());
+            ps.setInt(12, updatedUser.getCellPhone());
+            
+            result = ps.executeUpdate();
+        }
+        return result;
+    }
+    
+    /**
+     *
+     * This method updates a users password.
+     *
+     * @author Giuseppe Campanelli
+     * @param id id of the user
+     * @param password new password
+     * @return
+     * @throws SQLException
+     */
+    public int updateUserPassword(int id, String password) throws SQLException {
+        int result = 0;
+        String update = "UPDATE user SET password = ? WHERE user_id = ? ";
+
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement ps = connection.prepareStatement(update);) {
+            ps.setInt(1, password);
+            ps.setInt(2, id);
+            result = ps.executeUpdate();
+        }
+        return result;
+    }
 
     /**
      *
@@ -769,5 +1041,64 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
         }
         return surveyBean;
     }
+    
+    private RegisteredUserBean createUser(final ResultSet resultSet) throws SQLException {
+        int titleId, provinceId;
+        
+        RegisteredUserBean user = new RegisteredUserBean();
+        user.setClientId(resultSet.getInt("user_id"));
+        user.setEmailAddress(resultSet.getString("email_address"));
+        user.setPassword(resultSet.getString("password"));
+        titleId = resultSet.getInt("title_id");
+        user.setFirstName(resultSet.getString("first_name"));
+        user.setLastName(resultSet.getString("last_name"));
+        user.setCompanyName(resultSet.getString("company_name"));
+        user.setAddressOne(resultSet.getString("address_one"));
+        user.setAddressTwo(resultSet.getString("address_two"));
+        user.setCity(resultSet.getString("city"));
+        provinceId = resultSet.getInt("province_id");
+        user.setCountry(resultSet.getString("country");
+        user.setPostalCode(resultSet.getString("postal_code"));
+        user.setHomePhone(resultSet.getString("home_phone"));
+        user.setCellPhone(resultSet.getString("cell_phone"));
+        user.setIsManager(resultSet.getBoolean("manager"));
+        user.setIsActive(resultSet.getBoolean("active"));
+        
+        ProvinceBean province = new ProvinceBean();
+        String select = "SELECT name, gst, pst, hst FROM province WHERE name = ?;";
 
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement ps = connection.prepareStatement(select);
+                ps.setInt(1, provinceId);
+                ResultSet resultSet = ps.executeQuery()) {
+
+            if (resultSet.next()) {
+                province.setName(resultSet.getString("name"));
+                province.setGst(resultSet.getDouble("gst"));
+                province.setPst(resultSet.getDouble("pst"));
+                province.setHst(resultSet.getDouble("hst"));
+            }
+        }
+                        
+        user.setProvince(provinceBean);
+                
+        String title = "";
+        String select = "SELECT title FROM title WHERE title_id = ?;";
+
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement ps = connection.prepareStatement(select);
+                ps.setInt(1, titleId);
+                ResultSet resultSet = ps.executeQuery()) {
+
+            if (resultSet.next()) {
+                province.setName(resultSet.getString("name"));
+                province.setGst(resultSet.getDouble("gst"));
+                province.setPst(resultSet.getDouble("pst"));
+                province.setHst(resultSet.getDouble("hst"));
+            }
+        }
+        user.setTitle(title);
+        
+        return user;
+    }
 }
