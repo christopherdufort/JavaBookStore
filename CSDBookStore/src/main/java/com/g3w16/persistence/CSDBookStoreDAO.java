@@ -13,6 +13,7 @@ import com.g3w16.beans.InvoiceDetailBean;
 import com.g3w16.beans.ProvinceBean;
 import com.g3w16.beans.RegisteredUserBean;
 import com.g3w16.beans.ReviewBean;
+import com.g3w16.beans.SurveyBean;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -470,4 +471,15 @@ public interface CSDBookStoreDAO {
      * @throws SQLException
      */
     public List<FormatBean> getFormatByBook(BookBean book)throws SQLException;
+    
+    /**
+     * Survey table select by id. Retrieve one record from the given table based
+     * on the primary key
+     *
+     * @author Christopher Dufort
+     * @version 0.0.7 - last modified 2/3/2016
+     * @param id
+     * @return the Survey object
+     */
+    public SurveyBean findById(int id) throws SQLException;
 }

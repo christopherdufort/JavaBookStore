@@ -10,19 +10,19 @@ import java.util.Objects;
 /**
  *
  * @author Christopher Dufort
- * @version 0.1.0 - Last modified 2/4/2016
+ * @version 0.1.1 - Last modified 2/4/2016
  * @since 0.1.0 - Originally Written 2/4/2016
  */
 public class AdBean {
     private int adId;
-    private String adLink;
+    private String adFilename;
 
     public AdBean() {
     }
 
     public AdBean(final int adId, final String adLink) {
         this.adId = adId;
-        this.adLink = adLink;
+        this.adFilename = adLink;
     }
 
     public int getAdId() {
@@ -33,19 +33,19 @@ public class AdBean {
         this.adId = adId;
     }
 
-    public String getAdLink() {
-        return adLink;
+    public String getAdFilename() {
+        return adFilename;
     }
 
-    public void setAdLink(final String adLink) {
-        this.adLink = adLink;
+    public void setAdFilename(final String adFilename) {
+        this.adFilename = adFilename;
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
         hash = 67 * hash + this.adId;
-        hash = 67 * hash + Objects.hashCode(this.adLink);
+        hash = 67 * hash + Objects.hashCode(this.adFilename);
         return hash;
     }
 
@@ -64,7 +64,7 @@ public class AdBean {
         if (this.adId != other.adId) {
             return false;
         }
-        if (!Objects.equals(this.adLink, other.adLink)) {
+        if (!Objects.equals(this.adFilename, other.adFilename)) {
             return false;
         }
         return true;
@@ -72,7 +72,7 @@ public class AdBean {
 
     @Override
     public String toString() {
-        return "AdBean{" + "adId=" + adId + ", adLink=" + adLink + '}';
+        return "AdBean{" + "adId=" + adId + ", adLink=" + adFilename + '}';
     }
     
     

@@ -16,6 +16,7 @@ DROP TABLE IF EXISTS book_author;
 DROP TABLE IF EXISTS author;
 DROP TABLE IF EXISTS book;
 
+
 --Author Jonas & Chris
 CREATE TABLE book(
     book_id INT(6) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -207,6 +208,19 @@ CREATE TABLE survey(
     answer_default VARCHAR(50) NOT NULL
 )ENGINE=InnoDB;
 
+--Author Chris
+DROP TABLE IF EXISTS ad;
+CREATE TABLE ad(
+    ad_id INT(6) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    ad_filename VARCHAR(100) NOT NULL UNIQUE
+)ENGINE=InnoDB;
+
+--Author Chris
+DROP TABLE IF EXISTS news_feed;
+CREATE TABLE news_feed(
+    news_feed_id INT(6) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    news_feed_link VARCHAR(200) NOT NULL UNIQUE
+)ENGINE=InnoDB;
 
 INSERT INTO book VALUES (NULL, "978-1305635166", "Microelectronic Circuits: Analysis and Design", "Thomson-Engineering", "2016-01-11", 1360, 150, 317.95, 309.08, "2016-01-30", TRUE, 0, "'Take a ''breadth-first'' approach to learning electronics with a strong emphasis on design and simulation in MICROELECTRONIC CIRCUITS: ANALYSIS AND DESIGN, 3E. This book introduces the general characteristics of circuits (ICs) to prepare you to effectively use circuit design and analysis techniques. The author then offers a more detailed study of devices and circuits and how they operate within ICs. Important circuits are analyzed in worked-out examples to introduce basic techniques and emphasize the effects of parameter variations. More than half of the problems and examples concentrate on design and use software tools extensively. You learn to apply theory to real-world design problems as you master computer simulations for testing and verifying your designs'");
 INSERT INTO book VALUES (NULL, "978-1608877119", "The Art of XCOM 2", "Insight Editions", "2016-01-22", 192, 25, 56.95, 50.68, "2016-01-30", TRUE, 0, "From the developer behind the Civilization series, XCOM is an award-winning, deeply engrossing strategy game. With the Earth under attack by a super-advanced alien race, players command an elite paramilitary organization called XCOM to repel the extraterrestrial offensive and defend humanity. In The Art of XCOM 2, readers get a behind-the-scenes look at the incredible concept art created for the series and hear from key developers and artists about the challenges, secrets, and rewards of creating this landmark series.");
