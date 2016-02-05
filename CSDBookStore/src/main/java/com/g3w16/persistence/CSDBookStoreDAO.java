@@ -5,6 +5,8 @@
  */
 package com.g3w16.persistence;
 
+import com.g3w16.beans.AuthorBean;
+import com.g3w16.beans.BookBean;
 import com.g3w16.beans.InvoiceBean;
 import com.g3w16.beans.InvoiceDetailBean;
 import com.g3w16.beans.RegisteredUserBean;
@@ -358,4 +360,58 @@ public interface CSDBookStoreDAO {
      * @throws SQLException
      */
     public int deleteReviewByDateSubmitted(LocalDateTime date_submitted) throws SQLException;
+    
+    /**
+     * CRUD method for Author table
+     * 
+     * @author Jonas Faure
+     * @version 0.0.12
+     * @param author
+     * @return 
+     * @throws SQLException
+     */
+    public int createAuthor(AuthorBean author)throws SQLException;
+    
+    /**
+     * CRUD method for Author table
+     * 
+     * @author Jonas Faure
+     * @version 0.0.12
+     * @param author_id
+     * @return 
+     * @throws SQLException
+     */
+    public int deleteAuthorByAuthorId(int author_id)throws SQLException;
+    
+    /**
+     * CRUD method for Author table
+     * 
+     * @author Jonas Faure
+     * @version 0.0.12
+     * @param author
+     * @return 
+     * @throws SQLException
+     */
+    public int updateAuthor(AuthorBean author)throws SQLException;
+    
+    /**
+     * CRUD method for Author table
+     * 
+     * @author Jonas Faure
+     * @version 0.0.12
+     * @return 
+     * @throws SQLException
+     */
+    public List<AuthorBean> getAllAuthor()throws SQLException;
+    
+    /**
+     * CRUD method for Author table
+     * 
+     * @author Jonas Faure
+     * @version 0.0.12
+     * @param book
+     * @return 
+     * @throws SQLException
+     */
+    public List<AuthorBean> getAuthorByBook(BookBean book)throws SQLException;
 }
