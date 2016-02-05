@@ -474,6 +474,17 @@ public interface CSDBookStoreDAO {
     public List<FormatBean> getFormatByBook(BookBean book)throws SQLException;
     
     /**
+     * Survey table select by id. Retrieve one record from the given table based
+     * on the primary key
+     *
+     * @author Christopher Dufort
+     * @version 0.0.7 - last modified 2/3/2016
+     * @param id
+     * @return the Survey object
+     */
+    public SurveyBean findById(int id) throws SQLException;
+    
+    /**
      * CRUD method for Genre table
      * 
      * @author Jonas Faure
