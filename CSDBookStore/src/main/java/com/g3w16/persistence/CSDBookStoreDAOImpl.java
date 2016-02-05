@@ -1128,26 +1128,78 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
 
     @Override
     public int createAuthor(AuthorBean author) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String query = "INSERT INTO author (author_name) VALUES(?);";
+        int result = 0;
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement pStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);) {
+            pStatement.setString(1, author.getName());
+            result = pStatement.executeUpdate();
+            ResultSet resultSet = pStatement.getGeneratedKeys();
+            if (resultSet.next()) {
+                author.setId(resultSet.getInt(1));
+            }
+        }
+        return result;
     }
 
     @Override
     public int deleteAuthorByAuthorId(int author_id) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int result = 0;
+        String query = "DELETE FROM author WHERE author_id=?;";
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement pStatement = connection.prepareStatement(query);) {
+            pStatement.setInt(1, author_id);
+            result = pStatement.executeUpdate();
+        }
+        return result;
     }
 
     @Override
     public int updateAuthor(AuthorBean author) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int result = 0;
+        String query = "UPDATE author SET author_name = ? WHERE author_id=?";
+        try(Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement pStatement = connection.prepareStatement(query);){
+            pStatement.setString(1, author.getName());
+            pStatement.setInt(2, author.getId());
+            result = pStatement.executeUpdate();
+        }
+        return result;
     }
 
     @Override
     public List<AuthorBean> getAllAuthor() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<AuthorBean> authors = new ArrayList<>();
+        String query = "SELECT * FROM author";
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement pStatement = connection.prepareStatement(query);) {
+            ResultSet resultSet = pStatement.executeQuery();
+            while (resultSet.next()) {
+                authors.add(new AuthorBean(
+                        resultSet.getInt("author_id"),
+                        resultSet.getString("author_name")
+                ));
+            }
+        }
+        return authors;
     }
 
     @Override
     public List<AuthorBean> getAuthorByBook(BookBean book) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<AuthorBean> authors = new ArrayList<>();
+        String query_book_author ="SELECT * FROM author A WHERE EXISTS(SELECT 1 FROM book_author BA WHERE BA.book_id=? AND BA.author_id=A.author_id)";
+        try(Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement pStatement = connection.prepareStatement(query_book_author);){
+            ResultSet resultSet = pStatement.executeQuery();
+            while (resultSet.next()){
+                authors.add(
+                        new AuthorBean(
+                                new Integer(resultSet.getInt("author_id")),
+                                new String(resultSet.getString("author_name"))
+                        )
+                );
+            }
+        }
+        return authors;
     }
 }
