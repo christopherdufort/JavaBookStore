@@ -7,6 +7,7 @@ package com.g3w16.persistence;
 
 import com.g3w16.beans.AuthorBean;
 import com.g3w16.beans.BookBean;
+import com.g3w16.beans.FormatBean;
 import com.g3w16.beans.InvoiceBean;
 import com.g3w16.beans.InvoiceDetailBean;
 import com.g3w16.beans.RegisteredUserBean;
@@ -1143,12 +1144,12 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
     }
 
     @Override
-    public int deleteAuthorByAuthorId(int author_id) throws SQLException {
+    public int deleteAuthorByAuthorId(int authorId) throws SQLException {
         int result = 0;
         String query = "DELETE FROM author WHERE author_id=?;";
         try (Connection connection = CSDBookStoreSource.getConnection();
                 PreparedStatement pStatement = connection.prepareStatement(query);) {
-            pStatement.setInt(1, author_id);
+            pStatement.setInt(1, authorId);
             result = pStatement.executeUpdate();
         }
         return result;
@@ -1201,5 +1202,82 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
             }
         }
         return authors;
+    }
+
+    @Override
+    public int createFormat(FormatBean format) throws SQLException {
+        String query = "INSERT INTO format (extension) VALUES(?);";
+        int result = 0;
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement pStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);) {
+            pStatement.setString(1, format.getExtension());
+            result = pStatement.executeUpdate();
+            ResultSet resultSet = pStatement.getGeneratedKeys();
+            if (resultSet.next()) {
+                format.setId(resultSet.getInt(1));
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public int updateFormat(FormatBean format) throws SQLException {
+        int result = 0;
+        String query = "UPDATE format SET extension = ? WHERE format_id=?";
+        try(Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement pStatement = connection.prepareStatement(query);){
+            pStatement.setString(1, format.getExtension());
+            pStatement.setInt(2, format.getId());
+            result = pStatement.executeUpdate();
+        }
+        return result;
+    }
+
+    @Override
+    public int deleteById(int formatId) throws SQLException {
+        int result = 0;
+        String query = "DELETE FROM format WHERE format_id=?;";
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement pStatement = connection.prepareStatement(query);) {
+            pStatement.setInt(1, formatId);
+            result = pStatement.executeUpdate();
+        }
+        return result;
+    }
+
+    @Override
+    public List<FormatBean> getAllFormat() throws SQLException {
+        List<FormatBean> formats = new ArrayList<>();
+        String query = "SELECT * FROM format";
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement pStatement = connection.prepareStatement(query);) {
+            ResultSet resultSet = pStatement.executeQuery();
+            while (resultSet.next()) {
+                formats.add(new FormatBean(
+                        resultSet.getInt("format_id"),
+                        resultSet.getString("extension")
+                ));
+            }
+        }
+        return formats;
+    }
+
+    @Override
+    public List<FormatBean> getFormatByBook(BookBean book) throws SQLException {
+        List<FormatBean> formats = new ArrayList<>();
+        String query_book_author ="SELECT * FROM format F WHERE EXISTS(SELECT 1 FROM book_format BA WHERE BA.book_id=? AND BA.format_id=F.format_id)";
+        try(Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement pStatement = connection.prepareStatement(query_book_author);){
+            ResultSet resultSet = pStatement.executeQuery();
+            while (resultSet.next()){
+                formats.add(
+                        new FormatBean(
+                                new Integer(resultSet.getInt("format_id")),
+                                new String(resultSet.getString("extension"))
+                        )
+                );
+            }
+        }
+        return formats;
     }
 }
