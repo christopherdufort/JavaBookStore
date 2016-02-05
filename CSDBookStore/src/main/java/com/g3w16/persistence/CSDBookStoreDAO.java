@@ -7,8 +7,10 @@ package com.g3w16.persistence;
 
 import com.g3w16.beans.AuthorBean;
 import com.g3w16.beans.BookBean;
+import com.g3w16.beans.FormatBean;
 import com.g3w16.beans.InvoiceBean;
 import com.g3w16.beans.InvoiceDetailBean;
+import com.g3w16.beans.ProvinceBean;
 import com.g3w16.beans.RegisteredUserBean;
 import com.g3w16.beans.ReviewBean;
 import java.sql.SQLException;
@@ -381,7 +383,7 @@ public interface CSDBookStoreDAO {
      * @return 
      * @throws SQLException
      */
-    public int deleteAuthorByAuthorId(int author_id)throws SQLException;
+    public int deleteAuthorByAuthorId(int authorId)throws SQLException;
     
     /**
      * CRUD method for Author table
@@ -414,4 +416,58 @@ public interface CSDBookStoreDAO {
      * @throws SQLException
      */
     public List<AuthorBean> getAuthorByBook(BookBean book)throws SQLException;
+    
+    /**
+     * CRUD method for Format table
+     * 
+     * @author Jonas Faure
+     * @version 0.0.12
+     * @param format
+     * @return 
+     * @throws SQLException
+     */
+    public int createFormat(FormatBean format)throws SQLException;
+    
+    /**
+     * CRUD method for Format table
+     * 
+     * @author Jonas Faure
+     * @version 0.0.12
+     * @param format
+     * @return 
+     * @throws SQLException
+     */
+    public int updateFormat(FormatBean format)throws SQLException;
+    
+    /**
+     * CRUD method for Format table
+     * 
+     * @author Jonas Faure
+     * @version 0.0.12
+     * @param formatId
+     * @return 
+     * @throws SQLException
+     */
+    public int deleteById(int formatId)throws SQLException;
+    
+    /**
+     * CRUD method for Format table
+     * 
+     * @author Jonas Faure
+     * @version 0.0.12
+     * @return 
+     * @throws SQLException
+     */
+    public List<FormatBean> getAllFormat()throws SQLException;
+    
+    /**
+     * CRUD method for Format table
+     * 
+     * @author Jonas Faure
+     * @version 0.0.12
+     * @param book
+     * @return 
+     * @throws SQLException
+     */
+    public List<FormatBean> getFormatByBook(BookBean book)throws SQLException;
 }
