@@ -8,6 +8,7 @@ package com.g3w16.persistence;
 import com.g3w16.beans.AuthorBean;
 import com.g3w16.beans.BookBean;
 import com.g3w16.beans.FormatBean;
+import com.g3w16.beans.GenreBean;
 import com.g3w16.beans.InvoiceBean;
 import com.g3w16.beans.InvoiceDetailBean;
 import com.g3w16.beans.RegisteredUserBean;
@@ -1068,11 +1069,6 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
         user.setIsManager(resultSet.getBoolean("manager"));
         user.setIsActive(resultSet.getBoolean("active"));
 
-        return user;
-        /*
-        
-                ??????????
-        
         ProvinceBean province = new ProvinceBean();
         String select = "SELECT name, gst, pst, hst FROM province WHERE name = ?;";
 
@@ -1080,43 +1076,30 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
                 PreparedStatement ps = connection.prepareStatement(select)) {
             ps.setInt(1, provinceId);
             try (
-                    ResultSet resultSet = ps.executeQuery()) {
+                    ResultSet resultSetTaxes = ps.executeQuery()) {
 
-                if (resultSet.next()) {
-                    province.setName(resultSet.getString("name"));
-                    province.setGst(resultSet.getDouble("gst"));
-                    province.setPst(resultSet.getDouble("pst"));
-                    province.setHst(resultSet.getDouble("hst"));
+                if (resultSetTaxes.next()) {
+                    province.setName(resultSetTaxes.getString("name"));
+                    province.setGst(resultSetTaxes.getDouble("gst"));
+                    province.setPst(resultSetTaxes.getDouble("pst"));
+                    province.setHst(resultSetTaxes.getDouble("hst"));
                 }
             }
 
-            user.setProvince(provinceBean);
+            user.setProvince(province);
 
             String title = "";
-            String select = "SELECT title FROM title WHERE title_id = ?;";
+            select = "SELECT title FROM title WHERE title_id = ?;";
 
-            try (Connection connection = CSDBookStoreSource.getConnection();
-                    PreparedStatement ps = connection.prepareStatement(select);
-                    ps.setInt          (1, titleId
-                );
-                ResultSet resultSet = ps.executeQuery()
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                    ) {
+            try (PreparedStatement ps2 = connection.prepareStatement(select)) {
+                ps2.setInt(1, titleId);
+                try (ResultSet resultSetTitle = ps2.executeQuery()) {
 
-            if (resultSet.next()) {
-                        province.setName(resultSet.getString("name"));
-                        province.setGst(resultSet.getDouble("gst"));
-                        province.setPst(resultSet.getDouble("pst"));
-                        province.setHst(resultSet.getDouble("hst"));
+                    if (resultSetTitle.next()) {
+                        province.setName(resultSetTitle.getString("name"));
+                        province.setGst(resultSetTitle.getDouble("gst"));
+                        province.setPst(resultSetTitle.getDouble("pst"));
+                        province.setHst(resultSetTitle.getDouble("hst"));
                     }
                 }
                 user.setTitle(title);
@@ -1124,7 +1107,6 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
                 return user;
             }
         }
-         */
     }
 
     @Override
@@ -1159,8 +1141,8 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
     public int updateAuthor(AuthorBean author) throws SQLException {
         int result = 0;
         String query = "UPDATE author SET author_name = ? WHERE author_id=?";
-        try(Connection connection = CSDBookStoreSource.getConnection();
-                PreparedStatement pStatement = connection.prepareStatement(query);){
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement pStatement = connection.prepareStatement(query);) {
             pStatement.setString(1, author.getName());
             pStatement.setInt(2, author.getId());
             result = pStatement.executeUpdate();
@@ -1188,11 +1170,11 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
     @Override
     public List<AuthorBean> getAuthorByBook(BookBean book) throws SQLException {
         ArrayList<AuthorBean> authors = new ArrayList<>();
-        String query_book_author ="SELECT * FROM author A WHERE EXISTS(SELECT 1 FROM book_author BA WHERE BA.book_id=? AND BA.author_id=A.author_id)";
-        try(Connection connection = CSDBookStoreSource.getConnection();
-                PreparedStatement pStatement = connection.prepareStatement(query_book_author);){
+        String query_book_author = "SELECT * FROM author A WHERE EXISTS(SELECT 1 FROM book_author BA WHERE BA.book_id=? AND BA.author_id=A.author_id)";
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement pStatement = connection.prepareStatement(query_book_author);) {
             ResultSet resultSet = pStatement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 authors.add(
                         new AuthorBean(
                                 new Integer(resultSet.getInt("author_id")),
@@ -1224,8 +1206,8 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
     public int updateFormat(FormatBean format) throws SQLException {
         int result = 0;
         String query = "UPDATE format SET extension = ? WHERE format_id=?";
-        try(Connection connection = CSDBookStoreSource.getConnection();
-                PreparedStatement pStatement = connection.prepareStatement(query);){
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement pStatement = connection.prepareStatement(query);) {
             pStatement.setString(1, format.getExtension());
             pStatement.setInt(2, format.getId());
             result = pStatement.executeUpdate();
@@ -1265,11 +1247,11 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
     @Override
     public List<FormatBean> getFormatByBook(BookBean book) throws SQLException {
         List<FormatBean> formats = new ArrayList<>();
-        String query_book_author ="SELECT * FROM format F WHERE EXISTS(SELECT 1 FROM book_format BA WHERE BA.book_id=? AND BA.format_id=F.format_id)";
-        try(Connection connection = CSDBookStoreSource.getConnection();
-                PreparedStatement pStatement = connection.prepareStatement(query_book_author);){
+        String query_book_author = "SELECT * FROM format F WHERE EXISTS(SELECT 1 FROM book_format BA WHERE BA.book_id=? AND BA.format_id=F.format_id)";
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement pStatement = connection.prepareStatement(query_book_author);) {
             ResultSet resultSet = pStatement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 formats.add(
                         new FormatBean(
                                 new Integer(resultSet.getInt("format_id")),
@@ -1279,5 +1261,82 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
             }
         }
         return formats;
+    }
+
+    @Override
+    public int createGenre(GenreBean genre) throws SQLException {
+        String query = "INSERT INTO genre (genre_name) VALUES(?);";
+        int result = 0;
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement pStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);) {
+            pStatement.setString(1, genre.getName());
+            result = pStatement.executeUpdate();
+            ResultSet resultSet = pStatement.getGeneratedKeys();
+            if (resultSet.next()) {
+                genre.setId(resultSet.getInt(1));
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public int updateGenre(GenreBean genre) throws SQLException {
+        int result = 0;
+        String query = "UPDATE genre SET genre_name = ? WHERE genre_id=?";
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement pStatement = connection.prepareStatement(query);) {
+            pStatement.setString(1, genre.getName());
+            pStatement.setInt(2, genre.getId());
+            result = pStatement.executeUpdate();
+        }
+        return result;
+    }
+
+    @Override
+    public int deleteGenreById(int genreId) throws SQLException {
+        int result = 0;
+        String query = "DELETE FROM genre WHERE genre_id=?;";
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement pStatement = connection.prepareStatement(query);) {
+            pStatement.setInt(1, genreId);
+            result = pStatement.executeUpdate();
+        }
+        return result;
+    }
+
+    @Override
+    public List<GenreBean> getAllGenre() throws SQLException {
+        List<GenreBean> genres = new ArrayList<>();
+        String query = "SELECT * FROM genre";
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement pStatement = connection.prepareStatement(query);) {
+            ResultSet resultSet = pStatement.executeQuery();
+            while (resultSet.next()) {
+                genres.add(new GenreBean(
+                        resultSet.getInt("genre_id"),
+                        resultSet.getString("genre_name")
+                ));
+            }
+        }
+        return genres;
+    }
+
+    @Override
+    public List<GenreBean> getGenreByBook(BookBean book) throws SQLException {
+        List<GenreBean> genres = new ArrayList<>();
+        String query_book_author = "SELECT * FROM genre G WHERE EXISTS(SELECT 1 FROM book_genre BA WHERE BA.book_id=? AND BA.genre_id=G.genre_id)";
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement pStatement = connection.prepareStatement(query_book_author);) {
+            ResultSet resultSet = pStatement.executeQuery();
+            while (resultSet.next()) {
+                genres.add(
+                        new GenreBean(
+                                resultSet.getInt("genre_id"),
+                                resultSet.getString("genre_name")
+                        )
+                );
+            }
+        }
+        return genres;
     }
 }
