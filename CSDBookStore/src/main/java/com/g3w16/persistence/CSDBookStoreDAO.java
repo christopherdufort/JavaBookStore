@@ -8,6 +8,7 @@ package com.g3w16.persistence;
 import com.g3w16.beans.AuthorBean;
 import com.g3w16.beans.BookBean;
 import com.g3w16.beans.FormatBean;
+import com.g3w16.beans.GenreBean;
 import com.g3w16.beans.InvoiceBean;
 import com.g3w16.beans.InvoiceDetailBean;
 import com.g3w16.beans.ProvinceBean;
@@ -470,4 +471,58 @@ public interface CSDBookStoreDAO {
      * @throws SQLException
      */
     public List<FormatBean> getFormatByBook(BookBean book)throws SQLException;
+    
+    /**
+     * CRUD method for Genre table
+     * 
+     * @author Jonas Faure
+     * @version 0.0.12
+     * @param genre
+     * @return 
+     * @throws SQLException
+     */
+    public int createGenre(GenreBean genre)throws SQLException;
+    
+    /**
+     * CRUD method for Genre table
+     * 
+     * @author Jonas Faure
+     * @version 0.0.12
+     * @param genre
+     * @return 
+     * @throws SQLException
+     */
+    public int updateGenre(GenreBean genre)throws SQLException;
+    
+    /**
+     * CRUD method for Genre table
+     * 
+     * @author Jonas Faure
+     * @version 0.0.12
+     * @param genreId
+     * @return 
+     * @throws SQLException
+     */
+    public int deleteGenreById(int genreId)throws SQLException;
+    
+    /**
+     * CRUD method for Genre table
+     * 
+     * @author Jonas Faure
+     * @version 0.0.12
+     * @return 
+     * @throws SQLException
+     */
+    public int getAllGenre()throws SQLException;
+    
+    /**
+     * CRUD method for Genre table
+     * 
+     * @author Jonas Faure
+     * @version 0.0.12
+     * @param book
+     * @return 
+     * @throws SQLException
+     */
+    public int getGenreByBook(BookBean book)throws SQLException;
 }
