@@ -5,11 +5,14 @@
  */
 package com.g3w16.persistence;
 
+import com.g3w16.beans.AuthorBean;
+import com.g3w16.beans.BookBean;
 import com.g3w16.beans.InvoiceBean;
 import com.g3w16.beans.InvoiceDetailBean;
 import com.g3w16.beans.RegisteredUserBean;
 import com.g3w16.beans.ReviewBean;
 import com.g3w16.beans.SurveyBean;
+import com.g3w16.beans.ProvinceBean;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -39,7 +42,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
     public CSDBookStoreDAOImpl() {
         super();
     }
-    
+
     /**
      *
      * This method gets all the provinces.
@@ -69,7 +72,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
         }
         return provinces;
     }
-    
+
     /**
      *
      * This method gets a province bean by name.
@@ -79,26 +82,27 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      * @return province bean
      * @throws SQLException
      */
-    public ProvinceBean findProvinceByName(String province) throws SQLException {
-        ProvinceBean province = new ProvinceBean();
+    public ProvinceBean findProvinceByName(String name) throws SQLException {
+        ProvinceBean newProvince = new ProvinceBean();
 
-        String select = "SELECT name, gst, pst, hst FROM province WHERE name = ?;";
+        String select = "SELECT name, gst, pst, hst FROM province WHERE name = ?";
 
         try (Connection connection = CSDBookStoreSource.getConnection();
-                PreparedStatement ps = connection.prepareStatement(select);
-                ps.setString(1, name);
-                ResultSet resultSet = ps.executeQuery()) {
+                PreparedStatement ps = connection.prepareStatement(select);) {
+            ps.setString(1, name);
+            try (ResultSet resultSet = ps.executeQuery()) {
 
-            if (resultSet.next()) {
-                province.setName(resultSet.getString("name"));
-                province.setGst(resultSet.getDouble("gst"));
-                province.setPst(resultSet.getDouble("pst"));
-                province.setHst(resultSet.getDouble("hst"));
+                if (resultSet.next()) {
+                    newProvince.setName(resultSet.getString("name"));
+                    newProvince.setGst(resultSet.getDouble("gst"));
+                    newProvince.setPst(resultSet.getDouble("pst"));
+                    newProvince.setHst(resultSet.getDouble("hst"));
+                }
             }
         }
-        return province;
+        return newProvince;
     }
-    
+
     /**
      *
      * This method gets all titles.
@@ -122,8 +126,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
         }
         return titles;
     }
-    
-    
+
     /**
      *
      * This method gets a province bean by name.
@@ -135,21 +138,21 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      * @throws SQLException
      */
     public int createRegisteredUser(String emailAddress, String password) throws SQLException {
-            int result = 0;
+        int result = 0;
 
-            String createRegisteredUser = "INSERT INTO user (email_address, password) VALUES (?, ?);";
+        String createRegisteredUser = "INSERT INTO user (email_address, password) VALUES (?, ?);";
 
-            try (Connection conn = CSDBookStoreSource.getConnection();
+        try (Connection conn = CSDBookStoreSource.getConnection();
                 PreparedStatement ps = conn.prepareStatement(createRegisteredUser)) {
 
-                ps.setString(1, emailAddress);
-                ps.setString(2, password);
+            ps.setString(1, emailAddress);
+            ps.setString(2, password);
 
-                result = ps.executeUpdate();
-            }
+            result = ps.executeUpdate();
+        }
         return result;
     }
-    
+
     /**
      *
      * This method gets all the registered users.
@@ -160,7 +163,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      */
     public List<RegisteredUserBean> findAllUsers() throws SQLException {
         List<RegisteredUserBean> users = new ArrayList<>();
-        
+
         String select = "SELECT user_id, email_address, password, title_id, first_name, last_name, "
                 + "company_name, address_one, address_two, city, province_id, country, postal_code, "
                 + "home_phone, cell_phone, manager, active FROM registered_user;";
@@ -170,13 +173,13 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
                 ResultSet resultSet = ps.executeQuery()) {
 
             while (resultSet.next()) {
-                user = createUser(resultSet);
+                RegisteredUserBean user = createUser(resultSet);
                 users.add(user);
             }
         }
         return users;
     }
-    
+
     /**
      *
      * This method gets a user by id.
@@ -188,23 +191,23 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      */
     public RegisteredUserBean findUserById(int id) throws SQLException {
         RegisteredUserBean user = new RegisteredUserBean();
-        
+
         String select = "SELECT user_id, email_address, password, title_id, first_name, last_name, "
                 + "company_name, address_one, address_two, city, province_id, country, postal_code, "
                 + "home_phone, cell_phone, manager, active FROM registered_user WHERE user_id = ?;";
 
         try (Connection connection = CSDBookStoreSource.getConnection();
-                PreparedStatement ps = connection.prepareStatement(select);
-                ps.setInt(1, id);
-                ResultSet resultSet = ps.executeQuery()) {
-
-            if (resultSet.next()) {
-                user = createUser(resultSet);
+                PreparedStatement ps = connection.prepareStatement(select)) {
+            ps.setInt(1, id);
+            try (ResultSet resultSet = ps.executeQuery()) {
+                if (resultSet.next()) {
+                    user = createUser(resultSet);
+                }
             }
         }
         return user;
     }
-    
+
     /**
      *
      * This method updates a users account status.
@@ -221,18 +224,19 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
 
         try (Connection connection = CSDBookStoreSource.getConnection();
                 PreparedStatement ps = connection.prepareStatement(update);) {
-            ps.setInt(1, isActive);
+            ps.setBoolean(1, isActive);
             ps.setInt(2, id);
             result = ps.executeUpdate();
-         }
+        }
         return result;
     }
-    
+
     /**
      *
      * This method updates a users manager status.
      *
      * This method gets a
+     *
      * @author Giuseppe Campanelli
      * @param id id of the user
      * @param isManager manager status
@@ -245,13 +249,13 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
 
         try (Connection connection = CSDBookStoreSource.getConnection();
                 PreparedStatement ps = connection.prepareStatement(update);) {
-            ps.setInt(1, isManager);
+            ps.setBoolean(1, isManager);
             ps.setInt(2, id);
             result = ps.executeUpdate();
         }
         return result;
     }
-    
+
     /**
      *
      * This method updates a users billing info.
@@ -268,27 +272,27 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
         String update = "UPDATE user SET title_id = ?, first_name = ?, last_name = ?, company_name = ?, "
                 + "address_one = ?, address_two = ?, city = ?, province_id = ?, country = ?, "
                 + "postal_code = ?, home_phone = ?, cell_phone = ? WHERE user_id = ? ";
-        
+
         try (Connection connection = CSDBookStoreSource.getConnection();
                 PreparedStatement ps = connection.prepareStatement(update);) {
             ps.setInt(1, titleIndex);
-            ps.setInt(2, updatedUser.getFirstNamre());
-            ps.setInt(3, updatedUser.getLastName());
-            ps.setInt(4, updatedUser.getCompanyName());
-            ps.setInt(5, updatedUser.getAddressOne());
-            ps.setInt(6, updatedUser.getAddressTwo());
-            ps.setInt(7, updatedUser.getCity());
+            ps.setString(2, updatedUser.getFirstName());
+            ps.setString(3, updatedUser.getLastName());
+            ps.setString(4, updatedUser.getCompanyName());
+            ps.setString(5, updatedUser.getAddressOne());
+            ps.setString(6, updatedUser.getAddressTwo());
+            ps.setString(7, updatedUser.getCity());
             ps.setInt(8, provinceIndex);
-            ps.setInt(9, updatedUser.getCountry());
-            ps.setInt(10, updatedUser.getPostalCode());
-            ps.setInt(11, updatedUser.getHomePhone());
-            ps.setInt(12, updatedUser.getCellPhone());
-            
+            ps.setString(9, updatedUser.getCountry());
+            ps.setString(10, updatedUser.getPostalCode());
+            ps.setString(11, updatedUser.getHomePhone());
+            ps.setString(12, updatedUser.getCellPhone());
+
             result = ps.executeUpdate();
         }
         return result;
     }
-    
+
     /**
      *
      * This method updates a users password.
@@ -305,7 +309,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
 
         try (Connection connection = CSDBookStoreSource.getConnection();
                 PreparedStatement ps = connection.prepareStatement(update);) {
-            ps.setInt(1, password);
+            ps.setString(1, password);
             ps.setInt(2, id);
             result = ps.executeUpdate();
         }
@@ -661,7 +665,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      */
     @Override
     public int deleteInvoiceDetail(int id) throws SQLException {
-       
+
         int result = 0;
 
         String delete = "DELETE FROM invoicedetails WHERE invoicedetail_id = ?";
@@ -997,40 +1001,39 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
         reviewBean.setReview_text(resultSet.getString("review_text"));
         return reviewBean;
     }
-    
-    
+
     /**
-     * Survey table select by id.
-     * Retrieve one record from the given table based on the primary key
-     * 
+     * Survey table select by id. Retrieve one record from the given table based
+     * on the primary key
+     *
      * @author Christopher Dufort
      * @version 0.0.7 - last modified 2/3/2016
      * @param id
      * @return the Survey object
      */
-    public SurveyBean findById(int id) throws SQLException{
+    public SurveyBean findById(int id) throws SQLException {
         //If there is no record with the requested id, null object will be returned.
-        
+
         SurveyBean surveyBean = null;
-        
+
         String selectQuery = "SELECT survey_id, question, answer_one, answer_two, answer_three, answer_default FROM survey WHERE ID=?";
-       
+
         // Using try with resources, available since Java 1.7
         // Class that implement the Closable interface created in the
         // parenthesis () will be closed when the block ends.
-        try(Connection connection = CSDBookStoreSource.getConnection();
-            // You must use PreparedStatements to guard against SQL Injection
-            PreparedStatement prepStatement = connection.prepareStatement(selectQuery);) {
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                // You must use PreparedStatements to guard against SQL Injection
+                PreparedStatement prepStatement = connection.prepareStatement(selectQuery);) {
             // Only object creation statements can be in the parenthesis so
             // first try-with-resources block ends
-            prepStatement.setInt(1,id);
+            prepStatement.setInt(1, id);
             // A new try-with-resources block for creating the ResultSet object
-            
-            try (ResultSet resultSet = prepStatement.executeQuery()){
-                
+
+            try (ResultSet resultSet = prepStatement.executeQuery()) {
+
                 if (resultSet.next()) {
                     surveyBean = new SurveyBean();
-                    
+
                     surveyBean.setSurveyId(id);
                     surveyBean.setAnswerOne(resultSet.getString("answer_one"));
                     surveyBean.setAnswerTwo(resultSet.getString("answer_two"));
@@ -1041,10 +1044,10 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
         }
         return surveyBean;
     }
-    
+
     private RegisteredUserBean createUser(final ResultSet resultSet) throws SQLException {
         int titleId, provinceId;
-        
+
         RegisteredUserBean user = new RegisteredUserBean();
         user.setClientId(resultSet.getInt("user_id"));
         user.setEmailAddress(resultSet.getString("email_address"));
@@ -1057,48 +1060,94 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
         user.setAddressTwo(resultSet.getString("address_two"));
         user.setCity(resultSet.getString("city"));
         provinceId = resultSet.getInt("province_id");
-        user.setCountry(resultSet.getString("country");
+        user.setCountry(resultSet.getString("country"));
         user.setPostalCode(resultSet.getString("postal_code"));
         user.setHomePhone(resultSet.getString("home_phone"));
         user.setCellPhone(resultSet.getString("cell_phone"));
         user.setIsManager(resultSet.getBoolean("manager"));
         user.setIsActive(resultSet.getBoolean("active"));
+
+        return user;
+        /*
+        
+                ??????????
         
         ProvinceBean province = new ProvinceBean();
         String select = "SELECT name, gst, pst, hst FROM province WHERE name = ?;";
 
         try (Connection connection = CSDBookStoreSource.getConnection();
-                PreparedStatement ps = connection.prepareStatement(select);
-                ps.setInt(1, provinceId);
-                ResultSet resultSet = ps.executeQuery()) {
+                PreparedStatement ps = connection.prepareStatement(select)) {
+            ps.setInt(1, provinceId);
+            try (
+                    ResultSet resultSet = ps.executeQuery()) {
 
-            if (resultSet.next()) {
-                province.setName(resultSet.getString("name"));
-                province.setGst(resultSet.getDouble("gst"));
-                province.setPst(resultSet.getDouble("pst"));
-                province.setHst(resultSet.getDouble("hst"));
+                if (resultSet.next()) {
+                    province.setName(resultSet.getString("name"));
+                    province.setGst(resultSet.getDouble("gst"));
+                    province.setPst(resultSet.getDouble("pst"));
+                    province.setHst(resultSet.getDouble("hst"));
+                }
             }
-        }
-                        
-        user.setProvince(provinceBean);
+
+            user.setProvince(provinceBean);
+
+            String title = "";
+            String select = "SELECT title FROM title WHERE title_id = ?;";
+
+            try (Connection connection = CSDBookStoreSource.getConnection();
+                    PreparedStatement ps = connection.prepareStatement(select);
+                    ps.setInt          (1, titleId
+                );
+                ResultSet resultSet = ps.executeQuery()
                 
-        String title = "";
-        String select = "SELECT title FROM title WHERE title_id = ?;";
-
-        try (Connection connection = CSDBookStoreSource.getConnection();
-                PreparedStatement ps = connection.prepareStatement(select);
-                ps.setInt(1, titleId);
-                ResultSet resultSet = ps.executeQuery()) {
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                    ) {
 
             if (resultSet.next()) {
-                province.setName(resultSet.getString("name"));
-                province.setGst(resultSet.getDouble("gst"));
-                province.setPst(resultSet.getDouble("pst"));
-                province.setHst(resultSet.getDouble("hst"));
+                        province.setName(resultSet.getString("name"));
+                        province.setGst(resultSet.getDouble("gst"));
+                        province.setPst(resultSet.getDouble("pst"));
+                        province.setHst(resultSet.getDouble("hst"));
+                    }
+                }
+                user.setTitle(title);
+
+                return user;
             }
         }
-        user.setTitle(title);
-        
-        return user;
+         */
+    }
+
+    @Override
+    public int createAuthor(AuthorBean author) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int deleteAuthorByAuthorId(int author_id) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int updateAuthor(AuthorBean author) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<AuthorBean> getAllAuthor() throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<AuthorBean> getAuthorByBook(BookBean book) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
