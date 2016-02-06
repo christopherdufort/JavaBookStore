@@ -16,6 +16,7 @@ import com.g3w16.beans.ReviewBean;
 import com.g3w16.beans.SurveyBean;
 import com.g3w16.beans.ProvinceBean;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -1339,5 +1340,342 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
             }
         }
         return genres;
+    }
+
+    @Override
+    public int createBook(BookBean book, List<AuthorBean> authors, List<FormatBean> formats, List<GenreBean> genres) throws SQLException {
+        String queryBook = "INSERT INTO book (isbn,title,publisher,publish_date,"
+                + "page_number,wholesale_price,list_price,sale_price"
+                + "date_entered,available,synopsis )"
+                + "VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+        String queryInsertBookAuthor = "INSERT INTO book_author (book_id, author_id)"
+                + "VALUES(?,?)";
+        String queryInsertBookFormat = "INSERT INTO book_format (book_id, format_id)"
+                + "VALUES(?,?)";
+        String queryInsertBookGenre = "INSERT INTO book_genre (book_id, genre_id)"
+                + "VALUES(?,?";
+        int result = 0;
+        Date today = null;
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement pStatementBook = connection.prepareStatement(queryBook, Statement.RETURN_GENERATED_KEYS);) {
+            // Create book
+            pStatementBook.setString(1, book.getIsbn());
+            pStatementBook.setString(2, book.getTitle());
+            pStatementBook.setString(3, book.getPublisher());
+            pStatementBook.setDate(4, book.getPublish_date());
+            pStatementBook.setInt(5, book.getPages());
+            pStatementBook.setDouble(6, book.getWholesale_price());
+            pStatementBook.setDouble(7, book.getList_price());
+            pStatementBook.setDouble(8, book.getSale_price());
+            pStatementBook.setDate(9, today);
+            pStatementBook.setBoolean(10, book.isAvailable());
+            pStatementBook.setString(11, book.getSynopsis());
+
+            result = pStatementBook.executeUpdate();
+            ResultSet resultSet = pStatementBook.getGeneratedKeys();
+            if (resultSet.next()) {
+                book.setId(resultSet.getInt(1));
+            }
+
+            // Create relation between book & author
+            for (AuthorBean author : authors) {
+                try (PreparedStatement pStatementBookAuthor = connection.prepareStatement(queryInsertBookAuthor)) {
+                    pStatementBookAuthor.setInt(1, book.getId());
+                    pStatementBookAuthor.setInt(2, author.getId());
+                    result += pStatementBookAuthor.executeUpdate();
+                }
+            }
+            // Create relation between book & format
+            for (FormatBean format : formats) {
+                try(PreparedStatement pStatementBookFormat = connection.prepareStatement(queryInsertBookFormat)){
+                    pStatementBookFormat.setInt(1, book.getId());
+                    pStatementBookFormat.setInt(2, format.getId());
+                    result += pStatementBookFormat.executeUpdate();
+                }
+            }
+            // Create relation between book & genre
+            for (GenreBean genre : genres){
+                try(PreparedStatement pStatementBookGenre = connection.prepareStatement(queryInsertBookGenre)){
+                    pStatementBookGenre.setInt(1, book.getId());
+                    pStatementBookGenre.setInt(2, genre.getId());
+                    result += pStatementBookGenre.executeUpdate();
+                }
+            }
+        }
+
+        return result;
+    }
+
+    @Override
+    public int updateBook(BookBean book, List<AuthorBean> authors, List<FormatBean> formats, List<GenreBean> genres) throws SQLException {
+        String queryBook = "UPDATE book SET isbn=?,title=?,publisher=?,publish_date=?,"
+                + "page_number=?,wholesale_price=?,list_price=?,sale_price=?"
+                + "date_entered=?,available=?,synopsis=? )"
+                + "WHERE book_id=?";
+        String queryPurgeBookAuthor = "DELETE FROM book_author WHERE book_id=?";
+        String queryInsertBookAuthor = "INSERT INTO book_author (book_id, author_id)"
+                + "VALUES(?,?)";
+        String queryPurgeBookFormat = "DELETE FROM book_format WHERE book_id=?";
+        String queryInsertBookFormat = "INSERT INTO book_format (book_id, format_id)"
+                + "VALUES(?,?)";
+        String queryPurgeBookGenre = "DELETE FROM book_genre WHERE book_id=?";
+        String queryInsertBookGenre = "INSERT INTO book_genre (book_id, genre_id)"
+                + "VALUES(?,?";
+        int result = 0;
+        Date today = null;
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement pStatementBook = connection.prepareStatement(queryBook, Statement.RETURN_GENERATED_KEYS);
+                PreparedStatement pStatementPurgeBookAuthor = connection.prepareStatement(queryPurgeBookAuthor);
+                PreparedStatement pStatementPurgeBookFormat = connection.prepareStatement(queryPurgeBookFormat);
+                PreparedStatement pStatementPurgeBookGenre = connection.prepareStatement(queryPurgeBookGenre);) {
+            // Update Book
+            pStatementBook.setString(1, book.getIsbn());
+            pStatementBook.setString(2, book.getTitle());
+            pStatementBook.setString(3, book.getPublisher());
+            pStatementBook.setDate(4, book.getPublish_date());
+            pStatementBook.setInt(5, book.getPages());
+            pStatementBook.setDouble(6, book.getWholesale_price());
+            pStatementBook.setDouble(7, book.getList_price());
+            pStatementBook.setDouble(8, book.getSale_price());
+            pStatementBook.setDate(9, today);
+            pStatementBook.setBoolean(10, book.isAvailable());
+            pStatementBook.setString(11, book.getSynopsis());
+            pStatementBook.setInt(12, book.getId());
+
+            result = pStatementBook.executeUpdate();
+            ResultSet resultSet = pStatementBook.getGeneratedKeys();
+            if (resultSet.next()) {
+                book.setId(resultSet.getInt(1));
+            }
+
+            // Purge existing relation between book & author
+            pStatementPurgeBookAuthor.setInt(1,book.getId());
+            result+=pStatementPurgeBookAuthor.executeUpdate();
+            // Create relation between book & author
+            for (AuthorBean author : authors) {
+                try (PreparedStatement pStatementBookAuthor = connection.prepareStatement(queryInsertBookAuthor)) {
+                    pStatementBookAuthor.setInt(1, book.getId());
+                    pStatementBookAuthor.setInt(2, author.getId());
+                    result += pStatementBookAuthor.executeUpdate();
+                }
+            }
+            // Purge existing relation between book & format
+            pStatementPurgeBookFormat.setInt(1,book.getId());
+            result+=pStatementPurgeBookFormat.executeUpdate();
+            // Create relation between book & format
+            for (FormatBean format : formats) {
+                try(PreparedStatement pStatementBookFormat = connection.prepareStatement(queryInsertBookFormat)){
+                    pStatementBookFormat.setInt(1, book.getId());
+                    pStatementBookFormat.setInt(2, format.getId());
+                    result += pStatementBookFormat.executeUpdate();
+                }
+            }
+            // Purge existing relation between book & author
+            pStatementPurgeBookGenre.setInt(1,book.getId());
+            result+=pStatementPurgeBookGenre.executeUpdate();
+            // Create relation between book & genre
+            for (GenreBean genre : genres){
+                try(PreparedStatement pStatementBookGenre = connection.prepareStatement(queryInsertBookGenre)){
+                    pStatementBookGenre.setInt(1, book.getId());
+                    pStatementBookGenre.setInt(2, genre.getId());
+                    result += pStatementBookGenre.executeUpdate();
+                }
+            }
+        }
+
+        return result;
+    }
+
+    @Override
+    public int deleteBook(int book_id) throws SQLException {
+        int result = 0;
+        String queryBook = "DELETE FROM book WHERE book_id=?";
+        String queryBookAuthor = "DELETE FROM book_author WHERE book_id=?";
+        String queryBookFormat = "DELETE FROM book_format WHERE book_id=?";
+        String queryBookGenre = "DELETE FROM book_genre WHERE book_id=?";
+        try(Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement pStatementBook = connection.prepareStatement(queryBook);
+                PreparedStatement pStatementBookAuthor = connection.prepareStatement(queryBookAuthor);
+                PreparedStatement pStatementBookFormat = connection.prepareStatement(queryBookFormat);
+                PreparedStatement pStatementBookGenre = connection.prepareStatement(queryBookGenre);){
+            // delete relation between book & author
+            pStatementBookAuthor.setInt(1, book_id);
+            result += pStatementBookAuthor.executeUpdate();
+            // delete relation book & format 
+            pStatementBookFormat.setInt(1, book_id);
+            result += pStatementBookFormat.executeUpdate();
+            //delete relation book & genre
+            pStatementBookGenre.setInt(1, book_id);
+            result += pStatementBookGenre.executeUpdate();
+            //delete book
+            pStatementBook.setInt(1, book_id);
+            result+= pStatementBook.executeUpdate();
+        }
+        return result;
+    }
+
+    @Override
+    public List<BookBean> getAllBook() throws SQLException {
+        String query = "SELECT * FROM book";
+        List<BookBean> books = new ArrayList<>();
+        try(Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement pStatement = connection.prepareStatement(query);){
+            ResultSet resultSet = pStatement.executeQuery();
+            while(resultSet.next()){
+                books.add(new BookBean(
+                        resultSet.getInt("book_id"),
+                        resultSet.getString("isbn"),
+                        resultSet.getString("title"),
+                        resultSet.getString("publisher"),
+                        resultSet.getDate("publish_date"),
+                        resultSet.getInt("page_number"),
+                        resultSet.getDouble("wholesale_price"),
+                        resultSet.getDouble("list_price"),
+                        resultSet.getDouble("sale_price"),
+                        resultSet.getDate("date_entered"),
+                        resultSet.getBoolean("available"),
+                        resultSet.getDouble("overall_rating"),
+                        resultSet.getString("synopsis")
+                ));
+            }
+        }
+        return books;
+    }
+
+    @Override
+    public List<BookBean> getBookByAuthors(AuthorBean... authors) throws SQLException {
+        // building select query
+        String query;
+        if (authors.length>0){
+            query = "SELECT * FROM book b WHERE EXISTS(SELECT 1 FROM book_author ba WHERE ba.book_id=b.book_id AND (";
+            for (int i=0; i<authors.length; i++){
+                query+=" ba.author_id=? ";
+                if (i<authors.length-1){
+                    query+=" OR ";
+                }
+                query+= " )";
+            }
+        }else{
+            return getAllBook();
+        }
+        List<BookBean> books = new ArrayList<>();
+        // selecting books from db
+        try(Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement pStatement = connection.prepareStatement(query);){
+            for(int i = 0; i<authors.length; i++){
+                pStatement.setInt(i+1, authors[i].getId());
+            }
+            ResultSet resultSet = pStatement.executeQuery();
+            while(resultSet.next()){
+                books.add(new BookBean(
+                        resultSet.getInt("book_id"),
+                        resultSet.getString("isbn"),
+                        resultSet.getString("title"),
+                        resultSet.getString("publisher"),
+                        resultSet.getDate("publish_date"),
+                        resultSet.getInt("page_number"),
+                        resultSet.getDouble("wholesale_price"),
+                        resultSet.getDouble("list_price"),
+                        resultSet.getDouble("sale_price"),
+                        resultSet.getDate("date_entered"),
+                        resultSet.getBoolean("available"),
+                        resultSet.getDouble("overall_rating"),
+                        resultSet.getString("synopsis")
+                ));
+            }
+        }
+        return books;
+    }
+
+    @Override
+    public List<BookBean> getBookByFormats(FormatBean... formats) throws SQLException {
+        // building select query
+        String query;
+        if (formats.length>0){
+            query = "SELECT * FROM book b WHERE EXISTS(SELECT 1 FROM book_format bf WHERE bf.book_id=b.book_id AND (";
+            for (int i=0; i<formats.length; i++){
+                query+=" bf.format_id=? ";
+                if (i<formats.length-1){
+                    query+=" OR ";
+                }
+                query+= " )";
+            }
+        }else{
+            return getAllBook();
+        }
+        List<BookBean> books = new ArrayList<>();
+        // selecting books from db
+        try(Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement pStatement = connection.prepareStatement(query);){
+            for(int i = 0; i<formats.length; i++){
+                pStatement.setInt(i+1, formats[i].getId());
+            }
+            ResultSet resultSet = pStatement.executeQuery();
+            while(resultSet.next()){
+                // FIXME: List of Authors, Formats & Genres aren't initialize
+                books.add(new BookBean(
+                        resultSet.getInt("book_id"),
+                        resultSet.getString("isbn"),
+                        resultSet.getString("title"),
+                        resultSet.getString("publisher"),
+                        resultSet.getDate("publish_date"),
+                        resultSet.getInt("page_number"),
+                        resultSet.getDouble("wholesale_price"),
+                        resultSet.getDouble("list_price"),
+                        resultSet.getDouble("sale_price"),
+                        resultSet.getDate("date_entered"),
+                        resultSet.getBoolean("available"),
+                        resultSet.getDouble("overall_rating"),
+                        resultSet.getString("synopsis")
+                ));
+            }
+        }
+        return books;
+    }
+
+    @Override
+    public List<BookBean> getBookByGenres(GenreBean... genres) throws SQLException {
+        // building select query
+        String query;
+        if (genres.length>0){
+            query = "SELECT * FROM book b WHERE EXISTS(SELECT 1 FROM book_genre bg WHERE bg.book_id=b.book_id AND (";
+            for (int i=0; i<genres.length; i++){
+                query+=" bg.genre_id=? ";
+                if (i<genres.length-1){
+                    query+=" OR ";
+                }
+                query+= " )";
+            }
+        }else{
+            return getAllBook();
+        }
+        List<BookBean> books = new ArrayList<>();
+        // selecting books from db
+        try(Connection connection = CSDBookStoreSource.getConnection();
+                PreparedStatement pStatement = connection.prepareStatement(query);){
+            for(int i = 0; i<genres.length; i++){
+                pStatement.setInt(i+1, genres[i].getId());
+            }
+            ResultSet resultSet = pStatement.executeQuery();
+            while(resultSet.next()){
+                // FIXME: List of Authors, Formats & Genres aren't initialize
+                books.add(new BookBean(
+                        resultSet.getInt("book_id"),
+                        resultSet.getString("isbn"),
+                        resultSet.getString("title"),
+                        resultSet.getString("publisher"),
+                        resultSet.getDate("publish_date"),
+                        resultSet.getInt("page_number"),
+                        resultSet.getDouble("wholesale_price"),
+                        resultSet.getDouble("list_price"),
+                        resultSet.getDouble("sale_price"),
+                        resultSet.getDate("date_entered"),
+                        resultSet.getBoolean("available"),
+                        resultSet.getDouble("overall_rating"),
+                        resultSet.getString("synopsis")
+                ));
+            }
+        }
+        return books;
     }
 }
