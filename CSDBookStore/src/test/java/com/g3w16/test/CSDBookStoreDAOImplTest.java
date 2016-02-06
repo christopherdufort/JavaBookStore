@@ -36,6 +36,7 @@ import javax.inject.Inject;
 import javax.sql.DataSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
@@ -46,6 +47,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.runner.RunWith;
 
 /**
  * @author Xin Ma
@@ -54,6 +56,7 @@ import static org.junit.Assert.*;
  * @version 0.1.4
  * @since 0.0.1
  */
+@RunWith(Arquillian.class)
 public class CSDBookStoreDAOImplTest {
     
     @Deployment
