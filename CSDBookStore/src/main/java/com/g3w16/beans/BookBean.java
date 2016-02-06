@@ -1,7 +1,7 @@
 package com.g3w16.beans;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * @author Jonas Faure
@@ -14,44 +14,74 @@ public class BookBean {
     private String isbn;
     private String title;
     private String publisher;
-    private Integer pages;
-    private String path_img_original;
+    private int pages;
     private String path_img_small;
-    private Integer wholesale_price;
-    private Integer list_price;
-    private Integer sale_price;
+    private double wholesale_price;
+    private double list_price;
+    private double sale_price;
     private Date date_of_entrance;
-    private boolean removal_status;
+    private Date publish_date;
+    private double overall_rating;
+    private boolean available;
     private String synopsis;
+    
+    private ArrayList<AuthorBean> authors;
+    private ArrayList<GenreBean> genres;
+    private ArrayList<FormatBean> formats;
 
-    private ArrayList<String> authors;
-    private ArrayList<String> genres;
-    private ArrayList<String> formats;
+    public double getOverall_rating() {
+        return overall_rating;
+    }
+
+    public void setOverall_rating(double overall_rating) {
+        this.overall_rating = overall_rating;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
+
+    public Date getPublish_date() {
+        return publish_date;
+    }
+
+    public void setPublish_date(Date publish_date) {
+        this.publish_date = publish_date;
+    }
 
     public BookBean(){
     }
 
-    public BookBean(final Integer id, final String isbn, final String title, final String publisher, final Integer pages, final String path_img_original, final String path_img_small, final Integer wholesale_price, final Integer list_price, final Integer sale_price, final Date date_of_entrance, final boolean removal_status, final String synopsis) {
+    public BookBean(final Integer id, final String isbn, 
+            final String title, final String publisher,
+            final Date publish_date,
+            final int pages, final double wholesale_price, 
+            final double list_price, final double  sale_price, 
+            final Date date_of_entrance, final boolean removal_status, 
+            final double overall_rating ,final String synopsis) {
         super();
         this.id = id;
         this.isbn = isbn;
         this.title = title;
         this.publisher = publisher;
+        this.publish_date = publish_date;
         this.pages = pages;
-        this.path_img_original = path_img_original;
-        this.path_img_small = path_img_small;
         this.wholesale_price = wholesale_price;
         this.list_price = list_price;
         this.sale_price = sale_price;
         this.date_of_entrance = date_of_entrance;
-        this.removal_status = removal_status;
+        this.overall_rating = overall_rating;
         this.synopsis = synopsis;
-        this.authors = new ArrayList<String>();
-        this.genres = new ArrayList<String>();
-        this.formats = new ArrayList<String>();
+        this.authors = new ArrayList<>();
+        this.genres = new ArrayList<>();
+        this.formats = new ArrayList<>();
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -83,20 +113,12 @@ public class BookBean {
         this.publisher = publisher;
     }
 
-    public Integer getPages() {
+    public int getPages() {
         return pages;
     }
 
     public void setPages(Integer pages) {
         this.pages = pages;
-    }
-
-    public String getPath_img_original() {
-        return path_img_original;
-    }
-
-    public void setPath_img_original(String path_img_original) {
-        this.path_img_original = path_img_original;
     }
 
     public String getPath_img_small() {
@@ -107,7 +129,7 @@ public class BookBean {
         this.path_img_small = path_img_small;
     }
 
-    public Integer getWholesale_price() {
+    public double getWholesale_price() {
         return wholesale_price;
     }
 
@@ -115,7 +137,7 @@ public class BookBean {
         this.wholesale_price = wholesale_price;
     }
 
-    public Integer getList_price() {
+    public double getList_price() {
         return list_price;
     }
 
@@ -123,7 +145,7 @@ public class BookBean {
         this.list_price = list_price;
     }
 
-    public Integer getSale_price() {
+    public double getSale_price() {
         return sale_price;
     }
 
@@ -137,14 +159,6 @@ public class BookBean {
 
     public void setDate_of_entrance(Date date_of_entrance) {
         this.date_of_entrance = date_of_entrance;
-    }
-
-    public boolean isRemoval_status() {
-        return removal_status;
-    }
-
-    public void setRemoval_status(boolean removal_status) {
-        this.removal_status = removal_status;
     }
 
     public String getSynopsis() {
@@ -162,7 +176,7 @@ public class BookBean {
      * collections.
      * @return 
      */
-    public ArrayList<String> getAuthors() {
+    public ArrayList<AuthorBean> getAuthors() {
         return authors;
     }
 
@@ -173,7 +187,7 @@ public class BookBean {
      * collections.
      * @return 
      */
-    public ArrayList<String> getGenres() {
+    public ArrayList<GenreBean> getGenres() {
         return genres;
     }
 
@@ -184,7 +198,7 @@ public class BookBean {
      * collections.
      * @return 
      */
-    public ArrayList<String> getFormats() {
+    public ArrayList<FormatBean> getFormats() {
         return formats;
     }
 
