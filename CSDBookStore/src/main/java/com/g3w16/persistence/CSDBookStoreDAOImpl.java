@@ -1517,12 +1517,18 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
     @Override
     public List<BookBean> getAllBook() throws SQLException {
         String query = "SELECT * FROM book";
+        String queryAuthors = "SELET * FROM author a WHERE EXISTS(SELECT 1 FROM book_author ba WHERE ba.book_id=? AND ba.author_id=a.author_id)";
+        String queryFormats = "SELET * FROM format f WHERE EXISTS(SELECT 1 FROM book_format bf WHERE bf.book_id=? AND bf.format_id=f.format_id)";
+        String queryGenres = "SELET * FROM genre g WHERE EXISTS(SELECT 1 FROM book_genre bg WHERE bg.book_id=? AND bg.genre_id=g.genre_id)";
         List<BookBean> books = new ArrayList<>();
         try(Connection connection = CSDBookStoreSource.getConnection();
-                PreparedStatement pStatement = connection.prepareStatement(query);){
+                PreparedStatement pStatement = connection.prepareStatement(query);
+                PreparedStatement pStatementAuthors = connection.prepareStatement(queryAuthors);
+                PreparedStatement pStatementFormats = connection.prepareStatement(queryFormats);
+                PreparedStatement pStatementGenres = connection.prepareStatement(queryGenres)){
             ResultSet resultSet = pStatement.executeQuery();
             while(resultSet.next()){
-                books.add(new BookBean(
+                BookBean book = new BookBean(
                         resultSet.getInt("book_id"),
                         resultSet.getString("isbn"),
                         resultSet.getString("title"),
@@ -1536,7 +1542,34 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
                         resultSet.getBoolean("available"),
                         resultSet.getDouble("overall_rating"),
                         resultSet.getString("synopsis")
-                ));
+                );
+                // gathering data about authors, formats && genres related w/ book
+                pStatementAuthors.setInt(1, book.getId());
+                ResultSet resultSetAuthors = pStatementAuthors.executeQuery();
+                while(resultSetAuthors.next()){
+                    book.getAuthors().add(new AuthorBean(
+                            resultSetAuthors.getInt("author_id"),
+                            resultSetAuthors.getString("author_name")
+                    ));
+                }
+                pStatementFormats.setInt(1, book.getId());
+                ResultSet resultSetFormats = pStatementFormats.executeQuery();
+                while(resultSetFormats.next()){
+                    book.getFormats().add(new FormatBean(
+                            resultSetFormats.getInt("format_id"),
+                            resultSetFormats.getString("extension")
+                    ));
+                }
+                pStatementGenres.setInt(1, book.getId());
+                ResultSet resultSetGenres = pStatementGenres.executeQuery();
+                while(resultSetGenres.next()){
+                    book.getGenres().add(new GenreBean(
+                            resultSetGenres.getInt("genre_id"),
+                            resultSetGenres.getString("genre_name")
+                    ));
+                }
+                // adding it to the result of our function :) It would be too bad to forget
+                books.add(book);
             }
         }
         return books;
@@ -1558,16 +1591,22 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
         }else{
             return getAllBook();
         }
+        String queryAuthors = "SELET * FROM author a WHERE EXISTS(SELECT 1 FROM book_author ba WHERE ba.book_id=? AND ba.author_id=a.author_id)";
+        String queryFormats = "SELET * FROM format f WHERE EXISTS(SELECT 1 FROM book_format bf WHERE bf.book_id=? AND bf.format_id=f.format_id)";
+        String queryGenres = "SELET * FROM genre g WHERE EXISTS(SELECT 1 FROM book_genre bg WHERE bg.book_id=? AND bg.genre_id=g.genre_id)";
         List<BookBean> books = new ArrayList<>();
         // selecting books from db
         try(Connection connection = CSDBookStoreSource.getConnection();
-                PreparedStatement pStatement = connection.prepareStatement(query);){
+                PreparedStatement pStatement = connection.prepareStatement(query);
+                PreparedStatement pStatementAuthors = connection.prepareStatement(queryAuthors);
+                PreparedStatement pStatementFormats = connection.prepareStatement(queryFormats);
+                PreparedStatement pStatementGenres = connection.prepareStatement(queryGenres);){
             for(int i = 0; i<authors.length; i++){
                 pStatement.setInt(i+1, authors[i].getId());
             }
             ResultSet resultSet = pStatement.executeQuery();
             while(resultSet.next()){
-                books.add(new BookBean(
+                BookBean book = new BookBean(
                         resultSet.getInt("book_id"),
                         resultSet.getString("isbn"),
                         resultSet.getString("title"),
@@ -1581,7 +1620,34 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
                         resultSet.getBoolean("available"),
                         resultSet.getDouble("overall_rating"),
                         resultSet.getString("synopsis")
-                ));
+                );
+                // gathering data about authors, formats && genres related w/ book
+                pStatementAuthors.setInt(1, book.getId());
+                ResultSet resultSetAuthors = pStatementAuthors.executeQuery();
+                while(resultSetAuthors.next()){
+                    book.getAuthors().add(new AuthorBean(
+                            resultSetAuthors.getInt("author_id"),
+                            resultSetAuthors.getString("author_name")
+                    ));
+                }
+                pStatementFormats.setInt(1, book.getId());
+                ResultSet resultSetFormats = pStatementFormats.executeQuery();
+                while(resultSetFormats.next()){
+                    book.getFormats().add(new FormatBean(
+                            resultSetFormats.getInt("format_id"),
+                            resultSetFormats.getString("extension")
+                    ));
+                }
+                pStatementGenres.setInt(1, book.getId());
+                ResultSet resultSetGenres = pStatementGenres.executeQuery();
+                while(resultSetGenres.next()){
+                    book.getGenres().add(new GenreBean(
+                            resultSetGenres.getInt("genre_id"),
+                            resultSetGenres.getString("genre_name")
+                    ));
+                }
+                // adding it to the result of our function :) It would be too bad to forget
+                books.add(book);
             }
         }
         return books;
@@ -1603,17 +1669,23 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
         }else{
             return getAllBook();
         }
+        String queryAuthors = "SELET * FROM author a WHERE EXISTS(SELECT 1 FROM book_author ba WHERE ba.book_id=? AND ba.author_id=a.author_id)";
+        String queryFormats = "SELET * FROM format f WHERE EXISTS(SELECT 1 FROM book_format bf WHERE bf.book_id=? AND bf.format_id=f.format_id)";
+        String queryGenres = "SELET * FROM genre g WHERE EXISTS(SELECT 1 FROM book_genre bg WHERE bg.book_id=? AND bg.genre_id=g.genre_id)";
         List<BookBean> books = new ArrayList<>();
         // selecting books from db
         try(Connection connection = CSDBookStoreSource.getConnection();
-                PreparedStatement pStatement = connection.prepareStatement(query);){
+                PreparedStatement pStatement = connection.prepareStatement(query);
+                PreparedStatement pStatementAuthors = connection.prepareStatement(queryAuthors);
+                PreparedStatement pStatementFormats = connection.prepareStatement(queryFormats);
+                PreparedStatement pStatementGenres = connection.prepareStatement(queryGenres);){
             for(int i = 0; i<formats.length; i++){
                 pStatement.setInt(i+1, formats[i].getId());
             }
             ResultSet resultSet = pStatement.executeQuery();
             while(resultSet.next()){
                 // FIXME: List of Authors, Formats & Genres aren't initialize
-                books.add(new BookBean(
+                BookBean book = new BookBean(
                         resultSet.getInt("book_id"),
                         resultSet.getString("isbn"),
                         resultSet.getString("title"),
@@ -1627,7 +1699,35 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
                         resultSet.getBoolean("available"),
                         resultSet.getDouble("overall_rating"),
                         resultSet.getString("synopsis")
-                ));
+                );
+                
+                // gathering data about authors, formats && genres related w/ book
+                pStatementAuthors.setInt(1, book.getId());
+                ResultSet resultSetAuthors = pStatementAuthors.executeQuery();
+                while(resultSetAuthors.next()){
+                    book.getAuthors().add(new AuthorBean(
+                            resultSetAuthors.getInt("author_id"),
+                            resultSetAuthors.getString("author_name")
+                    ));
+                }
+                pStatementFormats.setInt(1, book.getId());
+                ResultSet resultSetFormats = pStatementFormats.executeQuery();
+                while(resultSetFormats.next()){
+                    book.getFormats().add(new FormatBean(
+                            resultSetFormats.getInt("format_id"),
+                            resultSetFormats.getString("extension")
+                    ));
+                }
+                pStatementGenres.setInt(1, book.getId());
+                ResultSet resultSetGenres = pStatementGenres.executeQuery();
+                while(resultSetGenres.next()){
+                    book.getGenres().add(new GenreBean(
+                            resultSetGenres.getInt("genre_id"),
+                            resultSetGenres.getString("genre_name")
+                    ));
+                }
+                // adding it to the result of our function :) It would be too bad to forget
+                books.add(book);
             }
         }
         return books;
@@ -1649,17 +1749,23 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
         }else{
             return getAllBook();
         }
+        String queryAuthors = "SELET * FROM author a WHERE EXISTS(SELECT 1 FROM book_author ba WHERE ba.book_id=? AND ba.author_id=a.author_id)";
+        String queryFormats = "SELET * FROM format f WHERE EXISTS(SELECT 1 FROM book_format bf WHERE bf.book_id=? AND bf.format_id=f.format_id)";
+        String queryGenres = "SELET * FROM genre g WHERE EXISTS(SELECT 1 FROM book_genre bg WHERE bg.book_id=? AND bg.genre_id=g.genre_id)";
         List<BookBean> books = new ArrayList<>();
         // selecting books from db
         try(Connection connection = CSDBookStoreSource.getConnection();
-                PreparedStatement pStatement = connection.prepareStatement(query);){
+                PreparedStatement pStatement = connection.prepareStatement(query);
+                PreparedStatement pStatementAuthors = connection.prepareStatement(queryAuthors);
+                PreparedStatement pStatementFormats = connection.prepareStatement(queryFormats);
+                PreparedStatement pStatementGenres = connection.prepareStatement(queryGenres);){
             for(int i = 0; i<genres.length; i++){
                 pStatement.setInt(i+1, genres[i].getId());
             }
             ResultSet resultSet = pStatement.executeQuery();
             while(resultSet.next()){
                 // FIXME: List of Authors, Formats & Genres aren't initialize
-                books.add(new BookBean(
+                BookBean book = new BookBean(
                         resultSet.getInt("book_id"),
                         resultSet.getString("isbn"),
                         resultSet.getString("title"),
@@ -1673,7 +1779,35 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
                         resultSet.getBoolean("available"),
                         resultSet.getDouble("overall_rating"),
                         resultSet.getString("synopsis")
-                ));
+                );
+                
+                // gathering data about authors, formats && genres related w/ book
+                pStatementAuthors.setInt(1, book.getId());
+                ResultSet resultSetAuthors = pStatementAuthors.executeQuery();
+                while(resultSetAuthors.next()){
+                    book.getAuthors().add(new AuthorBean(
+                            resultSetAuthors.getInt("author_id"),
+                            resultSetAuthors.getString("author_name")
+                    ));
+                }
+                pStatementFormats.setInt(1, book.getId());
+                ResultSet resultSetFormats = pStatementFormats.executeQuery();
+                while(resultSetFormats.next()){
+                    book.getFormats().add(new FormatBean(
+                            resultSetFormats.getInt("format_id"),
+                            resultSetFormats.getString("extension")
+                    ));
+                }
+                pStatementGenres.setInt(1, book.getId());
+                ResultSet resultSetGenres = pStatementGenres.executeQuery();
+                while(resultSetGenres.next()){
+                    book.getGenres().add(new GenreBean(
+                            resultSetGenres.getInt("genre_id"),
+                            resultSetGenres.getString("genre_name")
+                    ));
+                }
+                // adding it to the result of our function :) It would be too bad to forget
+                books.add(book);
             }
         }
         return books;
