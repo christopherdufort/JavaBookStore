@@ -25,7 +25,7 @@ import java.util.List;
  * @version : 0.0.2
  */
 public interface CSDBookStoreDAO {
-    
+
     /**
      *
      * This method gets all the provinces.
@@ -35,7 +35,7 @@ public interface CSDBookStoreDAO {
      * @throws SQLException
      */
     public List<ProvinceBean> findAllProvinces() throws SQLException;
-    
+
     /**
      *
      * This method gets a province bean by name.
@@ -46,7 +46,7 @@ public interface CSDBookStoreDAO {
      * @throws SQLException
      */
     public ProvinceBean findProvinceByName(final String province) throws SQLException;
-    
+
     /**
      *
      * This method gets all titles.
@@ -56,8 +56,7 @@ public interface CSDBookStoreDAO {
      * @throws SQLException
      */
     public List<String> findAllTitles() throws SQLException;
-    
-    
+
     /**
      *
      * This method gets a province bean by name.
@@ -68,7 +67,7 @@ public interface CSDBookStoreDAO {
      * @throws SQLException
      */
     public int createRegisteredUser(String emailAddress, String password) throws SQLException;
-    
+
     /**
      *
      * This method gets all the registered users.
@@ -78,7 +77,7 @@ public interface CSDBookStoreDAO {
      * @throws SQLException
      */
     public List<RegisteredUserBean> findAllUsers() throws SQLException;
-    
+
     /**
      *
      * This method gets a user by id.
@@ -89,7 +88,7 @@ public interface CSDBookStoreDAO {
      * @throws SQLException
      */
     public RegisteredUserBean findUserById(final int id) throws SQLException;
-    
+
     /**
      *
      * This method updates a users account status.
@@ -100,19 +99,20 @@ public interface CSDBookStoreDAO {
      * @throws SQLException
      */
     public int setAccountStatus(final int id, final boolean isActive) throws SQLException;
-    
+
     /**
      *
      * This method updates a users manager status.
      *
      * This method gets a
+     *
      * @author Giuseppe Campanelli
      * @param id id of the user
      * @param isManager manager status
      * @throws SQLException
      */
     public int setManagerStatus(final int id, final boolean isManager) throws SQLException;
-    
+
     /**
      *
      * This method updates a users billing info.
@@ -125,7 +125,7 @@ public interface CSDBookStoreDAO {
      * @throws SQLException
      */
     public int updateUserBilling(RegisteredUserBean updatedUser, int titleIndex, int provinceIndex) throws SQLException;
-    
+
     /**
      *
      * This method updates a users password.
@@ -364,115 +364,115 @@ public interface CSDBookStoreDAO {
      * @throws SQLException
      */
     public int deleteReviewByDateSubmitted(LocalDateTime date_submitted) throws SQLException;
-    
+
     /**
      * CRUD method for Author table
-     * 
+     *
      * @author Jonas Faure
      * @version 0.0.12
      * @param author
-     * @return 
+     * @return
      * @throws SQLException
      */
-    public int createAuthor(AuthorBean author)throws SQLException;
-    
+    public int createAuthor(AuthorBean author) throws SQLException;
+
     /**
      * CRUD method for Author table
-     * 
+     *
      * @author Jonas Faure
      * @version 0.0.12
      * @param author_id
-     * @return 
+     * @return
      * @throws SQLException
      */
-    public int deleteAuthorByAuthorId(int authorId)throws SQLException;
-    
+    public int deleteAuthorByAuthorId(int authorId) throws SQLException;
+
     /**
      * CRUD method for Author table
-     * 
+     *
      * @author Jonas Faure
      * @version 0.0.12
      * @param author
-     * @return 
+     * @return
      * @throws SQLException
      */
-    public int updateAuthor(AuthorBean author)throws SQLException;
-    
+    public int updateAuthor(AuthorBean author) throws SQLException;
+
     /**
      * CRUD method for Author table
-     * 
+     *
      * @author Jonas Faure
      * @version 0.0.12
-     * @return 
+     * @return
      * @throws SQLException
      */
-    public List<AuthorBean> getAllAuthor()throws SQLException;
-    
+    public List<AuthorBean> getAllAuthor() throws SQLException;
+
     /**
      * CRUD method for Author table
-     * 
+     *
      * @author Jonas Faure
      * @version 0.0.12
      * @param book
-     * @return 
+     * @return
      * @throws SQLException
      */
-    public List<AuthorBean> getAuthorByBook(BookBean book)throws SQLException;
-    
+    public List<AuthorBean> getAuthorByBook(BookBean book) throws SQLException;
+
     /**
      * CRUD method for Format table
-     * 
+     *
      * @author Jonas Faure
      * @version 0.0.12
      * @param format
-     * @return 
+     * @return
      * @throws SQLException
      */
-    public int createFormat(FormatBean format)throws SQLException;
-    
+    public int createFormat(FormatBean format) throws SQLException;
+
     /**
      * CRUD method for Format table
-     * 
+     *
      * @author Jonas Faure
      * @version 0.0.12
      * @param format
-     * @return 
+     * @return
      * @throws SQLException
      */
-    public int updateFormat(FormatBean format)throws SQLException;
-    
+    public int updateFormat(FormatBean format) throws SQLException;
+
     /**
      * CRUD method for Format table
-     * 
+     *
      * @author Jonas Faure
      * @version 0.0.12
      * @param formatId
-     * @return 
+     * @return
      * @throws SQLException
      */
-    public int deleteById(int formatId)throws SQLException;
-    
+    public int deleteById(int formatId) throws SQLException;
+
     /**
      * CRUD method for Format table
-     * 
+     *
      * @author Jonas Faure
      * @version 0.0.12
-     * @return 
+     * @return
      * @throws SQLException
      */
-    public List<FormatBean> getAllFormat()throws SQLException;
-    
+    public List<FormatBean> getAllFormat() throws SQLException;
+
     /**
      * CRUD method for Format table
-     * 
+     *
      * @author Jonas Faure
      * @version 0.0.12
      * @param book
-     * @return 
+     * @return
      * @throws SQLException
      */
-    public List<FormatBean> getFormatByBook(BookBean book)throws SQLException;
-    
+    public List<FormatBean> getFormatByBook(BookBean book) throws SQLException;
+
     /**
      * Survey table select by id. Retrieve one record from the given table based
      * on the primary key
@@ -483,58 +483,157 @@ public interface CSDBookStoreDAO {
      * @return the Survey object
      */
     public SurveyBean findSurveyById(int id) throws SQLException;
-    
+
     /**
      * CRUD method for Genre table
-     * 
+     *
      * @author Jonas Faure
      * @version 0.0.12
      * @param genre
-     * @return 
+     * @return
      * @throws SQLException
      */
-    public int createGenre(GenreBean genre)throws SQLException;
-    
+    public int createGenre(GenreBean genre) throws SQLException;
+
     /**
      * CRUD method for Genre table
-     * 
+     *
      * @author Jonas Faure
      * @version 0.0.12
      * @param genre
-     * @return 
+     * @return
      * @throws SQLException
      */
-    public int updateGenre(GenreBean genre)throws SQLException;
-    
+    public int updateGenre(GenreBean genre) throws SQLException;
+
     /**
      * CRUD method for Genre table
-     * 
+     *
      * @author Jonas Faure
      * @version 0.0.12
      * @param genreId
-     * @return 
+     * @return
      * @throws SQLException
      */
-    public int deleteGenreById(int genreId)throws SQLException;
-    
+    public int deleteGenreById(int genreId) throws SQLException;
+
     /**
      * CRUD method for Genre table
-     * 
+     *
      * @author Jonas Faure
      * @version 0.0.12
-     * @return 
+     * @return
      * @throws SQLException
      */
-    public List<GenreBean>  getAllGenre()throws SQLException;
-    
+    public List<GenreBean> getAllGenre() throws SQLException;
+
     /**
      * CRUD method for Genre table
-     * 
+     *
      * @author Jonas Faure
      * @version 0.0.12
      * @param book
-     * @return 
+     * @return
      * @throws SQLException
      */
-    public List<GenreBean> getGenreByBook(BookBean book)throws SQLException;
+    public List<GenreBean> getGenreByBook(BookBean book) throws SQLException;
+
+    /**
+     * CRUD method for Book table
+     *
+     * @author Jonas Faure
+     * @version 0.1.5
+     * @param book
+     * @return
+     * @throws SQLException
+     */
+    public int createBook(BookBean book) throws SQLException;
+
+    /**
+     * CRUD method for Book table
+     *
+     * @author Jonas Faure
+     * @version 0.1.5
+     * @param book
+     * @param authors
+     * @param formats
+     * @param genres
+     * @return
+     * @throws SQLException
+     */
+    public int createBook(BookBean book, List<AuthorBean> authors,
+            List<FormatBean> formats, List<GenreBean> genres
+    ) throws SQLException;
+
+    /**
+     * CRUD method for Book table
+     *
+     * @author Jonas Faure
+     * @version 0.1.5
+     * @param book
+     * @param authors
+     * @param formats
+     * @param genres
+     * @return
+     * @throws SQLException
+     */
+    public int updateBook(BookBean book, List<AuthorBean> authors,
+            List<FormatBean> formats, List<GenreBean> genres
+    ) throws SQLException;
+    
+    /**
+     * CRUD method for Book table
+     *
+     * @author Jonas Faure
+     * @version 0.1.5
+     * @param book_id
+     * @return
+     * @throws SQLException
+     */
+    public int deleteBook(int book_id) throws SQLException;
+    
+    /**
+     * CRUD method for Book table
+     *
+     * @author Jonas Faure
+     * @version 0.1.5
+     * @return
+     * @throws SQLException
+     */
+    public List<BookBean> getAllBook() throws SQLException;
+    
+    /**
+     * CRUD method for Book table
+     *
+     * @author Jonas Faure
+     * @version 0.1.5
+     * @param authors
+     * @return
+     * @throws SQLException
+     */
+    public List<BookBean> getBookByAuthors(AuthorBean...authors) throws SQLException;
+    
+    /**
+     * CRUD method for Book table
+     *
+     * @author Jonas Faure
+     * @version 0.1.5
+     * @param formats
+     * @return
+     * @throws SQLException
+     */
+    public List<BookBean> getBookByFormats(FormatBean...formats) throws SQLException;
+    
+    /**
+     * CRUD method for Book table
+     *
+     * @author Jonas Faure
+     * @version 0.1.5
+     * @param genres
+     * @return
+     * @throws SQLException
+     */
+    public List<BookBean> getBookByGenres(GenreBean...genres) throws SQLException;
+    
+    
 }
