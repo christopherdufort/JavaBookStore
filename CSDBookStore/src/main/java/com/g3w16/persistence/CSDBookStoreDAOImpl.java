@@ -5,12 +5,14 @@
  */
 package com.g3w16.persistence;
 
+import com.g3w16.beans.AdBean;
 import com.g3w16.beans.AuthorBean;
 import com.g3w16.beans.BookBean;
 import com.g3w16.beans.FormatBean;
 import com.g3w16.beans.GenreBean;
 import com.g3w16.beans.InvoiceBean;
 import com.g3w16.beans.InvoiceDetailBean;
+import com.g3w16.beans.NewsFeedBean;
 import com.g3w16.beans.RegisteredUserBean;
 import com.g3w16.beans.ReviewBean;
 import com.g3w16.beans.SurveyBean;
@@ -54,6 +56,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      * @return list of all provinces
      * @throws SQLException
      */
+    @Override
     public List<ProvinceBean> findAllProvinces() throws SQLException {
         List<ProvinceBean> provinces = new ArrayList<>();
 
@@ -81,7 +84,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      * This method gets a province bean by name.
      *
      * @author Giuseppe Campanelli
-     * @param province province name to get bean of
+     * @param name province name to get bean of
      * @return province bean
      * @throws SQLException
      */
@@ -140,6 +143,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      * @return last id inserted
      * @throws SQLException
      */
+    @Override
     public int createRegisteredUser(String emailAddress, String password) throws SQLException {
         int result = 0;
 
@@ -164,6 +168,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      * @return list of all users
      * @throws SQLException
      */
+    @Override
     public List<RegisteredUserBean> findAllUsers() throws SQLException {
         List<RegisteredUserBean> users = new ArrayList<>();
 
@@ -192,6 +197,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      * @return registered user bean
      * @throws SQLException
      */
+    @Override
     public RegisteredUserBean findUserById(int id) throws SQLException {
         RegisteredUserBean user = new RegisteredUserBean();
 
@@ -221,6 +227,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      * @return rows affected
      * @throws SQLException
      */
+    @Override
     public int setAccountStatus(int id, boolean isActive) throws SQLException {
         int result = 0;
         String update = "UPDATE user SET active = ? WHERE user_id = ? ";
@@ -246,6 +253,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      * @return rows affected
      * @throws SQLException
      */
+    @Override
     public int setManagerStatus(int id, boolean isManager) throws SQLException {
         int result = 0;
         String update = "UPDATE user SET manager = ? WHERE user_id = ? ";
@@ -270,6 +278,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      * @return rows affected
      * @throws SQLException
      */
+    @Override
     public int updateUserBilling(RegisteredUserBean updatedUser, int titleIndex, int provinceIndex) throws SQLException {
         int result = 0;
         String update = "UPDATE user SET title_id = ?, first_name = ?, last_name = ?, company_name = ?, "
@@ -306,6 +315,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      * @return
      * @throws SQLException
      */
+    @Override
     public int updateUserPassword(int id, String password) throws SQLException {
         int result = 0;
         String update = "UPDATE user SET password = ? WHERE user_id = ? ";
@@ -1048,7 +1058,82 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
         }
         return surveyBean;
     }
+    /**
+     * Ad table select by id. Retrieve one record from the given table based
+     * on the primary key
+     *
+     * @author Christopher Dufort
+     * @version 0.1.6 - last modified 2/7/2016
+     * @param id
+     * @return the Ad object
+     * @throws java.sql.SQLException
+     */
+    @Override
+    public AdBean findAdById(int id) throws SQLException{
+        //If there is no record with the requested id, null object will be returned.
+        AdBean adBean = null;
 
+        String selectQuery = "SELECT ad_id, ad_filename FROM ad WHERE ID=?";
+
+        // Using try with resources, available since Java 1.7
+        // Class that implement the Closable interface created in the parenthesis () will be closed when the block ends.
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                // You must use PreparedStatements to guard against SQL Injection
+                PreparedStatement prepStatement = connection.prepareStatement(selectQuery);) {
+            // Only object creation statements can be in the parenthesis so first try-with-resources block ends
+            prepStatement.setInt(1, id);
+            // A new try-with-resources block for creating the ResultSet object
+            try (ResultSet resultSet = prepStatement.executeQuery()) {
+
+                if (resultSet.next()) {
+                    adBean = new AdBean();
+
+                    adBean.setAdId(id);
+                    adBean.setAdFilename(resultSet.getString("ad_filename"));
+                }
+            }
+        }
+        return adBean;
+    }
+    
+    /**
+     * NewsFeed table select by id. Retrieve one record from the given table based
+     * on the primary key
+     *
+     * @author Christopher Dufort
+     * @version 0.1.6 - last modified 2/7/2016
+     * @param id
+     * @return the NewsFeed object
+     * @throws java.sql.SQLException
+     */
+    @Override
+    public NewsFeedBean findNewsFeedById(int id) throws SQLException{
+        //If there is no record with the requested id, null object will be returned.
+        NewsFeedBean newsFeedBean = null;
+
+        String selectQuery = "SELECT news_feed_id, news_feed_link FROM news_feed WHERE ID=?";
+
+        // Using try with resources, available since Java 1.7
+        // Class that implement the Closable interface created in the parenthesis () will be closed when the block ends.
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                // You must use PreparedStatements to guard against SQL Injection
+                PreparedStatement prepStatement = connection.prepareStatement(selectQuery);) {
+            // Only object creation statements can be in the parenthesis so first try-with-resources block ends
+            prepStatement.setInt(1, id);
+            // A new try-with-resources block for creating the ResultSet object
+            try (ResultSet resultSet = prepStatement.executeQuery()) {
+
+                if (resultSet.next()) {
+                    newsFeedBean = new NewsFeedBean();
+
+                    newsFeedBean.setNewsFeedId(id);
+                    newsFeedBean.setNewsFeedLink(resultSet.getString("news_feed_link"));
+                }
+            }
+        }
+        return newsFeedBean;
+    }
+    
     private RegisteredUserBean createUser(final ResultSet resultSet) throws SQLException {
         int titleId, provinceId;
 
@@ -1811,5 +1896,10 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
             }
         }
         return books;
+    }
+
+    @Override
+    public int createBook(BookBean book) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
