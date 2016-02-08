@@ -502,7 +502,7 @@ public interface CSDBookStoreDAO {
      * @return the Ad object
      * @throws java.sql.SQLException
      */
-    public AdBean findAdById(int id) throws SQLException; 
+    public AdBean findAdById(int id) throws SQLException;
     
     /**
      * NewsFeed table select by id. Retrieve one record from the given table based
@@ -667,5 +667,40 @@ public interface CSDBookStoreDAO {
      */
     public List<BookBean> getBookByGenres(GenreBean...genres) throws SQLException;
     
+    /**
+     * Method used to retrieve a list of books based on provided title;
+     *
+     * @author Christopher Dufort
+     * @version 0.1.7 - last modified 2/7/2016
+     * @param title
+     *          Book tittle in string format used to search for books
+     * @return the book objects where the titles match
+     * @throws java.sql.SQLException
+     */
+    public List<BookBean> getBookByTitle(String title) throws SQLException;
     
+    /**
+     * Method used to retrieve a book based on provided isbn;
+     * ISBN should be unique
+     *
+     * @author Christopher Dufort
+     * @version 0.1.7 - last modified 2/7/2016
+     * @param isbn
+     *          Unique isbn in string format used to search for books
+     * @return the book object matching the isbn
+     * @throws java.sql.SQLException
+     */
+    public BookBean getBookByISBN(String isbn) throws SQLException;
+    
+     /**
+     * Method used to retrieve a list of books based on provided publisher;
+     *
+     * @author Christopher Dufort
+     * @version 0.1.7 - last modified 2/7/2016
+     * @param publisher
+     *          publisher name in string format used to search for books
+     * @return the list of books matching publisher
+     * @throws java.sql.SQLException
+     */   
+    public List<BookBean> getBookByPublisher(String publisher) throws SQLException;
 }

@@ -8,31 +8,32 @@ package com.g3w16.beans;
 /**
  *
  * @author jesuisnuageux
+ * @author Christopher Dufort
  */
 public class AuthorBean {
-    private Integer id;
-    private String name;
+    private Integer author_id;
+    private String author_name;
 
     public AuthorBean(){}
     
     public AuthorBean(final Integer id, final String name) {
-        this.name = name;
+        this.author_name = name;
     }
 
-    public String getName() {
-        return name;
+    public String getAuthor_name() {
+        return author_name;
     }
 
-    public void setName(final String name) {
-        this.name = name;
+    public void setAuthor_name(final String author_name) {
+        this.author_name = author_name;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getAuthor_id() {
+        return author_id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setAuthor_id(Integer author_id) {
+        this.author_id = author_id;
     }
     
 }
