@@ -1489,24 +1489,9 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
     @Override
     public int deleteBook(int book_id) throws SQLException {
         int result = 0;
-        String queryBook = "DELETE FROM book WHERE book_id=?";
-        String queryBookAuthor = "DELETE FROM book_author WHERE book_id=?";
-        String queryBookFormat = "DELETE FROM book_format WHERE book_id=?";
-        String queryBookGenre = "DELETE FROM book_genre WHERE book_id=?";
+        String queryBook = "UPDATE book SET availble=FALSE WHERE book_id=?";
         try(Connection connection = CSDBookStoreSource.getConnection();
-                PreparedStatement pStatementBook = connection.prepareStatement(queryBook);
-                PreparedStatement pStatementBookAuthor = connection.prepareStatement(queryBookAuthor);
-                PreparedStatement pStatementBookFormat = connection.prepareStatement(queryBookFormat);
-                PreparedStatement pStatementBookGenre = connection.prepareStatement(queryBookGenre);){
-            // delete relation between book & author
-            pStatementBookAuthor.setInt(1, book_id);
-            result += pStatementBookAuthor.executeUpdate();
-            // delete relation book & format 
-            pStatementBookFormat.setInt(1, book_id);
-            result += pStatementBookFormat.executeUpdate();
-            //delete relation book & genre
-            pStatementBookGenre.setInt(1, book_id);
-            result += pStatementBookGenre.executeUpdate();
+                PreparedStatement pStatementBook = connection.prepareStatement(queryBook);){
             //delete book
             pStatementBook.setInt(1, book_id);
             result+= pStatementBook.executeUpdate();
