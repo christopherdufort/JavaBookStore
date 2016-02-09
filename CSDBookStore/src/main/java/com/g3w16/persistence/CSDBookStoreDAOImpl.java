@@ -1427,7 +1427,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
     }
 
     @Override
-    public int createBook(BookBean book, List<AuthorBean> authors, List<FormatBean> formats, List<GenreBean> genres) throws SQLException {
+    public int createBook(BookBean book) throws SQLException {
         String queryBook = "INSERT INTO book (isbn,title,publisher,publish_date,"
                 + "page_number,wholesale_price,list_price,sale_price"
                 + "date_entered,available,synopsis )"
@@ -1462,7 +1462,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
             }
 
             // Create relation between book & author
-            for (AuthorBean author : authors) {
+            for (AuthorBean author : book.getAuthors()) {
                 try (PreparedStatement pStatementBookAuthor = connection.prepareStatement(queryInsertBookAuthor)) {
                     pStatementBookAuthor.setInt(1, book.getId());
                     pStatementBookAuthor.setInt(2, author.getAuthor_id());
@@ -1470,7 +1470,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
                 }
             }
             // Create relation between book & format
-            for (FormatBean format : formats) {
+            for (FormatBean format : book.getFormats()) {
                 try(PreparedStatement pStatementBookFormat = connection.prepareStatement(queryInsertBookFormat)){
                     pStatementBookFormat.setInt(1, book.getId());
                     pStatementBookFormat.setInt(2, format.getFormat_id());
@@ -1478,7 +1478,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
                 }
             }
             // Create relation between book & genre
-            for (GenreBean genre : genres){
+            for (GenreBean genre : book.getGenres()){
                 try(PreparedStatement pStatementBookGenre = connection.prepareStatement(queryInsertBookGenre)){
                     pStatementBookGenre.setInt(1, book.getId());
                     pStatementBookGenre.setInt(2, genre.getGenre_id());
@@ -1491,7 +1491,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
     }
 
     @Override
-    public int updateBook(BookBean book, List<AuthorBean> authors, List<FormatBean> formats, List<GenreBean> genres) throws SQLException {
+    public int updateBook(BookBean book) throws SQLException {
         String queryBook = "UPDATE book SET isbn=?,title=?,publisher=?,publish_date=?,"
                 + "page_number=?,wholesale_price=?,list_price=?,sale_price=?"
                 + "date_entered=?,available=?,synopsis=? )"
@@ -1536,7 +1536,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
             pStatementPurgeBookAuthor.setInt(1,book.getId());
             result+=pStatementPurgeBookAuthor.executeUpdate();
             // Create relation between book & author
-            for (AuthorBean author : authors) {
+            for (AuthorBean author : book.getAuthors()) {
                 try (PreparedStatement pStatementBookAuthor = connection.prepareStatement(queryInsertBookAuthor)) {
                     pStatementBookAuthor.setInt(1, book.getId());
                     pStatementBookAuthor.setInt(2, author.getAuthor_id());
@@ -1547,7 +1547,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
             pStatementPurgeBookFormat.setInt(1,book.getId());
             result+=pStatementPurgeBookFormat.executeUpdate();
             // Create relation between book & format
-            for (FormatBean format : formats) {
+            for (FormatBean format : book.getFormats()) {
                 try(PreparedStatement pStatementBookFormat = connection.prepareStatement(queryInsertBookFormat)){
                     pStatementBookFormat.setInt(1, book.getId());
                     pStatementBookFormat.setInt(2, format.getFormat_id());
@@ -1558,7 +1558,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
             pStatementPurgeBookGenre.setInt(1,book.getId());
             result+=pStatementPurgeBookGenre.executeUpdate();
             // Create relation between book & genre
-            for (GenreBean genre : genres){
+            for (GenreBean genre : book.getGenres()){
                 try(PreparedStatement pStatementBookGenre = connection.prepareStatement(queryInsertBookGenre)){
                     pStatementBookGenre.setInt(1, book.getId());
                     pStatementBookGenre.setInt(2, genre.getGenre_id());
@@ -1880,11 +1880,6 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
             }
         }
         return books;
-    }
-
-    @Override
-    public int createBook(BookBean book) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
