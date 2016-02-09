@@ -1816,7 +1816,13 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
         }
         return books;
     }
-
+    /**
+     * @author Jonas Faure
+     * @author Christopher Dufort
+     * @param genres
+     * @return
+     * @throws SQLException 
+     */
     @Override
     public List<BookBean> getBookByGenres(GenreBean... genres) throws SQLException {
         // building select query
@@ -1833,9 +1839,9 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
         }else{
             return getAllBook();
         }
-        String queryAuthors = "SELET * FROM author a WHERE EXISTS(SELECT 1 FROM book_author ba WHERE ba.book_id=? AND ba.author_id=a.author_id)";
-        String queryFormats = "SELET * FROM format f WHERE EXISTS(SELECT 1 FROM book_format bf WHERE bf.book_id=? AND bf.format_id=f.format_id)";
-        String queryGenres = "SELET * FROM genre g WHERE EXISTS(SELECT 1 FROM book_genre bg WHERE bg.book_id=? AND bg.genre_id=g.genre_id)";
+        String queryAuthors = "SELECT * FROM author a WHERE EXISTS(SELECT 1 FROM book_author ba WHERE ba.book_id=? AND ba.author_id=a.author_id)";
+        String queryFormats = "SELECT * FROM format f WHERE EXISTS(SELECT 1 FROM book_format bf WHERE bf.book_id=? AND bf.format_id=f.format_id)";
+        String queryGenres = "SELECT * FROM genre g WHERE EXISTS(SELECT 1 FROM book_genre bg WHERE bg.book_id=? AND bg.genre_id=g.genre_id)";
         List<BookBean> books = new ArrayList<>();
         // selecting books from db
         try(Connection connection = CSDBookStoreSource.getConnection();
@@ -1901,101 +1907,295 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
     public int createBook(BookBean book) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    /**
+     * Method used to retrieve a list of books based on provided title;
+     *
+     * @author Christopher Dufort
+     * @version 0.1.8 - last modified 2/8/2016
+     * @param title
+     *          Book tittle in string format used to search for books
+     * @return the book objects where the titles match
+     * @throws java.sql.SQLException
+     */
     @Override
     public List<BookBean> getBookByTitle(String title) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        //If there is no record with the requested id, null object will be returned.
+        List<BookBean> bookBeans = null;
+        List<AuthorBean> authorBeans = null;
+        List<FormatBean> formatBeans = null;
+        List<GenreBean> genreBeans = null;
 
+        String selectQuery = "SELECT book_id, isbn, title, publisher, publish_date, page_number,"
+                + " wholesale_price, list_price, sale_price, date_entered, available, overall_rating, synopsis,"
+                + " author_id, author_name FROM book WHERE title LIKE %?%";
+        
+        String authorQuery = "SELECT * FROM author a WHERE EXISTS(SELECT 1 FROM book_author ba WHERE ba.book_id=? AND ba.author_id=a.author_id)";
+        String formatQuery = "SELECT * FROM format f WHERE EXISTS(SELECT 1 FROM book_format bf WHERE bf.book_id=? AND bf.format_id=f.format_id)";
+        String genreQuery = "SELECT * FROM genre g WHERE EXISTS(SELECT 1 FROM book_genre bg WHERE bg.book_id=? AND bg.genre_id=g.genre_id)";
+        
+         bookBeans = new ArrayList<>();
+        // Using try with resources, available since Java 1.7
+        // Class that implement the Closable interface created in the
+        // parenthesis () will be closed when the block ends.
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                // You must use PreparedStatements to guard against SQL Injection
+                PreparedStatement ps1 = connection.prepareStatement(selectQuery);
+                PreparedStatement ps2 = connection.prepareStatement(authorQuery);
+                PreparedStatement ps3 = connection.prepareStatement(formatQuery);
+                PreparedStatement ps4 = connection.prepareStatement(genreQuery); ) {
+            
+            // Only object creation statements can be in the parenthesis so
+            // first try-with-resources block ends
+            ps1.setString(1, title);
+            // A new try-with-resources block for creating the ResultSet object
+            try (ResultSet resultSet = ps1.executeQuery()) {
+                
+                //Many books could match so loop.
+                while (resultSet.next()) {
+                    BookBean bookBean = new BookBean(
+                        resultSet.getInt("book_id"),
+                        resultSet.getString("isbn"),
+                        resultSet.getString("title"),
+                        resultSet.getString("publisher"),
+                        resultSet.getDate("publish_date"),
+                        resultSet.getInt("page_number"),
+                        resultSet.getDouble("wholesale_price"),
+                        resultSet.getDouble("list_price"),
+                        resultSet.getDouble("sale_price"),
+                        resultSet.getDate("date_entered"),
+                        resultSet.getBoolean("available"),
+                        resultSet.getDouble("overall_rating"),
+                        resultSet.getString("synopsis")     
+                    ); 
+                    
+                    //create author objects for each author of the book
+                    ps2.setInt(1, bookBean.getId());
+                    ResultSet authorResultSet=ps2.executeQuery();
+                    
+                    while(authorResultSet.next()){
+                        bookBean.getAuthors().add(new AuthorBean(
+                                authorResultSet.getInt("author_id"), 
+                                authorResultSet.getString("author_name")));
+                    }
+                    
+                    //create format objects for each format of the book
+                    ps3.setInt(1, bookBean.getId());
+                    ResultSet formatResultSet=ps3.executeQuery();
+                    
+                    while(formatResultSet.next()){
+                        bookBean.getFormats().add(new FormatBean(
+                                formatResultSet.getInt("format_id"), 
+                                formatResultSet.getString("extension")));
+                    }
+                    
+                    //create genre objects for each genre of the book
+                    ps4.setInt(1, bookBean.getId());
+                    ResultSet genreResultSet=ps4.executeQuery();
+                    
+                    while(genreResultSet.next()){
+                        bookBean.getGenres().add(new GenreBean(
+                                genreResultSet.getInt("genre_id"), 
+                                genreResultSet.getString("genre_name")));
+                    }
+                 bookBeans.add(bookBean);
+                }
+            }
+        }//end of connection try block
+        return bookBeans;
+    }
+    
+     /**
+     * Method used to retrieve a book based on provided isbn;
+     * ISBN should be unique
+     *
+     * @author Christopher Dufort
+     * @version 0.1.8 - last modified 2/8/2016
+     * @param isbn
+     *          Unique isbn in string format used to search for books
+     * @return the book object matching the isbn
+     * @throws java.sql.SQLException
+     */
     @Override
     public BookBean getBookByISBN(String isbn) throws SQLException {
-         throw new UnsupportedOperationException("Not finished "); //To change body of generated methods, choose Tools | Templates.
-//        //If there is no record with the requested id, null object will be returned.
-//        BookBean bookBean = null;
-//        List<AuthorBean> authorBeans = null;
-//        List<FormatBean> formatBeans = null;
-//        List<GenreBean> genreBeans = null;
-//
-//        String selectBookQuery = "SELECT book_id, isbn, title, publisher, publish_date, page_number,"
-//                + " wholesale_price, list_price, sale_price, date_entered, available, overall_rating, synopsis,"
-//                + " author_id, author_name"
-//                + " FROM book b JOIN book_author ba ON b.book_id=ba.book_id JOIN author a ON ba.author_id ="
-//                + " WHERE isbn=?";
-//        
-//        String selectFormatQuery = "SELECT format_id FROM book_format where book_id=?";
-//        String selectAuthorQuery = "SELECT author_id FROM book_author where book_id=?";
-//        String SelectGenreQuery = "SELECT genre_id FROM book_genre where book_id=?";
-//        
-//        String selectedAuthorNameQuery = "SELECT author_name FROM author WHERE author_id=?";
-//        String selectExtensionQuery = "SELECT extension FROM format WHERE format_id=?";
-//        String SelectGenreNameQuery = "SELECT genre_name FROM genre WHERE genre_id=?";
-//
-//        // Using try with resources, available since Java 1.7
-//        // Class that implement the Closable interface created in the
-//        // parenthesis () will be closed when the block ends.
-//        try (Connection connection = CSDBookStoreSource.getConnection();
-//                // You must use PreparedStatements to guard against SQL Injection
-//                PreparedStatement ps1 = connection.prepareStatement(selectBookQuery);
-//                PreparedStatement ps2 = connection.prepareStatement(selectFormatQuery);
-//                PreparedStatement ps3 = connection.prepareStatement(selectAuthorQuery);
-//                PreparedStatement ps4 = connection.prepareStatement(SelectGenreQuery); ) {
-//            
-//            // Only object creation statements can be in the parenthesis so
-//            // first try-with-resources block ends
-//            prepStatement1.setString(1, isbn);
-//            // A new try-with-resources block for creating the ResultSet object
-//            try (ResultSet resultSet = prepStatement1.executeQuery()) {
-//
-//                if (resultSet.next()) {
-//                    bookBean = new BookBean(
-//                        resultSet.getInt("book_id"),
-//                        isbn,
-//                        resultSet.getString("title"),
-//                        resultSet.getString("publisher"),
-//                        resultSet.getDate("publish_date"),
-//                        resultSet.getInt("page_number"),
-//                        resultSet.getDouble("wholesale_price"),
-//                        resultSet.getDouble("list_price"),
-//                        resultSet.getDouble("sale_price"),
-//                        resultSet.getDate("date_entered"),
-//                        resultSet.getBoolean("available"),
-//                        resultSet.getDouble("overall_rating"),
-//                        resultSet.getString("synopsis")     
-//                    ); 
-//                }
-//            }
-//             //create author objects for each author of the book
-//            prepStatement2.setString(1, bookBean.getIsbn());
-//            try(ResultSet resultSet = prepStatement2.executeQuery();){
-//                
-//                 if (resultSet.next()) {
-//                     authorBeans = new ArrayList<>();
-//                     
-//                     while(resultSet.next()){
-//                         authorBeans.add(new AuthorBean())
-//                     }
-//                 }      
-//            }
-//               
-//                //create format objects for each format of the book
-//                prepStatement3.setString(1, bookBean.getIsbn());  
-//                prepStatement3.executeQuery();
-//                //create genre objects for each genre of the book 
-//                prepStatement4.setString(1, bookBean.getIsbn()); 
-//                prepStatement4.executeQuery();
-//                    
-//                    
-//                    
-//                    bookBean.getAuthors()
-//                    bookBean.getFormats()
-//                    bookBean.getGenres()
-//
-//        }//end of connection try block
-//        return bookBean;
+        //If there is no record with the requested id, null object will be returned.
+        BookBean bookBean = null;
+        List<AuthorBean> authorBeans = null;
+        List<FormatBean> formatBeans = null;
+        List<GenreBean> genreBeans = null;
+
+        String selectQuery = "SELECT book_id, isbn, title, publisher, publish_date, page_number,"
+                + " wholesale_price, list_price, sale_price, date_entered, available, overall_rating, synopsis,"
+                + " author_id, author_name FROM book WHERE isbn=?";
+        
+        String authorQuery = "SELECT * FROM author a WHERE EXISTS(SELECT 1 FROM book_author ba WHERE ba.book_id=? AND ba.author_id=a.author_id)";
+        String formatQuery = "SELECT * FROM format f WHERE EXISTS(SELECT 1 FROM book_format bf WHERE bf.book_id=? AND bf.format_id=f.format_id)";
+        String genreQuery = "SELECT * FROM genre g WHERE EXISTS(SELECT 1 FROM book_genre bg WHERE bg.book_id=? AND bg.genre_id=g.genre_id)";
+        
+
+        // Using try with resources, available since Java 1.7
+        // Class that implement the Closable interface created in the
+        // parenthesis () will be closed when the block ends.
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                // You must use PreparedStatements to guard against SQL Injection
+                PreparedStatement ps1 = connection.prepareStatement(selectQuery);
+                PreparedStatement ps2 = connection.prepareStatement(authorQuery);
+                PreparedStatement ps3 = connection.prepareStatement(formatQuery);
+                PreparedStatement ps4 = connection.prepareStatement(genreQuery); ) {
+            
+            // Only object creation statements can be in the parenthesis so
+            // first try-with-resources block ends
+            ps1.setString(1, isbn);
+            // A new try-with-resources block for creating the ResultSet object
+            try (ResultSet resultSet = ps1.executeQuery()) {
+                
+                //Single book should match no loop.
+                if (resultSet.next()) {
+                    bookBean = new BookBean(
+                        resultSet.getInt("book_id"),
+                        isbn,
+                        resultSet.getString("title"),
+                        resultSet.getString("publisher"),
+                        resultSet.getDate("publish_date"),
+                        resultSet.getInt("page_number"),
+                        resultSet.getDouble("wholesale_price"),
+                        resultSet.getDouble("list_price"),
+                        resultSet.getDouble("sale_price"),
+                        resultSet.getDate("date_entered"),
+                        resultSet.getBoolean("available"),
+                        resultSet.getDouble("overall_rating"),
+                        resultSet.getString("synopsis")     
+                    ); 
+                    
+                    //create author objects for each author of the book
+                    ps2.setInt(1, bookBean.getId());
+                    ResultSet authorResultSet=ps2.executeQuery();
+                    
+                    while(authorResultSet.next()){
+                        bookBean.getAuthors().add(new AuthorBean(
+                                authorResultSet.getInt("author_id"), 
+                                authorResultSet.getString("author_name")));
+                    }
+                    
+                    //create format objects for each format of the book
+                    ps3.setInt(1, bookBean.getId());
+                    ResultSet formatResultSet=ps3.executeQuery();
+                    
+                    while(formatResultSet.next()){
+                        bookBean.getFormats().add(new FormatBean(
+                                formatResultSet.getInt("format_id"), 
+                                formatResultSet.getString("extension")));
+                    }
+                    
+                    //create genre objects for each genre of the book
+                    ps4.setInt(1, bookBean.getId());
+                    ResultSet genreResultSet=ps4.executeQuery();
+                    
+                    while(genreResultSet.next()){
+                        bookBean.getGenres().add(new GenreBean(
+                                genreResultSet.getInt("genre_id"), 
+                                genreResultSet.getString("genre_name")));
+                    }
+                 //Only one or zero book should be found.
+                }
+            }
+        }//end of connection try block
+        return bookBean;
     }
 
+    /**
+     * Method used to retrieve a list of books based on provided publisher;
+     *
+     * @author Christopher Dufort
+     * @version 0.1.7 - last modified 2/7/2016
+     * @param publisher
+     *          publisher name in string format used to search for books
+     * @return the list of books matching publisher
+     * @throws java.sql.SQLException
+     */ 
     @Override
     public List<BookBean> getBookByPublisher(String publisher) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+      //If there is no record with the requested id, null object will be returned.
+        List<BookBean> bookBeans = null;
+        List<AuthorBean> authorBeans = null;
+        List<FormatBean> formatBeans = null;
+        List<GenreBean> genreBeans = null;
+
+        String selectQuery = "SELECT book_id, isbn, title, publisher, publish_date, page_number,"
+                + " wholesale_price, list_price, sale_price, date_entered, available, overall_rating, synopsis,"
+                + " author_id, author_name FROM book WHERE publisher LIKE %?%";
+        
+        String authorQuery = "SELECT * FROM author a WHERE EXISTS(SELECT 1 FROM book_author ba WHERE ba.book_id=? AND ba.author_id=a.author_id)";
+        String formatQuery = "SELECT * FROM format f WHERE EXISTS(SELECT 1 FROM book_format bf WHERE bf.book_id=? AND bf.format_id=f.format_id)";
+        String genreQuery = "SELECT * FROM genre g WHERE EXISTS(SELECT 1 FROM book_genre bg WHERE bg.book_id=? AND bg.genre_id=g.genre_id)";
+        
+         bookBeans = new ArrayList<>();
+        // Using try with resources, available since Java 1.7
+        // Class that implement the Closable interface created in the
+        // parenthesis () will be closed when the block ends.
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                // You must use PreparedStatements to guard against SQL Injection
+                PreparedStatement ps1 = connection.prepareStatement(selectQuery);
+                PreparedStatement ps2 = connection.prepareStatement(authorQuery);
+                PreparedStatement ps3 = connection.prepareStatement(formatQuery);
+                PreparedStatement ps4 = connection.prepareStatement(genreQuery); ) {
+            
+            // Only object creation statements can be in the parenthesis so
+            // first try-with-resources block ends
+            ps1.setString(1, publisher);
+            // A new try-with-resources block for creating the ResultSet object
+            try (ResultSet resultSet = ps1.executeQuery()) {
+                
+                //Many books could match so loop.
+                while (resultSet.next()) {
+                    BookBean bookBean = new BookBean(
+                        resultSet.getInt("book_id"),
+                        resultSet.getString("isbn"),
+                        resultSet.getString("title"),
+                        resultSet.getString("publisher"),
+                        resultSet.getDate("publish_date"),
+                        resultSet.getInt("page_number"),
+                        resultSet.getDouble("wholesale_price"),
+                        resultSet.getDouble("list_price"),
+                        resultSet.getDouble("sale_price"),
+                        resultSet.getDate("date_entered"),
+                        resultSet.getBoolean("available"),
+                        resultSet.getDouble("overall_rating"),
+                        resultSet.getString("synopsis")     
+                    ); 
+                    
+                    //create author objects for each author of the book
+                    ps2.setInt(1, bookBean.getId());
+                    ResultSet authorResultSet=ps2.executeQuery();
+                    
+                    while(authorResultSet.next()){
+                        bookBean.getAuthors().add(new AuthorBean(
+                                authorResultSet.getInt("author_id"), 
+                                authorResultSet.getString("author_name")));
+                    }
+                    
+                    //create format objects for each format of the book
+                    ps3.setInt(1, bookBean.getId());
+                    ResultSet formatResultSet=ps3.executeQuery();
+                    
+                    while(formatResultSet.next()){
+                        bookBean.getFormats().add(new FormatBean(
+                                formatResultSet.getInt("format_id"), 
+                                formatResultSet.getString("extension")));
+                    }
+                    
+                    //create genre objects for each genre of the book
+                    ps4.setInt(1, bookBean.getId());
+                    ResultSet genreResultSet=ps4.executeQuery();
+                    
+                    while(genreResultSet.next()){
+                        bookBean.getGenres().add(new GenreBean(
+                                genreResultSet.getInt("genre_id"), 
+                                genreResultSet.getString("genre_name")));
+                    }
+                 bookBeans.add(bookBean);
+                }
+            }
+        }//end of connection try block
+        return bookBeans;
     }
 }
