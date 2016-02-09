@@ -1,64 +1,10 @@
--- phpMyAdmin SQL Dump
--- version 4.4.10
--- http://www.phpmyadmin.net
---
--- Host: localhost:3306
--- Generation Time: Feb 06, 2016 at 03:29 AM
--- Server version: 5.5.42
--- PHP Version: 5.6.10
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
-
---
--- Database: `g3w16`
---
-
--- --------------------------------------------------------
-
---
--- Table structure for table `ad`
---
-
-CREATE TABLE IF NOT EXISTS `ad` (
-  `ad_id` int(6) NOT NULL,
-  `ad_filename` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `approval`
---
-
-CREATE TABLE IF NOT EXISTS `approval` (
-  `approval_id` int(11) NOT NULL,
-  `approval_status` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `approval`
---
+USE g3w16;
 
 INSERT INTO `approval` (`approval_id`, `approval_status`) VALUES
 (1, 'Approved'),
 (2, 'Pending'),
 (3, 'Denied');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `author`
---
-
-CREATE TABLE IF NOT EXISTS `author` (
-  `author_id` int(6) NOT NULL,
-  `author_name` varchar(30) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=145 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `author`
---
 
 INSERT INTO `author` (`author_id`, `author_name`) VALUES
 (1, 'Muhammad H. Rashid'),
@@ -206,32 +152,6 @@ INSERT INTO `author` (`author_id`, `author_name`) VALUES
 (143, 'Andrew Peterson'),
 (144, 'Lee Child');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `book`
---
-
-CREATE TABLE IF NOT EXISTS `book` (
-  `book_id` int(6) NOT NULL,
-  `isbn` varchar(14) NOT NULL,
-  `title` varchar(200) NOT NULL,
-  `publisher` varchar(70) NOT NULL,
-  `publish_date` datetime NOT NULL,
-  `page_number` int(5) NOT NULL,
-  `wholesale_price` decimal(15,2) NOT NULL,
-  `list_price` decimal(15,2) DEFAULT NULL,
-  `sale_price` decimal(15,2) DEFAULT NULL,
-  `date_entered` datetime NOT NULL,
-  `available` bit(1) NOT NULL,
-  `overall_rating` decimal(2,1) NOT NULL DEFAULT '0.0',
-  `synopsis` mediumtext
-) ENGINE=InnoDB AUTO_INCREMENT=104 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `book`
---
-
 INSERT INTO `book` (`book_id`, `isbn`, `title`, `publisher`, `publish_date`, `page_number`, `wholesale_price`, `list_price`, `sale_price`, `date_entered`, `available`, `overall_rating`, `synopsis`) VALUES
 (1, '978-1305635166', 'Microelectronic Circuits: Analysis and Design', 'Thomson-Engineering', '2016-01-11 00:00:00', 1360, '150.00', '317.95', '309.08', '2016-01-30 00:00:00', b'1', '0.0', '''Take a ''''breadth-first'''' approach to learning electronics with a strong emphasis on design and simulation in MICROELECTRONIC CIRCUITS: ANALYSIS AND DESIGN, 3E. This book introduces the general characteristics of circuits (ICs) to prepare you to effectively use circuit design and analysis techniques. The author then offers a more detailed study of devices and circuits and how they operate within ICs. Important circuits are analyzed in worked-out examples to introduce basic techniques and emphasize the effects of parameter variations. More than half of the problems and examples concentrate on design and use software tools extensively. You learn to apply theory to real-world design problems as you master computer simulations for testing and verifying your designs'''),
 (2, '978-1608877119', 'The Art of XCOM 2', 'Insight Editions', '2016-01-22 00:00:00', 192, '25.00', '56.95', '50.68', '2016-01-30 00:00:00', b'1', '0.0', 'From the developer behind the Civilization series, XCOM is an award-winning, deeply engrossing strategy game. With the Earth under attack by a super-advanced alien race, players command an elite paramilitary organization called XCOM to repel the extraterrestrial offensive and defend humanity. In The Art of XCOM 2, readers get a behind-the-scenes look at the incredible concept art created for the series and hear from key developers and artists about the challenges, secrets, and rewards of creating this landmark series.'),
@@ -338,20 +258,6 @@ INSERT INTO `book` (`book_id`, `isbn`, `title`, `publisher`, `publish_date`, `pa
 (102, 'B00H3QQGV6', 'Ready to Kill (The Nathan McBride Series Book 4)', 'Thomas & Mercer', '2014-04-29 00:00:00', 348, '7.26', '7.26', '7.26', '2016-01-30 00:00:00', b'1', '0.0', '''When a mysterious note referencing a top-secret US operation is tossed over the wall of the embassy in Nicaragua, Nathan McBride and his old pal Harv are called out of retirement by CIA Director Rebecca Cantrell and sent to Central America. Cantrell wants the situation resolved quickly and knows that Nathan is the man to do it,  after all, he has a history with the place. The jungle he and Harv are about to land in is the same one that Nathan barely escaped with his life decades before, an ordeal that left him physically and psychologically scarred. To make it out alive a second time, Nathan will have to face down his own demons and square off with a ruthless killer who learned from the best, Nathan himself. '''),
 (103, 'B00R04MDAE', 'Make Me', 'Delacorte Press', '2015-09-08 00:00:00', 417, '15.99', '15.99', '15.99', '2016-01-30 00:00:00', b'1', '0.0', '''?Why is this town called Mother?s Rest?? That?s all Reacher wants to know. But no one will tell him. It?s a tiny place hidden in a thousand square miles of wheat fields, with a railroad stop, and sullen and watchful people, and a worried woman named Michelle Chang, who mistakes him for someone else: her missing partner in a private investigation she thinks must have started small and then turned lethal. Reacher has no particular place to go, and all the time in the world to get there, and there?s something about Chang . . . so he teams up with her and starts to ask around. He thinks: How bad can this thing be? But before long he?s plunged into a desperate race through LA, Chicago, Phoenix, and San Francisco, and through the hidden parts of the internet, up against thugs and assassins every step of the way?right back to where he started, in Mother?s Rest, where he must confront the worst nightmare he could imagine. Walking away would have been easier. But as always, Reacher?s rule is: If you want me to stop, you?re going to have to make me.''');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `book_author`
---
-
-CREATE TABLE IF NOT EXISTS `book_author` (
-  `book_id` int(6) NOT NULL,
-  `author_id` int(6) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `book_author`
---
 
 INSERT INTO `book_author` (`book_id`, `author_id`) VALUES
 (1, 1),
@@ -513,21 +419,6 @@ INSERT INTO `book_author` (`book_id`, `author_id`) VALUES
 (101, 142),
 (102, 143),
 (103, 144);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `book_format`
---
-
-CREATE TABLE IF NOT EXISTS `book_format` (
-  `book_id` int(6) NOT NULL,
-  `format_id` int(6) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `book_format`
---
 
 INSERT INTO `book_format` (`book_id`, `format_id`) VALUES
 (21, 2),
@@ -837,21 +728,6 @@ INSERT INTO `book_format` (`book_id`, `format_id`) VALUES
 (90, 11),
 (100, 11);
 
--- --------------------------------------------------------
-
---
--- Table structure for table `book_genre`
---
-
-CREATE TABLE IF NOT EXISTS `book_genre` (
-  `book_id` int(6) NOT NULL,
-  `genre_id` int(3) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `book_genre`
---
-
 INSERT INTO `book_genre` (`book_id`, `genre_id`) VALUES
 (1, 1),
 (2, 1),
@@ -957,21 +833,6 @@ INSERT INTO `book_genre` (`book_id`, `genre_id`) VALUES
 (102, 5),
 (103, 5);
 
--- --------------------------------------------------------
-
---
--- Table structure for table `format`
---
-
-CREATE TABLE IF NOT EXISTS `format` (
-  `format_id` int(6) NOT NULL,
-  `extension` varchar(7) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `format`
---
-
 INSERT INTO `format` (`format_id`, `extension`) VALUES
 (2, '.cbr'),
 (3, '.chm'),
@@ -985,21 +846,6 @@ INSERT INTO `format` (`format_id`, `extension`) VALUES
 (8, 'pdb'),
 (7, 'pdf');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `genre`
---
-
-CREATE TABLE IF NOT EXISTS `genre` (
-  `genre_id` int(3) NOT NULL,
-  `genre_name` varchar(30) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `genre`
---
-
 INSERT INTO `genre` (`genre_id`, `genre_name`) VALUES
 (1, 'Computers & Technology'),
 (2, 'Travel'),
@@ -1007,23 +853,6 @@ INSERT INTO `genre` (`genre_id`, `genre_name`) VALUES
 (4, 'Religion & Spirituality'),
 (5, 'Mystery, Thriller & Suspense');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `invoice`
---
-
-CREATE TABLE IF NOT EXISTS `invoice` (
-  `invoice_id` int(11) NOT NULL,
-  `sale_date` datetime DEFAULT NULL,
-  `user_number` int(11) NOT NULL,
-  `total_net_value_of_sale` decimal(12,2) DEFAULT NULL,
-  `total_gross_value_of_sale` decimal(12,2) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `invoice`
---
 
 INSERT INTO `invoice` (`invoice_id`, `sale_date`, `user_number`, `total_net_value_of_sale`, `total_gross_value_of_sale`) VALUES
 (1, '2016-02-01 00:00:00', 1231, '16.31', '18.45'),
@@ -1033,27 +862,6 @@ INSERT INTO `invoice` (`invoice_id`, `sale_date`, `user_number`, `total_net_valu
 (5, '2016-02-05 00:00:00', 1234, '8.74', '9.81'),
 (6, '2016-02-06 00:00:00', 1334, '9.99', '13.28');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `invoice_detail`
---
-
-CREATE TABLE IF NOT EXISTS `invoice_detail` (
-  `invoice_detail_id` int(11) NOT NULL,
-  `invoice_id` int(11) NOT NULL,
-  `isbn` varchar(25) NOT NULL,
-  `pst` decimal(12,2) DEFAULT NULL,
-  `gst` decimal(12,2) DEFAULT NULL,
-  `hst` decimal(12,2) DEFAULT NULL,
-  `book_price` decimal(12,2) DEFAULT NULL,
-  `quantity` int(2) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `invoice_detail`
---
-
 INSERT INTO `invoice_detail` (`invoice_detail_id`, `invoice_id`, `isbn`, `pst`, `gst`, `hst`, `book_price`, `quantity`) VALUES
 (1, 1, '978-0894864025', '1.63', '0.82', '0.00', '16.31', 1),
 (2, 1, '978-1582705248', '2.05', '1.03', '0.00', '20.56', 1),
@@ -1061,34 +869,6 @@ INSERT INTO `invoice_detail` (`invoice_detail_id`, `invoice_id`, `isbn`, `pst`, 
 (4, 4, '978-1582705248', '2.05', '1.03', '0.00', '20.56', 1),
 (5, 5, '978-0451205360', '0.87', '0.44', '0.00', '8.74', 1);
 
--- --------------------------------------------------------
-
---
--- Table structure for table `news_feed`
---
-
-CREATE TABLE IF NOT EXISTS `news_feed` (
-  `news_feed_id` int(6) NOT NULL,
-  `news_feed_link` varchar(200) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `province`
---
-
-CREATE TABLE IF NOT EXISTS `province` (
-  `province_id` int(11) NOT NULL,
-  `province` varchar(30) NOT NULL,
-  `pst` decimal(12,2) DEFAULT NULL,
-  `gst` decimal(12,2) DEFAULT NULL,
-  `hst` decimal(12,2) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `province`
---
 
 INSERT INTO `province` (`province_id`, `province`, `pst`, `gst`, `hst`) VALUES
 (1, 'Quebec', '9.98', '5.00', NULL),
@@ -1105,68 +885,6 @@ INSERT INTO `province` (`province_id`, `province`, `pst`, `gst`, `hst`) VALUES
 (12, 'Northwest Territories', NULL, '5.00', NULL),
 (13, 'Nunavut', NULL, '5.00', NULL);
 
--- --------------------------------------------------------
-
---
--- Table structure for table `registered_user`
---
-
-CREATE TABLE IF NOT EXISTS `registered_user` (
-  `user_id` int(11) NOT NULL,
-  `email_address` varchar(50) NOT NULL,
-  `password` varchar(25) NOT NULL,
-  `title_id` int(11) DEFAULT NULL,
-  `first_name` varchar(25) DEFAULT NULL,
-  `last_name` varchar(25) DEFAULT NULL,
-  `company_name` varchar(50) DEFAULT NULL,
-  `address_one` varchar(50) DEFAULT NULL,
-  `address_two` varchar(50) DEFAULT NULL,
-  `city` varchar(25) DEFAULT NULL,
-  `province_id` int(11) DEFAULT NULL,
-  `country` varchar(25) DEFAULT NULL,
-  `postal_code` varchar(10) DEFAULT NULL,
-  `home_phone` varchar(25) DEFAULT NULL,
-  `cell_phone` varchar(25) DEFAULT NULL,
-  `manager` tinyint(1) DEFAULT '0',
-  `active` tinyint(1) DEFAULT '1'
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `review`
---
-
-CREATE TABLE IF NOT EXISTS `review` (
-  `review_id` int(11) NOT NULL,
-  `isbn` varchar(14) DEFAULT NULL,
-  `date_submitted` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `user_id` int(11) DEFAULT NULL,
-  `rating` int(11) DEFAULT NULL,
-  `approval_id` int(11) DEFAULT NULL,
-  `review_title` varchar(50) DEFAULT '',
-  `review_text` varchar(750) DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `survey`
---
-
-CREATE TABLE IF NOT EXISTS `survey` (
-  `survey_id` int(6) NOT NULL,
-  `question` varchar(200) NOT NULL,
-  `answer_one` varchar(50) NOT NULL,
-  `answer_two` varchar(50) NOT NULL,
-  `answer_three` varchar(50) NOT NULL,
-  `answer_default` varchar(50) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `survey`
---
-
 INSERT INTO `survey` (`survey_id`, `question`, `answer_one`, `answer_two`, `answer_three`, `answer_default`) VALUES
 (1, 'What is your favorite type of book?', 'Electronic copy', 'Hard Cover', 'Paperback', 'Something else'),
 (2, 'Have you ever written a book?', 'Yes atleast one', 'No never', 'Im writing one', 'It''s a secret'),
@@ -1175,20 +893,6 @@ INSERT INTO `survey` (`survey_id`, `question`, `answer_one`, `answer_two`, `answ
 (5, 'Do you keep a reading journal/list?', 'Yes its full', 'Yes but its empty', 'No', 'I want to'),
 (6, 'Is there anything in your shopping cart now?', 'Yes im buying stuff', 'No I will buy stuff soon', 'I already bought a book', 'This is a trick to get me to buy books');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `title`
---
-
-CREATE TABLE IF NOT EXISTS `title` (
-  `title_id` int(11) NOT NULL,
-  `title` varchar(10) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `title`
---
 
 INSERT INTO `title` (`title_id`, `title`) VALUES
 (1, 'Mr.'),
@@ -1196,245 +900,3 @@ INSERT INTO `title` (`title_id`, `title`) VALUES
 (3, 'Mrs.'),
 (4, 'Miss.'),
 (5, 'Dr.');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `ad`
---
-ALTER TABLE `ad`
-  ADD PRIMARY KEY (`ad_id`),
-  ADD UNIQUE KEY `ad_filename` (`ad_filename`);
-
---
--- Indexes for table `approval`
---
-ALTER TABLE `approval`
-  ADD PRIMARY KEY (`approval_id`);
-
---
--- Indexes for table `author`
---
-ALTER TABLE `author`
-  ADD PRIMARY KEY (`author_id`);
-
---
--- Indexes for table `book`
---
-ALTER TABLE `book`
-  ADD PRIMARY KEY (`book_id`),
-  ADD UNIQUE KEY `isbn` (`isbn`);
-
---
--- Indexes for table `book_author`
---
-ALTER TABLE `book_author`
-  ADD PRIMARY KEY (`book_id`,`author_id`),
-  ADD KEY `book_author_author_id_fk` (`author_id`);
-
---
--- Indexes for table `book_format`
---
-ALTER TABLE `book_format`
-  ADD PRIMARY KEY (`book_id`,`format_id`),
-  ADD KEY `format_id_fk` (`format_id`);
-
---
--- Indexes for table `book_genre`
---
-ALTER TABLE `book_genre`
-  ADD PRIMARY KEY (`book_id`,`genre_id`),
-  ADD KEY `book_genre_subgenre_id_fk` (`genre_id`);
-
---
--- Indexes for table `format`
---
-ALTER TABLE `format`
-  ADD PRIMARY KEY (`format_id`),
-  ADD UNIQUE KEY `extension` (`extension`);
-
---
--- Indexes for table `genre`
---
-ALTER TABLE `genre`
-  ADD PRIMARY KEY (`genre_id`);
-
---
--- Indexes for table `invoice`
---
-ALTER TABLE `invoice`
-  ADD PRIMARY KEY (`invoice_id`),
-  ADD KEY `user_number_index` (`user_number`);
-
---
--- Indexes for table `invoice_detail`
---
-ALTER TABLE `invoice_detail`
-  ADD PRIMARY KEY (`invoice_detail_id`),
-  ADD KEY `invoice_fk` (`invoice_id`);
-
---
--- Indexes for table `news_feed`
---
-ALTER TABLE `news_feed`
-  ADD PRIMARY KEY (`news_feed_id`),
-  ADD UNIQUE KEY `news_feed_link` (`news_feed_link`);
-
---
--- Indexes for table `province`
---
-ALTER TABLE `province`
-  ADD PRIMARY KEY (`province_id`);
-
---
--- Indexes for table `registered_user`
---
-ALTER TABLE `registered_user`
-  ADD PRIMARY KEY (`user_id`),
-  ADD UNIQUE KEY `email_address` (`email_address`),
-  ADD KEY `title_id` (`title_id`),
-  ADD KEY `province_id` (`province_id`);
-
---
--- Indexes for table `review`
---
-ALTER TABLE `review`
-  ADD PRIMARY KEY (`review_id`),
-  ADD KEY `approval_id_FK` (`approval_id`),
-  ADD KEY `isbn_FK` (`isbn`),
-  ADD KEY `client_id_FK` (`user_id`);
-
---
--- Indexes for table `survey`
---
-ALTER TABLE `survey`
-  ADD PRIMARY KEY (`survey_id`),
-  ADD UNIQUE KEY `question` (`question`);
-
---
--- Indexes for table `title`
---
-ALTER TABLE `title`
-  ADD PRIMARY KEY (`title_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `ad`
---
-ALTER TABLE `ad`
-  MODIFY `ad_id` int(6) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `approval`
---
-ALTER TABLE `approval`
-  MODIFY `approval_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
---
--- AUTO_INCREMENT for table `author`
---
-ALTER TABLE `author`
-  MODIFY `author_id` int(6) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
---
--- AUTO_INCREMENT for table `book`
---
-ALTER TABLE `book`
-  MODIFY `book_id` int(6) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
---
--- AUTO_INCREMENT for table `format`
---
-ALTER TABLE `format`
-  MODIFY `format_id` int(6) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
---
--- AUTO_INCREMENT for table `genre`
---
-ALTER TABLE `genre`
-  MODIFY `genre_id` int(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
---
--- AUTO_INCREMENT for table `invoice`
---
-ALTER TABLE `invoice`
-  MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
---
--- AUTO_INCREMENT for table `invoice_detail`
---
-ALTER TABLE `invoice_detail`
-  MODIFY `invoice_detail_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
---
--- AUTO_INCREMENT for table `news_feed`
---
-ALTER TABLE `news_feed`
-  MODIFY `news_feed_id` int(6) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `province`
---
-ALTER TABLE `province`
-  MODIFY `province_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
---
--- AUTO_INCREMENT for table `registered_user`
---
-ALTER TABLE `registered_user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
---
--- AUTO_INCREMENT for table `review`
---
-ALTER TABLE `review`
-  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `survey`
---
-ALTER TABLE `survey`
-  MODIFY `survey_id` int(6) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
---
--- AUTO_INCREMENT for table `title`
---
-ALTER TABLE `title`
-  MODIFY `title_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `book_author`
---
-ALTER TABLE `book_author`
-  ADD CONSTRAINT `book_author_book_id_fk` FOREIGN KEY (`book_id`) REFERENCES `book` (`book_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `book_author_author_id_fk` FOREIGN KEY (`author_id`) REFERENCES `author` (`author_id`) ON DELETE CASCADE;
-
---
--- Constraints for table `book_format`
---
-ALTER TABLE `book_format`
-  ADD CONSTRAINT `book_id_fk` FOREIGN KEY (`book_id`) REFERENCES `book` (`book_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `format_id_fk` FOREIGN KEY (`format_id`) REFERENCES `format` (`format_id`) ON DELETE CASCADE;
-
---
--- Constraints for table `book_genre`
---
-ALTER TABLE `book_genre`
-  ADD CONSTRAINT `book_genre_book_id_fk` FOREIGN KEY (`book_id`) REFERENCES `book` (`book_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `book_genre_subgenre_id_fk` FOREIGN KEY (`genre_id`) REFERENCES `genre` (`genre_id`) ON DELETE CASCADE;
-
---
--- Constraints for table `invoice_detail`
---
-ALTER TABLE `invoice_detail`
-  ADD CONSTRAINT `invoice_fk` FOREIGN KEY (`invoice_id`) REFERENCES `invoice` (`invoice_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `registered_user`
---
-ALTER TABLE `registered_user`
-  ADD CONSTRAINT `registered_user_ibfk_1` FOREIGN KEY (`title_id`) REFERENCES `title` (`title_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `registered_user_ibfk_2` FOREIGN KEY (`province_id`) REFERENCES `province` (`province_id`) ON DELETE CASCADE;
-
---
--- Constraints for table `review`
---
-ALTER TABLE `review`
-  ADD CONSTRAINT `approval_id_FK` FOREIGN KEY (`approval_id`) REFERENCES `approval` (`approval_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `isbn_FK` FOREIGN KEY (`isbn`) REFERENCES `book` (`isbn`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `client_id_FK` FOREIGN KEY (`user_id`) REFERENCES `registered_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
