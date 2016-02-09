@@ -8,32 +8,34 @@ package com.g3w16.beans;
 /**
  *
  * @author jesuisnuageux
+ * @author Christopher Dufort
+ * @version 0.1.7 - last modified 2/07/2016
  */
 public class GenreBean {
-    private Integer id;
-    private String name;
+    private Integer genre_id;
+    private String genre_name;
 
     public GenreBean() {
     }
 
     public GenreBean(final Integer id, final String name) {
-        this.name = name;
+        this.genre_name = name;
     }
 
-    public String getName() {
-        return name;
+    public String getGenre_name() {
+        return genre_name;
     }
 
-    public void setName(final String name) {
-        this.name = name;
+    public void setGenre_name(final String genre_name) {
+        this.genre_name = genre_name;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getGenre_id() {
+        return genre_id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setGenre_id(Integer genre_id) {
+        this.genre_id = genre_id;
     }
     
 }

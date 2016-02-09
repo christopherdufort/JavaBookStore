@@ -5,12 +5,14 @@
  */
 package com.g3w16.persistence;
 
+import com.g3w16.beans.AdBean;
 import com.g3w16.beans.AuthorBean;
 import com.g3w16.beans.BookBean;
 import com.g3w16.beans.FormatBean;
 import com.g3w16.beans.GenreBean;
 import com.g3w16.beans.InvoiceBean;
 import com.g3w16.beans.InvoiceDetailBean;
+import com.g3w16.beans.NewsFeedBean;
 import com.g3w16.beans.RegisteredUserBean;
 import com.g3w16.beans.ReviewBean;
 import com.g3w16.beans.SurveyBean;
@@ -54,6 +56,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      * @return list of all provinces
      * @throws SQLException
      */
+    @Override
     public List<ProvinceBean> findAllProvinces() throws SQLException {
         List<ProvinceBean> provinces = new ArrayList<>();
 
@@ -81,7 +84,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      * This method gets a province bean by name.
      *
      * @author Giuseppe Campanelli
-     * @param province province name to get bean of
+     * @param name province name to get bean of
      * @return province bean
      * @throws SQLException
      */
@@ -140,6 +143,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      * @return last id inserted
      * @throws SQLException
      */
+    @Override
     public int createRegisteredUser(String emailAddress, String password) throws SQLException {
         int result = 0;
 
@@ -164,6 +168,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      * @return list of all users
      * @throws SQLException
      */
+    @Override
     public List<RegisteredUserBean> findAllUsers() throws SQLException {
         List<RegisteredUserBean> users = new ArrayList<>();
 
@@ -192,6 +197,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      * @return registered user bean
      * @throws SQLException
      */
+    @Override
     public RegisteredUserBean findUserById(int id) throws SQLException {
         RegisteredUserBean user = new RegisteredUserBean();
 
@@ -221,6 +227,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      * @return rows affected
      * @throws SQLException
      */
+    @Override
     public int setAccountStatus(int id, boolean isActive) throws SQLException {
         int result = 0;
         String update = "UPDATE user SET active = ? WHERE user_id = ? ";
@@ -246,6 +253,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      * @return rows affected
      * @throws SQLException
      */
+    @Override
     public int setManagerStatus(int id, boolean isManager) throws SQLException {
         int result = 0;
         String update = "UPDATE user SET manager = ? WHERE user_id = ? ";
@@ -270,6 +278,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      * @return rows affected
      * @throws SQLException
      */
+    @Override
     public int updateUserBilling(RegisteredUserBean updatedUser, int titleIndex, int provinceIndex) throws SQLException {
         int result = 0;
         String update = "UPDATE user SET title_id = ?, first_name = ?, last_name = ?, company_name = ?, "
@@ -306,6 +315,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      * @return
      * @throws SQLException
      */
+    @Override
     public int updateUserPassword(int id, String password) throws SQLException {
         int result = 0;
         String update = "UPDATE user SET password = ? WHERE user_id = ? ";
@@ -1017,7 +1027,6 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
     @Override
     public SurveyBean findSurveyById(int id) throws SQLException {
         //If there is no record with the requested id, null object will be returned.
-
         SurveyBean surveyBean = null;
 
         String selectQuery = "SELECT survey_id, question, answer_one, answer_two, answer_three, answer_default FROM survey WHERE ID=?";
@@ -1048,7 +1057,82 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
         }
         return surveyBean;
     }
+    /**
+     * Ad table select by id. Retrieve one record from the given table based
+     * on the primary key
+     *
+     * @author Christopher Dufort
+     * @version 0.1.6 - last modified 2/7/2016
+     * @param id
+     * @return the Ad object
+     * @throws java.sql.SQLException
+     */
+    @Override
+    public AdBean findAdById(int id) throws SQLException{
+        //If there is no record with the requested id, null object will be returned.
+        AdBean adBean = null;
 
+        String selectQuery = "SELECT ad_id, ad_filename FROM ad WHERE ID=?";
+
+        // Using try with resources, available since Java 1.7
+        // Class that implement the Closable interface created in the parenthesis () will be closed when the block ends.
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                // You must use PreparedStatements to guard against SQL Injection
+                PreparedStatement prepStatement = connection.prepareStatement(selectQuery);) {
+            // Only object creation statements can be in the parenthesis so first try-with-resources block ends
+            prepStatement.setInt(1, id);
+            // A new try-with-resources block for creating the ResultSet object
+            try (ResultSet resultSet = prepStatement.executeQuery()) {
+
+                if (resultSet.next()) {
+                    adBean = new AdBean();
+
+                    adBean.setAdId(id);
+                    adBean.setAdFilename(resultSet.getString("ad_filename"));
+                }
+            }
+        }
+        return adBean;
+    }
+    
+    /**
+     * NewsFeed table select by id. Retrieve one record from the given table based
+     * on the primary key
+     *
+     * @author Christopher Dufort
+     * @version 0.1.6 - last modified 2/7/2016
+     * @param id
+     * @return the NewsFeed object
+     * @throws java.sql.SQLException
+     */
+    @Override
+    public NewsFeedBean findNewsFeedById(int id) throws SQLException{
+        //If there is no record with the requested id, null object will be returned.
+        NewsFeedBean newsFeedBean = null;
+
+        String selectQuery = "SELECT news_feed_id, news_feed_link FROM news_feed WHERE ID=?";
+
+        // Using try with resources, available since Java 1.7
+        // Class that implement the Closable interface created in the parenthesis () will be closed when the block ends.
+        try (Connection connection = CSDBookStoreSource.getConnection();
+                // You must use PreparedStatements to guard against SQL Injection
+                PreparedStatement prepStatement = connection.prepareStatement(selectQuery);) {
+            // Only object creation statements can be in the parenthesis so first try-with-resources block ends
+            prepStatement.setInt(1, id);
+            // A new try-with-resources block for creating the ResultSet object
+            try (ResultSet resultSet = prepStatement.executeQuery()) {
+
+                if (resultSet.next()) {
+                    newsFeedBean = new NewsFeedBean();
+
+                    newsFeedBean.setNewsFeedId(id);
+                    newsFeedBean.setNewsFeedLink(resultSet.getString("news_feed_link"));
+                }
+            }
+        }
+        return newsFeedBean;
+    }
+    
     private RegisteredUserBean createUser(final ResultSet resultSet) throws SQLException {
         int titleId, provinceId;
 
@@ -1117,11 +1201,11 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
         int result = 0;
         try (Connection connection = CSDBookStoreSource.getConnection();
                 PreparedStatement pStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);) {
-            pStatement.setString(1, author.getName());
+            pStatement.setString(1, author.getAuthor_name());
             result = pStatement.executeUpdate();
             ResultSet resultSet = pStatement.getGeneratedKeys();
             if (resultSet.next()) {
-                author.setId(resultSet.getInt(1));
+                author.setAuthor_id(resultSet.getInt(1));
             }
         }
         return result;
@@ -1145,8 +1229,8 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
         String query = "UPDATE author SET author_name = ? WHERE author_id=?";
         try (Connection connection = CSDBookStoreSource.getConnection();
                 PreparedStatement pStatement = connection.prepareStatement(query);) {
-            pStatement.setString(1, author.getName());
-            pStatement.setInt(2, author.getId());
+            pStatement.setString(1, author.getAuthor_name());
+            pStatement.setInt(2, author.getAuthor_id());
             result = pStatement.executeUpdate();
         }
         return result;
@@ -1198,7 +1282,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
             result = pStatement.executeUpdate();
             ResultSet resultSet = pStatement.getGeneratedKeys();
             if (resultSet.next()) {
-                format.setId(resultSet.getInt(1));
+                format.setFormat_id(resultSet.getInt(1));
             }
         }
         return result;
@@ -1211,7 +1295,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
         try (Connection connection = CSDBookStoreSource.getConnection();
                 PreparedStatement pStatement = connection.prepareStatement(query);) {
             pStatement.setString(1, format.getExtension());
-            pStatement.setInt(2, format.getId());
+            pStatement.setInt(2, format.getFormat_id());
             result = pStatement.executeUpdate();
         }
         return result;
@@ -1271,11 +1355,11 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
         int result = 0;
         try (Connection connection = CSDBookStoreSource.getConnection();
                 PreparedStatement pStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);) {
-            pStatement.setString(1, genre.getName());
+            pStatement.setString(1, genre.getGenre_name());
             result = pStatement.executeUpdate();
             ResultSet resultSet = pStatement.getGeneratedKeys();
             if (resultSet.next()) {
-                genre.setId(resultSet.getInt(1));
+                genre.setGenre_id(resultSet.getInt(1));
             }
         }
         return result;
@@ -1287,8 +1371,8 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
         String query = "UPDATE genre SET genre_name = ? WHERE genre_id=?";
         try (Connection connection = CSDBookStoreSource.getConnection();
                 PreparedStatement pStatement = connection.prepareStatement(query);) {
-            pStatement.setString(1, genre.getName());
-            pStatement.setInt(2, genre.getId());
+            pStatement.setString(1, genre.getGenre_name());
+            pStatement.setInt(2, genre.getGenre_id());
             result = pStatement.executeUpdate();
         }
         return result;
@@ -1374,14 +1458,14 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
             result = pStatementBook.executeUpdate();
             ResultSet resultSet = pStatementBook.getGeneratedKeys();
             if (resultSet.next()) {
-                book.setId(resultSet.getInt(1));
+                book.setBook_id(resultSet.getInt(1));
             }
 
             // Create relation between book & author
             for (AuthorBean author : authors) {
                 try (PreparedStatement pStatementBookAuthor = connection.prepareStatement(queryInsertBookAuthor)) {
                     pStatementBookAuthor.setInt(1, book.getId());
-                    pStatementBookAuthor.setInt(2, author.getId());
+                    pStatementBookAuthor.setInt(2, author.getAuthor_id());
                     result += pStatementBookAuthor.executeUpdate();
                 }
             }
@@ -1389,7 +1473,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
             for (FormatBean format : formats) {
                 try(PreparedStatement pStatementBookFormat = connection.prepareStatement(queryInsertBookFormat)){
                     pStatementBookFormat.setInt(1, book.getId());
-                    pStatementBookFormat.setInt(2, format.getId());
+                    pStatementBookFormat.setInt(2, format.getFormat_id());
                     result += pStatementBookFormat.executeUpdate();
                 }
             }
@@ -1397,7 +1481,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
             for (GenreBean genre : genres){
                 try(PreparedStatement pStatementBookGenre = connection.prepareStatement(queryInsertBookGenre)){
                     pStatementBookGenre.setInt(1, book.getId());
-                    pStatementBookGenre.setInt(2, genre.getId());
+                    pStatementBookGenre.setInt(2, genre.getGenre_id());
                     result += pStatementBookGenre.executeUpdate();
                 }
             }
@@ -1445,7 +1529,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
             result = pStatementBook.executeUpdate();
             ResultSet resultSet = pStatementBook.getGeneratedKeys();
             if (resultSet.next()) {
-                book.setId(resultSet.getInt(1));
+                book.setBook_id(resultSet.getInt(1));
             }
 
             // Purge existing relation between book & author
@@ -1455,7 +1539,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
             for (AuthorBean author : authors) {
                 try (PreparedStatement pStatementBookAuthor = connection.prepareStatement(queryInsertBookAuthor)) {
                     pStatementBookAuthor.setInt(1, book.getId());
-                    pStatementBookAuthor.setInt(2, author.getId());
+                    pStatementBookAuthor.setInt(2, author.getAuthor_id());
                     result += pStatementBookAuthor.executeUpdate();
                 }
             }
@@ -1466,7 +1550,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
             for (FormatBean format : formats) {
                 try(PreparedStatement pStatementBookFormat = connection.prepareStatement(queryInsertBookFormat)){
                     pStatementBookFormat.setInt(1, book.getId());
-                    pStatementBookFormat.setInt(2, format.getId());
+                    pStatementBookFormat.setInt(2, format.getFormat_id());
                     result += pStatementBookFormat.executeUpdate();
                 }
             }
@@ -1477,7 +1561,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
             for (GenreBean genre : genres){
                 try(PreparedStatement pStatementBookGenre = connection.prepareStatement(queryInsertBookGenre)){
                     pStatementBookGenre.setInt(1, book.getId());
-                    pStatementBookGenre.setInt(2, genre.getId());
+                    pStatementBookGenre.setInt(2, genre.getGenre_id());
                     result += pStatementBookGenre.executeUpdate();
                 }
             }
@@ -1587,7 +1671,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
                 PreparedStatement pStatementFormats = connection.prepareStatement(queryFormats);
                 PreparedStatement pStatementGenres = connection.prepareStatement(queryGenres);){
             for(int i = 0; i<authors.length; i++){
-                pStatement.setInt(i+1, authors[i].getId());
+                pStatement.setInt(i+1, authors[i].getAuthor_id());
             }
             ResultSet resultSet = pStatement.executeQuery();
             while(resultSet.next()){
@@ -1665,7 +1749,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
                 PreparedStatement pStatementFormats = connection.prepareStatement(queryFormats);
                 PreparedStatement pStatementGenres = connection.prepareStatement(queryGenres);){
             for(int i = 0; i<formats.length; i++){
-                pStatement.setInt(i+1, formats[i].getId());
+                pStatement.setInt(i+1, formats[i].getFormat_id());
             }
             ResultSet resultSet = pStatement.executeQuery();
             while(resultSet.next()){
@@ -1745,7 +1829,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
                 PreparedStatement pStatementFormats = connection.prepareStatement(queryFormats);
                 PreparedStatement pStatementGenres = connection.prepareStatement(queryGenres);){
             for(int i = 0; i<genres.length; i++){
-                pStatement.setInt(i+1, genres[i].getId());
+                pStatement.setInt(i+1, genres[i].getGenre_id());
             }
             ResultSet resultSet = pStatement.executeQuery();
             while(resultSet.next()){
@@ -1796,5 +1880,107 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
             }
         }
         return books;
+    }
+
+    @Override
+    public int createBook(BookBean book) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<BookBean> getBookByTitle(String title) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public BookBean getBookByISBN(String isbn) throws SQLException {
+         throw new UnsupportedOperationException("Not finished "); //To change body of generated methods, choose Tools | Templates.
+//        //If there is no record with the requested id, null object will be returned.
+//        BookBean bookBean = null;
+//        List<AuthorBean> authorBeans = null;
+//        List<FormatBean> formatBeans = null;
+//        List<GenreBean> genreBeans = null;
+//
+//        String selectBookQuery = "SELECT book_id, isbn, title, publisher, publish_date, page_number,"
+//                + " wholesale_price, list_price, sale_price, date_entered, available, overall_rating, synopsis,"
+//                + " author_id, author_name"
+//                + " FROM book b JOIN book_author ba ON b.book_id=ba.book_id JOIN author a ON ba.author_id ="
+//                + " WHERE isbn=?";
+//        
+//        String selectFormatQuery = "SELECT format_id FROM book_format where book_id=?";
+//        String selectAuthorQuery = "SELECT author_id FROM book_author where book_id=?";
+//        String SelectGenreQuery = "SELECT genre_id FROM book_genre where book_id=?";
+//        
+//        String selectedAuthorNameQuery = "SELECT author_name FROM author WHERE author_id=?";
+//        String selectExtensionQuery = "SELECT extension FROM format WHERE format_id=?";
+//        String SelectGenreNameQuery = "SELECT genre_name FROM genre WHERE genre_id=?";
+//
+//        // Using try with resources, available since Java 1.7
+//        // Class that implement the Closable interface created in the
+//        // parenthesis () will be closed when the block ends.
+//        try (Connection connection = CSDBookStoreSource.getConnection();
+//                // You must use PreparedStatements to guard against SQL Injection
+//                PreparedStatement ps1 = connection.prepareStatement(selectBookQuery);
+//                PreparedStatement ps2 = connection.prepareStatement(selectFormatQuery);
+//                PreparedStatement ps3 = connection.prepareStatement(selectAuthorQuery);
+//                PreparedStatement ps4 = connection.prepareStatement(SelectGenreQuery); ) {
+//            
+//            // Only object creation statements can be in the parenthesis so
+//            // first try-with-resources block ends
+//            prepStatement1.setString(1, isbn);
+//            // A new try-with-resources block for creating the ResultSet object
+//            try (ResultSet resultSet = prepStatement1.executeQuery()) {
+//
+//                if (resultSet.next()) {
+//                    bookBean = new BookBean(
+//                        resultSet.getInt("book_id"),
+//                        isbn,
+//                        resultSet.getString("title"),
+//                        resultSet.getString("publisher"),
+//                        resultSet.getDate("publish_date"),
+//                        resultSet.getInt("page_number"),
+//                        resultSet.getDouble("wholesale_price"),
+//                        resultSet.getDouble("list_price"),
+//                        resultSet.getDouble("sale_price"),
+//                        resultSet.getDate("date_entered"),
+//                        resultSet.getBoolean("available"),
+//                        resultSet.getDouble("overall_rating"),
+//                        resultSet.getString("synopsis")     
+//                    ); 
+//                }
+//            }
+//             //create author objects for each author of the book
+//            prepStatement2.setString(1, bookBean.getIsbn());
+//            try(ResultSet resultSet = prepStatement2.executeQuery();){
+//                
+//                 if (resultSet.next()) {
+//                     authorBeans = new ArrayList<>();
+//                     
+//                     while(resultSet.next()){
+//                         authorBeans.add(new AuthorBean())
+//                     }
+//                 }      
+//            }
+//               
+//                //create format objects for each format of the book
+//                prepStatement3.setString(1, bookBean.getIsbn());  
+//                prepStatement3.executeQuery();
+//                //create genre objects for each genre of the book 
+//                prepStatement4.setString(1, bookBean.getIsbn()); 
+//                prepStatement4.executeQuery();
+//                    
+//                    
+//                    
+//                    bookBean.getAuthors()
+//                    bookBean.getFormats()
+//                    bookBean.getGenres()
+//
+//        }//end of connection try block
+//        return bookBean;
+    }
+
+    @Override
+    public List<BookBean> getBookByPublisher(String publisher) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

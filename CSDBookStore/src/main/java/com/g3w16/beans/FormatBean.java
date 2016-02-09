@@ -8,9 +8,10 @@ package com.g3w16.beans;
 /**
  *
  * @author jesuisnuageux
+ * @author Christopher Dufort
  */
 public class FormatBean {
-    private Integer id;
+    private Integer format_id;
     private String extension;
 
     public FormatBean() {
@@ -20,12 +21,12 @@ public class FormatBean {
         this.extension = extension;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getFormat_id() {
+        return format_id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setFormat_id(Integer format_id) {
+        this.format_id = format_id;
     }
 
     public String getExtension() {

@@ -10,7 +10,7 @@ import java.sql.Date;
  * @since 0.0.1 - Originally written 25/01/2016.
  */
 public class BookBean {
-    private Integer id;
+    private Integer book_id;
     private String isbn;
     private String title;
     private String publisher;
@@ -64,7 +64,7 @@ public class BookBean {
             final Date date_of_entrance, final boolean removal_status, 
             final double overall_rating ,final String synopsis) {
         super();
-        this.id = id;
+        this.book_id = id;
         this.isbn = isbn;
         this.title = title;
         this.publisher = publisher;
@@ -82,11 +82,11 @@ public class BookBean {
     }
 
     public int getId() {
-        return id;
+        return book_id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setBook_id(Integer book_id) {
+        this.book_id = book_id;
     }
     
     public String getIsbn() {
