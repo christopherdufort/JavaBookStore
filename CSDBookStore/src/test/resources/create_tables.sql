@@ -112,10 +112,10 @@ CREATE TABLE IF NOT EXISTS `registered_user` (
   `active` tinyint(1) DEFAULT '1'
 ) ENGINE=InnoDB;
 
-DROP TABLE IF EXISTS `invoice_details`;
-CREATE TABLE IF NOT EXISTS `invoice_details` (
+DROP TABLE IF EXISTS `invoice_detail`;
+CREATE TABLE IF NOT EXISTS `invoice_detail` (
   `invoice_detail_id` int(11) NOT NULL,
-  `sale_number` int(11) NOT NULL,
+  `invoice_id` int(11) NOT NULL,
   `isbn` varchar(25) NOT NULL,
   `pst` decimal(12,2) DEFAULT NULL,
   `gst` decimal(12,2) DEFAULT NULL,
@@ -126,7 +126,7 @@ CREATE TABLE IF NOT EXISTS `invoice_details` (
 
 DROP TABLE IF EXISTS `invoice`
 CREATE TABLE IF NOT EXISTS `invoice` (
-  `sale_number` int(11) NOT NULL,
+  `invoice_id` int(11) NOT NULL,
   `sale_date` timestamp DEFAULT CURRENT_TIMESTAMP,,
   `user_number` int(11) NOT NULL,
   `total_net_value_of_sale` decimal(12,2) DEFAULT NULL,
@@ -196,12 +196,12 @@ ALTER TABLE `genre`
   ADD PRIMARY KEY (`genre_id`);
   
 ALTER TABLE `invoice`
-  ADD PRIMARY KEY (`sale_number`),
+  ADD PRIMARY KEY (`invoice_id`),
   ADD KEY `user_number_index` (`user_number`);
   
-ALTER TABLE `invoice_details`
+ALTER TABLE `invoice_detail`
   ADD PRIMARY KEY (`invoice_detail_id`),
-  ADD KEY `invoice_fk` (`sale_number`);
+  ADD KEY `invoice_fk` (`invoice_id`);
   
 ALTER TABLE `news_feed`
   ADD PRIMARY KEY (`news_feed_id`),
@@ -249,9 +249,9 @@ ALTER TABLE `genre`
   MODIFY `genre_id` int(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
   
 ALTER TABLE `invoice`
-  MODIFY `sale_number` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
+  MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
   
-ALTER TABLE `invoice_details`
+ALTER TABLE `invoice_detail`
   MODIFY `invoice_detail_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
   
 ALTER TABLE `news_feed`
@@ -285,8 +285,8 @@ ALTER TABLE `book_genre`
   ADD CONSTRAINT `book_genre_book_id_fk` FOREIGN KEY (`book_id`) REFERENCES `book` (`book_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `book_genre_subgenre_id_fk` FOREIGN KEY (`genre_id`) REFERENCES `genre` (`genre_id`) ON DELETE CASCADE;
 
-ALTER TABLE `invoice_details`
-  ADD CONSTRAINT `invoice_fk` FOREIGN KEY (`sale_number`) REFERENCES `invoice` (`sale_number`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `invoice_detail`
+  ADD CONSTRAINT `invoice_fk` FOREIGN KEY (`invoice_id`) REFERENCES `invoice` (`invoice_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE `registered_user`
   ADD CONSTRAINT `registered_user_ibfk_1` FOREIGN KEY (`title_id`) REFERENCES `title` (`title_id`) ON DELETE CASCADE,

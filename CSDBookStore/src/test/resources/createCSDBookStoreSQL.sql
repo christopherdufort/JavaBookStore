@@ -1014,7 +1014,7 @@ INSERT INTO `genre` (`genre_id`, `genre_name`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `invoice` (
-  `sale_number` int(11) NOT NULL,
+  `invoice_id` int(11) NOT NULL,
   `sale_date` datetime DEFAULT NULL,
   `user_number` int(11) NOT NULL,
   `total_net_value_of_sale` decimal(12,2) DEFAULT NULL,
@@ -1025,7 +1025,7 @@ CREATE TABLE IF NOT EXISTS `invoice` (
 -- Dumping data for table `invoice`
 --
 
-INSERT INTO `invoice` (`sale_number`, `sale_date`, `user_number`, `total_net_value_of_sale`, `total_gross_value_of_sale`) VALUES
+INSERT INTO `invoice` (`invoice_id`, `sale_date`, `user_number`, `total_net_value_of_sale`, `total_gross_value_of_sale`) VALUES
 (1, '2016-02-01 00:00:00', 1231, '16.31', '18.45'),
 (2, '2016-02-02 00:00:00', 1231, '20.56', '24.12'),
 (3, '2016-02-03 00:00:00', 1231, '48.87', '62.12'),
@@ -1036,12 +1036,12 @@ INSERT INTO `invoice` (`sale_number`, `sale_date`, `user_number`, `total_net_val
 -- --------------------------------------------------------
 
 --
--- Table structure for table `invoice_details`
+-- Table structure for table `invoice_detail`
 --
 
-CREATE TABLE IF NOT EXISTS `invoice_details` (
+CREATE TABLE IF NOT EXISTS `invoice_detail` (
   `invoice_detail_id` int(11) NOT NULL,
-  `sale_number` int(11) NOT NULL,
+  `invoice_id` int(11) NOT NULL,
   `isbn` varchar(25) NOT NULL,
   `pst` decimal(12,2) DEFAULT NULL,
   `gst` decimal(12,2) DEFAULT NULL,
@@ -1051,10 +1051,10 @@ CREATE TABLE IF NOT EXISTS `invoice_details` (
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `invoice_details`
+-- Dumping data for table `invoice_detail`
 --
 
-INSERT INTO `invoice_details` (`invoice_detail_id`, `sale_number`, `isbn`, `pst`, `gst`, `hst`, `book_price`, `quantity`) VALUES
+INSERT INTO `invoice_detail` (`invoice_detail_id`, `invoice_id`, `isbn`, `pst`, `gst`, `hst`, `book_price`, `quantity`) VALUES
 (1, 1, '978-0894864025', '1.63', '0.82', '0.00', '16.31', 1),
 (2, 1, '978-1582705248', '2.05', '1.03', '0.00', '20.56', 1),
 (3, 3, '978-1101902639', '4.87', '2.44', '0.00', '16.29', 3),
@@ -1265,15 +1265,15 @@ ALTER TABLE `genre`
 -- Indexes for table `invoice`
 --
 ALTER TABLE `invoice`
-  ADD PRIMARY KEY (`sale_number`),
+  ADD PRIMARY KEY (`invoice_id`),
   ADD KEY `user_number_index` (`user_number`);
 
 --
--- Indexes for table `invoice_details`
+-- Indexes for table `invoice_detail`
 --
-ALTER TABLE `invoice_details`
+ALTER TABLE `invoice_detail`
   ADD PRIMARY KEY (`invoice_detail_id`),
-  ADD KEY `invoice_fk` (`sale_number`);
+  ADD KEY `invoice_fk` (`invoice_id`);
 
 --
 -- Indexes for table `news_feed`
@@ -1357,11 +1357,11 @@ ALTER TABLE `genre`
 -- AUTO_INCREMENT for table `invoice`
 --
 ALTER TABLE `invoice`
-  MODIFY `sale_number` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
+  MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
 --
--- AUTO_INCREMENT for table `invoice_details`
+-- AUTO_INCREMENT for table `invoice_detail`
 --
-ALTER TABLE `invoice_details`
+ALTER TABLE `invoice_detail`
   MODIFY `invoice_detail_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
 --
 -- AUTO_INCREMENT for table `news_feed`
@@ -1419,10 +1419,10 @@ ALTER TABLE `book_genre`
   ADD CONSTRAINT `book_genre_subgenre_id_fk` FOREIGN KEY (`genre_id`) REFERENCES `genre` (`genre_id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `invoice_details`
+-- Constraints for table `invoice_detail`
 --
-ALTER TABLE `invoice_details`
-  ADD CONSTRAINT `invoice_fk` FOREIGN KEY (`sale_number`) REFERENCES `invoice` (`sale_number`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `invoice_detail`
+  ADD CONSTRAINT `invoice_fk` FOREIGN KEY (`invoice_id`) REFERENCES `invoice` (`invoice_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `registered_user`

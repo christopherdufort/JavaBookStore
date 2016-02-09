@@ -854,7 +854,7 @@ INSERT INTO `genre` (`genre_id`, `genre_name`) VALUES
 (5, 'Mystery, Thriller & Suspense');
 
 
-INSERT INTO `invoice` (`sale_number`, `sale_date`, `user_number`, `total_net_value_of_sale`, `total_gross_value_of_sale`) VALUES
+INSERT INTO `invoice` (`invoice_id`, `sale_date`, `user_number`, `total_net_value_of_sale`, `total_gross_value_of_sale`) VALUES
 (1, '2016-02-01 00:00:00', 1231, '16.31', '18.45'),
 (2, '2016-02-02 00:00:00', 1231, '20.56', '24.12'),
 (3, '2016-02-03 00:00:00', 1231, '48.87', '62.12'),
@@ -862,7 +862,7 @@ INSERT INTO `invoice` (`sale_number`, `sale_date`, `user_number`, `total_net_val
 (5, '2016-02-05 00:00:00', 1234, '8.74', '9.81'),
 (6, '2016-02-06 00:00:00', 1334, '9.99', '13.28');
 
-INSERT INTO `invoice_details` (`invoice_detail_id`, `sale_number`, `isbn`, `pst`, `gst`, `hst`, `book_price`, `quantity`) VALUES
+INSERT INTO `invoice_detail` (`invoice_detail_id`, `invoice_id`, `isbn`, `pst`, `gst`, `hst`, `book_price`, `quantity`) VALUES
 (1, 1, '978-0894864025', '1.63', '0.82', '0.00', '16.31', 1),
 (2, 1, '978-1582705248', '2.05', '1.03', '0.00', '20.56', 1),
 (3, 3, '978-1101902639', '4.87', '2.44', '0.00', '16.29', 3),

@@ -376,7 +376,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
     public List<InvoiceBean> findAllInvoices() throws SQLException {
         List<InvoiceBean> invoices = new ArrayList<>();
 
-        String select = "SELECT sale_number, sale_date, user_number, total_net_value_sale, total_gross_value_sale FROM invoice;";
+        String select = "SELECT invoice_id, sale_date, user_number, total_net_value_sale, total_gross_value_sale FROM invoice;";
 
         try (Connection connection = CSDBookStoreSource.getConnection();
                 PreparedStatement ps = connection.prepareStatement(select);
@@ -384,7 +384,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
 
             while (resultSet.next()) {
                 InvoiceBean invoice = new InvoiceBean();
-                invoice.setSaleNumber(resultSet.getInt("sale_number"));
+                invoice.setSaleNumber(resultSet.getInt("invoice_id"));
                 invoice.setSaleDate(resultSet.getTimestamp("sale_date").toLocalDateTime());
                 invoice.setUserNumber(resultSet.getInt("user_number"));
                 invoice.setTotalNetValueOfSale(resultSet.getDouble("total_net_value_sale"));
@@ -417,7 +417,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
 
         List<InvoiceBean> invoices = new ArrayList<>();
 
-        String select = "SELECT sale_number, sale_date, user_number, total_net_value_sale, total_gross_value_sale FROM invoice WHERE user_number = ?;";
+        String select = "SELECT invoice_id, sale_date, user_number, total_net_value_sale, total_gross_value_sale FROM invoice WHERE user_number = ?;";
 
         try (Connection connection = CSDBookStoreSource.getConnection();
                 PreparedStatement ps = connection.prepareStatement(select);) {
@@ -429,7 +429,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
                 while (resultSet.next()) {
 
                     InvoiceBean invoice = new InvoiceBean();
-                    invoice.setSaleNumber(resultSet.getInt("sale_number"));
+                    invoice.setSaleNumber(resultSet.getInt("invoice_id"));
                     invoice.setSaleDate(resultSet.getTimestamp("sale_date").toLocalDateTime());
                     invoice.setUserNumber(resultSet.getInt("user_number"));
                     invoice.setTotalNetValueOfSale(resultSet.getDouble("total_net_value_sale"));
@@ -463,7 +463,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
 
         InvoiceBean invoice = new InvoiceBean();
 
-        String select = "SELECT sale_number, sale_date, user_number, total_net_value_sale, total_gross_value_sale FROM invoice WHERE sale_number = ?;";
+        String select = "SELECT invoice_id, sale_date, user_number, total_net_value_sale, total_gross_value_sale FROM invoice WHERE invoice_id = ?;";
 
         try (Connection connection = CSDBookStoreSource.getConnection();
                 PreparedStatement ps = connection.prepareStatement(select);) {
@@ -474,7 +474,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
 
                 if (resultSet.next()) {
 
-                    invoice.setSaleNumber(resultSet.getInt("sale_number"));
+                    invoice.setSaleNumber(resultSet.getInt("invoice_id"));
                     invoice.setSaleDate(resultSet.getTimestamp("sale_date").toLocalDateTime());
                     invoice.setUserNumber(resultSet.getInt("user_number"));
                     invoice.setTotalNetValueOfSale(resultSet.getDouble("total_net_value_sale"));
@@ -506,7 +506,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
     public int deleteInvoice(int saleNumber) throws SQLException {
         int result = 0;
 
-        String delete = "DELETE FROM invoice WHERE sale_number = ?";
+        String delete = "DELETE FROM invoice WHERE invoice_id = ?";
 
         try (Connection connection = CSDBookStoreSource.getConnection();
                 PreparedStatement ps = connection.prepareStatement(delete);) {
@@ -532,7 +532,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
 
         int result = 0;
 
-        String createInvoice = "INSERT INTO invoicedetails (invoicedetail_id, sale_number, ISBN, book_price, PST, GST,  HST) VALUES (?, ?, ?, ?,?, ?, ?);";
+        String createInvoice = "INSERT INTO invoicedetails (invoicedetail_id, invoice_id, ISBN, book_price, PST, GST,  HST) VALUES (?, ?, ?, ?,?, ?, ?);";
 
         try (Connection conn = CSDBookStoreSource.getConnection();
                 PreparedStatement ps = conn.prepareStatement(createInvoice)) {
@@ -563,7 +563,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
     public List<InvoiceDetailBean> findAllInvoiceDetails() throws SQLException {
         List<InvoiceDetailBean> invoiceDetails = new ArrayList<>();
 
-        String select = "SELECT invoicedetail_id, sale_number, ISBN, book_price, PST, GST,HST FROM invoicedetails;";
+        String select = "SELECT invoicedetail_id, invoice_id, ISBN, book_price, PST, GST,HST FROM invoicedetails;";
 
         try (Connection connection = CSDBookStoreSource.getConnection();
                 PreparedStatement ps = connection.prepareStatement(select);
@@ -571,7 +571,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
 
             while (resultSet.next()) {
                 InvoiceDetailBean invoiceDetail = new InvoiceDetailBean();
-                invoiceDetail.setSaleNumber(resultSet.getInt("sale_number"));
+                invoiceDetail.setSaleNumber(resultSet.getInt("invoice_id"));
                 invoiceDetail.setISBN(resultSet.getString("ISBN"));
                 invoiceDetail.setBookPrice(resultSet.getDouble("book_price"));
                 invoiceDetail.setPST(resultSet.getDouble("PST"));
@@ -599,7 +599,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
 
         InvoiceDetailBean invoiceD = new InvoiceDetailBean();
 
-        String select = "SELECT invoicedetail_id, sale_number, ISBN, book_price, PST, GST, HST FROM invoicedetails WHERE invoicedetail_id = ?;";
+        String select = "SELECT invoicedetail_id, invoice_id, ISBN, book_price, PST, GST, HST FROM invoicedetails WHERE invoicedetail_id = ?;";
 
         try (Connection connection = CSDBookStoreSource.getConnection();
                 PreparedStatement ps = connection.prepareStatement(select);) {
@@ -610,7 +610,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
 
                 if (resultSet.next()) {
 
-                    invoiceD.setSaleNumber(resultSet.getInt("sale_number"));
+                    invoiceD.setSaleNumber(resultSet.getInt("invoice_id"));
                     invoiceD.setISBN(resultSet.getString("ISBN"));
                     invoiceD.setBookPrice(resultSet.getDouble("book_price"));
                     invoiceD.setPST(resultSet.getDouble("PST"));
@@ -640,7 +640,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
 
         List<InvoiceDetailBean> invoiceDetails = new ArrayList<>();
 
-        String select = "SELECT invoicedetail_id, sale_number, ISBN, book_price, PST, GST,HST FROM invoicedetails WHERE sale_number =? ;";
+        String select = "SELECT invoicedetail_id, invoice_id, ISBN, book_price, PST, GST,HST FROM invoicedetails WHERE invoice_id =? ;";
 
         try (Connection connection = CSDBookStoreSource.getConnection();
                 PreparedStatement ps = connection.prepareStatement(select);) {
@@ -652,7 +652,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
                 while (resultSet.next()) {
 
                     InvoiceDetailBean invoiceDetail = new InvoiceDetailBean();
-                    invoiceDetail.setSaleNumber(resultSet.getInt("sale_number"));
+                    invoiceDetail.setSaleNumber(resultSet.getInt("invoice_id"));
                     invoiceDetail.setISBN(resultSet.getString("ISBN"));
                     invoiceDetail.setBookPrice(resultSet.getDouble("book_price"));
                     invoiceDetail.setPST(resultSet.getDouble("PST"));
