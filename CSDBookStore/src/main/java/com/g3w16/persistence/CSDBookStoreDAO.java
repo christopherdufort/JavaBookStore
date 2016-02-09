@@ -576,17 +576,6 @@ public interface CSDBookStoreDAO {
      * @author Jonas Faure
      * @version 0.1.5
      * @param book
-     * @return
-     * @throws SQLException
-     */
-    public int createBook(BookBean book) throws SQLException;
-
-    /**
-     * CRUD method for Book table
-     *
-     * @author Jonas Faure
-     * @version 0.1.5
-     * @param book
      * @param authors
      * @param formats
      * @param genres
