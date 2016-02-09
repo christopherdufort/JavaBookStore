@@ -582,9 +582,7 @@ public interface CSDBookStoreDAO {
      * @return
      * @throws SQLException
      */
-    public int createBook(BookBean book, List<AuthorBean> authors,
-            List<FormatBean> formats, List<GenreBean> genres
-    ) throws SQLException;
+    public int createBook(BookBean book) throws SQLException;
 
     /**
      * CRUD method for Book table
@@ -598,9 +596,7 @@ public interface CSDBookStoreDAO {
      * @return
      * @throws SQLException
      */
-    public int updateBook(BookBean book, List<AuthorBean> authors,
-            List<FormatBean> formats, List<GenreBean> genres
-    ) throws SQLException;
+    public int updateBook(BookBean book) throws SQLException;
     
     /**
      * CRUD method for Book table

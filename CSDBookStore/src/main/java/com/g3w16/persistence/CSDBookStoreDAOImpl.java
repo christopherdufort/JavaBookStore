@@ -2086,7 +2086,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
      * Method used to retrieve a list of books based on provided publisher;
      *
      * @author Christopher Dufort
-     * @version 0.1.7 - last modified 2/7/2016
+     * @version 0.1.8 - last modified 2/8/2016
      * @param publisher
      *          publisher name in string format used to search for books
      * @return the list of books matching publisher
