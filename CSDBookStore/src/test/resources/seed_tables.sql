@@ -420,6 +420,19 @@ INSERT INTO `book_author` (`book_id`, `author_id`) VALUES
 (102, 143),
 (103, 144);
 
+INSERT INTO `format` (`format_id`, `extension`) VALUES
+(2, '.cbr'),
+(3, '.chm'),
+(4, '.docx'),
+(1, '.epub'),
+(9, '.html'),
+(5, '.ibooks'),
+(6, '.mobi'),
+(10, '.rtf'),
+(11, '.txt'),
+(8, 'pdb'),
+(7, 'pdf');
+
 INSERT INTO `book_format` (`book_id`, `format_id`) VALUES
 (21, 2),
 (22, 2),
@@ -728,6 +741,13 @@ INSERT INTO `book_format` (`book_id`, `format_id`) VALUES
 (90, 11),
 (100, 11);
 
+INSERT INTO `genre` (`genre_id`, `genre_name`) VALUES
+(1, 'Computers & Technology'),
+(2, 'Travel'),
+(3, 'Comics & Graphic Novels'),
+(4, 'Religion & Spirituality'),
+(5, 'Mystery, Thriller & Suspense');
+
 INSERT INTO `book_genre` (`book_id`, `genre_id`) VALUES
 (1, 1),
 (2, 1),
@@ -833,25 +853,9 @@ INSERT INTO `book_genre` (`book_id`, `genre_id`) VALUES
 (102, 5),
 (103, 5);
 
-INSERT INTO `format` (`format_id`, `extension`) VALUES
-(2, '.cbr'),
-(3, '.chm'),
-(4, '.docx'),
-(1, '.epub'),
-(9, '.html'),
-(5, '.ibooks'),
-(6, '.mobi'),
-(10, '.rtf'),
-(11, '.txt'),
-(8, 'pdb'),
-(7, 'pdf');
 
-INSERT INTO `genre` (`genre_id`, `genre_name`) VALUES
-(1, 'Computers & Technology'),
-(2, 'Travel'),
-(3, 'Comics & Graphic Novels'),
-(4, 'Religion & Spirituality'),
-(5, 'Mystery, Thriller & Suspense');
+
+
 
 
 INSERT INTO `invoice` (`invoice_id`, `sale_date`, `user_number`, `total_net_value_of_sale`, `total_gross_value_of_sale`) VALUES

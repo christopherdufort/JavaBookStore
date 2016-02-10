@@ -1,0 +1,5 @@
+CREATE DATABASE g3w16;
+
+GRANT ALL ON g3w16.* TO g3w16@"%" IDENTIFIED BY "sofa3brick";
+
+GRANT ALL ON g3w16.* TO g3w16@"localhost" IDENTIFIED BY "sofa3brick";

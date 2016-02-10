@@ -4,7 +4,7 @@
 -- ------------------------ --
 
 -- ----------------------------------------------------
--- Get rid of the past, the DIRTY WAY
+-- Get rid of the past, the DIRTY WAY 
 
 DELETE FROM review WHERE review_id>=1;
 DELETE FROM book_author WHERE book_id>=1;

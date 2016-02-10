@@ -124,10 +124,10 @@ CREATE TABLE IF NOT EXISTS `invoice_detail` (
   `quantity` int(2) NOT NULL
 ) ENGINE=InnoDB;
 
-DROP TABLE IF EXISTS `invoice`
+DROP TABLE IF EXISTS `invoice`;
 CREATE TABLE IF NOT EXISTS `invoice` (
   `invoice_id` int(11) NOT NULL,
-  `sale_date` timestamp DEFAULT CURRENT_TIMESTAMP,,
+  `sale_date` timestamp DEFAULT CURRENT_TIMESTAMP,
   `user_number` int(11) NOT NULL,
   `total_net_value_of_sale` decimal(12,2) DEFAULT NULL,
   `total_gross_value_of_sale` decimal(12,2) DEFAULT NULL
@@ -171,9 +171,7 @@ ALTER TABLE `book`
   ADD PRIMARY KEY (`book_id`),
   ADD UNIQUE KEY `isbn` (`isbn`),
   ADD INDEX (title),
-  ADD INDEX (author),
   ADD INDEX (publisher),
-  ADD INDEX (genre),
   ADD INDEX (isbn);
   
 ALTER TABLE `book_author`
@@ -227,11 +225,11 @@ ALTER TABLE `survey`
   ADD UNIQUE KEY `question` (`question`);
   
 ALTER TABLE `title`
-  ADD PRIMARY KEY (`title_id`)
+  ADD PRIMARY KEY (`title_id`);
   
 --AUTO INCREMENTS
 ALTER TABLE `ad`
-  MODIFY `ad_id` int(6) NOT NULL AUTO_INCREMENT;
+  MODIFY `ad_id` int(6) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
   
 ALTER TABLE `approval`
   MODIFY `approval_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
@@ -255,7 +253,7 @@ ALTER TABLE `invoice_detail`
   MODIFY `invoice_detail_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
   
 ALTER TABLE `news_feed`
-  MODIFY `news_feed_id` int(6) NOT NULL AUTO_INCREMENT;
+  MODIFY `news_feed_id` int(6) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
   
 ALTER TABLE `province`
   MODIFY `province_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
@@ -264,7 +262,7 @@ ALTER TABLE `registered_user`
   MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
   
 ALTER TABLE `review`
-  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
   
 ALTER TABLE `survey`
   MODIFY `survey_id` int(6) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
