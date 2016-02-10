@@ -12,26 +12,29 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Resource;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 
 /**
  *
  * @author 1040570
+ * @author Jonas Faure
  */
+@Named
+@RequestScoped
 public class GenreJpaController implements Serializable {
 
-    public GenreJpaController(UserTransaction utx, EntityManagerFactory emf) {
-        this.utx = utx;
-        this.emf = emf;
+    public GenreJpaController() {
     }
-    private UserTransaction utx = null;
-    private EntityManagerFactory emf = null;
 
-    public EntityManager getEntityManager() {
-        return emf.createEntityManager();
-    }
+    @Resource
+    private UserTransaction utx;
+    @PersistenceContext
+    private EntityManager em;
 
     public void create(Genre genre) throws RollbackFailureException, Exception {
         if (genre.getBookList() == null) {
@@ -40,7 +43,6 @@ public class GenreJpaController implements Serializable {
         EntityManager em = null;
         try {
             utx.begin();
-            em = getEntityManager();
             List<Book> attachedBookList = new ArrayList<Book>();
             for (Book bookListBookToAttach : genre.getBookList()) {
                 bookListBookToAttach = em.getReference(bookListBookToAttach.getClass(), bookListBookToAttach.getBookId());
@@ -60,18 +62,12 @@ public class GenreJpaController implements Serializable {
                 throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
             }
             throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
         }
     }
 
     public void edit(Genre genre) throws NonexistentEntityException, RollbackFailureException, Exception {
-        EntityManager em = null;
         try {
             utx.begin();
-            em = getEntityManager();
             Genre persistentGenre = em.find(Genre.class, genre.getGenreId());
             List<Book> bookListOld = persistentGenre.getBookList();
             List<Book> bookListNew = genre.getBookList();
@@ -110,18 +106,12 @@ public class GenreJpaController implements Serializable {
                 }
             }
             throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
         }
     }
 
     public void destroy(Integer id) throws NonexistentEntityException, RollbackFailureException, Exception {
-        EntityManager em = null;
         try {
             utx.begin();
-            em = getEntityManager();
             Genre genre;
             try {
                 genre = em.getReference(Genre.class, id);
@@ -143,10 +133,6 @@ public class GenreJpaController implements Serializable {
                 throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
             }
             throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
         }
     }
 
@@ -159,36 +145,21 @@ public class GenreJpaController implements Serializable {
     }
 
     private List<Genre> findGenreEntities(boolean all, int maxResults, int firstResult) {
-        EntityManager em = getEntityManager();
-        try {
-            Query q = em.createQuery("select object(o) from Genre as o");
-            if (!all) {
-                q.setMaxResults(maxResults);
-                q.setFirstResult(firstResult);
-            }
-            return q.getResultList();
-        } finally {
-            em.close();
+        Query q = em.createQuery("select object(o) from Genre as o");
+        if (!all) {
+            q.setMaxResults(maxResults);
+            q.setFirstResult(firstResult);
         }
+        return q.getResultList();
     }
 
     public Genre findGenre(Integer id) {
-        EntityManager em = getEntityManager();
-        try {
-            return em.find(Genre.class, id);
-        } finally {
-            em.close();
-        }
+        return em.find(Genre.class, id);
     }
 
     public int getGenreCount() {
-        EntityManager em = getEntityManager();
-        try {
-            Query q = em.createQuery("select count(o) from Genre as o");
-            return ((Long) q.getSingleResult()).intValue();
-        } finally {
-            em.close();
-        }
+        Query q = em.createQuery("select count(o) from Genre as o");
+        return ((Long) q.getSingleResult()).intValue();
     }
-    
+
 }

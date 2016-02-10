@@ -12,26 +12,28 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Resource;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 
 /**
  *
  * @author 1040570
  */
+@Named
+@RequestScoped
 public class BookJpaController implements Serializable {
 
-    public BookJpaController(UserTransaction utx, EntityManagerFactory emf) {
-        this.utx = utx;
-        this.emf = emf;
+    public BookJpaController() {
     }
-    private UserTransaction utx = null;
-    private EntityManagerFactory emf = null;
-
-    public EntityManager getEntityManager() {
-        return emf.createEntityManager();
-    }
+    @Resource
+    private UserTransaction utx;
+    @PersistenceContext
+    private EntityManager em;
 
     public void create(Book book) throws RollbackFailureException, Exception {
         if (book.getAuthorList() == null) {
@@ -46,10 +48,8 @@ public class BookJpaController implements Serializable {
         if (book.getReviewList() == null) {
             book.setReviewList(new ArrayList<Review>());
         }
-        EntityManager em = null;
         try {
             utx.begin();
-            em = getEntityManager();
             List<Author> attachedAuthorList = new ArrayList<Author>();
             for (Author authorListAuthorToAttach : book.getAuthorList()) {
                 authorListAuthorToAttach = em.getReference(authorListAuthorToAttach.getClass(), authorListAuthorToAttach.getAuthorId());
@@ -104,18 +104,12 @@ public class BookJpaController implements Serializable {
                 throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
             }
             throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
         }
     }
 
     public void edit(Book book) throws NonexistentEntityException, RollbackFailureException, Exception {
-        EntityManager em = null;
         try {
             utx.begin();
-            em = getEntityManager();
             Book persistentBook = em.find(Book.class, book.getBookId());
             List<Author> authorListOld = persistentBook.getAuthorList();
             List<Author> authorListNew = book.getAuthorList();
@@ -222,18 +216,12 @@ public class BookJpaController implements Serializable {
                 }
             }
             throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
         }
     }
 
     public void destroy(Integer id) throws NonexistentEntityException, RollbackFailureException, Exception {
-        EntityManager em = null;
         try {
             utx.begin();
-            em = getEntityManager();
             Book book;
             try {
                 book = em.getReference(Book.class, id);
@@ -270,10 +258,6 @@ public class BookJpaController implements Serializable {
                 throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
             }
             throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
         }
     }
 
@@ -286,36 +270,21 @@ public class BookJpaController implements Serializable {
     }
 
     private List<Book> findBookEntities(boolean all, int maxResults, int firstResult) {
-        EntityManager em = getEntityManager();
-        try {
-            Query q = em.createQuery("select object(o) from Book as o");
-            if (!all) {
-                q.setMaxResults(maxResults);
-                q.setFirstResult(firstResult);
-            }
-            return q.getResultList();
-        } finally {
-            em.close();
+        Query q = em.createQuery("select object(o) from Book as o");
+        if (!all) {
+            q.setMaxResults(maxResults);
+            q.setFirstResult(firstResult);
         }
+        return q.getResultList();
     }
 
     public Book findBook(Integer id) {
-        EntityManager em = getEntityManager();
-        try {
-            return em.find(Book.class, id);
-        } finally {
-            em.close();
-        }
+        return em.find(Book.class, id);
     }
 
     public int getBookCount() {
-        EntityManager em = getEntityManager();
-        try {
-            Query q = em.createQuery("select count(o) from Book as o");
-            return ((Long) q.getSingleResult()).intValue();
-        } finally {
-            em.close();
-        }
+        Query q = em.createQuery("select count(o) from Book as o");
+        return ((Long) q.getSingleResult()).intValue();
     }
-    
+
 }
