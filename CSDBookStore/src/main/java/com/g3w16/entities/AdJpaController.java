@@ -9,34 +9,39 @@ import com.g3w16.entities.exceptions.NonexistentEntityException;
 import com.g3w16.entities.exceptions.RollbackFailureException;
 import java.io.Serializable;
 import java.util.List;
+import javax.annotation.Resource;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 
 /**
  *
  * @author 1040570
  */
+@Named
+@SessionScoped
 public class AdJpaController implements Serializable {
 
-    public AdJpaController(UserTransaction utx, EntityManagerFactory emf) {
-        this.utx = utx;
-        this.emf = emf;
-    }
-    private UserTransaction utx = null;
-    private EntityManagerFactory emf = null;
+    @Resource
+    private UserTransaction utx;
 
-    public EntityManager getEntityManager() {
-        return emf.createEntityManager();
+    @PersistenceContext
+    private EntityManager em;
+
+    /**
+     * Default Constructor
+     */
+    public AdJpaController() {
+        super();
     }
 
     public void create(Ad ad) throws RollbackFailureException, Exception {
-        EntityManager em = null;
         try {
             utx.begin();
-            em = getEntityManager();
             em.persist(ad);
             utx.commit();
         } catch (Exception ex) {
@@ -46,18 +51,12 @@ public class AdJpaController implements Serializable {
                 throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
             }
             throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
         }
     }
 
     public void edit(Ad ad) throws NonexistentEntityException, RollbackFailureException, Exception {
-        EntityManager em = null;
         try {
             utx.begin();
-            em = getEntityManager();
             ad = em.merge(ad);
             utx.commit();
         } catch (Exception ex) {
@@ -74,18 +73,12 @@ public class AdJpaController implements Serializable {
                 }
             }
             throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
         }
     }
 
     public void destroy(Integer id) throws NonexistentEntityException, RollbackFailureException, Exception {
-        EntityManager em = null;
         try {
             utx.begin();
-            em = getEntityManager();
             Ad ad;
             try {
                 ad = em.getReference(Ad.class, id);
@@ -102,10 +95,6 @@ public class AdJpaController implements Serializable {
                 throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
             }
             throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
         }
     }
 
@@ -118,21 +107,16 @@ public class AdJpaController implements Serializable {
     }
 
     private List<Ad> findAdEntities(boolean all, int maxResults, int firstResult) {
-        EntityManager em = getEntityManager();
-        try {
-            Query q = em.createQuery("select object(o) from Ad as o");
-            if (!all) {
-                q.setMaxResults(maxResults);
-                q.setFirstResult(firstResult);
-            }
-            return q.getResultList();
-        } finally {
-            em.close();
+        Query q = em.createQuery("select object(o) from Ad as o");
+        if (!all) {
+            q.setMaxResults(maxResults);
+            q.setFirstResult(firstResult);
         }
+        return q.getResultList();
+
     }
 
     public Ad findAd(Integer id) {
-        EntityManager em = getEntityManager();
         try {
             return em.find(Ad.class, id);
         } finally {
@@ -141,13 +125,8 @@ public class AdJpaController implements Serializable {
     }
 
     public int getAdCount() {
-        EntityManager em = getEntityManager();
-        try {
-            Query q = em.createQuery("select count(o) from Ad as o");
-            return ((Long) q.getSingleResult()).intValue();
-        } finally {
-            em.close();
-        }
+        Query q = em.createQuery("select count(o) from Ad as o");
+        return ((Long) q.getSingleResult()).intValue();
     }
-    
+
 }
