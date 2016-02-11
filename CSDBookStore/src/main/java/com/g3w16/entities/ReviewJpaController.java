@@ -252,6 +252,15 @@ public class ReviewJpaController implements Serializable {
             em.close();
         }
     }
+    
+    public Review findReviewByIsbn(Book isbn) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.find(Review.class, isbn);
+        } finally {
+            em.close();
+        }
+    }
 
     public int getReviewCount() {
         EntityManager em = getEntityManager();
