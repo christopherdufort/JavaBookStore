@@ -8,6 +8,7 @@ package com.g3w16.entities;
 import com.g3w16.entities.exceptions.NonexistentEntityException;
 import com.g3w16.entities.exceptions.RollbackFailureException;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -225,6 +226,33 @@ public class ReviewJpaController implements Serializable {
         }
     }
 
+    public Review findReviewByUserId(Integer userId) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.find(Review.class, userId);
+        } finally {
+            em.close();
+        }
+    }
+
+    public Review findReviewByDateSubmitted(Date dateSubmitted) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.find(Review.class, dateSubmitted);
+        } finally {
+            em.close();
+        }
+    }
+
+    public Review findReviewByApprovalId(Integer approvalId) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.find(Review.class, approvalId);
+        } finally {
+            em.close();
+        }
+    }
+
     public int getReviewCount() {
         EntityManager em = getEntityManager();
         try {
@@ -234,5 +262,5 @@ public class ReviewJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }
