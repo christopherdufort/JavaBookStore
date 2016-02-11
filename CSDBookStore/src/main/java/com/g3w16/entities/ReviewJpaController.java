@@ -10,6 +10,8 @@ import com.g3w16.entities.exceptions.RollbackFailureException;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
@@ -20,6 +22,8 @@ import javax.transaction.UserTransaction;
  *
  * @author 1040570
  */
+@Named
+@SessionScoped
 public class ReviewJpaController implements Serializable {
 
     public ReviewJpaController(UserTransaction utx, EntityManagerFactory emf) {
