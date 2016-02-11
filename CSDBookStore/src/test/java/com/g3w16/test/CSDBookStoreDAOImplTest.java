@@ -459,7 +459,7 @@ public class CSDBookStoreDAOImplTest {
      */
     @Before
     public void seedDatabase() {
-        final String seedDataScript = loadAsString("createCSDBookStoreSQL.sql");
+        final String seedDataScript = loadAsString("feed_database.sql");
         //TEST REMOVE THIS WHEN DONE
         if (ds == null)
             System.out.println("DS IS NULL NO CONNECTION THIS IS THE PROBLEM!");
