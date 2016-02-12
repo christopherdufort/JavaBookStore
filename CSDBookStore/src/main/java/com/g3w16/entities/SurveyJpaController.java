@@ -9,34 +9,40 @@ import com.g3w16.entities.exceptions.NonexistentEntityException;
 import com.g3w16.entities.exceptions.RollbackFailureException;
 import java.io.Serializable;
 import java.util.List;
+import javax.annotation.Resource;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 
 /**
  *
  * @author 1040570
  */
+@Named
+@SessionScoped
 public class SurveyJpaController implements Serializable {
 
-    public SurveyJpaController(UserTransaction utx, EntityManagerFactory emf) {
-        this.utx = utx;
-        this.emf = emf;
-    }
-    private UserTransaction utx = null;
-    private EntityManagerFactory emf = null;
+    @Resource
+    private UserTransaction utx;
 
-    public EntityManager getEntityManager() {
-        return emf.createEntityManager();
+    @PersistenceContext
+    private EntityManager em;
+    
+    /**
+     * Default Constructor
+     */
+    public SurveyJpaController(){
+        super();
     }
 
     public void create(Survey survey) throws RollbackFailureException, Exception {
-        EntityManager em = null;
         try {
             utx.begin();
-            em = getEntityManager();
             em.persist(survey);
             utx.commit();
         } catch (Exception ex) {
@@ -46,18 +52,12 @@ public class SurveyJpaController implements Serializable {
                 throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
             }
             throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
+        } 
     }
 
     public void edit(Survey survey) throws NonexistentEntityException, RollbackFailureException, Exception {
-        EntityManager em = null;
         try {
             utx.begin();
-            em = getEntityManager();
             survey = em.merge(survey);
             utx.commit();
         } catch (Exception ex) {
@@ -74,18 +74,12 @@ public class SurveyJpaController implements Serializable {
                 }
             }
             throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
+        } 
     }
 
     public void destroy(Integer id) throws NonexistentEntityException, RollbackFailureException, Exception {
-        EntityManager em = null;
         try {
             utx.begin();
-            em = getEntityManager();
             Survey survey;
             try {
                 survey = em.getReference(Survey.class, id);
@@ -102,10 +96,6 @@ public class SurveyJpaController implements Serializable {
                 throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
             }
             throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
         }
     }
 
@@ -118,36 +108,23 @@ public class SurveyJpaController implements Serializable {
     }
 
     private List<Survey> findSurveyEntities(boolean all, int maxResults, int firstResult) {
-        EntityManager em = getEntityManager();
-        try {
-            Query q = em.createQuery("select object(o) from Survey as o");
-            if (!all) {
-                q.setMaxResults(maxResults);
-                q.setFirstResult(firstResult);
-            }
-            return q.getResultList();
-        } finally {
-            em.close();
+        Query q = em.createQuery("select object(o) from Survey as o");
+        if (!all) {
+            q.setMaxResults(maxResults);
+            q.setFirstResult(firstResult);
         }
+        return q.getResultList();
     }
 
     public Survey findSurvey(Integer id) {
-        EntityManager em = getEntityManager();
-        try {
-            return em.find(Survey.class, id);
-        } finally {
-            em.close();
-        }
+        return em.find(Survey.class, id);
+
     }
 
     public int getSurveyCount() {
-        EntityManager em = getEntityManager();
-        try {
-            Query q = em.createQuery("select count(o) from Survey as o");
-            return ((Long) q.getSingleResult()).intValue();
-        } finally {
-            em.close();
-        }
+        Query q = em.createQuery("select count(o) from Survey as o");
+        return ((Long) q.getSingleResult()).intValue();
+
     }
     
 }
