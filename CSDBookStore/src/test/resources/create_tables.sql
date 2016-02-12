@@ -141,8 +141,8 @@ CREATE TABLE IF NOT EXISTS `review` (
   `user_id` int(11) DEFAULT NULL,
   `rating` int(11) DEFAULT NULL,
   `approval_id` int(11) DEFAULT NULL,
-  `review_title` varchar(50) DEFAULT '',
-  `review_text` varchar(750) DEFAULT ''
+  `review_title` varchar(200) DEFAULT '',
+  `review_text` varchar(1750) DEFAULT ''
 ) ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS `survey`;

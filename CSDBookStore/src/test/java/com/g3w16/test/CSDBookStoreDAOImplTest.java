@@ -457,9 +457,11 @@ public class CSDBookStoreDAOImplTest {
      * This routine is courtesy of Bartosz Majsak who also solved my Arquillian
      * remote server problem
      */
+    
+    
     @Before
     public void seedDatabase() {
-        final String seedDataScript = loadAsString("feed_database.sql");
+        final String seedDataScript = loadAsString("seed_tables.sql");
         //TEST REMOVE THIS WHEN DONE
         if (ds == null)
             System.out.println("DS IS NULL NO CONNECTION THIS IS THE PROBLEM!");
