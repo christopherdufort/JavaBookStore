@@ -6,6 +6,7 @@
 package com.g3w16.test;
 
 import com.g3w16.beans.AdBean;
+import com.g3w16.entities.Book;
 import com.g3w16.persistence.CSDBookStoreDAOImpl;
 
 import java.io.BufferedReader;
@@ -62,17 +63,8 @@ public class CSDBookStoreDAOImplTest {
         final WebArchive webArchive = ShrinkWrap.create(WebArchive.class)
                 .setWebXML(new File("src/main/webapp/WEB-INF/web.xml"))
                 .addPackage(CSDBookStoreDAOImpl.class.getPackage())
-                .addPackage(AdBean.class.getPackage())
-                //.addPackage(AuthorBean.class.getPackage())
-                //.addPackage(BookBean.class.getPackage())
-                //.addPackage(FormatBean.class.getPackage())
-                //.addPackage(GenreBean.class.getPackage())
-                //.addPackage(InvoiceBean.class.getPackage())
-                //.addPackage(InvoiceDetailBean.class.getPackage())
-                //.addPackage(ProvinceBean.class.getPackage())
-                //.addPackage(RegisteredUserBean.class.getPackage())
-                //.addPackage(ReviewBean.class.getPackage())
-                //.addPackage(SurveyBean.class.getPackage())
+                //s.addPackage(AdBean.class.getPackage())
+                .addPackage(Book.class.getPackage())
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addAsWebInfResource(new File("src/main/setup/glassfish-resources.xml"), "glassfish-resources.xml")
                 .addAsResource("createCSDBookStoreSQL.sql")
@@ -94,6 +86,7 @@ public class CSDBookStoreDAOImplTest {
     @Test
     public void always_pass(){
         //If this wont pass nothing will..
+        System.out.println("PASSES THE ONLY TEST!");
         assertTrue(true);
     }
     
