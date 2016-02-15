@@ -118,13 +118,11 @@ public class SurveyJpaController implements Serializable {
 
     public Survey findSurvey(Integer id) {
         return em.find(Survey.class, id);
-
     }
 
     public int getSurveyCount() {
         Query q = em.createQuery("select count(o) from Survey as o");
         return ((Long) q.getSingleResult()).intValue();
-
     }
     
 }

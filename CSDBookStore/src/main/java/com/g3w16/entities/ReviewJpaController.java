@@ -10,38 +10,34 @@ import com.g3w16.entities.exceptions.RollbackFailureException;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.annotation.Resource;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 
 /**
  *
- * @author 1040570
+ * @author Xin Ma
  */
 @Named
 @SessionScoped
 public class ReviewJpaController implements Serializable {
 
-    public ReviewJpaController(UserTransaction utx, EntityManagerFactory emf) {
-        this.utx = utx;
-        this.emf = emf;
+    public ReviewJpaController() {
+        super();
     }
-    private UserTransaction utx = null;
-    private EntityManagerFactory emf = null;
-
-    public EntityManager getEntityManager() {
-        return emf.createEntityManager();
-    }
+    @Resource
+    private UserTransaction utx;
+    @PersistenceContext
+    private EntityManager em;
 
     public void create(Review review) throws RollbackFailureException, Exception {
-        EntityManager em = null;
         try {
             utx.begin();
-            em = getEntityManager();
             Approval approvalId = review.getApprovalId();
             if (approvalId != null) {
                 approvalId = em.getReference(approvalId.getClass(), approvalId.getApprovalId());
@@ -78,18 +74,12 @@ public class ReviewJpaController implements Serializable {
                 throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
             }
             throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
         }
     }
 
     public void edit(Review review) throws NonexistentEntityException, RollbackFailureException, Exception {
-        EntityManager em = null;
         try {
             utx.begin();
-            em = getEntityManager();
             Review persistentReview = em.find(Review.class, review.getReviewId());
             Approval approvalIdOld = persistentReview.getApprovalId();
             Approval approvalIdNew = review.getApprovalId();
@@ -149,10 +139,6 @@ public class ReviewJpaController implements Serializable {
                 }
             }
             throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
         }
     }
 
@@ -160,7 +146,6 @@ public class ReviewJpaController implements Serializable {
         EntityManager em = null;
         try {
             utx.begin();
-            em = getEntityManager();
             Review review;
             try {
                 review = em.getReference(Review.class, id);
@@ -192,10 +177,6 @@ public class ReviewJpaController implements Serializable {
                 throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
             }
             throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
         }
     }
 
@@ -208,72 +189,37 @@ public class ReviewJpaController implements Serializable {
     }
 
     private List<Review> findReviewEntities(boolean all, int maxResults, int firstResult) {
-        EntityManager em = getEntityManager();
-        try {
-            Query q = em.createQuery("select object(o) from Review as o");
-            if (!all) {
-                q.setMaxResults(maxResults);
-                q.setFirstResult(firstResult);
-            }
-            return q.getResultList();
-        } finally {
-            em.close();
+        Query q = em.createQuery("select object(o) from Review as o");
+        if (!all) {
+            q.setMaxResults(maxResults);
+            q.setFirstResult(firstResult);
         }
+        return q.getResultList();
     }
 
     public Review findReview(Integer id) {
-        EntityManager em = getEntityManager();
-        try {
-            return em.find(Review.class, id);
-        } finally {
-            em.close();
-        }
+        return em.find(Review.class, id);
     }
 
     public Review findReviewByUserId(Integer userId) {
-        EntityManager em = getEntityManager();
-        try {
-            return em.find(Review.class, userId);
-        } finally {
-            em.close();
-        }
+        return em.find(Review.class, userId);
     }
 
     public Review findReviewByDateSubmitted(Date dateSubmitted) {
-        EntityManager em = getEntityManager();
-        try {
-            return em.find(Review.class, dateSubmitted);
-        } finally {
-            em.close();
-        }
+        return em.find(Review.class, dateSubmitted);
     }
 
     public Review findReviewByApprovalId(Integer approvalId) {
-        EntityManager em = getEntityManager();
-        try {
-            return em.find(Review.class, approvalId);
-        } finally {
-            em.close();
-        }
+        return em.find(Review.class, approvalId);
     }
-    
+
     public Review findReviewByIsbn(Book isbn) {
-        EntityManager em = getEntityManager();
-        try {
-            return em.find(Review.class, isbn);
-        } finally {
-            em.close();
-        }
+        return em.find(Review.class, isbn);
     }
 
     public int getReviewCount() {
-        EntityManager em = getEntityManager();
-        try {
-            Query q = em.createQuery("select count(o) from Review as o");
-            return ((Long) q.getSingleResult()).intValue();
-        } finally {
-            em.close();
-        }
+        Query q = em.createQuery("select count(o) from Review as o");
+        return ((Long) q.getSingleResult()).intValue();
     }
 
 }
