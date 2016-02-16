@@ -21,7 +21,8 @@ import javax.transaction.UserTransaction;
 
 /**
  *
- * @author 1040570
+ * @author Christopher Dufort
+ * @version 0.2.5-SNAPSHOT -Last modified 2/16/2016
  */
 @Named
 @SessionScoped
@@ -69,12 +70,15 @@ public class SurveyJpaController implements Serializable {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
                 Integer id = survey.getSurveyId();
-                if (findSurvey(id) == null) {
+                if (findSurveyById(id) == null) {
                     throw new NonexistentEntityException("The survey with id " + id + " no longer exists.");
                 }
             }
             throw ex;
         } 
+    }
+    public void destroySurvey(Survey survey)throws NonexistentEntityException, RollbackFailureException, Exception {
+        this.destroy(survey.getSurveyId());
     }
 
     public void destroy(Integer id) throws NonexistentEntityException, RollbackFailureException, Exception {
@@ -98,8 +102,16 @@ public class SurveyJpaController implements Serializable {
             throw ex;
         }
     }
-
-    public List<Survey> findSurveyEntities() {
+    
+    /**
+     * This method is responsible for finding all surveys in the database.
+     * It makes use of the private method.
+     * 
+     * @author Christopher Dufort
+     * @version 0.2.5-SNAPSHOT -Last Modified 2/16/2016
+     * @return 
+     */
+    public List<Survey> findAllSurveys() {
         return findSurveyEntities(true, -1, -1);
     }
 
@@ -116,7 +128,7 @@ public class SurveyJpaController implements Serializable {
         return q.getResultList();
     }
 
-    public Survey findSurvey(Integer id) {
+    public Survey findSurveyById(Integer id) {
         return em.find(Survey.class, id);
     }
 
@@ -125,4 +137,16 @@ public class SurveyJpaController implements Serializable {
         return ((Long) q.getSingleResult()).intValue();
     }
     
+    public Survey findSurveyByQuestion(String question){
+        //Example of named query(predefined in the entity class)
+        Query query = em.createNamedQuery("Survey.findByQuestion");
+ 
+        //binding for names parameters
+        query.setParameter("question",question);
+        
+        //execute query returning single result
+        Survey result = (Survey)query.getSingleResult(); 
+        return result;
+    }
+
 }
