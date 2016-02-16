@@ -8,7 +8,7 @@ package com.g3w16.entities;
 import com.g3w16.entities.exceptions.NonexistentEntityException;
 import com.g3w16.entities.exceptions.RollbackFailureException;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.enterprise.context.SessionScoped;
@@ -201,20 +201,28 @@ public class ReviewJpaController implements Serializable {
         return em.find(Review.class, id);
     }
 
-    public Review findReviewByUserId(Integer userId) {
-        return em.find(Review.class, userId);
+    public List<Review> findReviewByUserId(Integer userId) {
+        Query q = em.createQuery("select object(o) from Review as o where userId = :userId");
+        q.setParameter("userId", userId);
+        return q.getResultList();
     }
 
-    public Review findReviewByDateSubmitted(Date dateSubmitted) {
-        return em.find(Review.class, dateSubmitted);
+    public List<Review> findReviewByDateSubmitted(LocalDateTime dateSubmitted) {
+        Query q = em.createQuery("select object(o) from Review as o where dateSubmitted = :dateSubmitted");
+        q.setParameter("dateSubmitted", dateSubmitted);
+        return q.getResultList();
     }
 
-    public Review findReviewByApprovalId(Integer approvalId) {
-        return em.find(Review.class, approvalId);
+    public List<Review> findReviewByApprovalId(Integer approvalId) {
+        Query q = em.createQuery("select object(o) from Review as o where approvalId = :approvalId");
+        q.setParameter("approvalId", approvalId);
+        return q.getResultList();
     }
 
-    public Review findReviewByIsbn(Book isbn) {
-        return em.find(Review.class, isbn);
+    public List<Review> findReviewByIsbn(Book isbn) {
+        Query q = em.createQuery("select object(o) from Review as o where isbn = :isbn");
+        q.setParameter("isbn", isbn.getIsbn());
+        return q.getResultList();
     }
 
     public int getReviewCount() {

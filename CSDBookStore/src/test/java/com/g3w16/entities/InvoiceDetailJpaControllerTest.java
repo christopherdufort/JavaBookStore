@@ -14,37 +14,41 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import javax.sql.DataSource;
 import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.Before;
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.runner.RunWith;
 
 /**
  *
- * @author 1232046
+ * @author Rita Lazaar
  */
-public class ReviewJpaControllerTest {
+@RunWith(Arquillian.class)
+public class InvoiceDetailJpaControllerTest {
 
-    private Logger logger = Logger.getLogger(ReviewJpaControllerTest.class.getName());
+    public InvoiceDetailJpaControllerTest() {
+    }
 
     @Deployment
     public static WebArchive deploy() {
         // Use an alternative to the JUnit assert library called AssertJ
-        // Need to reference MySQL driver as it is not part of either
-        // embedded or remote TomEE
+        // Need to reference MySQL driver as it is not part of either embedded or remote TomEE
         final File[] dependencies = Maven
                 .resolver()
                 .loadPomFromFile("pom.xml")
@@ -52,16 +56,14 @@ public class ReviewJpaControllerTest {
                         "org.assertj:assertj-core").withoutTransitivity()
                 .asFile();
 
-        // For testing Arquillian prefers a resources.xml file over a
-        // context.xml
-        // Actual file name is resources-mysql-ds.xml in the test/resources
-        // folder
+        // For testing Arquillian prefers a resources.xml file over acontext.xml
+        // Actual file name is resources-mysql-ds.xml in the test/resources folder
         // The SQL script to create the database is also in this folder
         final WebArchive webArchive = ShrinkWrap.create(WebArchive.class)
                 .setWebXML(new File("src/main/webapp/WEB-INF/web.xml"))
                 //.addPackage(CSDBookStoreDAOImpl.class.getPackage())
-                .addPackage(ReviewJpaController.class.getPackage())
-                .addPackage(Review.class.getPackage())
+                .addPackage(AdJpaController.class.getPackage())
+                .addPackage(Ad.class.getPackage())
                 .addPackage(RollbackFailureException.class.getPackage())
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addAsWebInfResource(new File("src/main/setup/glassfish-resources.xml"), "glassfish-resources.xml")
@@ -71,133 +73,74 @@ public class ReviewJpaControllerTest {
 
         return webArchive;
     }
-
     @Resource(name = "java:app/jdbc/g3w16")
     private DataSource ds;
 
-    @Inject
-    private Review review;
+  
 
     @Inject
-    private ReviewJpaController reviewJpaController;
+    private InvoiceDetailJpaController invoiceDetailJpaController;
 
     /**
-     * Test of create method, of class ReviewJpaController.
+     * Test of create method, of class InvoiceDetailJpaController.
      */
     @Test
     public void testCreate() throws Exception {
         System.out.println("create");
-        reviewJpaController.create(review);
-    }
+        InvoiceDetail invoiceDetail = null;
 
-    /**
-     * Test of edit method, of class ReviewJpaController.
-     */
-    @Test
-    public void testEdit() throws Exception {
-        System.out.println("edit");
-        reviewJpaController.edit(review);
-    }
-
-    /**
-     * Test of destroy method, of class ReviewJpaController.
-     */
-    @Test
-    public void testDestroy() throws Exception {
-        System.out.println("destroy");
-        Integer id = null;
-        reviewJpaController.destroy(id);
-    }
-
-    /**
-     * Test of findReviewEntities method, of class ReviewJpaController.
-     */
-    @Test
-    public void testFindReviewEntities_0args() {
-        System.out.println("findReviewEntities");
-        List<Review> expResult = reviewJpaController.findReviewEntities();
-        assertThat(expResult).hasSize(44);
+        invoiceDetailJpaController.create(invoiceDetail);
 
     }
 
     /**
-     * Test of findReviewEntities method, of class ReviewJpaController.
+     * Test of findInvoiceDetailEntities method, of class
+     * InvoiceDetailJpaController.
      */
     @Test
-    public void testFindReviewEntities_int_int() {
-        System.out.println("findReviewEntities");
-        int maxResults = 10;
+    public void testFindInvoiceDetailEntities_0args() {
+        System.out.println("findInvoiceDetailEntities");
+      
+        List<InvoiceDetail> expResult = null;
+        List<InvoiceDetail> result = invoiceDetailJpaController.findInvoiceDetailEntities();
+        assertEquals(expResult, result);
+
+    }
+
+    /**
+     * Test of findInvoiceDetailEntities method, of class
+     * InvoiceDetailJpaController.
+     */
+    @Test
+    public void testFindInvoiceDetailEntities_int_int() {
+        System.out.println("findInvoiceDetailEntities");
+        int maxResults = 0;
         int firstResult = 0;
-        List<Review> expResult = reviewJpaController.findReviewEntities(maxResults, firstResult);
-        assertThat(expResult).hasSize(10);
+       
+        List<InvoiceDetail> expResult = null;
+        List<InvoiceDetail> result = invoiceDetailJpaController.findInvoiceDetailEntities(maxResults, firstResult);
+        assertEquals(expResult, result);
+
     }
 
     /**
-     * Test of findReview method, of class ReviewJpaController.
+     * Test of findInvoiceDetail method, of class InvoiceDetailJpaController.
      */
     @Test
-    public void testFindReview() {
-        System.out.println("findReview");
-        int reviewId = 1;
-        Review expResult = reviewJpaController.findReview(reviewId);
-        assertEquals((Integer) (expResult.getReviewId()), (Integer) reviewId);
-    }
+    public void testFindInvoiceDetail() {
+        System.out.println("findInvoiceDetail");
+        Integer id = null;
 
-    /**
-     * Test of findReviewByUserId method, of class ReviewJpaController.
-     */
-    @Test
-    public void testFindReviewByUserId() {
-        System.out.println("findReviewByUserId");
-        Integer userId = 1;
-        List<Review> expResult = reviewJpaController.findReviewByUserId(userId);
-        assertThat(expResult).hasSize(44);
-    }
-
-    /**
-     * Test of findReviewByDateSubmitted method, of class ReviewJpaController.
-     */
-    @Test
-    public void testFindReviewByDateSubmitted() {
-        System.out.println("findReviewByDateSubmitted");
-        LocalDateTime dateSubmitted = LocalDateTime.of(2013, 9, 20, 0, 0, 0);
-        List<Review> expResult = reviewJpaController.findReviewByDateSubmitted(dateSubmitted);
-        assertThat(expResult).hasSize(1);
-    }
-
-    /**
-     * Test of findReviewByApprovalId method, of class ReviewJpaController.
-     */
-    @Test
-    public void testFindReviewByApprovalId() {
-        System.out.println("findReviewByApprovalId");
-        Integer approvalId = 2;
-        List<Review> expResult = reviewJpaController.findReviewByApprovalId(approvalId);
-        assertThat(expResult).hasSize(3);
-    }
-
-    /**
-     * Test of findReviewByIsbn method, of class ReviewJpaController.
-     */
-    @Test
-    public void testFindReviewByIsbn() {
-        System.out.println("findReviewByIsbn");
-        Book isbn = new Book();
-        isbn.setIsbn("978-0679600213");
-        List<Review> expResult = reviewJpaController.findReviewByIsbn(isbn);
-        assertThat(expResult).hasSize(3);
-    }
-
-    /**
-     * Test of getReviewCount method, of class ReviewJpaController.
-     */
-    @Test
-    public void testGetReviewCount() {
-        int expResult = 0;
-        int result = reviewJpaController.getReviewCount();
+        InvoiceDetail expResult = null;
+        InvoiceDetail result = invoiceDetailJpaController.findInvoiceDetail(id);
         assertEquals(expResult, result);
     }
 
+// ---- END OF THE TESTS ---
+    /**
+     * This routine is courtesy of Bartosz Majsak who also solved my Arquillian
+     * remote server problem
+     */
     @Before
     public void seedDatabase() {
         final String seedDataScript = loadAsString("seed_tables.sql");
@@ -254,4 +197,5 @@ public class ReviewJpaControllerTest {
         return line.startsWith("--") || line.startsWith("//")
                 || line.startsWith("/*");
     }
+
 }

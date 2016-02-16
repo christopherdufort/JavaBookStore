@@ -17,7 +17,7 @@ import javax.transaction.UserTransaction;
 
 /**
  *
- * @author 1040570
+ * @author Rita Lazaar
  */
 public class InvoiceDetailJpaController implements Serializable {
 
@@ -145,6 +145,7 @@ public class InvoiceDetailJpaController implements Serializable {
     public List<InvoiceDetail> findInvoiceDetailEntities(int maxResults, int firstResult) {
         return findInvoiceDetailEntities(false, maxResults, firstResult);
     }
+    
 
     private List<InvoiceDetail> findInvoiceDetailEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
