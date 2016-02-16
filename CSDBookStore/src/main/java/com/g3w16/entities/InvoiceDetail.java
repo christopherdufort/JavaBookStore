@@ -21,7 +21,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author 1040570
+ * @author Rita Lazaar
  */
 @Entity
 @Table(name = "invoice_detail", catalog = "g3w16", schema = "")
@@ -33,7 +33,10 @@ import javax.persistence.Table;
     @NamedQuery(name = "InvoiceDetail.findByGst", query = "SELECT i FROM InvoiceDetail i WHERE i.gst = :gst"),
     @NamedQuery(name = "InvoiceDetail.findByHst", query = "SELECT i FROM InvoiceDetail i WHERE i.hst = :hst"),
     @NamedQuery(name = "InvoiceDetail.findByBookPrice", query = "SELECT i FROM InvoiceDetail i WHERE i.bookPrice = :bookPrice"),
-    @NamedQuery(name = "InvoiceDetail.findByQuantity", query = "SELECT i FROM InvoiceDetail i WHERE i.quantity = :quantity")})
+    @NamedQuery(name = "InvoiceDetail.findByQuantity", query = "SELECT i FROM InvoiceDetail i WHERE i.quantity = :quantity"),
+    @NamedQuery(name = "InvoiceDetail.findByInvoiceId", query = "SELECT i FROM InvoiceDetail i WHERE i.invoice_id = :invoice_id"),
+})
+    
 public class InvoiceDetail implements Serializable {
 
     private static final long serialVersionUID = 1L;
