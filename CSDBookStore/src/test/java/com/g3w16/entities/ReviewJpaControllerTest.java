@@ -14,7 +14,9 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -22,20 +24,23 @@ import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.sql.DataSource;
-import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.junit.Before;
+import org.junit.runner.RunWith;
 import static org.assertj.core.api.Assertions.assertThat;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit.Arquillian;
+import org.junit.Ignore;
 
 /**
  *
  * @author 1232046
  */
+@RunWith(Arquillian.class)
 public class ReviewJpaControllerTest {
 
     private Logger logger = Logger.getLogger(ReviewJpaControllerTest.class.getName());
@@ -43,8 +48,7 @@ public class ReviewJpaControllerTest {
     @Deployment
     public static WebArchive deploy() {
         // Use an alternative to the JUnit assert library called AssertJ
-        // Need to reference MySQL driver as it is not part of either
-        // embedded or remote TomEE
+        // Need to reference MySQL driver as it is not part of either embedded or remote TomEE
         final File[] dependencies = Maven
                 .resolver()
                 .loadPomFromFile("pom.xml")
@@ -52,10 +56,8 @@ public class ReviewJpaControllerTest {
                         "org.assertj:assertj-core").withoutTransitivity()
                 .asFile();
 
-        // For testing Arquillian prefers a resources.xml file over a
-        // context.xml
-        // Actual file name is resources-mysql-ds.xml in the test/resources
-        // folder
+        // For testing Arquillian prefers a resources.xml file over acontext.xml
+        // Actual file name is resources-mysql-ds.xml in the test/resources folder
         // The SQL script to create the database is also in this folder
         final WebArchive webArchive = ShrinkWrap.create(WebArchive.class)
                 .setWebXML(new File("src/main/webapp/WEB-INF/web.xml"))
@@ -76,36 +78,38 @@ public class ReviewJpaControllerTest {
     private DataSource ds;
 
     @Inject
-    private Review review;
-
-    @Inject
     private ReviewJpaController reviewJpaController;
 
     /**
      * Test of create method, of class ReviewJpaController.
      */
+    @Ignore
     @Test
     public void testCreate() throws Exception {
         System.out.println("create");
+        Review review = new Review();
         reviewJpaController.create(review);
     }
 
     /**
      * Test of edit method, of class ReviewJpaController.
      */
+    @Ignore
     @Test
     public void testEdit() throws Exception {
         System.out.println("edit");
+        Review review = new Review();
         reviewJpaController.edit(review);
     }
 
     /**
      * Test of destroy method, of class ReviewJpaController.
      */
+    @Ignore
     @Test
     public void testDestroy() throws Exception {
         System.out.println("destroy");
-        Integer id = null;
+        Integer id = 1;
         reviewJpaController.destroy(id);
     }
 
@@ -140,7 +144,7 @@ public class ReviewJpaControllerTest {
         System.out.println("findReview");
         int reviewId = 1;
         Review expResult = reviewJpaController.findReview(reviewId);
-        assertEquals((Integer) (expResult.getReviewId()), (Integer) reviewId);
+        assertThat(expResult.getReviewId()).isEqualTo(reviewId);
     }
 
     /**
@@ -158,9 +162,10 @@ public class ReviewJpaControllerTest {
      * Test of findReviewByDateSubmitted method, of class ReviewJpaController.
      */
     @Test
-    public void testFindReviewByDateSubmitted() {
+    public void testFindReviewByDateSubmitted() throws ParseException {
         System.out.println("findReviewByDateSubmitted");
-        LocalDateTime dateSubmitted = LocalDateTime.of(2013, 9, 20, 0, 0, 0);
+        String inputDate = "2015-12-24 00:00:00";
+        Date dateSubmitted = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a").parse(inputDate);
         List<Review> expResult = reviewJpaController.findReviewByDateSubmitted(dateSubmitted);
         assertThat(expResult).hasSize(1);
     }
@@ -189,15 +194,29 @@ public class ReviewJpaControllerTest {
     }
 
     /**
+     * Test of findReviewByRating method, of class ReviewJpaController.
+     */
+    @Test
+    public void testFindReviewByRating() {
+        System.out.println("findReviewByRating");
+        List<Review> expResult = reviewJpaController.findReviewByRating(5);
+        assertThat(expResult).hasSize(19);
+    }
+
+    /**
      * Test of getReviewCount method, of class ReviewJpaController.
      */
     @Test
     public void testGetReviewCount() {
-        int expResult = 0;
         int result = reviewJpaController.getReviewCount();
-        assertEquals(expResult, result);
+        assertThat(result).isEqualTo(44);
     }
+    //-----------------------------------------------------END OF TEST METHODS----------------------------------
 
+    /**
+     * This routine is courtesy of Bartosz Majsak who also solved my Arquillian
+     * remote server problem
+     */
     @Before
     public void seedDatabase() {
         final String seedDataScript = loadAsString("seed_tables.sql");

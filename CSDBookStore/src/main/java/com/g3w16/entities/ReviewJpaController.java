@@ -8,7 +8,8 @@ package com.g3w16.entities;
 import com.g3w16.entities.exceptions.NonexistentEntityException;
 import com.g3w16.entities.exceptions.RollbackFailureException;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
+
 import java.util.List;
 import javax.annotation.Resource;
 import javax.enterprise.context.SessionScoped;
@@ -27,13 +28,15 @@ import javax.transaction.UserTransaction;
 @SessionScoped
 public class ReviewJpaController implements Serializable {
 
+    @Resource
+    private UserTransaction utx;
+
+    @PersistenceContext
+    private EntityManager em;
+
     public ReviewJpaController() {
         super();
     }
-    @Resource
-    private UserTransaction utx;
-    @PersistenceContext
-    private EntityManager em;
 
     public void create(Review review) throws RollbackFailureException, Exception {
         try {
@@ -202,29 +205,35 @@ public class ReviewJpaController implements Serializable {
     }
 
     public List<Review> findReviewByUserId(Integer userId) {
-        Query q = em.createQuery("select object(o) from Review as o where userId = :userId");
+        Query q = em.createNamedQuery("Review.findByUserId");
         q.setParameter("userId", userId);
         return q.getResultList();
     }
 
-    public List<Review> findReviewByDateSubmitted(LocalDateTime dateSubmitted) {
-        Query q = em.createQuery("select object(o) from Review as o where dateSubmitted = :dateSubmitted");
+    public List<Review> findReviewByDateSubmitted(Date dateSubmitted) {
+        Query q = em.createNamedQuery("Review.findByDateSubmitted");
         q.setParameter("dateSubmitted", dateSubmitted);
         return q.getResultList();
     }
 
     public List<Review> findReviewByApprovalId(Integer approvalId) {
-        Query q = em.createQuery("select object(o) from Review as o where approvalId = :approvalId");
+        Query q = em.createNamedQuery("Review.findByApprovalId");
         q.setParameter("approvalId", approvalId);
         return q.getResultList();
     }
 
-    public List<Review> findReviewByIsbn(Book isbn) {
-        Query q = em.createQuery("select object(o) from Review as o where isbn = :isbn");
-        q.setParameter("isbn", isbn.getIsbn());
+    public List<Review> findReviewByIsbn(Book book) {
+        Query q = em.createNamedQuery("Review.findByIsbn");
+        String isbn=book.getIsbn();
+        q.setParameter("isbn", isbn);
         return q.getResultList();
     }
 
+    public List<Review> findReviewByRating(Integer rating) {
+        Query q = em.createNamedQuery("Review.findByRating");
+        q.setParameter("rating", rating);
+        return q.getResultList();
+    }
     public int getReviewCount() {
         Query q = em.createQuery("select count(o) from Review as o");
         return ((Long) q.getSingleResult()).intValue();
