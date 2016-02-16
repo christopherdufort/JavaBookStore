@@ -14,11 +14,10 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.sql.DataSource;
@@ -30,18 +29,15 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
- * @author 1232046
+ * @author Giuseppe Campanelli
  */
-public class ReviewJpaControllerTest {
-
-    private Logger logger = Logger.getLogger(ReviewJpaControllerTest.class.getName());
-
+public class TitleJpaControllerTest {
+    
     @Deployment
-    public static WebArchive deploy() {
+    public static WebArchive deploy(){
         // Use an alternative to the JUnit assert library called AssertJ
         // Need to reference MySQL driver as it is not part of either
         // embedded or remote TomEE
@@ -51,7 +47,7 @@ public class ReviewJpaControllerTest {
                 .resolve("mysql:mysql-connector-java",
                         "org.assertj:assertj-core").withoutTransitivity()
                 .asFile();
-
+        
         // For testing Arquillian prefers a resources.xml file over a
         // context.xml
         // Actual file name is resources-mysql-ds.xml in the test/resources
@@ -71,137 +67,111 @@ public class ReviewJpaControllerTest {
 
         return webArchive;
     }
-
-    @Resource(name = "java:app/jdbc/g3w16")
+    
+    @Resource(name="java:app/jdbc/g3w16")
     private DataSource ds;
 
     @Inject
-    private Review review;
-
+    private Title title;
+    
     @Inject
-    private ReviewJpaController reviewJpaController;
+    private TitleJpaController titleJpaController;
 
     /**
-     * Test of create method, of class ReviewJpaController.
+     * Test of create method, of class TitleJpaController.
      */
     @Test
     public void testCreate() throws Exception {
         System.out.println("create");
-        reviewJpaController.create(review);
+        title = new Title();
+        title.setTitle("Test");
+        titleJpaController.create(title);
+        assertEquals(title.getTitle(), titleJpaController.findTitleByName("Test").getTitle());
     }
 
     /**
-     * Test of edit method, of class ReviewJpaController.
+     * Test of edit method, of class TitleJpaController.
      */
     @Test
     public void testEdit() throws Exception {
         System.out.println("edit");
-        reviewJpaController.edit(review);
+        title = new Title(1, "Mr.");
+        title.setTitle("Mister");
+        titleJpaController.edit(title);
+        assertEquals(title, titleJpaController.findTitleByName("Mister"));
     }
 
     /**
-     * Test of destroy method, of class ReviewJpaController.
+     * Test of destroy method, of class TitleJpaController.
      */
     @Test
     public void testDestroy() throws Exception {
         System.out.println("destroy");
-        Integer id = null;
-        reviewJpaController.destroy(id);
+        Integer id = 5;
+        titleJpaController.destroy(id);
+        assertEquals(null, titleJpaController.findTitleById(5));
     }
 
     /**
-     * Test of findReviewEntities method, of class ReviewJpaController.
+     * Test of findTitleEntities method, of class TitleJpaController.
      */
     @Test
-    public void testFindReviewEntities_0args() {
-        System.out.println("findReviewEntities");
-        List<Review> expResult = reviewJpaController.findReviewEntities();
-        assertThat(expResult).hasSize(44);
-
-    }
-
-    /**
-     * Test of findReviewEntities method, of class ReviewJpaController.
-     */
-    @Test
-    public void testFindReviewEntities_int_int() {
-        System.out.println("findReviewEntities");
-        int maxResults = 10;
-        int firstResult = 0;
-        List<Review> expResult = reviewJpaController.findReviewEntities(maxResults, firstResult);
-        assertThat(expResult).hasSize(10);
-    }
-
-    /**
-     * Test of findReview method, of class ReviewJpaController.
-     */
-    @Test
-    public void testFindReview() {
-        System.out.println("findReview");
-        int reviewId = 1;
-        Review expResult = reviewJpaController.findReview(reviewId);
-        assertEquals((Integer) (expResult.getReviewId()), (Integer) reviewId);
-    }
-
-    /**
-     * Test of findReviewByUserId method, of class ReviewJpaController.
-     */
-    @Test
-    public void testFindReviewByUserId() {
-        System.out.println("findReviewByUserId");
-        Integer userId = 1;
-        List<Review> expResult = reviewJpaController.findReviewByUserId(userId);
-        assertThat(expResult).hasSize(44);
-    }
-
-    /**
-     * Test of findReviewByDateSubmitted method, of class ReviewJpaController.
-     */
-    @Test
-    public void testFindReviewByDateSubmitted() {
-        System.out.println("findReviewByDateSubmitted");
-        LocalDateTime dateSubmitted = LocalDateTime.of(2013, 9, 20, 0, 0, 0);
-        List<Review> expResult = reviewJpaController.findReviewByDateSubmitted(dateSubmitted);
-        assertThat(expResult).hasSize(1);
-    }
-
-    /**
-     * Test of findReviewByApprovalId method, of class ReviewJpaController.
-     */
-    @Test
-    public void testFindReviewByApprovalId() {
-        System.out.println("findReviewByApprovalId");
-        Integer approvalId = 2;
-        List<Review> expResult = reviewJpaController.findReviewByApprovalId(approvalId);
-        assertThat(expResult).hasSize(3);
-    }
-
-    /**
-     * Test of findReviewByIsbn method, of class ReviewJpaController.
-     */
-    @Test
-    public void testFindReviewByIsbn() {
-        System.out.println("findReviewByIsbn");
-        Book isbn = new Book();
-        isbn.setIsbn("978-0679600213");
-        List<Review> expResult = reviewJpaController.findReviewByIsbn(isbn);
-        assertThat(expResult).hasSize(3);
-    }
-
-    /**
-     * Test of getReviewCount method, of class ReviewJpaController.
-     */
-    @Test
-    public void testGetReviewCount() {
-        int expResult = 0;
-        int result = reviewJpaController.getReviewCount();
+    public void testFindAllTitles() {
+        System.out.println("findTitleEntities");
+        List<Title> expResult = new ArrayList<Title>();
+        expResult.add(new Title(1, "Mr."));
+        expResult.add(new Title(2, "Ms."));
+        expResult.add(new Title(3, "Mrs."));
+        expResult.add(new Title(4, "Miss."));
+        expResult.add(new Title(5, "Dr."));
+        List<Title> result = titleJpaController.findAll();
         assertEquals(expResult, result);
     }
 
+    /**
+     * Test of findTitle method, of class TitleJpaController.
+     */
+    @Test
+    public void testFindTitleById() {
+        System.out.println("findTitle");
+        Integer id = 1;
+        Title expResult = new Title(1, "Mr.");
+        Title result = titleJpaController.findTitleById(id);
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of findProvinceByName method, of class TitleJpaController.
+     */
+    @Test
+    public void testFindTitleByName() {
+        System.out.println("findProvinceByName");
+        String title = "Mr.";
+        Title expResult = new Title(1, "Mr.");
+        Title result = titleJpaController.findTitleByName(title);
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getTitleCount method, of class TitleJpaController.
+     */
+    @Test
+    public void testGetTitleCount() {
+        System.out.println("getTitleCount");
+        int expResult = 5;
+        int result = titleJpaController.getTitleCount();
+        assertEquals(expResult, result);
+    }
+    
+    //-----------------------------------------------------END OF TEST METHODS----------------------------------
+    /**
+     * This routine is courtesy of Bartosz Majsak who also solved my Arquillian
+     * remote server problem
+     */
     @Before
     public void seedDatabase() {
         final String seedDataScript = loadAsString("seed_tables.sql");
-
+        
         try (Connection connection = ds.getConnection()) {
             for (String statement : splitStatements(new StringReader(
                     seedDataScript), ";")) {
@@ -213,7 +183,7 @@ public class ReviewJpaControllerTest {
         }
         System.out.println("Seeding works");
     }
-
+    
     /**
      * The following methods support the seedDatabse method
      */
@@ -254,4 +224,5 @@ public class ReviewJpaControllerTest {
         return line.startsWith("--") || line.startsWith("//")
                 || line.startsWith("/*");
     }
+    
 }

@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 
@@ -149,7 +148,7 @@ public class RegisteredUserJpaController implements Serializable {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
                 Integer id = registeredUser.getUserId();
-                if (findRegisteredUser(id) == null) {
+                if (findUserById(id) == null) {
                     throw new NonexistentEntityException("The registeredUser with id " + id + " no longer exists.");
                 }
             }
@@ -194,11 +193,11 @@ public class RegisteredUserJpaController implements Serializable {
         }
     }
 
-    public List<RegisteredUser> findRegisteredUserEntities() {
+    public List<RegisteredUser> findAll() {
         return findRegisteredUserEntities(true, -1, -1);
     }
 
-    public List<RegisteredUser> findRegisteredUserEntities(int maxResults, int firstResult) {
+    public List<RegisteredUser> findUsersWithRange(int maxResults, int firstResult) {
         return findRegisteredUserEntities(false, maxResults, firstResult);
     }
 
@@ -211,28 +210,17 @@ public class RegisteredUserJpaController implements Serializable {
         return q.getResultList();
     }
 
-    public RegisteredUser findRegisteredUser(Integer id) {
+    public RegisteredUser findUserById(Integer id) {
         return em.find(RegisteredUser.class, id);
-    }
-    
-        public List<RegisteredUser> findAll() {
-        Query q = em.createNamedQuery("findAll", RegisteredUser.class);
-        return q.getResultList();
-    }
-    
-    public RegisteredUser findUserById(int id) {
-        Query q = em.createNamedQuery("findByUserId", RegisteredUser.class);
-        q.setParameter("userId", id);
-        return (RegisteredUser) q.getResultList().get(0);
     }
     
     public RegisteredUser findUserByEmail(String email) {
         Query q = em.createNamedQuery("findByEmailAddress", RegisteredUser.class);
         q.setParameter("emailAddress", email);
-        return (RegisteredUser) q.getResultList().get(0);
+        return (RegisteredUser) q.getSingleResult();
     }
 
-    public int getRegisteredUserCount() {
+    public int getUsersCount() {
         Query q = em.createQuery("select count(o) from RegisteredUser as o");
         return ((Long) q.getSingleResult()).intValue();
     }

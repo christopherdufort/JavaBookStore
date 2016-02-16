@@ -21,7 +21,6 @@ import javax.transaction.UserTransaction;
 
 /**
  *
- * @author 1040570
  * @author Jonas Faure
  */
 @Named
