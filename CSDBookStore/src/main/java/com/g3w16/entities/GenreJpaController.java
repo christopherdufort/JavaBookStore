@@ -135,15 +135,28 @@ public class GenreJpaController implements Serializable {
     }
 
     public List<Genre> findGenreEntities() {
-        return findGenreEntities(true, -1, -1);
+        return findGenreEntities(true, false, -1, -1);
+    }
+    
+    public List<Genre> findGenreEntitiesAsClient() {
+        return findGenreEntities(true, true, -1, -1);
     }
 
     public List<Genre> findGenreEntities(int maxResults, int firstResult) {
-        return findGenreEntities(false, maxResults, firstResult);
+        return findGenreEntities(false, false, maxResults, firstResult);
     }
 
-    private List<Genre> findGenreEntities(boolean all, int maxResults, int firstResult) {
-        Query q = em.createQuery("select object(o) from Genre as o");
+    public List<Genre> findGenreEntitiesAsClient(int maxResults, int firstResult) {
+        return findGenreEntities(false, true, maxResults, firstResult);
+    }
+    
+    private List<Genre> findGenreEntities(boolean all, boolean asClient, int maxResults, int firstResult) {
+        Query q;
+        if(asClient){
+            q = em.createNamedQuery("Genre.findAllAvailable");
+        }else{
+            q = em.createNamedQuery("Genre.findAll");
+        }
         if (!all) {
             q.setMaxResults(maxResults);
             q.setFirstResult(firstResult);
@@ -152,15 +165,28 @@ public class GenreJpaController implements Serializable {
     }
 
     public List<Genre> findGenreEntitiesLike(String genreName){
-        return findGenreEntitiesLike(genreName, true, -1, -1);
+        return findGenreEntitiesLike(genreName, true, false, -1, -1);
+    }
+    
+    public List<Genre> findGenreEntitiesLikeAsClient(String genreName){
+        return findGenreEntitiesLike(genreName, true, true, -1, -1);
     }
     
     public List<Genre> findGenreEntitiesLike(String genreName, int maxResults, int firstResult){
-        return findGenreEntitiesLike(genreName, false, maxResults, firstResult);
+        return findGenreEntitiesLike(genreName, false, false, maxResults, firstResult);
     }
     
-    private List<Genre> findGenreEntitiesLike(String genreName, boolean all, int maxResults, int firstResult){
-        Query q = em.createNamedQuery("Genre.findByGenreName");
+    public List<Genre> findGenreEntitiesLikeAsClient(String genreName, int maxResults, int firstResult){
+        return findGenreEntitiesLike(genreName, false, true, maxResults, firstResult);
+    }
+    
+    private List<Genre> findGenreEntitiesLike(String genreName, boolean all, boolean asClient, int maxResults, int firstResult){
+        Query q;
+        if(asClient){
+            q = em.createNamedQuery("Genre.findByGenreNameAvailable");
+        }else{
+            q = em.createNamedQuery("Genre.findByGenreName");
+        }
         if(!all){
             q.setMaxResults(maxResults);
             q.setFirstResult(firstResult);
@@ -170,15 +196,28 @@ public class GenreJpaController implements Serializable {
     }
     
     public List<Genre> findGenreEntitiesByBook(Book book){
-        return findGenreEntitiesByBook(book, true, -1, -1);
+        return findGenreEntitiesByBook(book, true, false, -1, -1);
+    }
+    
+    public List<Genre> findGenreEntitiesByBookAsClient(Book book){
+        return findGenreEntitiesByBook(book, true, true, -1, -1);
     }
     
     public List<Genre> findGenreEntitiesByBook(Book book, int maxResults, int firstResult){
-        return findGenreEntitiesByBook(book, false, maxResults, firstResult);
+        return findGenreEntitiesByBook(book, false, false, maxResults, firstResult);
     }
     
-    private List<Genre> findGenreEntitiesByBook(Book book, boolean all, int maxResults, int firstResult){
-        Query q = em.createNamedQuery("Genre.findByBookId");
+    public List<Genre> findGenreEntitiesByBookAsClient(Book book, int maxResults, int firstResult){
+        return findGenreEntitiesByBook(book, false, true, maxResults, firstResult);
+    }
+    
+    private List<Genre> findGenreEntitiesByBook(Book book, boolean all, boolean asClient, int maxResults, int firstResult){
+        Query q;
+        if(asClient){
+            q = em.createNamedQuery("Genre.findByBookIdAvailable");
+        }else{
+            q = em.createNamedQuery("Genre.findByBookId");
+        }
         if(!all){
             q.setMaxResults(maxResults);
             q.setFirstResult(firstResult);
@@ -188,15 +227,28 @@ public class GenreJpaController implements Serializable {
     }
     
     public List<Genre> findGenreEntitiesByFormat(Format format){
-        return findGenreEntitiesByFormat(format, true, -1, -1);
+        return findGenreEntitiesByFormat(format, true, false, -1, -1);
+    }
+    
+    public List<Genre> findGenreEntitiesByFormatAsClient(Format format){
+        return findGenreEntitiesByFormat(format, true, true, -1, -1);
     }
     
     public List<Genre> findGenreEntitiesByFormat(Format format, int maxResults, int firstResult){
-        return findGenreEntitiesByFormat(format, false, maxResults, firstResult);
+        return findGenreEntitiesByFormat(format, false, false, maxResults, firstResult);
     }
     
-    private List<Genre> findGenreEntitiesByFormat(Format format, boolean all, int maxResults, int firstResult){
-        Query q = em.createNamedQuery("Genre.FindByFormatId");
+    public List<Genre> findGenreEntitiesByFormatAsClient(Format format, int maxResults, int firstResult){
+        return findGenreEntitiesByFormat(format, false, true, maxResults, firstResult);
+    }
+    
+    private List<Genre> findGenreEntitiesByFormat(Format format, boolean all, boolean asClient, int maxResults, int firstResult){
+        Query q;
+        if(asClient){
+            q = em.createNamedQuery("Genre.FindByFormatIdAvailable");
+        }else{
+            q = em.createNamedQuery("Genre.FindByFormatId");
+        }
         if(!all){
             q.setMaxResults(maxResults);
             q.setFirstResult(firstResult);
@@ -206,15 +258,28 @@ public class GenreJpaController implements Serializable {
     }
     
     public List<Genre> findGenreEntitiesByAuthor(Author author){
-        return findGenreEntitiesByAuthor(author, true, -1, -1);
+        return findGenreEntitiesByAuthor(author, true, false, -1, -1);
+    }
+    
+    public List<Genre> findGenreEntitiesByAuthorAsClient(Author author){
+        return findGenreEntitiesByAuthor(author, true, true, -1, -1);
     }
     
     public List<Genre> findGenreEntitiesByAuthor(Author author, int maxResults, int firstResult){
-        return findGenreEntitiesByAuthor(author, false, maxResults, firstResult);
+        return findGenreEntitiesByAuthor(author, false, false, maxResults, firstResult);
     }
     
-    private List<Genre> findGenreEntitiesByAuthor(Author author, boolean all, int maxResults, int firstResult){
-        Query q = em.createNamedQuery("Genre.FindByAuthorId");
+    public List<Genre> findGenreEntitiesByAuthorAsClient(Author author, int maxResults, int firstResult){
+        return findGenreEntitiesByAuthor(author, false, true, maxResults, firstResult);
+    }
+    
+    private List<Genre> findGenreEntitiesByAuthor(Author author, boolean all, boolean asClient, int maxResults, int firstResult){
+        Query q;
+        if(asClient){
+            q = em.createNamedQuery("Genre.FindByAuthorIdAvailable");
+        }else{
+            q = em.createNamedQuery("Genre.FindByAuthorId");
+        }
         if(!all){
             q.setMaxResults(maxResults);
             q.setFirstResult(firstResult);

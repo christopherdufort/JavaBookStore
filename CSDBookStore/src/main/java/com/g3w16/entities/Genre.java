@@ -30,7 +30,13 @@ import javax.persistence.Table;
     @NamedQuery(name = "Genre.findByGenreName", query = "SELECT g FROM Genre g WHERE g.genreName LIKE :genreName"),
     @NamedQuery(name = "Genre.findByBookId", query = "SELECT g FROM Genre g WHERE EXISTS ( SELECT 1 FROM g.bookList b WHERE b.bookId = :bookId )"),
     @NamedQuery(name = "Genre.FindByAuthorId", query = "SELECT g FROM Genre g WHERE EXISTS ( SELECT 1 FROM g.bookList b WHERE EXISTS ( SELECT 1 FROM b.authorList a WHERE a.authorId = :authorId ) )"),
-    @NamedQuery(name = "Genre.FindByFormatId", query = "SELECT g FROM Genre g WHERE EXISTS ( SELECT 1 FROM g.bookList b WHERE EXISTS ( SELECT 1 FROM b.formatList f WHERE f.formatId = :formatId ) )")
+    @NamedQuery(name = "Genre.FindByFormatId", query = "SELECT g FROM Genre g WHERE EXISTS ( SELECT 1 FROM g.bookList b WHERE EXISTS ( SELECT 1 FROM b.formatList f WHERE f.formatId = :formatId ) )"),
+    @NamedQuery(name = "Genre.findAllAvailable", query = "SELECT g FROM Genre g WHERE EXISTS( SELECT 1 FROM g.bookList b WHERE b.available = 1 )"),
+    @NamedQuery(name = "Genre.findByGenreIdAvailable", query = "SELECT g FROM Genre g WHERE g.genreId = :genreId AND EXISTS( SELECT 1 FROM g.bookList b WHERE b.available = 1 )"),
+    @NamedQuery(name = "Genre.findByGenreNameAvailable", query = "SELECT g FROM Genre g WHERE g.genreName LIKE :genreName AND EXISTS( SELECT 1 FROM g.bookList b WHERE b.available = 1 )"),
+    @NamedQuery(name = "Genre.findByBookIdAvailable", query = "SELECT g FROM Genre g WHERE EXISTS ( SELECT 1 FROM g.bookList b WHERE b.bookId = :bookId AND b.available = 1)"),
+    @NamedQuery(name = "Genre.FindByAuthorIdAvailable", query = "SELECT g FROM Genre g WHERE EXISTS ( SELECT 1 FROM g.bookList b WHERE b.available = 1 AND EXISTS ( SELECT 1 FROM b.authorList a WHERE a.authorId = :authorId ) )"),
+    @NamedQuery(name = "Genre.FindByFormatIdAvailable", query = "SELECT g FROM Genre g WHERE EXISTS ( SELECT 1 FROM g.bookList b WHERE b.available = 1 AND EXISTS ( SELECT 1 FROM b.formatList f WHERE f.formatId = :formatId ) )")
 })
 public class Genre implements Serializable {
 
