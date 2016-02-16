@@ -6,7 +6,8 @@
 package com.g3w16.entities;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,8 +31,11 @@ import javax.persistence.TemporalType;
 @NamedQueries({
     @NamedQuery(name = "Review.findAll", query = "SELECT r FROM Review r"),
     @NamedQuery(name = "Review.findByReviewId", query = "SELECT r FROM Review r WHERE r.reviewId = :reviewId"),
+    @NamedQuery(name = "Review.findByUserId", query = "SELECT r FROM Review r WHERE r.userId = :userId"),
     @NamedQuery(name = "Review.findByDateSubmitted", query = "SELECT r FROM Review r WHERE r.dateSubmitted = :dateSubmitted"),
     @NamedQuery(name = "Review.findByRating", query = "SELECT r FROM Review r WHERE r.rating = :rating"),
+    @NamedQuery(name = "Review.findByApprovalId", query = "SELECT r FROM Review r WHERE r.approvalId = :approvalId"),
+    @NamedQuery(name = "Review.findByIsbn", query = "SELECT r FROM Review r WHERE r.isbn = :isbn"),
     @NamedQuery(name = "Review.findByReviewTitle", query = "SELECT r FROM Review r WHERE r.reviewTitle = :reviewTitle"),
     @NamedQuery(name = "Review.findByReviewText", query = "SELECT r FROM Review r WHERE r.reviewText = :reviewText")})
 public class Review implements Serializable {
@@ -44,7 +48,7 @@ public class Review implements Serializable {
     private Integer reviewId;
     @Column(name = "date_submitted")
     @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime dateSubmitted;
+    private Date dateSubmitted;
     @Column(name = "rating")
     private Integer rating;
     @Column(name = "review_title")
@@ -76,11 +80,11 @@ public class Review implements Serializable {
         this.reviewId = reviewId;
     }
 
-    public LocalDateTime getDateSubmitted() {
+    public Date getDateSubmitted() {
         return dateSubmitted;
     }
 
-    public void setDateSubmitted(LocalDateTime dateSubmitted) {
+    public void setDateSubmitted(Date dateSubmitted) {
         this.dateSubmitted = dateSubmitted;
     }
 

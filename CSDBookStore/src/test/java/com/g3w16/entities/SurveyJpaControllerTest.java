@@ -23,6 +23,7 @@ import java.util.Scanner;
 import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.sql.DataSource;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -79,18 +80,48 @@ public class SurveyJpaControllerTest {
     private DataSource ds;
 
     @Inject
-    private Survey survey;
-    
-    @Inject
     private SurveyJpaController surveyJpaController;
-   
+     //------------------------------------------------------TEST METHODS-----------------------------------------
     @Test
-    public void always_pass(){
-        //If this wont pass nothing will..
-        System.out.println("PASSES THE ONLY TEST!");
-        assertTrue(true);
+    public void successfulCreateSurvey() throws Exception{
+        Survey expectedSurvey = new Survey(null,"Q", "A1", "A2","A3","AD");
+        surveyJpaController.create(expectedSurvey);
+        
+        Survey actualSurvey = surveyJpaController.findSurveyById(7);
+        assertThat(actualSurvey).isEqualTo(expectedSurvey);
+    }
+    @Test
+    public void successfulUpdateSurvey() throws Exception{
+        Survey expectedSurvey = new Survey(7,"Q", "A1", "A2","A3","AD");
+        surveyJpaController.create(expectedSurvey);
+        
+        Survey modifiedSurvey = new Survey(7,"Modified", "A1", "A2","A3","AD");
+        
+        surveyJpaController.edit(modifiedSurvey);
+
+        assertThat(surveyJpaController.findSurveyById(7)).isEqualToComparingFieldByField(modifiedSurvey);
     }
     
+    @Test
+    public void successfulDestroySurvey() throws Exception{
+        Survey toBeDestroyed = new Survey(7,"Q", "A1", "A2","A3","AD");
+        surveyJpaController.create(toBeDestroyed);
+        
+        surveyJpaController.destroy(7);
+       
+        assertThat(surveyJpaController.getSurveyCount()).isEqualTo(6);
+    }
+    
+    @Test
+    public void successfulFindAllSurvey() throws Exception{
+        //Find all the surveys in the db
+        List<Survey> allSurveys = surveyJpaController.findAllSurveys();
+        
+        //should be 6 records int he db
+        assertThat(allSurveys.size()).isEqualTo(3);
+        
+    }
+      //-----------------------------------------------------END OF TEST METHODS-----------------------------------
     /**
      * This routine is courtesy of Bartosz Majsak who also solved my Arquillian
      * remote server problem

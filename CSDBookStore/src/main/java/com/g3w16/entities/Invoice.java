@@ -25,7 +25,7 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author 1040570
+ * @author Rita Lazaars
  */
 @Entity
 @Table(name = "invoice", catalog = "g3w16", schema = "")
@@ -36,6 +36,7 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Invoice.findByUserNumber", query = "SELECT i FROM Invoice i WHERE i.userNumber = :userNumber"),
     @NamedQuery(name = "Invoice.findByTotalNetValueOfSale", query = "SELECT i FROM Invoice i WHERE i.totalNetValueOfSale = :totalNetValueOfSale"),
     @NamedQuery(name = "Invoice.findByTotalGrossValueOfSale", query = "SELECT i FROM Invoice i WHERE i.totalGrossValueOfSale = :totalGrossValueOfSale")})
+
 public class Invoice implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -19,6 +19,7 @@ import javax.persistence.Table;
 /**
  *
  * @author 1040570
+ * 
  */
 @Entity
 @Table(name = "survey", catalog = "g3w16", schema = "")

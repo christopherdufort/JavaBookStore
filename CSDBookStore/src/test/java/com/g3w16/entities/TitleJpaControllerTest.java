@@ -70,9 +70,6 @@ public class TitleJpaControllerTest {
     
     @Resource(name="java:app/jdbc/g3w16")
     private DataSource ds;
-
-    @Inject
-    private Title title;
     
     @Inject
     private TitleJpaController titleJpaController;
@@ -83,7 +80,7 @@ public class TitleJpaControllerTest {
     @Test
     public void testCreate() throws Exception {
         System.out.println("create");
-        title = new Title();
+        Title title = new Title();
         title.setTitle("Test");
         titleJpaController.create(title);
         assertEquals(title.getTitle(), titleJpaController.findTitleByName("Test").getTitle());
@@ -95,7 +92,7 @@ public class TitleJpaControllerTest {
     @Test
     public void testEdit() throws Exception {
         System.out.println("edit");
-        title = new Title(1, "Mr.");
+        Title title = new Title(1, "Mr.");
         title.setTitle("Mister");
         titleJpaController.edit(title);
         assertEquals(title, titleJpaController.findTitleByName("Mister"));
