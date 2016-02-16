@@ -14,13 +14,13 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import javax.sql.DataSource;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -30,15 +30,18 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
  * @author 1232046
  */
 public class ReviewJpaControllerTest {
-    
-@Deployment
-    public static WebArchive deploy(){
+
+    private Logger logger = Logger.getLogger(ReviewJpaControllerTest.class.getName());
+
+    @Deployment
+    public static WebArchive deploy() {
         // Use an alternative to the JUnit assert library called AssertJ
         // Need to reference MySQL driver as it is not part of either
         // embedded or remote TomEE
@@ -48,7 +51,7 @@ public class ReviewJpaControllerTest {
                 .resolve("mysql:mysql-connector-java",
                         "org.assertj:assertj-core").withoutTransitivity()
                 .asFile();
-        
+
         // For testing Arquillian prefers a resources.xml file over a
         // context.xml
         // Actual file name is resources-mysql-ds.xml in the test/resources
@@ -68,28 +71,15 @@ public class ReviewJpaControllerTest {
 
         return webArchive;
     }
-    
-    @Resource(name="java:app/jdbc/g3w16")
+
+    @Resource(name = "java:app/jdbc/g3w16")
     private DataSource ds;
 
     @Inject
     private Review review;
-    
+
     @Inject
     private ReviewJpaController reviewJpaController;
-    /**
-     * Test of getEntityManager method, of class ReviewJpaController.
-     */
-    @Test
-    public void testGetEntityManager() {
-        System.out.println("getEntityManager");
-        ReviewJpaController instance = null;
-        EntityManager expResult = null;
-        //EntityManager result;
-        //assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
 
     /**
      * Test of create method, of class ReviewJpaController.
@@ -97,11 +87,7 @@ public class ReviewJpaControllerTest {
     @Test
     public void testCreate() throws Exception {
         System.out.println("create");
-        Review review = null;
-        ReviewJpaController instance = null;
-        instance.create(review);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        reviewJpaController.create(review);
     }
 
     /**
@@ -110,11 +96,7 @@ public class ReviewJpaControllerTest {
     @Test
     public void testEdit() throws Exception {
         System.out.println("edit");
-        Review review = null;
-        ReviewJpaController instance = null;
-        instance.edit(review);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        reviewJpaController.edit(review);
     }
 
     /**
@@ -124,10 +106,7 @@ public class ReviewJpaControllerTest {
     public void testDestroy() throws Exception {
         System.out.println("destroy");
         Integer id = null;
-        ReviewJpaController instance = null;
-        instance.destroy(id);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        reviewJpaController.destroy(id);
     }
 
     /**
@@ -136,12 +115,9 @@ public class ReviewJpaControllerTest {
     @Test
     public void testFindReviewEntities_0args() {
         System.out.println("findReviewEntities");
-        ReviewJpaController instance = null;
-        List<Review> expResult = null;
-        List<Review> result = instance.findReviewEntities();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        List<Review> expResult = reviewJpaController.findReviewEntities();
+        assertThat(expResult).hasSize(44);
+
     }
 
     /**
@@ -150,14 +126,10 @@ public class ReviewJpaControllerTest {
     @Test
     public void testFindReviewEntities_int_int() {
         System.out.println("findReviewEntities");
-        int maxResults = 0;
+        int maxResults = 10;
         int firstResult = 0;
-        ReviewJpaController instance = null;
-        List<Review> expResult = null;
-        List<Review> result = instance.findReviewEntities(maxResults, firstResult);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        List<Review> expResult = reviewJpaController.findReviewEntities(maxResults, firstResult);
+        assertThat(expResult).hasSize(10);
     }
 
     /**
@@ -166,13 +138,9 @@ public class ReviewJpaControllerTest {
     @Test
     public void testFindReview() {
         System.out.println("findReview");
-        Integer id = null;
-        ReviewJpaController instance = null;
-        Review expResult = null;
-        Review result = instance.findReview(id);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int reviewId = 1;
+        Review expResult = reviewJpaController.findReview(reviewId);
+        assertEquals((Integer) (expResult.getReviewId()), (Integer) reviewId);
     }
 
     /**
@@ -181,13 +149,9 @@ public class ReviewJpaControllerTest {
     @Test
     public void testFindReviewByUserId() {
         System.out.println("findReviewByUserId");
-        Integer userId = null;
-        ReviewJpaController instance = null;
-        Review expResult = null;
-        Review result = instance.findReviewByUserId(userId);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Integer userId = 1;
+        List<Review> expResult = reviewJpaController.findReviewByUserId(userId);
+        assertThat(expResult).hasSize(44);
     }
 
     /**
@@ -196,13 +160,9 @@ public class ReviewJpaControllerTest {
     @Test
     public void testFindReviewByDateSubmitted() {
         System.out.println("findReviewByDateSubmitted");
-        Date dateSubmitted = null;
-        ReviewJpaController instance = null;
-        Review expResult = null;
-        Review result = instance.findReviewByDateSubmitted(dateSubmitted);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        LocalDateTime dateSubmitted = LocalDateTime.of(2013, 9, 20, 0, 0, 0);
+        List<Review> expResult = reviewJpaController.findReviewByDateSubmitted(dateSubmitted);
+        assertThat(expResult).hasSize(1);
     }
 
     /**
@@ -211,13 +171,9 @@ public class ReviewJpaControllerTest {
     @Test
     public void testFindReviewByApprovalId() {
         System.out.println("findReviewByApprovalId");
-        Integer approvalId = null;
-        ReviewJpaController instance = null;
-        Review expResult = null;
-        Review result = instance.findReviewByApprovalId(approvalId);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Integer approvalId = 2;
+        List<Review> expResult = reviewJpaController.findReviewByApprovalId(approvalId);
+        assertThat(expResult).hasSize(3);
     }
 
     /**
@@ -226,13 +182,10 @@ public class ReviewJpaControllerTest {
     @Test
     public void testFindReviewByIsbn() {
         System.out.println("findReviewByIsbn");
-        Book isbn = null;
-        ReviewJpaController instance = null;
-        Review expResult = null;
-        Review result = instance.findReviewByIsbn(isbn);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Book isbn = new Book();
+        isbn.setIsbn("978-0679600213");
+        List<Review> expResult = reviewJpaController.findReviewByIsbn(isbn);
+        assertThat(expResult).hasSize(3);
     }
 
     /**
@@ -240,18 +193,15 @@ public class ReviewJpaControllerTest {
      */
     @Test
     public void testGetReviewCount() {
-        System.out.println("getReviewCount");
-        ReviewJpaController instance = null;
         int expResult = 0;
-        int result = instance.getReviewCount();
+        int result = reviewJpaController.getReviewCount();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
+
     @Before
     public void seedDatabase() {
         final String seedDataScript = loadAsString("seed_tables.sql");
-        
+
         try (Connection connection = ds.getConnection()) {
             for (String statement : splitStatements(new StringReader(
                     seedDataScript), ";")) {
@@ -263,7 +213,7 @@ public class ReviewJpaControllerTest {
         }
         System.out.println("Seeding works");
     }
-    
+
     /**
      * The following methods support the seedDatabse method
      */
