@@ -102,7 +102,7 @@ public class TitleJpaController implements Serializable {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
                 Integer id = title.getTitleId();
-                if (findTitle(id) == null) {
+                if (findTitleById(id) == null) {
                     throw new NonexistentEntityException("The title with id " + id + " no longer exists.");
                 }
             }
@@ -136,43 +136,20 @@ public class TitleJpaController implements Serializable {
             throw ex;
         }
     }
-
-    public List<Title> findTitleEntities() {
-        return findTitleEntities(true, -1, -1);
-    }
-
-    public List<Title> findTitleEntities(int maxResults, int firstResult) {
-        return findTitleEntities(false, maxResults, firstResult);
-    }
-
-    private List<Title> findTitleEntities(boolean all, int maxResults, int firstResult) {
-        Query q = em.createQuery("select object(o) from Title as o");
-        if (!all) {
-            q.setMaxResults(maxResults);
-            q.setFirstResult(firstResult);
-        }
-        return q.getResultList();
-    }
-
-    public Title findTitle(Integer id) {
-        return em.find(Title.class, id);
-    }
     
     public List<Title> findAll() {
         Query q = em.createNamedQuery("findAll", Title.class);
         return q.getResultList();
     }
     
-    public Title findProvinceById(int id) {
-        Query q = em.createNamedQuery("findByTitleId", Title.class);
-        q.setParameter("titleId", id);
-        return (Title) q.getResultList().get(0);
+    public Title findTitleById(int id) {
+        return em.find(Title.class, id);
     }
     
-    public Title findProvinceByName(String title) {
+    public Title findTitleByName(String title) {
         Query q = em.createNamedQuery("findByTitle", Title.class);
         q.setParameter("title", title);
-        return (Title) q.getResultList().get(0);
+        return (Title) q.getSingleResult();
     }
 
     public int getTitleCount() {

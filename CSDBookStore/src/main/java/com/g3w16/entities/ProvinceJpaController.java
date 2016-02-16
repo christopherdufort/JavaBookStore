@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 
@@ -103,7 +102,7 @@ public class ProvinceJpaController implements Serializable {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
                 Integer id = province.getProvinceId();
-                if (findProvince(id) == null) {
+                if (findProvinceById(id) == null) {
                     throw new NonexistentEntityException("The province with id " + id + " no longer exists.");
                 }
             }
@@ -137,27 +136,6 @@ public class ProvinceJpaController implements Serializable {
             throw ex;
         }
     }
-
-    public List<Province> findProvinceEntities() {
-        return findProvinceEntities(true, -1, -1);
-    }
-
-    public List<Province> findProvinceEntities(int maxResults, int firstResult) {
-        return findProvinceEntities(false, maxResults, firstResult);
-    }
-
-    private List<Province> findProvinceEntities(boolean all, int maxResults, int firstResult) {
-        Query q = em.createQuery("select object(o) from Province as o");
-        if (!all) {
-            q.setMaxResults(maxResults);
-            q.setFirstResult(firstResult);
-        }
-        return q.getResultList();
-    }
-
-    public Province findProvince(Integer id) {
-        return em.find(Province.class, id);
-    }
     
     public List<Province> findAll() {
         Query q = em.createNamedQuery("findAll", Province.class);
@@ -165,20 +143,17 @@ public class ProvinceJpaController implements Serializable {
     }
     
     public Province findProvinceById(int id) {
-        Query q = em.createNamedQuery("findByProvinceId", Province.class);
-        q.setParameter("provinceId", id);
-        return (Province) q.getResultList().get(0);
+        return em.find(Province.class, id);
     }
     
     public Province findProvinceByName(String name) {
         Query q = em.createNamedQuery("findByProvince", Province.class);
         q.setParameter("province", name);
-        return (Province) q.getResultList().get(0);
+        return (Province) q.getSingleResult();
     }
 
     public int getProvinceCount() {
         Query q = em.createQuery("select count(o) from Province as o");
         return ((Long) q.getSingleResult()).intValue();
-
     }
 }

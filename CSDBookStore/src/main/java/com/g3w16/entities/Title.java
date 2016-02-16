@@ -20,8 +20,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "title", catalog = "g3w16", schema = "")
 @NamedQueries({
-    @NamedQuery(name = "Title.findAll", query = "SELECT t FROM Title t"),
-    @NamedQuery(name = "Title.findByTitleId", query = "SELECT t FROM Title t WHERE t.titleId = :titleId"),
+    @NamedQuery(name = "Title.findAll", query = "SELECT object(t) FROM Title t"),
     @NamedQuery(name = "Title.findByTitle", query = "SELECT object(t) FROM Title t WHERE t.title = :title"),})
 public class Title implements Serializable {
 
@@ -97,5 +96,4 @@ public class Title implements Serializable {
     public String toString() {
         return "com.g3w16.entities.Title[ titleId=" + titleId + " ]";
     }
-    
 }
