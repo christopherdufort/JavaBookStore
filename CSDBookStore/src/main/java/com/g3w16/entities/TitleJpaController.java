@@ -12,35 +12,28 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Resource;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 
 /**
  *
- * @author 1040570
+ * @author Giuseppe Campanelli
  */
 public class TitleJpaController implements Serializable {
 
-    public TitleJpaController(UserTransaction utx, EntityManagerFactory emf) {
-        this.utx = utx;
-        this.emf = emf;
-    }
-    private UserTransaction utx = null;
-    private EntityManagerFactory emf = null;
-
-    public EntityManager getEntityManager() {
-        return emf.createEntityManager();
-    }
+    @Resource
+    private UserTransaction utx;
+    @PersistenceContext
+    private EntityManager em;
 
     public void create(Title title) throws RollbackFailureException, Exception {
         if (title.getRegisteredUserList() == null) {
             title.setRegisteredUserList(new ArrayList<RegisteredUser>());
         }
-        EntityManager em = null;
         try {
             utx.begin();
-            em = getEntityManager();
             List<RegisteredUser> attachedRegisteredUserList = new ArrayList<RegisteredUser>();
             for (RegisteredUser registeredUserListRegisteredUserToAttach : title.getRegisteredUserList()) {
                 registeredUserListRegisteredUserToAttach = em.getReference(registeredUserListRegisteredUserToAttach.getClass(), registeredUserListRegisteredUserToAttach.getUserId());
@@ -65,18 +58,12 @@ public class TitleJpaController implements Serializable {
                 throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
             }
             throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
         }
     }
 
     public void edit(Title title) throws NonexistentEntityException, RollbackFailureException, Exception {
-        EntityManager em = null;
         try {
             utx.begin();
-            em = getEntityManager();
             Title persistentTitle = em.find(Title.class, title.getTitleId());
             List<RegisteredUser> registeredUserListOld = persistentTitle.getRegisteredUserList();
             List<RegisteredUser> registeredUserListNew = title.getRegisteredUserList();
@@ -120,18 +107,12 @@ public class TitleJpaController implements Serializable {
                 }
             }
             throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
         }
     }
 
     public void destroy(Integer id) throws NonexistentEntityException, RollbackFailureException, Exception {
-        EntityManager em = null;
         try {
             utx.begin();
-            em = getEntityManager();
             Title title;
             try {
                 title = em.getReference(Title.class, id);
@@ -153,10 +134,6 @@ public class TitleJpaController implements Serializable {
                 throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
             }
             throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
         }
     }
 
@@ -169,36 +146,37 @@ public class TitleJpaController implements Serializable {
     }
 
     private List<Title> findTitleEntities(boolean all, int maxResults, int firstResult) {
-        EntityManager em = getEntityManager();
-        try {
-            Query q = em.createQuery("select object(o) from Title as o");
-            if (!all) {
-                q.setMaxResults(maxResults);
-                q.setFirstResult(firstResult);
-            }
-            return q.getResultList();
-        } finally {
-            em.close();
+        Query q = em.createQuery("select object(o) from Title as o");
+        if (!all) {
+            q.setMaxResults(maxResults);
+            q.setFirstResult(firstResult);
         }
+        return q.getResultList();
     }
 
     public Title findTitle(Integer id) {
-        EntityManager em = getEntityManager();
-        try {
-            return em.find(Title.class, id);
-        } finally {
-            em.close();
-        }
+        return em.find(Title.class, id);
+    }
+    
+    public List<Title> findAll() {
+        Query q = em.createNamedQuery("findAll", Title.class);
+        return q.getResultList();
+    }
+    
+    public Title findProvinceById(int id) {
+        Query q = em.createNamedQuery("findByTitleId", Title.class);
+        q.setParameter("titleId", id);
+        return (Title) q.getResultList().get(0);
+    }
+    
+    public Title findProvinceByName(String title) {
+        Query q = em.createNamedQuery("findByTitle", Title.class);
+        q.setParameter("title", title);
+        return (Title) q.getResultList().get(0);
     }
 
     public int getTitleCount() {
-        EntityManager em = getEntityManager();
-        try {
-            Query q = em.createQuery("select count(o) from Title as o");
-            return ((Long) q.getSingleResult()).intValue();
-        } finally {
-            em.close();
-        }
+        Query q = em.createQuery("select count(o) from Title as o");
+        return ((Long) q.getSingleResult()).intValue();
     }
-    
 }

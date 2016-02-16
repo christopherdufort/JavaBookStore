@@ -12,35 +12,35 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Resource;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 
 /**
  *
- * @author 1040570
+ * @author Xin Ma
  */
+@Named
+@SessionScoped
 public class ApprovalJpaController implements Serializable {
 
-    public ApprovalJpaController(UserTransaction utx, EntityManagerFactory emf) {
-        this.utx = utx;
-        this.emf = emf;
+    public ApprovalJpaController() {
+        super();
     }
-    private UserTransaction utx = null;
-    private EntityManagerFactory emf = null;
-
-    public EntityManager getEntityManager() {
-        return emf.createEntityManager();
-    }
+    @Resource
+    private UserTransaction utx;
+    @PersistenceContext
+    private EntityManager em;
 
     public void create(Approval approval) throws RollbackFailureException, Exception {
         if (approval.getReviewList() == null) {
             approval.setReviewList(new ArrayList<Review>());
         }
-        EntityManager em = null;
         try {
             utx.begin();
-            em = getEntityManager();
             List<Review> attachedReviewList = new ArrayList<Review>();
             for (Review reviewListReviewToAttach : approval.getReviewList()) {
                 reviewListReviewToAttach = em.getReference(reviewListReviewToAttach.getClass(), reviewListReviewToAttach.getReviewId());
@@ -65,18 +65,12 @@ public class ApprovalJpaController implements Serializable {
                 throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
             }
             throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
         }
     }
 
     public void edit(Approval approval) throws NonexistentEntityException, RollbackFailureException, Exception {
-        EntityManager em = null;
         try {
             utx.begin();
-            em = getEntityManager();
             Approval persistentApproval = em.find(Approval.class, approval.getApprovalId());
             List<Review> reviewListOld = persistentApproval.getReviewList();
             List<Review> reviewListNew = approval.getReviewList();
@@ -120,18 +114,12 @@ public class ApprovalJpaController implements Serializable {
                 }
             }
             throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
         }
     }
 
     public void destroy(Integer id) throws NonexistentEntityException, RollbackFailureException, Exception {
-        EntityManager em = null;
         try {
             utx.begin();
-            em = getEntityManager();
             Approval approval;
             try {
                 approval = em.getReference(Approval.class, id);
@@ -153,10 +141,6 @@ public class ApprovalJpaController implements Serializable {
                 throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
             }
             throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
         }
     }
 
@@ -169,36 +153,21 @@ public class ApprovalJpaController implements Serializable {
     }
 
     private List<Approval> findApprovalEntities(boolean all, int maxResults, int firstResult) {
-        EntityManager em = getEntityManager();
-        try {
-            Query q = em.createQuery("select object(o) from Approval as o");
-            if (!all) {
-                q.setMaxResults(maxResults);
-                q.setFirstResult(firstResult);
-            }
-            return q.getResultList();
-        } finally {
-            em.close();
+        Query q = em.createQuery("select object(o) from Approval as o");
+        if (!all) {
+            q.setMaxResults(maxResults);
+            q.setFirstResult(firstResult);
         }
+        return q.getResultList();
     }
 
     public Approval findApproval(Integer id) {
-        EntityManager em = getEntityManager();
-        try {
-            return em.find(Approval.class, id);
-        } finally {
-            em.close();
-        }
+        return em.find(Approval.class, id);
     }
 
     public int getApprovalCount() {
-        EntityManager em = getEntityManager();
-        try {
-            Query q = em.createQuery("select count(o) from Approval as o");
-            return ((Long) q.getSingleResult()).intValue();
-        } finally {
-            em.close();
-        }
+        Query q = em.createQuery("select count(o) from Approval as o");
+        return ((Long) q.getSingleResult()).intValue();
     }
-    
+
 }

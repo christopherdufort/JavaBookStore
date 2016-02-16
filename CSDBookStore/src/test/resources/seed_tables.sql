@@ -1,22 +1,40 @@
 USE g3w16;
 
+--EMPTY ALL TABLES AND RESET ALL INDEXES WE WILL PROBABLY MIX THE SCRIPTS BACK AND JUST DROP TABLES
 DELETE FROM review WHERE review_id>=1;
+ALTER TABLE review AUTO_INCREMENT = 1;
 DELETE FROM book_author WHERE book_id>=1;
+ALTER TABLE book_author AUTO_INCREMENT = 1;
 DELETE FROM book_format WHERE book_id>=1;
+ALTER TABLE book_format AUTO_INCREMENT = 1;
 DELETE FROM book_genre WHERE book_id>=1;
+ALTER TABLE book_genre AUTO_INCREMENT = 1;
 DELETE FROM ad WHERE ad_id>=1;
+ALTER TABLE ad AUTO_INCREMENT = 1;
 DELETE FROM book WHERE book_id>=1;
+ALTER TABLE book AUTO_INCREMENT = 1;
 DELETE FROM format WHERE format_id>=1;
+ALTER TABLE format AUTO_INCREMENT = 1;
 DELETE FROM genre WHERE genre_id>=1;
+ALTER TABLE genre AUTO_INCREMENT = 1;
 DELETE FROM author WHERE author_id>=1;
+ALTER TABLE author AUTO_INCREMENT = 1;
 DELETE FROM invoice WHERE invoice_id>=1;
+ALTER TABLE invoice AUTO_INCREMENT = 1;
 DELETE FROM invoice_detail WHERE invoice_detail_id>=1;
+ALTER TABLE invoice_detail AUTO_INCREMENT = 1;
 DELETE FROM news_feed WHERE news_feed_id>=1;
+ALTER TABLE news_feed AUTO_INCREMENT = 1;
 DELETE FROM province WHERE province_id>=1;
+ALTER TABLE province AUTO_INCREMENT = 1;
 DELETE FROM registered_user WHERE user_id>=1;
+ALTER TABLE registered_user AUTO_INCREMENT = 1;
 DELETE FROM survey WHERE survey_id>=1;
+ALTER TABLE survey AUTO_INCREMENT = 1;
 DELETE FROM title WHERE title_id>=1;
+ALTER TABLE title AUTO_INCREMENT = 1;
 DELETE FROM approval WHERE approval_id>=1;
+ALTER TABLE approval AUTO_INCREMENT = 1;
 
 INSERT INTO `approval` (`approval_id`, `approval_status`) VALUES
 (1, 'Approved'),

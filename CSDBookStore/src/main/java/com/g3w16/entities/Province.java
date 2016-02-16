@@ -21,17 +21,14 @@ import javax.persistence.Table;
 
 /**
  *
- * @author 1040570
+ * @author Giuseppe Campanelli
  */
 @Entity
 @Table(name = "province", catalog = "g3w16", schema = "")
 @NamedQueries({
     @NamedQuery(name = "Province.findAll", query = "SELECT p FROM Province p"),
     @NamedQuery(name = "Province.findByProvinceId", query = "SELECT p FROM Province p WHERE p.provinceId = :provinceId"),
-    @NamedQuery(name = "Province.findByProvince", query = "SELECT p FROM Province p WHERE p.province = :province"),
-    @NamedQuery(name = "Province.findByPst", query = "SELECT p FROM Province p WHERE p.pst = :pst"),
-    @NamedQuery(name = "Province.findByGst", query = "SELECT p FROM Province p WHERE p.gst = :gst"),
-    @NamedQuery(name = "Province.findByHst", query = "SELECT p FROM Province p WHERE p.hst = :hst")})
+    @NamedQuery(name = "Province.findByProvince", query = "SELECT object(p) FROM Province p WHERE p.province = :province")})
 public class Province implements Serializable {
 
     private static final long serialVersionUID = 1L;

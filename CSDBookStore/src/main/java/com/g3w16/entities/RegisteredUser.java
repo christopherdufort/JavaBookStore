@@ -22,25 +22,16 @@ import javax.persistence.Table;
 
 /**
  *
- * @author 1040570
+ * @author Giuseppe Campanelli
  */
 @Entity
 @Table(name = "registered_user", catalog = "g3w16", schema = "")
 @NamedQueries({
     @NamedQuery(name = "RegisteredUser.findAll", query = "SELECT r FROM RegisteredUser r"),
     @NamedQuery(name = "RegisteredUser.findByUserId", query = "SELECT r FROM RegisteredUser r WHERE r.userId = :userId"),
-    @NamedQuery(name = "RegisteredUser.findByEmailAddress", query = "SELECT r FROM RegisteredUser r WHERE r.emailAddress = :emailAddress"),
-    @NamedQuery(name = "RegisteredUser.findByPassword", query = "SELECT r FROM RegisteredUser r WHERE r.password = :password"),
+    @NamedQuery(name = "RegisteredUser.findByEmailAddress", query = "SELECT object(r) FROM RegisteredUser r WHERE r.emailAddress = :emailAddress"),
     @NamedQuery(name = "RegisteredUser.findByFirstName", query = "SELECT r FROM RegisteredUser r WHERE r.firstName = :firstName"),
     @NamedQuery(name = "RegisteredUser.findByLastName", query = "SELECT r FROM RegisteredUser r WHERE r.lastName = :lastName"),
-    @NamedQuery(name = "RegisteredUser.findByCompanyName", query = "SELECT r FROM RegisteredUser r WHERE r.companyName = :companyName"),
-    @NamedQuery(name = "RegisteredUser.findByAddressOne", query = "SELECT r FROM RegisteredUser r WHERE r.addressOne = :addressOne"),
-    @NamedQuery(name = "RegisteredUser.findByAddressTwo", query = "SELECT r FROM RegisteredUser r WHERE r.addressTwo = :addressTwo"),
-    @NamedQuery(name = "RegisteredUser.findByCity", query = "SELECT r FROM RegisteredUser r WHERE r.city = :city"),
-    @NamedQuery(name = "RegisteredUser.findByCountry", query = "SELECT r FROM RegisteredUser r WHERE r.country = :country"),
-    @NamedQuery(name = "RegisteredUser.findByPostalCode", query = "SELECT r FROM RegisteredUser r WHERE r.postalCode = :postalCode"),
-    @NamedQuery(name = "RegisteredUser.findByHomePhone", query = "SELECT r FROM RegisteredUser r WHERE r.homePhone = :homePhone"),
-    @NamedQuery(name = "RegisteredUser.findByCellPhone", query = "SELECT r FROM RegisteredUser r WHERE r.cellPhone = :cellPhone"),
     @NamedQuery(name = "RegisteredUser.findByManager", query = "SELECT r FROM RegisteredUser r WHERE r.manager = :manager"),
     @NamedQuery(name = "RegisteredUser.findByActive", query = "SELECT r FROM RegisteredUser r WHERE r.active = :active")})
 public class RegisteredUser implements Serializable {
