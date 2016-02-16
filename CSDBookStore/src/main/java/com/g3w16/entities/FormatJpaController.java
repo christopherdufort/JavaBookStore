@@ -135,15 +135,28 @@ public class FormatJpaController implements Serializable {
     }
 
     public List<Format> findFormatEntities() {
-        return findFormatEntities(true, -1, -1);
+        return findFormatEntities(true, false, -1, -1);
+    }
+    
+    public List<Format> findFormatEntitiesAsClient() {
+        return findFormatEntities(true, true, -1, -1);
     }
 
     public List<Format> findFormatEntities(int maxResults, int firstResult) {
-        return findFormatEntities(false, maxResults, firstResult);
+        return findFormatEntities(false, false, maxResults, firstResult);
+    }
+    
+    public List<Format> findFormatEntitiesAsClient(int maxResults, int firstResult) {
+        return findFormatEntities(false, false, maxResults, firstResult);
     }
 
-    private List<Format> findFormatEntities(boolean all, int maxResults, int firstResult) {
-        Query q = em.createQuery("select object(o) from Format as o");
+    private List<Format> findFormatEntities(boolean all, boolean asClient,  int maxResults, int firstResult) {
+        Query q;
+        if(asClient){
+            q = em.createNamedQuery("Format.findAllAvailable");
+        }else{
+            q = em.createNamedQuery("Format.findAll");
+        }
         if (!all) {
             q.setMaxResults(maxResults);
             q.setFirstResult(firstResult);
@@ -152,15 +165,28 @@ public class FormatJpaController implements Serializable {
     }
     
     public List<Format> findFormatEntitiesLike(String extension){
-        return findFormatEntitiesLike(extension, true, -1, -1);
+        return findFormatEntitiesLike(extension, true, false, -1, -1);
+    }
+    
+    public List<Format> findFormatEntitiesLikeAsClient(String extension){
+        return findFormatEntitiesLike(extension, true, true, -1, -1);
     }
     
     public List<Format> findformatEntitiesLike(String extension, int maxResults, int firstresult){
-        return findFormatEntitiesLike(extension, false, maxResults, firstresult);
+        return findFormatEntitiesLike(extension, false, false, maxResults, firstresult);
     }
     
-    private List<Format> findFormatEntitiesLike(String extension, boolean all, int maxResults, int firstResult){
-        Query q = em.createNamedQuery("Format.findByExtension");
+    public List<Format> findformatEntitiesLikeAsClient(String extension, int maxResults, int firstresult){
+        return findFormatEntitiesLike(extension, false, true, maxResults, firstresult);
+    }
+    
+    private List<Format> findFormatEntitiesLike(String extension, boolean all, boolean asClient, int maxResults, int firstResult){
+        Query q;
+        if(asClient){
+            q = em.createNamedQuery("Format.findByExtensionAvailable");
+        }else{
+            q = em.createNamedQuery("Format.findByExtension");
+        }
         if (!all){
             q.setMaxResults(maxResults);
             q.setFirstResult(firstResult);
@@ -170,15 +196,28 @@ public class FormatJpaController implements Serializable {
     }
 
     public List<Format> findFormatEntitiesByBook(Book book){
-        return findFormatEntitiesByBook(book, true, -1, -1);
+        return findFormatEntitiesByBook(book, true, false, -1, -1);
+    }
+    
+    public List<Format> findFormatEntitiesByBookAsClient(Book book){
+        return findFormatEntitiesByBook(book, true, true, -1, -1);
     }
     
     public List<Format> findFormatEntitiesByBook(Book book, int maxResults, int firstResult){
-        return findFormatEntitiesByBook(book, false, maxResults, firstResult);
+        return findFormatEntitiesByBook(book, false, false, maxResults, firstResult);
     }
     
-    private List<Format> findFormatEntitiesByBook(Book book, boolean all, int maxResults, int firstResult){
-        Query q = em.createNamedQuery("Format.findByBookId");
+    public List<Format> findFormatEntitiesByBookAsClient(Book book, int maxResults, int firstResult){
+        return findFormatEntitiesByBook(book, false, true, maxResults, firstResult);
+    }
+    
+    private List<Format> findFormatEntitiesByBook(Book book, boolean all, boolean asClient, int maxResults, int firstResult){
+        Query q;
+        if(asClient){
+            q = em.createNamedQuery("Format.findByBookIdAvailable");
+        }else{
+            q = em.createNamedQuery("Format.findByBookId");
+        }
         if(!all){
             q.setMaxResults(maxResults);
             q.setFirstResult(firstResult);
@@ -188,15 +227,28 @@ public class FormatJpaController implements Serializable {
     }
     
     public List<Format> findFormatEntitiesByGenre(Genre genre){
-        return findFormatEntitiesByGenre(genre, true, -1, -1);
+        return findFormatEntitiesByGenre(genre, true, false, -1, -1);
+    }
+    
+    public List<Format> findFormatEntitiesByGenreAsClient(Genre genre){
+        return findFormatEntitiesByGenre(genre, true, true, -1, -1);
     }
     
     public List<Format> findformatEntitiesByGenre(Genre genre, int maxResults, int firstResult){
-        return findFormatEntitiesByGenre(genre, false, maxResults, firstResult);
+        return findFormatEntitiesByGenre(genre, false, false, maxResults, firstResult);
     }
     
-    private List<Format> findFormatEntitiesByGenre(Genre genre, boolean all, int maxResults, int firstResult){
-        Query q = em.createNamedQuery("Format.findByGenreId");
+    public List<Format> findformatEntitiesByGenreAsClient(Genre genre, int maxResults, int firstResult){
+        return findFormatEntitiesByGenre(genre, false, true, maxResults, firstResult);
+    }
+    
+    private List<Format> findFormatEntitiesByGenre(Genre genre, boolean all, boolean asClient, int maxResults, int firstResult){
+        Query q;
+        if(asClient){
+            q = em.createNamedQuery("Format.findByGenreIdAvailable");
+        }else{
+            q = em.createNamedQuery("Format.findByGenreId");
+        }
         if(!all){
             q.setMaxResults(maxResults);
             q.setFirstResult(firstResult);
@@ -206,15 +258,28 @@ public class FormatJpaController implements Serializable {
     }
     
     public List<Format> findFormatEntitiesByAuthor(Author author){
-        return findFormatEntitiesByAuthor(author, true, -1, -1);
+        return findFormatEntitiesByAuthor(author, true, false, -1, -1);
+    }
+    
+    public List<Format> findFormatEntitiesByAuthorAsClient(Author author){
+        return findFormatEntitiesByAuthor(author, true, true, -1, -1);
     }
     
     public List<Format> findFormatEntitiesByAuthor(Author author, int maxResults, int firstResult){
-        return findFormatEntitiesByAuthor(author, false, maxResults, firstResult);
+        return findFormatEntitiesByAuthor(author, false, false, maxResults, firstResult);
     }
     
-    private List<Format> findFormatEntitiesByAuthor(Author author, boolean all, int maxResults, int firstResult){
-        Query q = em.createNamedQuery("Format.findByAuthorId");
+    public List<Format> findFormatEntitiesByAuthorAsClient(Author author, int maxResults, int firstResult){
+        return findFormatEntitiesByAuthor(author, false, true, maxResults, firstResult);
+    }
+    
+    private List<Format> findFormatEntitiesByAuthor(Author author, boolean all, boolean asClient, int maxResults, int firstResult){
+        Query q;
+        if(asClient){
+            q = em.createNamedQuery("Format.findByAuthorIdAvailable");
+        }else{
+            q = em.createNamedQuery("Format.findByAuthorId");
+        }
         if(!all){
             q.setMaxResults(maxResults);
             q.setFirstResult(firstResult);
