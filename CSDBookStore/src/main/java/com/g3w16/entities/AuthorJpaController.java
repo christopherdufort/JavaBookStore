@@ -143,15 +143,28 @@ public class AuthorJpaController implements Serializable {
     }
     
     public List<Author> findAuthorEntitiesLike(String authorName){
-        return findAuthorEntitiesLike(authorName, true, -1, -1);
+        return findAuthorEntitiesLike(authorName, true, false, -1, -1);
+    }
+    
+    public List<Author> findAuthorEntitiesLikeAsClient(String authorName){
+        return findAuthorEntitiesLike(authorName, true, true, -1, -1);
     }
     
     public List<Author> findAuthorEntitiesLike(String authorName, int maxResults, int firstResult){
-        return findAuthorEntitiesLike(authorName, false, maxResults, firstResult);
+        return findAuthorEntitiesLike(authorName, false, false, maxResults, firstResult);
     }
     
-    private List<Author> findAuthorEntitiesLike(String authorName, boolean all, int maxResults, int firstResult){
-        Query q = em.createNamedQuery("Author.findByAuthorName");
+    public List<Author> findAuthorEntitiesLikeAsClient(String authorName, int maxResults, int firstResult){
+        return findAuthorEntitiesLike(authorName, false, true, maxResults, firstResult);
+    }
+    
+    private List<Author> findAuthorEntitiesLike(String authorName, boolean all, boolean asClient, int maxResults, int firstResult){
+        Query q;
+        if(asClient){
+            q = em.createNamedQuery("Author.findByAuthorNameAvailable");
+        }else{
+            q = em.createNamedQuery("Author.findByAuthorName");
+        }
         if (!all){
             q.setMaxResults(maxResults);
             q.setFirstResult(firstResult);
@@ -170,15 +183,28 @@ public class AuthorJpaController implements Serializable {
     }
     
     public List<Author> findAuthorEntitiesByBook(Book book){
-        return findAuthorEntitiesByBook(book, true, -1, -1);
+        return findAuthorEntitiesByBook(book, true, false, -1, -1);
+    }
+    
+    public List<Author> findAuthorEntitiesByBookAsClient(Book book){
+        return findAuthorEntitiesByBook(book, true, true, -1, -1);
     }
     
     public List<Author> findAuthorEntitiesByBook(Book book, int maxResults, int firstResult){
-        return findAuthorEntitiesByBook(book, false, maxResults, firstResult);
+        return findAuthorEntitiesByBook(book, false, false, maxResults, firstResult);
     }
     
-    private List<Author> findAuthorEntitiesByBook(Book book, boolean all, int maxResults, int firstResult){
-        Query q = em.createNamedQuery("Author.findByBookId");
+    public List<Author> findAuthorEntitiesByBookAsClient(Book book, int maxResults, int firstResult){
+        return findAuthorEntitiesByBook(book, false, true, maxResults, firstResult);
+    }
+    
+    private List<Author> findAuthorEntitiesByBook(Book book, boolean all, boolean asClient, int maxResults, int firstResult){
+        Query q;
+        if(asClient){
+            q = em.createNamedQuery("Author.findByBookIdAvailable");
+        }else{
+            q = em.createNamedQuery("Author.findByBookId");
+        }
         if (!all){
             q.setMaxResults(maxResults);
             q.setFirstResult(firstResult);
@@ -188,15 +214,28 @@ public class AuthorJpaController implements Serializable {
     }
     
     public List<Author> findAuthorEntitiesByGenre(Genre genre){
-        return findAuthorEntitiesByGenre(genre, true, -1, -1);
+        return findAuthorEntitiesByGenre(genre, true, false, -1, -1);
+    }
+    
+    public List<Author> findAuthorEntitiesByGenreAsClient(Genre genre){
+        return findAuthorEntitiesByGenre(genre, true, true, -1, -1);
     }
     
     public List<Author> findAuthorEntitiesByGenre(Genre genre, int maxResults, int firstResult){
-        return findAuthorEntitiesByGenre(genre, false, maxResults, firstResult);
+        return findAuthorEntitiesByGenre(genre, false, false, maxResults, firstResult);
     }
     
-    private List<Author> findAuthorEntitiesByGenre(Genre genre, boolean all, int maxResults, int firstResult){
-        Query q = em.createNamedQuery("Author.findByGenreId");
+    public List<Author> findAuthorEntitiesByGenreAsClient(Genre genre, int maxResults, int firstResult){
+        return findAuthorEntitiesByGenre(genre, false, true, maxResults, firstResult);
+    }
+    
+    private List<Author> findAuthorEntitiesByGenre(Genre genre, boolean all, boolean asClient, int maxResults, int firstResult){
+        Query q;
+        if(asClient){
+            q = em.createNamedQuery("Author.findByGenreIdAvailable");
+        }else{
+            q = em.createNamedQuery("Author.findByGenreId");
+        }
         if(!all){
             q.setMaxResults(maxResults);
             q.setFirstResult(firstResult);
@@ -206,15 +245,28 @@ public class AuthorJpaController implements Serializable {
     }
     
     public List<Author> findAuthorEntitiesByFormat(Format format){
-        return findAuthorEntitiesByFormat(format, true, -1, -1);
+        return findAuthorEntitiesByFormat(format, true, false, -1, -1);
+    }
+    
+    public List<Author> findAuthorEntitiesByFormatAsClient(Format format){
+        return findAuthorEntitiesByFormat(format, true, true, -1, -1);
     }
     
     public List<Author> findAuthorEntitiesByFormat(Format format, int maxResults, int firstResult){
-        return findAuthorEntitiesByFormat(format, false, maxResults, firstResult);
+        return findAuthorEntitiesByFormat(format, false, false, maxResults, firstResult);
     }
     
-    private List<Author> findAuthorEntitiesByFormat(Format format, boolean all, int maxResults, int firstResult){
-        Query q = em.createNamedQuery("Author.findByFormatId");
+    public List<Author> findAuthorEntitiesByFormatAsClient(Format format, int maxResults, int firstResult){
+        return findAuthorEntitiesByFormat(format, false, true, maxResults, firstResult);
+    }
+    
+    private List<Author> findAuthorEntitiesByFormat(Format format, boolean all, boolean asClient, int maxResults, int firstResult){
+        Query q;
+        if(asClient){
+            q = em.createNamedQuery("Author.findByFormatIdAvailable");
+        }else{
+            q = em.createNamedQuery("Author.findByFormatId");
+        }
         if (!all){
             q.setMaxResults(maxResults);
             q.setFirstResult(firstResult);

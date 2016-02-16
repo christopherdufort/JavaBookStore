@@ -32,8 +32,13 @@ import javax.persistence.Table;
     @NamedQuery(name = "Author.findByAuthorName", query = "SELECT a FROM Author a WHERE a.authorName LIKE :authorName"),
     @NamedQuery(name = "Author.findByBookId", query = "SELECT a FROM Author a WHERE EXISTS(SELECT 1 FROM a.bookList b WHERE b.bookId = :bookId)"),
     @NamedQuery(name = "Author.findByGenreId", query = "SELECT a FROM Author a JOIN a.bookList b WHERE EXISTS(SELECT 1 FROM b.genreList g WHERE g.genreId = :genreId)"),
-    @NamedQuery(name = "Author.findByFormatId", query = "SELECT a FROM Author a WHERE EXISTS(SELECT 1 FROM a.bookList b WHERE EXISTS(SELECT 1 FROM b.formatList f WHERE f.formatId = :formatId) )")
-        
+    @NamedQuery(name = "Author.findByFormatId", query = "SELECT a FROM Author a WHERE EXISTS(SELECT 1 FROM a.bookList b WHERE EXISTS(SELECT 1 FROM b.formatList f WHERE f.formatId = :formatId) )"),
+    @NamedQuery(name = "Author.findAllAvailable", query = "SELECT a FROM Author a WHERE EXISTS(SELECT 1 FROM a.bookList b WHERE b.available = 1)"),
+    @NamedQuery(name = "Author.findByAuthorIdAvailable", query = "SELECT a FROM Author a WHERE a.authorId = :authorId AND EXISTS (SELECT 1 FROM a.bookList b WHERE b.available = 1)"),
+    @NamedQuery(name = "Author.findByAuthorNameAvailable", query = "SELECT a FROM Author a WHERE a.authorName LIKE :authorName AND EXISTS ( SELECT 1 FROM a.bookList b WHERE b.available = 1)"),
+    @NamedQuery(name = "Author.findByBookIdAvailable", query = "SELECT a FROM Author a WHERE EXISTS(SELECT 1 FROM a.bookList b WHERE b.bookId = :bookId and b.available = 1 )"),
+    @NamedQuery(name = "Author.findByGenreIdAvailable", query = "SELECT a FROM Author a JOIN a.bookList b WHERE EXISTS(SELECT 1 FROM b.genreList g WHERE g.genreId = :genreId) AND b.available = 1"),
+    @NamedQuery(name = "Author.findByFormatIdAvailable", query = "SELECT a FROM Author a WHERE EXISTS(SELECT 1 FROM a.bookList b WHERE b.available = 1 AND EXISTS(SELECT 1 FROM b.formatList f WHERE f.formatId = :formatId) )")    
 })
 public class Author implements Serializable {
 
