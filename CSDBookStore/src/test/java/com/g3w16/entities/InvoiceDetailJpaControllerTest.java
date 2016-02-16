@@ -76,8 +76,7 @@ public class InvoiceDetailJpaControllerTest {
     @Resource(name = "java:app/jdbc/g3w16")
     private DataSource ds;
 
-    @Inject
-    private InvoiceDetail invoiceDetail;
+  
 
     @Inject
     private InvoiceDetailJpaController invoiceDetailJpaController;
