@@ -12,35 +12,29 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 
 /**
  *
- * @author 1040570
+ * @author Giuseppe Campanelli
  */
 public class RegisteredUserJpaController implements Serializable {
 
-    public RegisteredUserJpaController(UserTransaction utx, EntityManagerFactory emf) {
-        this.utx = utx;
-        this.emf = emf;
-    }
-    private UserTransaction utx = null;
-    private EntityManagerFactory emf = null;
-
-    public EntityManager getEntityManager() {
-        return emf.createEntityManager();
-    }
+    @Resource
+    private UserTransaction utx;
+    @PersistenceContext
+    private EntityManager em;
 
     public void create(RegisteredUser registeredUser) throws RollbackFailureException, Exception {
         if (registeredUser.getReviewList() == null) {
             registeredUser.setReviewList(new ArrayList<Review>());
         }
-        EntityManager em = null;
         try {
             utx.begin();
-            em = getEntityManager();
             Title titleId = registeredUser.getTitleId();
             if (titleId != null) {
                 titleId = em.getReference(titleId.getClass(), titleId.getTitleId());
@@ -83,18 +77,12 @@ public class RegisteredUserJpaController implements Serializable {
                 throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
             }
             throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
         }
     }
 
     public void edit(RegisteredUser registeredUser) throws NonexistentEntityException, RollbackFailureException, Exception {
-        EntityManager em = null;
         try {
             utx.begin();
-            em = getEntityManager();
             RegisteredUser persistentRegisteredUser = em.find(RegisteredUser.class, registeredUser.getUserId());
             Title titleIdOld = persistentRegisteredUser.getTitleId();
             Title titleIdNew = registeredUser.getTitleId();
@@ -113,7 +101,7 @@ public class RegisteredUserJpaController implements Serializable {
             List<Review> attachedReviewListNew = new ArrayList<Review>();
             for (Review reviewListNewReviewToAttach : reviewListNew) {
                 reviewListNewReviewToAttach = em.getReference(reviewListNewReviewToAttach.getClass(), reviewListNewReviewToAttach.getReviewId());
-                attachedReviewListNew.add(reviewListNewReviewToAttach);
+                attachedReviewListNew.add(reviewListNewReviewToAttach); 
             }
             reviewListNew = attachedReviewListNew;
             registeredUser.setReviewList(reviewListNew);
@@ -166,18 +154,12 @@ public class RegisteredUserJpaController implements Serializable {
                 }
             }
             throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
         }
     }
 
     public void destroy(Integer id) throws NonexistentEntityException, RollbackFailureException, Exception {
-        EntityManager em = null;
         try {
             utx.begin();
-            em = getEntityManager();
             RegisteredUser registeredUser;
             try {
                 registeredUser = em.getReference(RegisteredUser.class, id);
@@ -209,10 +191,6 @@ public class RegisteredUserJpaController implements Serializable {
                 throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
             }
             throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
         }
     }
 
@@ -225,36 +203,37 @@ public class RegisteredUserJpaController implements Serializable {
     }
 
     private List<RegisteredUser> findRegisteredUserEntities(boolean all, int maxResults, int firstResult) {
-        EntityManager em = getEntityManager();
-        try {
-            Query q = em.createQuery("select object(o) from RegisteredUser as o");
-            if (!all) {
-                q.setMaxResults(maxResults);
-                q.setFirstResult(firstResult);
-            }
-            return q.getResultList();
-        } finally {
-            em.close();
+        Query q = em.createQuery("select object(o) from RegisteredUser as o");
+        if (!all) {
+            q.setMaxResults(maxResults);
+            q.setFirstResult(firstResult);
         }
+        return q.getResultList();
     }
 
     public RegisteredUser findRegisteredUser(Integer id) {
-        EntityManager em = getEntityManager();
-        try {
-            return em.find(RegisteredUser.class, id);
-        } finally {
-            em.close();
-        }
+        return em.find(RegisteredUser.class, id);
+    }
+    
+        public List<RegisteredUser> findAll() {
+        Query q = em.createNamedQuery("findAll", RegisteredUser.class);
+        return q.getResultList();
+    }
+    
+    public RegisteredUser findUserById(int id) {
+        Query q = em.createNamedQuery("findByUserId", RegisteredUser.class);
+        q.setParameter("userId", id);
+        return (RegisteredUser) q.getResultList().get(0);
+    }
+    
+    public RegisteredUser findUserByEmail(String email) {
+        Query q = em.createNamedQuery("findByEmailAddress", RegisteredUser.class);
+        q.setParameter("emailAddress", email);
+        return (RegisteredUser) q.getResultList().get(0);
     }
 
     public int getRegisteredUserCount() {
-        EntityManager em = getEntityManager();
-        try {
-            Query q = em.createQuery("select count(o) from RegisteredUser as o");
-            return ((Long) q.getSingleResult()).intValue();
-        } finally {
-            em.close();
-        }
+        Query q = em.createQuery("select count(o) from RegisteredUser as o");
+        return ((Long) q.getSingleResult()).intValue();
     }
-    
 }

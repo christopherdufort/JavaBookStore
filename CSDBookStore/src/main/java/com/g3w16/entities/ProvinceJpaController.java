@@ -12,35 +12,29 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 
 /**
  *
- * @author 1040570
+ * @author Giuseppe Campanelli
  */
 public class ProvinceJpaController implements Serializable {
 
-    public ProvinceJpaController(UserTransaction utx, EntityManagerFactory emf) {
-        this.utx = utx;
-        this.emf = emf;
-    }
-    private UserTransaction utx = null;
-    private EntityManagerFactory emf = null;
-
-    public EntityManager getEntityManager() {
-        return emf.createEntityManager();
-    }
+    @Resource
+    private UserTransaction utx;
+    @PersistenceContext
+    private EntityManager em;
 
     public void create(Province province) throws RollbackFailureException, Exception {
         if (province.getRegisteredUserList() == null) {
             province.setRegisteredUserList(new ArrayList<RegisteredUser>());
         }
-        EntityManager em = null;
         try {
             utx.begin();
-            em = getEntityManager();
             List<RegisteredUser> attachedRegisteredUserList = new ArrayList<RegisteredUser>();
             for (RegisteredUser registeredUserListRegisteredUserToAttach : province.getRegisteredUserList()) {
                 registeredUserListRegisteredUserToAttach = em.getReference(registeredUserListRegisteredUserToAttach.getClass(), registeredUserListRegisteredUserToAttach.getUserId());
@@ -65,18 +59,12 @@ public class ProvinceJpaController implements Serializable {
                 throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
             }
             throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
         }
     }
 
     public void edit(Province province) throws NonexistentEntityException, RollbackFailureException, Exception {
-        EntityManager em = null;
         try {
             utx.begin();
-            em = getEntityManager();
             Province persistentProvince = em.find(Province.class, province.getProvinceId());
             List<RegisteredUser> registeredUserListOld = persistentProvince.getRegisteredUserList();
             List<RegisteredUser> registeredUserListNew = province.getRegisteredUserList();
@@ -120,18 +108,12 @@ public class ProvinceJpaController implements Serializable {
                 }
             }
             throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
         }
     }
 
     public void destroy(Integer id) throws NonexistentEntityException, RollbackFailureException, Exception {
-        EntityManager em = null;
         try {
             utx.begin();
-            em = getEntityManager();
             Province province;
             try {
                 province = em.getReference(Province.class, id);
@@ -153,10 +135,6 @@ public class ProvinceJpaController implements Serializable {
                 throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
             }
             throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
         }
     }
 
@@ -169,36 +147,38 @@ public class ProvinceJpaController implements Serializable {
     }
 
     private List<Province> findProvinceEntities(boolean all, int maxResults, int firstResult) {
-        EntityManager em = getEntityManager();
-        try {
-            Query q = em.createQuery("select object(o) from Province as o");
-            if (!all) {
-                q.setMaxResults(maxResults);
-                q.setFirstResult(firstResult);
-            }
-            return q.getResultList();
-        } finally {
-            em.close();
+        Query q = em.createQuery("select object(o) from Province as o");
+        if (!all) {
+            q.setMaxResults(maxResults);
+            q.setFirstResult(firstResult);
         }
+        return q.getResultList();
     }
 
     public Province findProvince(Integer id) {
-        EntityManager em = getEntityManager();
-        try {
-            return em.find(Province.class, id);
-        } finally {
-            em.close();
-        }
+        return em.find(Province.class, id);
+    }
+    
+    public List<Province> findAll() {
+        Query q = em.createNamedQuery("findAll", Province.class);
+        return q.getResultList();
+    }
+    
+    public Province findProvinceById(int id) {
+        Query q = em.createNamedQuery("findByProvinceId", Province.class);
+        q.setParameter("provinceId", id);
+        return (Province) q.getResultList().get(0);
+    }
+    
+    public Province findProvinceByName(String name) {
+        Query q = em.createNamedQuery("findByProvince", Province.class);
+        q.setParameter("province", name);
+        return (Province) q.getResultList().get(0);
     }
 
     public int getProvinceCount() {
-        EntityManager em = getEntityManager();
-        try {
-            Query q = em.createQuery("select count(o) from Province as o");
-            return ((Long) q.getSingleResult()).intValue();
-        } finally {
-            em.close();
-        }
+        Query q = em.createQuery("select count(o) from Province as o");
+        return ((Long) q.getSingleResult()).intValue();
+
     }
-    
 }

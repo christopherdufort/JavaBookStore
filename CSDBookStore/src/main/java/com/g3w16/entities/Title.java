@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.g3w16.entities;
 
 import java.io.Serializable;
@@ -20,14 +15,14 @@ import javax.persistence.Table;
 
 /**
  *
- * @author 1040570
+ * @author Giuseppe Campanelli
  */
 @Entity
 @Table(name = "title", catalog = "g3w16", schema = "")
 @NamedQueries({
     @NamedQuery(name = "Title.findAll", query = "SELECT t FROM Title t"),
     @NamedQuery(name = "Title.findByTitleId", query = "SELECT t FROM Title t WHERE t.titleId = :titleId"),
-    @NamedQuery(name = "Title.findByTitle", query = "SELECT t FROM Title t WHERE t.title = :title")})
+    @NamedQuery(name = "Title.findByTitle", query = "SELECT object(t) FROM Title t WHERE t.title = :title"),})
 public class Title implements Serializable {
 
     private static final long serialVersionUID = 1L;
