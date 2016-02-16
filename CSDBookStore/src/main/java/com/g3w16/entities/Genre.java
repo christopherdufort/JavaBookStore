@@ -27,7 +27,11 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(name = "Genre.findAll", query = "SELECT g FROM Genre g"),
     @NamedQuery(name = "Genre.findByGenreId", query = "SELECT g FROM Genre g WHERE g.genreId = :genreId"),
-    @NamedQuery(name = "Genre.findByGenreName", query = "SELECT g FROM Genre g WHERE g.genreName = :genreName")})
+    @NamedQuery(name = "Genre.findByGenreName", query = "SELECT g FROM Genre g WHERE g.genreName LIKE :genreName"),
+    @NamedQuery(name = "Genre.findByBookId", query = "SELECT g FROM Genre g WHERE EXISTS ( SELECT 1 FROM g.bookList b WHERE b.bookId = :bookId )"),
+    @NamedQuery(name = "Genre.FindByAuthorId", query = "SELECT g FROM Genre g WHERE EXISTS ( SELECT 1 FROM g.bookList b WHERE EXISTS ( SELECT 1 FROM b.authorList a WHERE a.authorId = :authorId ) )"),
+    @NamedQuery(name = "Genre.FindByFormatId", query = "SELECT g FROM Genre g WHERE EXISTS ( SELECT 1 FROM g.bookList b WHERE EXISTS ( SELECT 1 FROM b.formatList f WHERE f.formatId = :formatId ) )")
+})
 public class Genre implements Serializable {
 
     private static final long serialVersionUID = 1L;

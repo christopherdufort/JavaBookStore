@@ -151,7 +151,79 @@ public class FormatJpaController implements Serializable {
         }
         return q.getResultList();
     }
+    
+    public List<Format> findFormatEntitiesLike(String extension){
+        return findFormatEntitiesLike(extension, true, -1, -1);
+    }
+    
+    public List<Format> findformatEntitiesLike(String extension, int maxResults, int firstresult){
+        return findFormatEntitiesLike(extension, false, maxResults, firstresult);
+    }
+    
+    private List<Format> findFormatEntitiesLike(String extension, boolean all, int maxResults, int firstResult){
+        Query q = em.createNamedQuery("Format.findByExtension");
+        if (!all){
+            q.setMaxResults(maxResults);
+            q.setFirstResult(firstResult);
+        }
+        q.setParameter("extension", "%"+extension+"%");
+        return q.getResultList();
+    }
 
+    public List<Format> findFormatEntitiesByBook(Book book){
+        return findFormatEntitiesByBook(book, true, -1, -1);
+    }
+    
+    public List<Format> findFormatEntitiesByBook(Book book, int maxResults, int firstResult){
+        return findFormatEntitiesByBook(book, false, maxResults, firstResult);
+    }
+    
+    private List<Format> findFormatEntitiesByBook(Book book, boolean all, int maxResults, int firstResult){
+        Query q = em.createNamedQuery("Format.findByBookId");
+        if(!all){
+            q.setMaxResults(maxResults);
+            q.setFirstResult(firstResult);
+        }
+        q.setParameter("bookId", book.getBookId());
+        return q.getResultList();
+    }
+    
+    public List<Format> findFormatEntitiesByGenre(Genre genre){
+        return findFormatEntitiesByGenre(genre, true, -1, -1);
+    }
+    
+    public List<Format> findformatEntitiesByGenre(Genre genre, int maxResults, int firstResult){
+        return findFormatEntitiesByGenre(genre, false, maxResults, firstResult);
+    }
+    
+    private List<Format> findFormatEntitiesByGenre(Genre genre, boolean all, int maxResults, int firstResult){
+        Query q = em.createNamedQuery("Format.findByGenreId");
+        if(!all){
+            q.setMaxResults(maxResults);
+            q.setFirstResult(firstResult);
+        }
+        q.setParameter("genreId", genre.getGenreId());
+        return q.getResultList();
+    }
+    
+    public List<Format> findFormatEntitiesByAuthor(Author author){
+        return findFormatEntitiesByAuthor(author, true, -1, -1);
+    }
+    
+    public List<Format> findFormatEntitiesByAuthor(Author author, int maxResults, int firstResult){
+        return findFormatEntitiesByAuthor(author, false, maxResults, firstResult);
+    }
+    
+    private List<Format> findFormatEntitiesByAuthor(Author author, boolean all, int maxResults, int firstResult){
+        Query q = em.createNamedQuery("Format.findByAuthorId");
+        if(!all){
+            q.setMaxResults(maxResults);
+            q.setFirstResult(firstResult);
+        }
+        q.setParameter("authorId", author.getAuthorId());
+        return q.getResultList();
+    }
+    
     public Format findFormat(Integer id) {
         return em.find(Format.class, id);
     }

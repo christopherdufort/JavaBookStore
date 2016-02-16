@@ -69,7 +69,7 @@ public class AuthorJpaController implements Serializable {
             Author persistentAuthor = em.find(Author.class, author.getAuthorId());
             List<Book> bookListOld = persistentAuthor.getBookList();
             List<Book> bookListNew = author.getBookList();
-            List<Book> attachedBookListNew = new ArrayList<Book>();
+            List<Book> attachedBookListNew = new ArrayList<>();
             for (Book bookListNewBookToAttach : bookListNew) {
                 bookListNewBookToAttach = em.getReference(bookListNewBookToAttach.getClass(), bookListNewBookToAttach.getBookId());
                 attachedBookListNew.add(bookListNewBookToAttach);
@@ -141,6 +141,24 @@ public class AuthorJpaController implements Serializable {
     public List<Author> findAuthorEntities(int maxResults, int firstResult) {
         return findAuthorEntities(false, maxResults, firstResult);
     }
+    
+    public List<Author> findAuthorEntitiesLike(String authorName){
+        return findAuthorEntitiesLike(authorName, true, -1, -1);
+    }
+    
+    public List<Author> findAuthorEntitiesLike(String authorName, int maxResults, int firstResult){
+        return findAuthorEntitiesLike(authorName, false, maxResults, firstResult);
+    }
+    
+    private List<Author> findAuthorEntitiesLike(String authorName, boolean all, int maxResults, int firstResult){
+        Query q = em.createNamedQuery("Author.findByAuthorName");
+        if (!all){
+            q.setMaxResults(maxResults);
+            q.setFirstResult(firstResult);
+        }
+        q.setParameter("authorName", "%"+authorName+"%");
+        return q.getResultList();
+    }
 
     private List<Author> findAuthorEntities(boolean all, int maxResults, int firstResult) {
         Query q = em.createQuery("select object(o) from Author as o");
@@ -148,6 +166,60 @@ public class AuthorJpaController implements Serializable {
             q.setMaxResults(maxResults);
             q.setFirstResult(firstResult);
         }
+        return q.getResultList();
+    }
+    
+    public List<Author> findAuthorEntitiesByBook(Book book){
+        return findAuthorEntitiesByBook(book, true, -1, -1);
+    }
+    
+    public List<Author> findAuthorEntitiesByBook(Book book, int maxResults, int firstResult){
+        return findAuthorEntitiesByBook(book, false, maxResults, firstResult);
+    }
+    
+    private List<Author> findAuthorEntitiesByBook(Book book, boolean all, int maxResults, int firstResult){
+        Query q = em.createNamedQuery("Author.findByBookId");
+        if (!all){
+            q.setMaxResults(maxResults);
+            q.setFirstResult(firstResult);
+        }
+        q.setParameter("bookId", book.getBookId());
+        return q.getResultList();
+    }
+    
+    public List<Author> findAuthorEntitiesByGenre(Genre genre){
+        return findAuthorEntitiesByGenre(genre, true, -1, -1);
+    }
+    
+    public List<Author> findAuthorEntitiesByGenre(Genre genre, int maxResults, int firstResult){
+        return findAuthorEntitiesByGenre(genre, false, maxResults, firstResult);
+    }
+    
+    private List<Author> findAuthorEntitiesByGenre(Genre genre, boolean all, int maxResults, int firstResult){
+        Query q = em.createNamedQuery("Author.findByGenreId");
+        if(!all){
+            q.setMaxResults(maxResults);
+            q.setFirstResult(firstResult);
+        }
+        q.setParameter("genreId", genre.getGenreId());
+        return q.getResultList();
+    }
+    
+    public List<Author> findAuthorEntitiesByFormat(Format format){
+        return findAuthorEntitiesByFormat(format, true, -1, -1);
+    }
+    
+    public List<Author> findAuthorEntitiesByFormat(Format format, int maxResults, int firstResult){
+        return findAuthorEntitiesByFormat(format, false, maxResults, firstResult);
+    }
+    
+    private List<Author> findAuthorEntitiesByFormat(Format format, boolean all, int maxResults, int firstResult){
+        Query q = em.createNamedQuery("Author.findByFormatId");
+        if (!all){
+            q.setMaxResults(maxResults);
+            q.setFirstResult(firstResult);
+        }
+        q.setParameter("formatId", format.getFormatId());
         return q.getResultList();
     }
 

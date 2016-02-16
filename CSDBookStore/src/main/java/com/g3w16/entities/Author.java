@@ -1,4 +1,4 @@
-/*
+    /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -29,18 +29,26 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(name = "Author.findAll", query = "SELECT a FROM Author a"),
     @NamedQuery(name = "Author.findByAuthorId", query = "SELECT a FROM Author a WHERE a.authorId = :authorId"),
-    @NamedQuery(name = "Author.findByAuthorName", query = "SELECT a FROM Author a WHERE a.authorName = :authorName")})
+    @NamedQuery(name = "Author.findByAuthorName", query = "SELECT a FROM Author a WHERE a.authorName LIKE :authorName"),
+    @NamedQuery(name = "Author.findByBookId", query = "SELECT a FROM Author a WHERE EXISTS(SELECT 1 FROM a.bookList b WHERE b.bookId = :bookId)"),
+    @NamedQuery(name = "Author.findByGenreId", query = "SELECT a FROM Author a JOIN a.bookList b WHERE EXISTS(SELECT 1 FROM b.genreList g WHERE g.genreId = :genreId)"),
+    @NamedQuery(name = "Author.findByFormatId", query = "SELECT a FROM Author a WHERE EXISTS(SELECT 1 FROM a.bookList b WHERE EXISTS(SELECT 1 FROM b.formatList f WHERE f.formatId = :formatId) )")
+        
+})
 public class Author implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "author_id")
     private Integer authorId;
+    
     @Basic(optional = false)
     @Column(name = "author_name")
     private String authorName;
+    
     @JoinTable(name = "book_author", joinColumns = {
         @JoinColumn(name = "author_id", referencedColumnName = "author_id")}, inverseJoinColumns = {
         @JoinColumn(name = "book_id", referencedColumnName = "book_id")})

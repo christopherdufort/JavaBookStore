@@ -38,12 +38,11 @@ public class GenreJpaController implements Serializable {
 
     public void create(Genre genre) throws RollbackFailureException, Exception {
         if (genre.getBookList() == null) {
-            genre.setBookList(new ArrayList<Book>());
+            genre.setBookList(new ArrayList<>());
         }
-        EntityManager em = null;
         try {
             utx.begin();
-            List<Book> attachedBookList = new ArrayList<Book>();
+            List<Book> attachedBookList = new ArrayList<>();
             for (Book bookListBookToAttach : genre.getBookList()) {
                 bookListBookToAttach = em.getReference(bookListBookToAttach.getClass(), bookListBookToAttach.getBookId());
                 attachedBookList.add(bookListBookToAttach);
@@ -153,6 +152,78 @@ public class GenreJpaController implements Serializable {
         return q.getResultList();
     }
 
+    public List<Genre> findGenreEntitiesLike(String genreName){
+        return findGenreEntitiesLike(genreName, true, -1, -1);
+    }
+    
+    public List<Genre> findGenreEntitiesLike(String genreName, int maxResults, int firstResult){
+        return findGenreEntitiesLike(genreName, false, maxResults, firstResult);
+    }
+    
+    private List<Genre> findGenreEntitiesLike(String genreName, boolean all, int maxResults, int firstResult){
+        Query q = em.createNamedQuery("Genre.findByGenreName");
+        if(!all){
+            q.setMaxResults(maxResults);
+            q.setFirstResult(firstResult);
+        }
+        q.setParameter("genreName", "%"+genreName+"%");
+        return q.getResultList();
+    }
+    
+    public List<Genre> findGenreEntitiesByBook(Book book){
+        return findGenreEntitiesByBook(book, true, -1, -1);
+    }
+    
+    public List<Genre> findGenreEntitiesByBook(Book book, int maxResults, int firstResult){
+        return findGenreEntitiesByBook(book, false, maxResults, firstResult);
+    }
+    
+    private List<Genre> findGenreEntitiesByBook(Book book, boolean all, int maxResults, int firstResult){
+        Query q = em.createNamedQuery("Genre.findByBookId");
+        if(!all){
+            q.setMaxResults(maxResults);
+            q.setFirstResult(firstResult);
+        }
+        q.setParameter("bookId", book.getBookId());
+        return q.getResultList();
+    }
+    
+    public List<Genre> findGenreEntitiesByFormat(Format format){
+        return findGenreEntitiesByFormat(format, true, -1, -1);
+    }
+    
+    public List<Genre> findGenreEntitiesByFormat(Format format, int maxResults, int firstResult){
+        return findGenreEntitiesByFormat(format, false, maxResults, firstResult);
+    }
+    
+    private List<Genre> findGenreEntitiesByFormat(Format format, boolean all, int maxResults, int firstResult){
+        Query q = em.createNamedQuery("Genre.FindByFormatId");
+        if(!all){
+            q.setMaxResults(maxResults);
+            q.setFirstResult(firstResult);
+        }
+        q.setParameter("formatId", format.getFormatId());
+        return q.getResultList();
+    }
+    
+    public List<Genre> findGenreEntitiesByAuthor(Author author){
+        return findGenreEntitiesByAuthor(author, true, -1, -1);
+    }
+    
+    public List<Genre> findGenreEntitiesByAuthor(Author author, int maxResults, int firstResult){
+        return findGenreEntitiesByAuthor(author, false, maxResults, firstResult);
+    }
+    
+    private List<Genre> findGenreEntitiesByAuthor(Author author, boolean all, int maxResults, int firstResult){
+        Query q = em.createNamedQuery("Genre.FindByAuthorId");
+        if(!all){
+            q.setMaxResults(maxResults);
+            q.setFirstResult(firstResult);
+        }
+        q.setParameter("authorId", author.getAuthorId());
+        return q.getResultList();
+    }
+    
     public Genre findGenre(Integer id) {
         return em.find(Genre.class, id);
     }

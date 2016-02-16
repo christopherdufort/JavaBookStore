@@ -36,16 +36,23 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Book.findAll", query = "SELECT b FROM Book b"),
     @NamedQuery(name = "Book.findByBookId", query = "SELECT b FROM Book b WHERE b.bookId = :bookId"),
     @NamedQuery(name = "Book.findByIsbn", query = "SELECT b FROM Book b WHERE b.isbn = :isbn"),
-    @NamedQuery(name = "Book.findByTitle", query = "SELECT b FROM Book b WHERE b.title = :title"),
-    @NamedQuery(name = "Book.findByPublisher", query = "SELECT b FROM Book b WHERE b.publisher = :publisher"),
-    @NamedQuery(name = "Book.findByPublishDate", query = "SELECT b FROM Book b WHERE b.publishDate = :publishDate"),
-    @NamedQuery(name = "Book.findByPageNumber", query = "SELECT b FROM Book b WHERE b.pageNumber = :pageNumber"),
-    @NamedQuery(name = "Book.findByWholesalePrice", query = "SELECT b FROM Book b WHERE b.wholesalePrice = :wholesalePrice"),
-    @NamedQuery(name = "Book.findByListPrice", query = "SELECT b FROM Book b WHERE b.listPrice = :listPrice"),
-    @NamedQuery(name = "Book.findBySalePrice", query = "SELECT b FROM Book b WHERE b.salePrice = :salePrice"),
-    @NamedQuery(name = "Book.findByDateEntered", query = "SELECT b FROM Book b WHERE b.dateEntered = :dateEntered"),
-    @NamedQuery(name = "Book.findByAvailable", query = "SELECT b FROM Book b WHERE b.available = :available"),
-    @NamedQuery(name = "Book.findByOverallRating", query = "SELECT b FROM Book b WHERE b.overallRating = :overallRating")})
+    @NamedQuery(name = "Book.findByTitle", query = "SELECT b FROM Book b WHERE b.title LIKE :title"),
+    @NamedQuery(name = "Book.findByPublisher", query = "SELECT b FROM Book b WHERE b.publisher LIKE :publisher"),
+    @NamedQuery(name = "Book.findByFormat", query = "SELECT b FROM Book b WHERE EXISTS( SELECT 1 FROM b.formatList f WHERE f.formatId = :formatId )"),
+    @NamedQuery(name = "Book.findByGenre", query = "SELECT b FROM Book b WHERE EXISTS( SELECT 1 FROM b.genreList g WHERE g.genreId = :genreId )"),
+    @NamedQuery(name = "Book.findByAuthor", query = "SELECT b FROM Book b WHERE EXISTS( SELECT 1 FROM b.authorList a WHERE a.authorId = :authorId )"),
+    // All function before this should be re-implemented with order ( price, date pub, date enter, rating, pages ) 
+    //      + with some care about availability ( in case of client's functions vs manager's functions )
+    
+    //@NamedQuery(name = "Book.findByPublishDate", query = "SELECT b FROM Book b WHERE b.publishDate = :publishDate"),
+    //@NamedQuery(name = "Book.findByPageNumber", query = "SELECT b FROM Book b WHERE b.pageNumber = :pageNumber"),
+    //@NamedQuery(name = "Book.findByWholesalePrice", query = "SELECT b FROM Book b WHERE b.wholesalePrice = :wholesalePrice"),
+    //@NamedQuery(name = "Book.findByListPrice", query = "SELECT b FROM Book b WHERE b.listPrice = :listPrice"),
+    //@NamedQuery(name = "Book.findBySalePrice", query = "SELECT b FROM Book b WHERE b.salePrice = :salePrice"),
+    //@NamedQuery(name = "Book.findByDateEntered", query = "SELECT b FROM Book b WHERE b.dateEntered = :dateEntered"),
+    //@NamedQuery(name = "Book.findByAvailable", query = "SELECT b FROM Book b WHERE b.available = :available"),
+    //@NamedQuery(name = "Book.findByOverallRating", query = "SELECT b FROM Book b WHERE b.overallRating = :overallRating"),
+})
 public class Book implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -93,8 +100,10 @@ public class Book implements Serializable {
     @ManyToMany(mappedBy = "bookList")
     private List<Author> authorList;
     @JoinTable(name = "book_format", joinColumns = {
-        @JoinColumn(name = "book_id", referencedColumnName = "book_id")}, inverseJoinColumns = {
-        @JoinColumn(name = "format_id", referencedColumnName = "format_id")})
+        @JoinColumn(name = "book_id", referencedColumnName = "book_id")
+    }, inverseJoinColumns = {
+        @JoinColumn(name = "format_id", referencedColumnName = "format_id")
+    })
     @ManyToMany
     private List<Format> formatList;
     @JoinTable(name = "book_genre", joinColumns = {

@@ -27,7 +27,11 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(name = "Format.findAll", query = "SELECT f FROM Format f"),
     @NamedQuery(name = "Format.findByFormatId", query = "SELECT f FROM Format f WHERE f.formatId = :formatId"),
-    @NamedQuery(name = "Format.findByExtension", query = "SELECT f FROM Format f WHERE f.extension = :extension")})
+    @NamedQuery(name = "Format.findByExtension", query = "SELECT f FROM Format f WHERE f.extension LIKE :extension"),
+    @NamedQuery(name = "Format.findByBookId", query = "SELECT f FROM Format f WHERE EXISTS( SELECT 1 FROM f.bookList b WHERE b.bookId = :bookId )"),
+    @NamedQuery(name = "Format.findByGenreId", query = "SELECT f FROM Format f WHERE EXISTS( SELECT 1 FROM f.bookList b WHERE EXISTS ( SELECT 1 FROM b.genreList g WHERE g.genreId = :genreId ) )"),
+    @NamedQuery(name = "Format.findByAuthorId", query = "SELECT f FROM Format f WHERE EXISTS ( SELECT 1 FROM f.bookList b WHERE EXISTS ( SELECT 1 FROM b.authorList a WHERE a.authorId = :authorId ) )")
+})
 public class Format implements Serializable {
 
     private static final long serialVersionUID = 1L;
