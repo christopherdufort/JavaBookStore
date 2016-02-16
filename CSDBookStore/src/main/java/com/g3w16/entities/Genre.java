@@ -20,7 +20,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author 1040570
+ * @author Jonas Faure
  */
 @Entity
 @Table(name = "genre", catalog = "g3w16", schema = "")

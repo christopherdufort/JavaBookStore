@@ -37,7 +37,7 @@ import org.junit.runner.RunWith;
 
 /**
  *
- * @author jesuisnuageux
+ * @author Jonas faure
  */
 @RunWith(Arquillian.class)
 public class FormatTest {

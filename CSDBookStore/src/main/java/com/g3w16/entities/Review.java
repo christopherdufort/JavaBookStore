@@ -6,7 +6,7 @@
 package com.g3w16.entities;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -44,7 +44,7 @@ public class Review implements Serializable {
     private Integer reviewId;
     @Column(name = "date_submitted")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date dateSubmitted;
+    private LocalDateTime dateSubmitted;
     @Column(name = "rating")
     private Integer rating;
     @Column(name = "review_title")
@@ -76,11 +76,11 @@ public class Review implements Serializable {
         this.reviewId = reviewId;
     }
 
-    public Date getDateSubmitted() {
+    public LocalDateTime getDateSubmitted() {
         return dateSubmitted;
     }
 
-    public void setDateSubmitted(Date dateSubmitted) {
+    public void setDateSubmitted(LocalDateTime dateSubmitted) {
         this.dateSubmitted = dateSubmitted;
     }
 
