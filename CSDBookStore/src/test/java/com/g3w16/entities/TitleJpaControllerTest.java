@@ -5,9 +5,6 @@
  */
 package com.g3w16.entities;
 
-
-import com.g3w16.entities.Survey;
-import com.g3w16.entities.SurveyJpaController;
 import com.g3w16.entities.exceptions.RollbackFailureException;
 import java.io.BufferedReader;
 import java.io.File;
@@ -17,32 +14,27 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.sql.DataSource;
-import static org.assertj.core.api.Assertions.assertThat;
 import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+import org.junit.Before;
 
 /**
- * @author Christopher
+ *
+ * @author Giuseppe Campanelli
  */
-@RunWith(Arquillian.class)
-public class SurveyJpaControllerTest {
+public class TitleJpaControllerTest {
     
     @Deployment
     public static WebArchive deploy(){
@@ -64,8 +56,8 @@ public class SurveyJpaControllerTest {
         final WebArchive webArchive = ShrinkWrap.create(WebArchive.class)
                 .setWebXML(new File("src/main/webapp/WEB-INF/web.xml"))
                 //.addPackage(CSDBookStoreDAOImpl.class.getPackage())
-                .addPackage(SurveyJpaController.class.getPackage())
-                .addPackage(Survey.class.getPackage())
+                .addPackage(ReviewJpaController.class.getPackage())
+                .addPackage(Review.class.getPackage())
                 .addPackage(RollbackFailureException.class.getPackage())
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addAsWebInfResource(new File("src/main/setup/glassfish-resources.xml"), "glassfish-resources.xml")
@@ -78,50 +70,97 @@ public class SurveyJpaControllerTest {
     
     @Resource(name="java:app/jdbc/g3w16")
     private DataSource ds;
-
+    
     @Inject
-    private SurveyJpaController surveyJpaController;
-     //------------------------------------------------------TEST METHODS-----------------------------------------
-    @Test
-    public void successfulCreateSurvey() throws Exception{
-        Survey expectedSurvey = new Survey(null,"Q", "A1", "A2","A3","AD");
-        surveyJpaController.create(expectedSurvey);
-        
-        Survey actualSurvey = surveyJpaController.findSurveyById(7);
-        assertThat(actualSurvey).isEqualTo(expectedSurvey);
-    }
-    @Test
-    public void successfulUpdateSurvey() throws Exception{
-        Survey expectedSurvey = new Survey(7,"Q", "A1", "A2","A3","AD");
-        surveyJpaController.create(expectedSurvey);
-        
-        Survey modifiedSurvey = new Survey(7,"Modified", "A1", "A2","A3","AD");
-        
-        surveyJpaController.edit(modifiedSurvey);
+    private TitleJpaController titleJpaController;
 
-        assertThat(surveyJpaController.findSurveyById(7)).isEqualToComparingFieldByField(modifiedSurvey);
+    /**
+     * Test of create method, of class TitleJpaController.
+     */
+    @Test
+    public void testCreate() throws Exception {
+        System.out.println("create");
+        Title title = new Title();
+        title.setTitle("Test");
+        titleJpaController.create(title);
+        assertEquals(title.getTitle(), titleJpaController.findTitleByName("Test").getTitle());
+    }
+
+    /**
+     * Test of edit method, of class TitleJpaController.
+     */
+    @Test
+    public void testEdit() throws Exception {
+        System.out.println("edit");
+        Title title = new Title(1, "Mr.");
+        title.setTitle("Mister");
+        titleJpaController.edit(title);
+        assertEquals(title, titleJpaController.findTitleByName("Mister"));
+    }
+
+    /**
+     * Test of destroy method, of class TitleJpaController.
+     */
+    @Test
+    public void testDestroy() throws Exception {
+        System.out.println("destroy");
+        Integer id = 5;
+        titleJpaController.destroy(id);
+        assertEquals(null, titleJpaController.findTitleById(5));
+    }
+
+    /**
+     * Test of findTitleEntities method, of class TitleJpaController.
+     */
+    @Test
+    public void testFindAllTitles() {
+        System.out.println("findTitleEntities");
+        List<Title> expResult = new ArrayList<Title>();
+        expResult.add(new Title(1, "Mr."));
+        expResult.add(new Title(2, "Ms."));
+        expResult.add(new Title(3, "Mrs."));
+        expResult.add(new Title(4, "Miss."));
+        expResult.add(new Title(5, "Dr."));
+        List<Title> result = titleJpaController.findAll();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of findTitle method, of class TitleJpaController.
+     */
+    @Test
+    public void testFindTitleById() {
+        System.out.println("findTitle");
+        Integer id = 1;
+        Title expResult = new Title(1, "Mr.");
+        Title result = titleJpaController.findTitleById(id);
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of findProvinceByName method, of class TitleJpaController.
+     */
+    @Test
+    public void testFindTitleByName() {
+        System.out.println("findProvinceByName");
+        String title = "Mr.";
+        Title expResult = new Title(1, "Mr.");
+        Title result = titleJpaController.findTitleByName(title);
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getTitleCount method, of class TitleJpaController.
+     */
+    @Test
+    public void testGetTitleCount() {
+        System.out.println("getTitleCount");
+        int expResult = 5;
+        int result = titleJpaController.getTitleCount();
+        assertEquals(expResult, result);
     }
     
-    @Test
-    public void successfulDestroySurvey() throws Exception{
-        Survey toBeDestroyed = new Survey(7,"Q", "A1", "A2","A3","AD");
-        surveyJpaController.create(toBeDestroyed);
-        
-        surveyJpaController.destroy(7);
-       
-        assertThat(surveyJpaController.getSurveyCount()).isEqualTo(6);
-    }
-    
-    @Test
-    public void successfulFindAllSurvey() throws Exception{
-        //Find all the surveys in the db
-        List<Survey> allSurveys = surveyJpaController.findAllSurveys();
-        
-        //should be 6 records int he db
-        assertThat(allSurveys.size()).isEqualTo(3);
-        
-    }
-      //-----------------------------------------------------END OF TEST METHODS-----------------------------------
+    //-----------------------------------------------------END OF TEST METHODS----------------------------------
     /**
      * This routine is courtesy of Bartosz Majsak who also solved my Arquillian
      * remote server problem
@@ -182,4 +221,5 @@ public class SurveyJpaControllerTest {
         return line.startsWith("--") || line.startsWith("//")
                 || line.startsWith("/*");
     }
+    
 }

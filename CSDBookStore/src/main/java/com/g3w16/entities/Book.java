@@ -41,6 +41,14 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Book.findByFormat", query = "SELECT b FROM Book b WHERE EXISTS( SELECT 1 FROM b.formatList f WHERE f.formatId = :formatId )"),
     @NamedQuery(name = "Book.findByGenre", query = "SELECT b FROM Book b WHERE EXISTS( SELECT 1 FROM b.genreList g WHERE g.genreId = :genreId )"),
     @NamedQuery(name = "Book.findByAuthor", query = "SELECT b FROM Book b WHERE EXISTS( SELECT 1 FROM b.authorList a WHERE a.authorId = :authorId )"),
+    @NamedQuery(name = "Book.findAllAvailable", query = "SELECT b FROM Book b AND b.availaible = True"),
+    @NamedQuery(name = "Book.findByBookIdAvailable", query = "SELECT b FROM Book b WHERE b.bookId = :bookId  AND b.availaible = True"),
+    @NamedQuery(name = "Book.findByIsbnAvailable", query = "SELECT b FROM Book b WHERE b.isbn = :isbn  AND b.availaible = True"),
+    @NamedQuery(name = "Book.findByTitleAvailable", query = "SELECT b FROM Book b WHERE b.title LIKE :title  AND b.availaible = True"),
+    @NamedQuery(name = "Book.findByPublisherAvailable", query = "SELECT b FROM Book b WHERE b.publisher LIKE :publisher  AND b.availaible = True"),
+    @NamedQuery(name = "Book.findByFormatAvailable", query = "SELECT b FROM Book b WHERE EXISTS( SELECT 1 FROM b.formatList f WHERE f.formatId = :formatId ) AND b.availaible = 1"),
+    @NamedQuery(name = "Book.findByGenreAvailable", query = "SELECT b FROM Book b WHERE EXISTS( SELECT 1 FROM b.genreList g WHERE g.genreId = :genreId ) AND b.getAvailaible = 1"),
+    @NamedQuery(name = "Book.findByAuthorAvailable", query = "SELECT b FROM Book b WHERE EXISTS( SELECT 1 FROM b.authorList a WHERE a.authorId = :authorId ) AND b.getAvailaible = 1"),
     // All function before this should be re-implemented with order ( price, date pub, date enter, rating, pages ) 
     //      + with some care about availability ( in case of client's functions vs manager's functions )
     

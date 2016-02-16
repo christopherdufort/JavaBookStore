@@ -1432,12 +1432,13 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
                 + "page_number,wholesale_price,list_price,sale_price"
                 + "date_entered,available,synopsis )"
                 + "VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+        
         String queryInsertBookAuthor = "INSERT INTO book_author (book_id, author_id)"
                 + "VALUES(?,?)";
         String queryInsertBookFormat = "INSERT INTO book_format (book_id, format_id)"
                 + "VALUES(?,?)";
         String queryInsertBookGenre = "INSERT INTO book_genre (book_id, genre_id)"
-                + "VALUES(?,?";
+                + "VALUES(?,?)";
         int result = 0;
         Date today = null;
         try (Connection connection = CSDBookStoreSource.getConnection();
@@ -1573,7 +1574,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
     @Override
     public int deleteBook(int book_id) throws SQLException {
         int result = 0;
-        String queryBook = "UPDATE book SET availble=FALSE WHERE book_id=?";
+        String queryBook = "UPDATE book SET available = FALSE WHERE book_id=?";
         try(Connection connection = CSDBookStoreSource.getConnection();
                 PreparedStatement pStatementBook = connection.prepareStatement(queryBook);){
             //delete book
@@ -1586,9 +1587,9 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
     @Override
     public List<BookBean> getAllBook() throws SQLException {
         String query = "SELECT * FROM book";
-        String queryAuthors = "SELET * FROM author a WHERE EXISTS(SELECT 1 FROM book_author ba WHERE ba.book_id=? AND ba.author_id=a.author_id)";
-        String queryFormats = "SELET * FROM format f WHERE EXISTS(SELECT 1 FROM book_format bf WHERE bf.book_id=? AND bf.format_id=f.format_id)";
-        String queryGenres = "SELET * FROM genre g WHERE EXISTS(SELECT 1 FROM book_genre bg WHERE bg.book_id=? AND bg.genre_id=g.genre_id)";
+        String queryAuthors = "SELECT * FROM author a WHERE EXISTS(SELECT 1 FROM book_author ba WHERE ba.book_id=? AND ba.author_id=a.author_id)";
+        String queryFormats = "SELECT * FROM format f WHERE EXISTS(SELECT 1 FROM book_format bf WHERE bf.book_id=? AND bf.format_id=f.format_id)";
+        String queryGenres = "SELECT * FROM genre g WHERE EXISTS(SELECT 1 FROM book_genre bg WHERE bg.book_id=? AND bg.genre_id=g.genre_id)";
         List<BookBean> books = new ArrayList<>();
         try(Connection connection = CSDBookStoreSource.getConnection();
                 PreparedStatement pStatement = connection.prepareStatement(query);
@@ -1649,20 +1650,20 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
         // building select query
         String query;
         if (authors.length>0){
-            query = "SELECT * FROM book b WHERE EXISTS(SELECT 1 FROM book_author ba WHERE ba.book_id=b.book_id AND (";
+            query = "SELECT * FROM book b WHERE EXISTS( SELECT 1 FROM book_author ba WHERE ba.book_id=b.book_id AND (";
             for (int i=0; i<authors.length; i++){
-                query+=" ba.author_id=? ";
+                query+=" ba.author_id = ? ";
                 if (i<authors.length-1){
-                    query+=" OR ";
+                    query+= " OR ";
                 }
-                query+= " )";
+                query+= ")";
             }
         }else{
             return getAllBook();
         }
-        String queryAuthors = "SELET * FROM author a WHERE EXISTS(SELECT 1 FROM book_author ba WHERE ba.book_id=? AND ba.author_id=a.author_id)";
-        String queryFormats = "SELET * FROM format f WHERE EXISTS(SELECT 1 FROM book_format bf WHERE bf.book_id=? AND bf.format_id=f.format_id)";
-        String queryGenres = "SELET * FROM genre g WHERE EXISTS(SELECT 1 FROM book_genre bg WHERE bg.book_id=? AND bg.genre_id=g.genre_id)";
+        String queryAuthors = "SELECT * FROM author a WHERE EXISTS(SELECT 1 FROM book_author ba WHERE ba.book_id=? AND ba.author_id=a.author_id)";
+        String queryFormats = "SELECT * FROM format f WHERE EXISTS(SELECT 1 FROM book_format bf WHERE bf.book_id=? AND bf.format_id=f.format_id)";
+        String queryGenres = "SELECT * FROM genre g WHERE EXISTS(SELECT 1 FROM book_genre bg WHERE bg.book_id=? AND bg.genre_id=g.genre_id)";
         List<BookBean> books = new ArrayList<>();
         // selecting books from db
         try(Connection connection = CSDBookStoreSource.getConnection();
@@ -1738,9 +1739,9 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
         }else{
             return getAllBook();
         }
-        String queryAuthors = "SELET * FROM author a WHERE EXISTS(SELECT 1 FROM book_author ba WHERE ba.book_id=? AND ba.author_id=a.author_id)";
-        String queryFormats = "SELET * FROM format f WHERE EXISTS(SELECT 1 FROM book_format bf WHERE bf.book_id=? AND bf.format_id=f.format_id)";
-        String queryGenres = "SELET * FROM genre g WHERE EXISTS(SELECT 1 FROM book_genre bg WHERE bg.book_id=? AND bg.genre_id=g.genre_id)";
+        String queryAuthors = "SELECT * FROM author a WHERE EXISTS(SELECT 1 FROM book_author ba WHERE ba.book_id=? AND ba.author_id=a.author_id)";
+        String queryFormats = "SELECT * FROM format f WHERE EXISTS(SELECT 1 FROM book_format bf WHERE bf.book_id=? AND bf.format_id=f.format_id)";
+        String queryGenres = "SELECT * FROM genre g WHERE EXISTS(SELECT 1 FROM book_genre bg WHERE bg.book_id=? AND bg.genre_id=g.genre_id)";
         List<BookBean> books = new ArrayList<>();
         // selecting books from db
         try(Connection connection = CSDBookStoreSource.getConnection();
@@ -1834,6 +1835,7 @@ public class CSDBookStoreDAOImpl implements CSDBookStoreDAO {
                 PreparedStatement pStatementAuthors = connection.prepareStatement(queryAuthors);
                 PreparedStatement pStatementFormats = connection.prepareStatement(queryFormats);
                 PreparedStatement pStatementGenres = connection.prepareStatement(queryGenres);){
+           
             for(int i = 0; i<genres.length; i++){
                 pStatement.setInt(i+1, genres[i].getGenre_id());
             }

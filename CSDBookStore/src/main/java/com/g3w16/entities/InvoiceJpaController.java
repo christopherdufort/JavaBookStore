@@ -19,7 +19,7 @@ import javax.transaction.UserTransaction;
 
 /**
  *
- * @author 1040570
+ * @author Rita Lazaar
  */
 public class InvoiceJpaController implements Serializable {
 

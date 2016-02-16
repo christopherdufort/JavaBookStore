@@ -72,9 +72,6 @@ public class AdJpaControllerTest {
     private DataSource ds;
 
     @Inject
-    private Ad ad;
-    
-    @Inject
     private AdJpaController adJpaController;
    
     //------------------------------------------------------TEST METHODS-----------------------------------
@@ -83,8 +80,8 @@ public class AdJpaControllerTest {
     @Test
     public void sccessfulCreateOfAd() throws Exception{
         Ad originalAd = new Ad(1);
-        ad.setAdFilename("ad1.jpg");
-        adJpaController.create(ad);
+        originalAd.setAdFilename("ad1.jpg");
+        adJpaController.create(originalAd);
         
         Ad retrievedAd = adJpaController.findAdById(1);
         //asertThat(actual).comparison(expected)

@@ -20,7 +20,8 @@ import javax.transaction.UserTransaction;
 
 /**
  *
- * @author 1040570
+ * @author Christopher Dufort  
+ * @version 0.2.4 - Last modified 2/15/2016
  */
 @Named
 @SessionScoped
@@ -34,11 +35,19 @@ public class AdJpaController implements Serializable {
 
     /**
      * Default Constructor
+     * @author Christopher Dufort  
+     * @version 0.2.4 - Last modified 2/15/2016
      */
     public AdJpaController() {
         super();
     }
-
+    /**
+     * @author Christopher Dufort  
+     * @version 0.2.4 - Last modified 2/15/2016
+     * @param ad
+     * @throws RollbackFailureException
+     * @throws Exception 
+     */
     public void create(Ad ad) throws RollbackFailureException, Exception {
         try {
             utx.begin();
@@ -53,7 +62,15 @@ public class AdJpaController implements Serializable {
             throw ex;
         }
     }
-
+    
+    /**
+     * @author Christopher Dufort  
+     * @version 0.2.4 - Last modified 2/15/2016
+     * @param ad
+     * @throws NonexistentEntityException
+     * @throws RollbackFailureException
+     * @throws Exception 
+     */
     public void edit(Ad ad) throws NonexistentEntityException, RollbackFailureException, Exception {
         try {
             utx.begin();
@@ -75,7 +92,15 @@ public class AdJpaController implements Serializable {
             throw ex;
         }
     }
-
+    
+    /**
+     * @author Christopher Dufort  
+     * @version 0.2.4 - Last modified 2/15/2016
+     * @param id
+     * @throws NonexistentEntityException
+     * @throws RollbackFailureException
+     * @throws Exception 
+     */
     public void destroy(Integer id) throws NonexistentEntityException, RollbackFailureException, Exception {
         try {
             utx.begin();
@@ -98,6 +123,8 @@ public class AdJpaController implements Serializable {
         }
     }
     /**
+     * @author Christopher Dufort  
+     * @version 0.2.4 - Last modified 2/15/2016
      * Return all the records in the table
      * @return 
      */
@@ -105,6 +132,13 @@ public class AdJpaController implements Serializable {
         return findAdEntities(true, -1, -1);
     }
 
+    /**
+     * @author Christopher Dufort  
+     * @version 0.2.4 - Last modified 2/15/2016
+     * @param maxResults
+     * @param firstResult
+     * @return 
+     */
     public List<Ad> findAdEntities(int maxResults, int firstResult) {
         return findAdEntities(false, maxResults, firstResult);
     }
@@ -112,6 +146,8 @@ public class AdJpaController implements Serializable {
     /**
      * Either find all or find a group of records
      * 
+     * @author Christopher Dufort  
+     * @version 0.2.4 - Last modified 2/15/2016
      * @param all True means find all, false means find subset
      * @param maxResults Number of records to find
      * @param firstResult Record number to start returning records
@@ -126,12 +162,24 @@ public class AdJpaController implements Serializable {
         return q.getResultList();
 
     }
-
+    
+    /**
+     * @author Christopher Dufort  
+     * @version 0.2.4 - Last modified 2/15/2016
+     * @param adId
+     * @return 
+     */
     public Ad findAdById(Integer adId) {
         //em.find will find in a class by primary key
         return em.find(Ad.class, adId);
     }
     
+    /**
+     * @author Christopher Dufort  
+     * @version 0.2.4 - Last modified 2/15/2016
+     * @param adFilename
+     * @return 
+     */
     public Ad findAdByFilename(String adFilename){
         //Example of named query(predefined in the entity class)
         Query query = em.createNamedQuery("Ad.findByAdFilename"); 
@@ -142,7 +190,12 @@ public class AdJpaController implements Serializable {
         Ad result = (Ad)query.getSingleResult(); 
         return result;
     }
-
+    
+    /**
+     * @author Christopher Dufort  
+     * @version 0.2.4 - Last modified 2/15/2016
+     * @return 
+     */
     public int getAdCount() {
         //Example of JPQL query
         Query q = em.createQuery("select count(o) from Ad as o");

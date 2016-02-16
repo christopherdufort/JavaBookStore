@@ -36,16 +36,16 @@ public class BookJpaController implements Serializable {
 
     public void create(Book book) throws RollbackFailureException, Exception {
         if (book.getAuthorList() == null) {
-            book.setAuthorList(new ArrayList<Author>());
+            book.setAuthorList(new ArrayList<>());
         }
         if (book.getFormatList() == null) {
-            book.setFormatList(new ArrayList<Format>());
+            book.setFormatList(new ArrayList<>());
         }
         if (book.getGenreList() == null) {
-            book.setGenreList(new ArrayList<Genre>());
+            book.setGenreList(new ArrayList<>());
         }
         if (book.getReviewList() == null) {
-            book.setReviewList(new ArrayList<Review>());
+            book.setReviewList(new ArrayList<>());
         }
         try {
             utx.begin();
@@ -219,6 +219,7 @@ public class BookJpaController implements Serializable {
     }
 
     public void destroy(Integer id) throws NonexistentEntityException, RollbackFailureException, Exception {
+        // TODO: overwrite to just switch the value of 'available' to False
         try {
             utx.begin();
             Book book;
@@ -261,15 +262,28 @@ public class BookJpaController implements Serializable {
     }
 
     public List<Book> findBookEntities() {
-        return findBookEntities(true, -1, -1);
+        return findBookEntities(true, false, -1, -1);
+    }
+    
+    public List<Book> findBookEntitiesAsClient() {
+        return findBookEntities(true, true, -1, -1);
     }
 
     public List<Book> findBookEntities(int maxResults, int firstResult) {
-        return findBookEntities(false, maxResults, firstResult);
+        return findBookEntities(false, false, maxResults, firstResult);
     }
 
-    private List<Book> findBookEntities(boolean all, int maxResults, int firstResult) {
-        Query q = em.createNamedQuery("Book.findAll");
+    public List<Book> findBookEntitiesAsClient(int maxResults, int firstResult) {
+        return findBookEntities(false, true, maxResults, firstResult);
+    }
+    
+    private List<Book> findBookEntities(boolean all, boolean asClient, int maxResults, int firstResult) {
+        Query q;
+        if (asClient){
+            q = em.createNamedQuery("Book.findAllAvailable");
+        }else{
+            q = em.createNamedQuery("Book.findAll");
+        }
         if (!all) {
             q.setMaxResults(maxResults);
             q.setFirstResult(firstResult);
@@ -278,15 +292,28 @@ public class BookJpaController implements Serializable {
     }
     
     public List<Book> findBookEntitiesByISBN(String isbn){
-        return findBookEntitiesByISBN(isbn, true, -1, -1);
+        return findBookEntitiesByISBN(isbn, true, false, -1, -1);
+    }
+    
+    public List<Book> findBookEntitiesByISBNAsClient(String isbn){
+        return findBookEntitiesByISBN(isbn, true, true, -1, -1);
     }
     
     public List<Book> findBookEntitiesByISBN(String isbn, int maxResults, int firstResult){
-        return findBookEntitiesByISBN(isbn, false, maxResults, firstResult);
+        return findBookEntitiesByISBN(isbn, false, false, maxResults, firstResult);
     }
     
-    private List<Book> findBookEntitiesByISBN(String isbn, boolean all, int maxResults, int firstResult){
-        Query q = em.createNamedQuery("Book.findByIsbn");
+    public List<Book> findBookEntitiesByISBNAsClient(String isbn, int maxResults, int firstResult){
+        return findBookEntitiesByISBN(isbn, false, true, maxResults, firstResult);
+    }
+    
+    private List<Book> findBookEntitiesByISBN(String isbn, boolean all, boolean asClient, int maxResults, int firstResult){
+        Query q ;
+        if (asClient){
+            q = em.createNamedQuery("Book.findByIsbnAvailable");
+        }else{
+            q = em.createNamedQuery("Book.findByIsbn");
+        }
         if(!all){
             q.setMaxResults(maxResults);
             q.setFirstResult(firstResult);
@@ -296,15 +323,28 @@ public class BookJpaController implements Serializable {
     }
     
     public List<Book> findBookEntitiesByTitleLike(String title){
-        return findBookEntitiesByTitleLike(title, true, -1, -1);
+        return findBookEntitiesByTitleLike(title, true, false, -1, -1);
+    }
+    
+    public List<Book> findBookEntitiesByTitleLikeAsClient(String title){
+        return findBookEntitiesByTitleLike(title, true, true, -1, -1);
     }
     
     public List<Book> findBookEntitiesByTitleLike(String title, int maxResults, int firstResult){
-        return findBookEntitiesByTitleLike(title, false, maxResults, firstResult);
+        return findBookEntitiesByTitleLike(title, false, false, maxResults, firstResult);
     }
     
-    private List<Book> findBookEntitiesByTitleLike(String title, boolean all, int maxResults, int firstResult){
-        Query q = em.createNamedQuery("Book.findByTitle");
+    public List<Book> findBookEntitiesByTitleLikeAsClient(String title, int maxResults, int firstResult){
+        return findBookEntitiesByTitleLike(title, false, true, maxResults, firstResult);
+    }
+    
+    private List<Book> findBookEntitiesByTitleLike(String title, boolean all, boolean asClient, int maxResults, int firstResult){
+        Query q;
+        if(asClient){
+            q = em.createNamedQuery("Book.findByTitleAvailable");
+        }else{
+            q = em.createNamedQuery("Book.findByTitle");
+        }
         if(!all){
             q.setMaxResults(maxResults);
             q.setFirstResult(firstResult);
@@ -314,15 +354,28 @@ public class BookJpaController implements Serializable {
     }
     
     public List<Book> findBookEntitiesByPublisherLike(String publisher){
-        return findBookEntitiesByPublisherLike(publisher, true, -1, -1);
+        return findBookEntitiesByPublisherLike(publisher, true, false, -1, -1);
+    }
+    
+    public List<Book> findBookEntitiesByPublisherLikeAsClient(String publisher){
+        return findBookEntitiesByPublisherLike(publisher, true, true, -1, -1);
     }
     
     public List<Book> findBookEntitiesByPublisherLike(String publisher, int maxResults, int firstResult){
-        return findBookEntitiesByPublisherLike(publisher, false, maxResults, firstResult);
+        return findBookEntitiesByPublisherLike(publisher, false, false, maxResults, firstResult);
     }
     
-    private List<Book> findBookEntitiesByPublisherLike(String publisher, boolean all, int maxResults, int firstResult){
-        Query q = em.createNamedQuery("Book.findByPublisher");
+    public List<Book> findBookEntitiesByPublisherLikeAsClient(String publisher, int maxResults, int firstResult){
+        return findBookEntitiesByPublisherLike(publisher, false, true, maxResults, firstResult);
+    }
+    
+    private List<Book> findBookEntitiesByPublisherLike(String publisher, boolean all, boolean asClient, int maxResults, int firstResult){
+        Query q;
+        if(asClient){
+            q = em.createNamedQuery("Book.findByPublisherAvailable");
+        }else{
+            q = em.createNamedQuery("Book.findByPublisher");
+        }
         if(!all){
             q.setMaxResults(maxResults);
             q.setFirstResult(firstResult);
@@ -332,15 +385,28 @@ public class BookJpaController implements Serializable {
     }
     
     public List<Book> findBookEntitiesByFormat(Format format){
-        return findBookEntitiesByFormat(format, true, -1, -1);
+        return findBookEntitiesByFormat(format, true, false, -1, -1);
+    }
+    
+    public List<Book> findBookEntitiesByFormatAsClient(Format format){
+        return findBookEntitiesByFormat(format, true, true, -1, -1);
     }
     
     public List<Book> findBookEntitiesByFormat(Format format, int maxResults, int firstResult){
-        return findBookEntitiesByFormat(format, false, maxResults, firstResult);
+        return findBookEntitiesByFormat(format, false, false, maxResults, firstResult);
     }
     
-    private List<Book> findBookEntitiesByFormat(Format format, boolean all, int maxResults, int firstResult){
-        Query q = em.createNamedQuery("Book.findByFormat");
+    public List<Book> findBookEntitiesByFormatAsClient(Format format, int maxResults, int firstResult){
+        return findBookEntitiesByFormat(format, false, true, maxResults, firstResult);
+    }
+    
+    private List<Book> findBookEntitiesByFormat(Format format, boolean all, boolean asClient, int maxResults, int firstResult){
+        Query q;
+        if(asClient){
+            q = em.createNamedQuery("Book.findByFormatAvailable");
+        }else{
+            q = em.createNamedQuery("Book.findByFormat");
+        }
         if(!all){
             q.setMaxResults(maxResults);
             q.setFirstResult(firstResult);
@@ -350,15 +416,28 @@ public class BookJpaController implements Serializable {
     }
     
     public List<Book> findBookEntitiesByGenre(Genre genre){
-        return findBookEntitiesByGenre(genre, true, -1, -1);
+        return findBookEntitiesByGenre(genre, true, false, -1, -1);
+    }
+    
+    public List<Book> findBookEntitiesByGenreAsClient(Genre genre){
+        return findBookEntitiesByGenre(genre, true, true, -1, -1);
     }
     
     public List<Book> findBookEntitiesByGenre(Genre genre, int maxResults, int firstResult){
-        return findBookEntitiesByGenre(genre, false, maxResults, firstResult);
+        return findBookEntitiesByGenre(genre, false, false, maxResults, firstResult);
     }
     
-    private List<Book> findBookEntitiesByGenre(Genre genre, boolean all, int maxResults, int firstResult){
-        Query q = em.createNamedQuery("Book.findByGenre");
+    public List<Book> findBookEntitiesByGenreAsClient(Genre genre, int maxResults, int firstResult){
+        return findBookEntitiesByGenre(genre, false, true, maxResults, firstResult);
+    }
+    
+    private List<Book> findBookEntitiesByGenre(Genre genre, boolean all, boolean asClient, int maxResults, int firstResult){
+        Query q;
+        if(asClient){
+            q = em.createNamedQuery("Book.findByGenreAvailable");
+        }else{
+            q = em.createNamedQuery("Book.findByGenre");
+        }
         if(!all){
             q.setMaxResults(maxResults);
             q.setFirstResult(firstResult);
@@ -368,15 +447,28 @@ public class BookJpaController implements Serializable {
     }
     
     public List<Book> findBookEntitiesByAuthor(Author author){
-        return findBookEntitiesByAuthor(author, true, -1, -1);
+        return findBookEntitiesByAuthor(author, true, false, -1, -1);
+    }
+    
+    public List<Book> findBookEntitiesByAuthorAsClient(Author author){
+        return findBookEntitiesByAuthor(author, true, true, -1, -1);
     }
     
     public List<Book> findBookEntitiesByAuthor(Author author, int maxResults, int firstResults){
-        return findBookEntitiesByAuthor(author, false, maxResults, firstResults);
+        return findBookEntitiesByAuthor(author, false, false, maxResults, firstResults);
     }
     
-    private List<Book> findBookEntitiesByAuthor(Author author, boolean all, int maxResults, int firstResult){
-        Query q = em.createNamedQuery("Book.findByAuthor");
+    public List<Book> findBookEntitiesByAuthorAsClient(Author author, int maxResults, int firstResults){
+        return findBookEntitiesByAuthor(author, false, true, maxResults, firstResults);
+    }
+    
+    private List<Book> findBookEntitiesByAuthor(Author author, boolean all, boolean asClient, int maxResults, int firstResult){
+        Query q;
+        if(asClient){
+            q = em.createNamedQuery("Book.findByAuthorAvailable");
+        }else{
+            q = em.createNamedQuery("Book.findByAuthor");
+        }
         if(!all){
             q.setMaxResults(maxResults);
             q.setFirstResult(firstResult);
