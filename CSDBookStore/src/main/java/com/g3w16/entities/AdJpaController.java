@@ -68,7 +68,7 @@ public class AdJpaController implements Serializable {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
                 Integer id = ad.getAdId();
-                if (findAd(id) == null) {
+                if (findAdById(id) == null) {
                     throw new NonexistentEntityException("The ad with id " + id + " no longer exists.");
                 }
             }
@@ -97,15 +97,26 @@ public class AdJpaController implements Serializable {
             throw ex;
         }
     }
-
-    public List<Ad> findAdEntities() {
+    /**
+     * Return all the records in the table
+     * @return 
+     */
+    public List<Ad> findAllAds() {
         return findAdEntities(true, -1, -1);
     }
 
     public List<Ad> findAdEntities(int maxResults, int firstResult) {
         return findAdEntities(false, maxResults, firstResult);
     }
-
+    
+    /**
+     * Either find all or find a group of records
+     * 
+     * @param all True means find all, false means find subset
+     * @param maxResults Number of records to find
+     * @param firstResult Record number to start returning records
+     * @return 
+     */
     private List<Ad> findAdEntities(boolean all, int maxResults, int firstResult) {
         Query q = em.createQuery("select object(o) from Ad as o");
         if (!all) {
@@ -116,15 +127,24 @@ public class AdJpaController implements Serializable {
 
     }
 
-    public Ad findAd(Integer id) {
-        try {
-            return em.find(Ad.class, id);
-        } finally {
-            em.close();
-        }
+    public Ad findAdById(Integer adId) {
+        //em.find will find in a class by primary key
+        return em.find(Ad.class, adId);
+    }
+    
+    public Ad findAdByFilename(String adFilename){
+        //Example of named query(predefined in the entity class)
+        Query query = em.createNamedQuery("Ad.findByAdFilename"); 
+        //binding for names parameters
+        query.setParameter("adFilename",adFilename);
+        
+        //execute query returning single result
+        Ad result = (Ad)query.getSingleResult(); 
+        return result;
     }
 
     public int getAdCount() {
+        //Example of JPQL query
         Query q = em.createQuery("select count(o) from Ad as o");
         return ((Long) q.getSingleResult()).intValue();
     }
