@@ -262,5 +262,4 @@ public class RegisteredUser implements Serializable {
     public String toString() {
         return "com.g3w16.entities.RegisteredUser[ userId=" + userId + " ]";
     }
-    
 }

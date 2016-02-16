@@ -26,8 +26,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "province", catalog = "g3w16", schema = "")
 @NamedQueries({
-    @NamedQuery(name = "Province.findAll", query = "SELECT p FROM Province p"),
-    @NamedQuery(name = "Province.findByProvinceId", query = "SELECT p FROM Province p WHERE p.provinceId = :provinceId"),
+    @NamedQuery(name = "Province.findAll", query = "SELECT object(p) FROM Province p"),
     @NamedQuery(name = "Province.findByProvince", query = "SELECT object(p) FROM Province p WHERE p.province = :province")})
 public class Province implements Serializable {
 
@@ -134,5 +133,4 @@ public class Province implements Serializable {
     public String toString() {
         return "com.g3w16.entities.Province[ provinceId=" + provinceId + " ]";
     }
-    
 }
