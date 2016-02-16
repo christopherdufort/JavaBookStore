@@ -21,7 +21,7 @@ import javax.transaction.UserTransaction;
 
 /**
  *
- * @author 1040570
+ * @author Jonas Faure
  */
 @Named
 @RequestScoped
@@ -309,7 +309,7 @@ public class BookJpaController implements Serializable {
             q.setMaxResults(maxResults);
             q.setFirstResult(firstResult);
         }
-        q.setParameter("title", title);
+        q.setParameter("title", "%"+title+"%");
         return q.getResultList();
     }
     
@@ -327,7 +327,7 @@ public class BookJpaController implements Serializable {
             q.setMaxResults(maxResults);
             q.setFirstResult(firstResult);
         }
-        q.setParameter("publisher", publisher);
+        q.setParameter("publisher", "%"+publisher+"%");
         return q.getResultList();
     }
     
