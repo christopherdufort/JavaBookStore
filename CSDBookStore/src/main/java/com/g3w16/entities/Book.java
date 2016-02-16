@@ -28,7 +28,7 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author 1040570
+ * @author Jonas Faure
  */
 @Entity
 @Table(name = "book", catalog = "g3w16", schema = "")

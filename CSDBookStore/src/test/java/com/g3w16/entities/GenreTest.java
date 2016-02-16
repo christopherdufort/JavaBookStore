@@ -36,7 +36,7 @@ import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
 /**
  *
- * @author jesuisnuageux
+ * @author Jonas Faure
  */
 @RunWith(Arquillian.class)
 public class GenreTest {
