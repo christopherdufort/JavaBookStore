@@ -219,7 +219,10 @@ public class BookJpaController implements Serializable {
     }
 
     public void destroy(Integer id) throws NonexistentEntityException, RollbackFailureException, Exception {
-        // TODO: overwrite to just switch the value of 'available' to False
+        Book book = findBookEntitiesById(id);
+        book.setAvailable(false);
+        edit(book);
+        /*
         try {
             utx.begin();
             Book book;
@@ -258,7 +261,7 @@ public class BookJpaController implements Serializable {
                 throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
             }
             throw ex;
-        }
+        }*/
     }
 
     public List<Book> findBookEntities() {
