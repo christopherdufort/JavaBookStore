@@ -66,7 +66,7 @@ public class NewsFeedJpaController implements Serializable {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
                 Integer id = newsFeed.getNewsFeedId();
-                if (findNewsFeed(id) == null) {
+                if (findNewsFeedById(id) == null) {
                     throw new NonexistentEntityException("The newsFeed with id " + id + " no longer exists.");
                 }
             }
@@ -96,11 +96,11 @@ public class NewsFeedJpaController implements Serializable {
         }
     }
 
-    public List<NewsFeed> findNewsFeedEntities() {
+    public List<NewsFeed> findAllNewsFeeds() {
         return findNewsFeedEntities(true, -1, -1);
     }
 
-    public List<NewsFeed> findNewsFeedEntities(int maxResults, int firstResult) {
+    public List<NewsFeed> findNewsFeedPagination(int maxResults, int firstResult) {
         return findNewsFeedEntities(false, maxResults, firstResult);
     }
 
@@ -114,9 +114,27 @@ public class NewsFeedJpaController implements Serializable {
 
     }
 
-    public NewsFeed findNewsFeed(Integer id) {
+    public NewsFeed findNewsFeedById(Integer id) {
         return em.find(NewsFeed.class, id);
 
+    }
+    
+    /**
+     * @author Christopher Dufort  
+     * @version 0.2.6 - Last modified 2/17/2016
+     * @param newsFeedLink
+     * @return 
+     */
+    public NewsFeed findNewsFeedByLink(String newsFeedLink){
+        //Example of named query(predefined in the entity class)
+        Query query = em.createNamedQuery("NewsFeed.findByNewsFeedLink"); 
+        
+        //binding for names parameters
+        query.setParameter("newsFeedLink",newsFeedLink);
+        
+        //execute query returning single result
+        NewsFeed result = (NewsFeed)query.getSingleResult(); 
+        return result;
     }
 
     public int getNewsFeedCount() {

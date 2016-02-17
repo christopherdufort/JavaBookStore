@@ -76,7 +76,7 @@ public class AdJpaControllerTest {
    
     //------------------------------------------------------TEST METHODS-----------------------------------
     // TODO Should have 2-3 test methods per controller method(pass,fail,exception?)
-    //TODO should have comments and loggs
+    // TODO should have comments and loggs
     @Test
     public void sccessfulCreateOfAd() throws Exception{
         Ad originalAd = new Ad(1);

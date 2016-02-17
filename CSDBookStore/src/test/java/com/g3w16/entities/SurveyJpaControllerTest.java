@@ -17,6 +17,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -81,7 +82,10 @@ public class SurveyJpaControllerTest {
 
     @Inject
     private SurveyJpaController surveyJpaController;
-     //------------------------------------------------------TEST METHODS-----------------------------------------
+    
+    //------------------------------------------------------TEST METHODS-----------------------------------------
+    // TODO Should have 2-3 test methods per controller method(pass,fail,exception?)
+    // TODO should have comments and loggs
     @Test
     public void successfulCreateSurvey() throws Exception{
         Survey expectedSurvey = new Survey(null,"Q", "A1", "A2","A3","AD");
@@ -118,10 +122,41 @@ public class SurveyJpaControllerTest {
         List<Survey> allSurveys = surveyJpaController.findAllSurveys();
         
         //should be 6 records int he db
-        assertThat(allSurveys.size()).isEqualTo(3);
+        assertThat(allSurveys.size()).isEqualTo(6);  
+    }
+    @Test
+    public void successfulSurveyEntities() throws Exception{
+         //Find 4 surveys in the db starting at 2 
+        List<Survey> someSurveys = surveyJpaController.findSurveyEntities(4,2);
+        
+        List<Integer> expectedListOfId = new ArrayList<>();
+        List<Integer> actualListOfId = new ArrayList<>();
+        
+        for( Survey survey : someSurveys){
+            actualListOfId.add(survey.getSurveyId());
+        }
+        assertThat(actualListOfId).isEqualTo(expectedListOfId);
+    }
+    @Test
+    public void sucessfulFindSurveyById() throws Exception{
+        
+        //find a specific survey by its primary key
+        Survey foundSurvey = surveyJpaController.findSurveyById(4);
+        
+        //Check that the value of one of its records is as expected.
+        assertThat(foundSurvey.getAnswerOne()).isEqualTo("Yes");
+    }
+    
+    @Test
+    public void sucessfulCountOfSurvey() throws Exception{
+        //current 6 things in the database;
+        Survey seventhSurvey = new Survey(7,"Q", "A1", "A2","A3","AD");
+        surveyJpaController.create(seventhSurvey);
+        
+        assertThat(surveyJpaController.getSurveyCount()).isEqualTo(7);
         
     }
-      //-----------------------------------------------------END OF TEST METHODS-----------------------------------
+    //-----------------------------------------------------END OF TEST METHODS-----------------------------------
     /**
      * This routine is courtesy of Bartosz Majsak who also solved my Arquillian
      * remote server problem
