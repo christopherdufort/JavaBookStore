@@ -34,7 +34,7 @@ import javax.persistence.Table;
     @NamedQuery(name = "InvoiceDetail.findByHst", query = "SELECT i FROM InvoiceDetail i WHERE i.hst = :hst"),
     @NamedQuery(name = "InvoiceDetail.findByBookPrice", query = "SELECT i FROM InvoiceDetail i WHERE i.bookPrice = :bookPrice"),
     @NamedQuery(name = "InvoiceDetail.findByQuantity", query = "SELECT i FROM InvoiceDetail i WHERE i.quantity = :quantity"),
-    @NamedQuery(name = "InvoiceDetail.findByInvoiceId", query = "SELECT i FROM InvoiceDetail i WHERE i.invoice_id = :invoice_id"),
+    @NamedQuery(name = "InvoiceDetail.findByInvoiceId", query = "SELECT i FROM InvoiceDetail i WHERE i.invoiceId = :invoiceId"),
 })
     
 public class InvoiceDetail implements Serializable {
