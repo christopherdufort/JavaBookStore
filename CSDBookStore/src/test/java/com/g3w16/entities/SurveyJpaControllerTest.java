@@ -156,7 +156,7 @@ public class SurveyJpaControllerTest {
         assertThat(surveyJpaController.getSurveyCount()).isEqualTo(7);
         
     }
-      //-----------------------------------------------------END OF TEST METHODS-----------------------------------
+    //-----------------------------------------------------END OF TEST METHODS-----------------------------------
     /**
      * This routine is courtesy of Bartosz Majsak who also solved my Arquillian
      * remote server problem
