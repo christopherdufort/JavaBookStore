@@ -97,7 +97,7 @@ public class BookTest {
      * @throws java.lang.Exception
      */
     @Test
-    public void testEdit() throws Exception {
+    public void testEdit_splitAssertOnTitle() throws Exception {
         System.out.println("> Book > Edition");
         Calendar cal = GregorianCalendar.getInstance();
         Date date_publish = cal.getTime();
@@ -124,13 +124,258 @@ public class BookTest {
         
         bookController.edit(book);
         assertEquals(book.getTitle(), "some title");
-        assertEquals(book.getIsbn(), "0000000000000");
-        assertEquals(book.getPublisher(), "some publisher");
-        assertEquals(book.getPublishDate(), date_publish);
+        //assertEquals(book.getIsbn(), "0000000000000");
+        //assertEquals(book.getPublisher(), "some publisher");
+        //assertEquals(book.getPublishDate(), date_publish);
         // TODO: test date_entered too ..
+        //assertTrue(book.getPageNumber()== 666);
+        //assertEquals(book.getWholesalePrice(), new BigDecimal(13.12));
+        //assertTrue(book.getAvailable());
+        //assertEquals(book.getOverallRating(), new BigDecimal(-1.));
+    }
+    
+    /**
+     * Test of edition method for entity : Book
+     * @author Jonas Faure
+     * @throws java.lang.Exception
+     */
+    @Test
+    public void testEdit_splitAssertOnIsbn() throws Exception {
+        System.out.println("> Book > Edition");
+        Calendar cal = GregorianCalendar.getInstance();
+        Date date_publish = cal.getTime();
+        
+        Book book = new Book(
+                2,
+                "0000000000000",
+                "some title",
+                "some publisher",
+                date_publish,
+                666,
+                new BigDecimal(13.12),
+                true,
+                new BigDecimal(-1.)
+        );
+        book.setAuthorList(
+                authorController.findAuthorEntitiesLike("jo")
+        );
+        book.setFormatList(new ArrayList<>());
+        book.getFormatList().add(formatController.findFormat(1));
+        book.setGenreList(new ArrayList<>());
+        book.getGenreList().add(genreController.findGenre(1));
+        book.setReviewList(new ArrayList<>());
+        
+        bookController.edit(book);
+        assertEquals(book.getIsbn(), "0000000000000");
+    }
+    
+    /**
+     * Test of edition method for entity : Book
+     * @author Jonas Faure
+     * @throws java.lang.Exception
+     */
+    @Test
+    public void testEdit_splitAssertOnPublisher() throws Exception {
+        System.out.println("> Book > Edition");
+        Calendar cal = GregorianCalendar.getInstance();
+        Date date_publish = cal.getTime();
+        
+        Book book = new Book(
+                2,
+                "0000000000000",
+                "some title",
+                "some publisher",
+                date_publish,
+                666,
+                new BigDecimal(13.12),
+                true,
+                new BigDecimal(-1.)
+        );
+        book.setAuthorList(
+                authorController.findAuthorEntitiesLike("jo")
+        );
+        book.setFormatList(new ArrayList<>());
+        book.getFormatList().add(formatController.findFormat(1));
+        book.setGenreList(new ArrayList<>());
+        book.getGenreList().add(genreController.findGenre(1));
+        book.setReviewList(new ArrayList<>());
+        
+        bookController.edit(book);
+        assertEquals(book.getPublisher(), "some publisher");
+    }
+    
+    /**
+     * Test of edition method for entity : Book
+     * @author Jonas Faure
+     * @throws java.lang.Exception
+     */
+    @Test
+    public void testEdit_splitAssertOnPublishDate() throws Exception {
+        System.out.println("> Book > Edition");
+        Calendar cal = GregorianCalendar.getInstance();
+        Date date_publish = cal.getTime();
+        
+        Book book = new Book(
+                2,
+                "0000000000000",
+                "some title",
+                "some publisher",
+                date_publish,
+                666,
+                new BigDecimal(13.12),
+                true,
+                new BigDecimal(-1.)
+        );
+        book.setAuthorList(
+                authorController.findAuthorEntitiesLike("jo")
+        );
+        book.setFormatList(new ArrayList<>());
+        book.getFormatList().add(formatController.findFormat(1));
+        book.setGenreList(new ArrayList<>());
+        book.getGenreList().add(genreController.findGenre(1));
+        book.setReviewList(new ArrayList<>());
+        
+        bookController.edit(book);
+        assertEquals(book.getPublishDate(), date_publish);
+    }
+    
+    /**
+     * Test of edition method for entity : Book
+     * @author Jonas Faure
+     * @throws java.lang.Exception
+     */
+    @Test
+    public void testEdit_splitAssertOnPageNumber() throws Exception {
+        System.out.println("> Book > Edition");
+        Calendar cal = GregorianCalendar.getInstance();
+        Date date_publish = cal.getTime();
+        
+        Book book = new Book(
+                2,
+                "0000000000000",
+                "some title",
+                "some publisher",
+                date_publish,
+                666,
+                new BigDecimal(13.12),
+                true,
+                new BigDecimal(-1.)
+        );
+        book.setAuthorList(
+                authorController.findAuthorEntitiesLike("jo")
+        );
+        book.setFormatList(new ArrayList<>());
+        book.getFormatList().add(formatController.findFormat(1));
+        book.setGenreList(new ArrayList<>());
+        book.getGenreList().add(genreController.findGenre(1));
+        book.setReviewList(new ArrayList<>());
+        
+        bookController.edit(book);
         assertTrue(book.getPageNumber()== 666);
+    }
+    
+    /**
+     * Test of edition method for entity : Book
+     * @author Jonas Faure
+     * @throws java.lang.Exception
+     */
+    @Test
+    public void testEdit_splitAssertOnWholesalePrice() throws Exception {
+        System.out.println("> Book > Edition");
+        Calendar cal = GregorianCalendar.getInstance();
+        Date date_publish = cal.getTime();
+        
+        Book book = new Book(
+                2,
+                "0000000000000",
+                "some title",
+                "some publisher",
+                date_publish,
+                666,
+                new BigDecimal(13.12),
+                true,
+                new BigDecimal(-1.)
+        );
+        book.setAuthorList(
+                authorController.findAuthorEntitiesLike("jo")
+        );
+        book.setFormatList(new ArrayList<>());
+        book.getFormatList().add(formatController.findFormat(1));
+        book.setGenreList(new ArrayList<>());
+        book.getGenreList().add(genreController.findGenre(1));
+        book.setReviewList(new ArrayList<>());
+        
+        bookController.edit(book);
         assertEquals(book.getWholesalePrice(), new BigDecimal(13.12));
+    }
+    
+    /**
+     * Test of edition method for entity : Book
+     * @author Jonas Faure
+     * @throws java.lang.Exception
+     */
+    @Test
+    public void testEdit_splitAssertOnAvailable() throws Exception {
+        System.out.println("> Book > Edition");
+        Calendar cal = GregorianCalendar.getInstance();
+        Date date_publish = cal.getTime();
+        
+        Book book = new Book(
+                2,
+                "0000000000000",
+                "some title",
+                "some publisher",
+                date_publish,
+                666,
+                new BigDecimal(13.12),
+                true,
+                new BigDecimal(-1.)
+        );
+        book.setAuthorList(
+                authorController.findAuthorEntitiesLike("jo")
+        );
+        book.setFormatList(new ArrayList<>());
+        book.getFormatList().add(formatController.findFormat(1));
+        book.setGenreList(new ArrayList<>());
+        book.getGenreList().add(genreController.findGenre(1));
+        book.setReviewList(new ArrayList<>());
+        
+        bookController.edit(book);
         assertTrue(book.getAvailable());
+    }
+    
+    /**
+     * Test of edition method for entity : Book
+     * @author Jonas Faure
+     * @throws java.lang.Exception
+     */
+    @Test
+    public void testEdit_splitAssertOnOverallRating() throws Exception {
+        System.out.println("> Book > Edition");
+        Calendar cal = GregorianCalendar.getInstance();
+        Date date_publish = cal.getTime();
+        
+        Book book = new Book(
+                2,
+                "0000000000000",
+                "some title",
+                "some publisher",
+                date_publish,
+                666,
+                new BigDecimal(13.12),
+                true,
+                new BigDecimal(-1.)
+        );
+        book.setAuthorList(
+                authorController.findAuthorEntitiesLike("jo")
+        );
+        book.setFormatList(new ArrayList<>());
+        book.getFormatList().add(formatController.findFormat(1));
+        book.setGenreList(new ArrayList<>());
+        book.getGenreList().add(genreController.findGenre(1));
+        book.setReviewList(new ArrayList<>());
+        
+        bookController.edit(book);
         assertEquals(book.getOverallRating(), new BigDecimal(-1.));
     }
     
@@ -185,7 +430,7 @@ public class BookTest {
         // below the SQL statement used to check that value 
         
         // SELECT count(book_id) from g3w16.book;
-        assertTrue(bookController.getBookCount()==102);
+        assertTrue(bookController.getBookCountAvailable()==102);
     }
 
     
@@ -241,7 +486,7 @@ public class BookTest {
         assertTrue(book.getWholesalePrice().compareTo(    new BigDecimal("150.00")) == 0);
         assertTrue(book.getListPrice().compareTo(    new BigDecimal("317.95")) == 0 );
         assertTrue(book.getSalePrice().compareTo(    new BigDecimal("309.08")) == 0 );
-        // TODO: test date_entered    "2016-01-30 00:00:00"
+        assertEquals(dateFormater.format(book.getDateEntered()),    "2016-01-30 12:00:00");
         assertTrue(book.getAvailable());
         assertTrue(book.getOverallRating().compareTo(   new BigDecimal("0")) == 0 );
         assertEquals(book.getSynopsis(),    "'Take a ''breadth-first'' approach to learning electronics with a strong emphasis on design and simulation in MICROELECTRONIC CIRCUITS: ANALYSIS AND DESIGN, 3E. This book introduces the general characteristics of circuits (ICs) to prepare you to effectively use circuit design and analysis techniques. The author then offers a more detailed study of devices and circuits and how they operate within ICs. Important circuits are analyzed in worked-out examples to introduce basic techniques and emphasize the effects of parameter variations. More than half of the problems and examples concentrate on design and use software tools extensively. You learn to apply theory to real-world design problems as you master computer simulations for testing and verifying your designs'");
@@ -418,7 +663,7 @@ public class BookTest {
             e.printStackTrace();
             throw new RuntimeException("Failed seeding database", e);
         }
-        System.out.println("Seeding works");
+        //System.out.println("Seeding works");
     }
 
     @After

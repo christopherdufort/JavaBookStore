@@ -9,34 +9,32 @@ import com.g3w16.entities.exceptions.NonexistentEntityException;
 import com.g3w16.entities.exceptions.RollbackFailureException;
 import java.io.Serializable;
 import java.util.List;
+import javax.annotation.Resource;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 
 /**
  *
  * @author Rita Lazaar
  */
+@Named
+@RequestScoped
 public class InvoiceDetailJpaController implements Serializable {
 
-    public InvoiceDetailJpaController(UserTransaction utx, EntityManagerFactory emf) {
-        this.utx = utx;
-        this.emf = emf;
-    }
-    private UserTransaction utx = null;
-    private EntityManagerFactory emf = null;
-
-    public EntityManager getEntityManager() {
-        return emf.createEntityManager();
-    }
-
+    @Resource
+    private UserTransaction utx;
+    @PersistenceContext
+    private EntityManager em;
+    
     public void create(InvoiceDetail invoiceDetail) throws RollbackFailureException, Exception {
-        EntityManager em = null;
         try {
             utx.begin();
-            em = getEntityManager();
             Invoice invoiceId = invoiceDetail.getInvoiceId();
             if (invoiceId != null) {
                 invoiceId = em.getReference(invoiceId.getClass(), invoiceId.getInvoiceId());
@@ -55,18 +53,12 @@ public class InvoiceDetailJpaController implements Serializable {
                 throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
             }
             throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
         }
     }
 
     public void edit(InvoiceDetail invoiceDetail) throws NonexistentEntityException, RollbackFailureException, Exception {
-        EntityManager em = null;
         try {
             utx.begin();
-            em = getEntityManager();
             InvoiceDetail persistentInvoiceDetail = em.find(InvoiceDetail.class, invoiceDetail.getInvoiceDetailId());
             Invoice invoiceIdOld = persistentInvoiceDetail.getInvoiceId();
             Invoice invoiceIdNew = invoiceDetail.getInvoiceId();
@@ -98,18 +90,12 @@ public class InvoiceDetailJpaController implements Serializable {
                 }
             }
             throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
         }
     }
 
     public void destroy(Integer id) throws NonexistentEntityException, RollbackFailureException, Exception {
-        EntityManager em = null;
         try {
             utx.begin();
-            em = getEntityManager();
             InvoiceDetail invoiceDetail;
             try {
                 invoiceDetail = em.getReference(InvoiceDetail.class, id);
@@ -131,10 +117,6 @@ public class InvoiceDetailJpaController implements Serializable {
                 throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
             }
             throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
         }
     }
 
@@ -148,36 +130,21 @@ public class InvoiceDetailJpaController implements Serializable {
     
 
     private List<InvoiceDetail> findInvoiceDetailEntities(boolean all, int maxResults, int firstResult) {
-        EntityManager em = getEntityManager();
-        try {
-            Query q = em.createQuery("select object(o) from InvoiceDetail as o");
+        Query q = em.createQuery("select object(o) from InvoiceDetail as o");
             if (!all) {
                 q.setMaxResults(maxResults);
                 q.setFirstResult(firstResult);
             }
             return q.getResultList();
-        } finally {
-            em.close();
-        }
     }
 
     public InvoiceDetail findInvoiceDetail(Integer id) {
-        EntityManager em = getEntityManager();
-        try {
-            return em.find(InvoiceDetail.class, id);
-        } finally {
-            em.close();
-        }
+        return em.find(InvoiceDetail.class, id);
     }
 
     public int getInvoiceDetailCount() {
-        EntityManager em = getEntityManager();
-        try {
-            Query q = em.createQuery("select count(o) from InvoiceDetail as o");
+        Query q = em.createQuery("select count(o) from InvoiceDetail as o");
             return ((Long) q.getSingleResult()).intValue();
-        } finally {
-            em.close();
-        }
     }
     
 }
