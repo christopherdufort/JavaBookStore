@@ -9,7 +9,6 @@ import com.g3w16.entities.exceptions.NonexistentEntityException;
 import com.g3w16.entities.exceptions.RollbackFailureException;
 import java.io.Serializable;
 import javax.persistence.Query;
-import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
@@ -485,7 +484,12 @@ public class BookJpaController implements Serializable {
     }
 
     public int getBookCount() {
-        Query q = em.createQuery("select count(o) from Book as o");
+        Query q = em.createNamedQuery("Book.countAll");
+        return ((Long) q.getSingleResult()).intValue();
+    }
+
+    public int getBookCountAvailable() {
+        Query q = em.createNamedQuery("Book.countAllAvailable");
         return ((Long) q.getSingleResult()).intValue();
     }
 

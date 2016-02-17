@@ -41,6 +41,8 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Book.findByFormat", query = "SELECT b FROM Book b WHERE EXISTS( SELECT 1 FROM b.formatList f WHERE f.formatId = :formatId )"),
     @NamedQuery(name = "Book.findByGenre", query = "SELECT b FROM Book b WHERE EXISTS( SELECT 1 FROM b.genreList g WHERE g.genreId = :genreId )"),
     @NamedQuery(name = "Book.findByAuthor", query = "SELECT b FROM Book b WHERE EXISTS( SELECT 1 FROM b.authorList a WHERE a.authorId = :authorId )"),
+    @NamedQuery(name = "Book.countAll", query = "SELECT count(b) FROM Book b"),
+    @NamedQuery(name = "Book.countAllAvailable", query = "SELECT count(b) FROM Book b WHERE b.available = 1"),
     @NamedQuery(name = "Book.findAllAvailable", query = "SELECT b FROM Book b AND b.availaible = 1"),
     @NamedQuery(name = "Book.findByBookIdAvailable", query = "SELECT b FROM Book b WHERE b.bookId = :bookId  AND b.availaible = 1"),
     @NamedQuery(name = "Book.findByIsbnAvailable", query = "SELECT b FROM Book b WHERE b.isbn = :isbn  AND b.availaible = 1"),
