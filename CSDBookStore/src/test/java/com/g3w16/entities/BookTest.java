@@ -430,7 +430,7 @@ public class BookTest {
         // below the SQL statement used to check that value 
         
         // SELECT count(book_id) from g3w16.book;
-        assertTrue(bookController.getBookCount()==102);
+        assertTrue(bookController.getBookCountAvailable()==102);
     }
 
     
@@ -663,7 +663,7 @@ public class BookTest {
             e.printStackTrace();
             throw new RuntimeException("Failed seeding database", e);
         }
-        System.out.println("Seeding works");
+        //System.out.println("Seeding works");
     }
 
     @After

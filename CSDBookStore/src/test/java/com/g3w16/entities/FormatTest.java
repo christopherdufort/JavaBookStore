@@ -314,7 +314,7 @@ public class FormatTest {
             e.printStackTrace();
             throw new RuntimeException("Failed seeding database", e);
         }
-        System.out.println("Seeding works");
+        //System.out.println("Seeding works");
     }
 
     @After
