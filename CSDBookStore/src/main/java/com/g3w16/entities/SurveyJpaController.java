@@ -136,7 +136,11 @@ public class SurveyJpaController implements Serializable {
         Query q = em.createQuery("select count(o) from Survey as o");
         return ((Long) q.getSingleResult()).intValue();
     }
-    
+    /**
+     * PROBABLY WILL NOT BE USED
+     * @param question
+     * @return 
+     */
     public Survey findSurveyByQuestion(String question){
         //Example of named query(predefined in the entity class)
         Query query = em.createNamedQuery("Survey.findByQuestion");
@@ -148,5 +152,66 @@ public class SurveyJpaController implements Serializable {
         Survey result = (Survey)query.getSingleResult(); 
         return result;
     }
-
+    /**
+     * PROBABLY WILL NOT BE USED
+     * @param answerOne
+     * @return 
+     */
+    public List<Survey> findSurveyByAnswerOne(String answerOne){
+        //Example of named query(predefined in the entity class)
+        Query query = em.createNamedQuery("Survey.findByAnswerOne");
+ 
+        //binding for names parameters
+        query.setParameter("answerOne",answerOne);
+        
+        //execute query returning single result
+        List<Survey> result = (List<Survey>)query.getResultList(); 
+        return result;   
+    }
+    /**
+     * PROBABLY WILL NOT BE USED
+     * @param answerTwo
+     * @return 
+     */
+    public List<Survey> findSurveyByAnswerTwo(String answerTwo){
+        //Example of named query(predefined in the entity class)
+        Query query = em.createNamedQuery("Survey.findByAnswerTwo");
+ 
+        //binding for names parameters
+        query.setParameter("answerTwo",answerTwo);
+        
+        //execute query returning single result
+        List<Survey> result = (List<Survey>)query.getResultList(); 
+        return result;          
+    }
+    /**
+     * PROBABLY WILL NOT BE USED
+     */
+    public List<Survey> findSurveyByAnswerThree(String answerThree){
+        //Example of named query(predefined in the entity class)
+        Query query = em.createNamedQuery("Survey.findByAnswerThree");
+ 
+        //binding for names parameters
+        query.setParameter("answerThree",answerThree);
+        
+        //execute query returning single result
+        List<Survey> result = (List<Survey>)query.getResultList(); 
+        return result;          
+    }
+    /**
+     * PROBABLY WILL NOT BE USED
+     * @param answerDefault
+     * @return 
+     */
+    public List<Survey> findSurveyByAnswerDefault(String answerDefault){
+         //Example of named query(predefined in the entity class)
+        Query query = em.createNamedQuery("Survey.findByAnswerDefault");
+ 
+        //binding for names parameters
+        query.setParameter("answerDefault",answerDefault);
+        
+        //execute query returning single result
+        List<Survey> result = (List<Survey>)query.getResultList(); 
+        return result;         
+    }
 }
