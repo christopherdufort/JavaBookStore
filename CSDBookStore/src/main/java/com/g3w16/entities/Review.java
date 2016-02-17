@@ -31,11 +31,11 @@ import javax.persistence.TemporalType;
 @NamedQueries({
     @NamedQuery(name = "Review.findAll", query = "SELECT r FROM Review r"),
     @NamedQuery(name = "Review.findByReviewId", query = "SELECT r FROM Review r WHERE r.reviewId = :reviewId"),
-    @NamedQuery(name = "Review.findByUserId", query = "SELECT r FROM Review r WHERE r.userId = :userId"),
+    @NamedQuery(name = "Review.findByUserId", query = "SELECT r FROM Review r WHERE EXISTS( SELECT u FROM r.userId u WHERE u.userId = :userId)"),
     @NamedQuery(name = "Review.findByDateSubmitted", query = "SELECT r FROM Review r WHERE r.dateSubmitted = :dateSubmitted"),
     @NamedQuery(name = "Review.findByRating", query = "SELECT r FROM Review r WHERE r.rating = :rating"),
-    @NamedQuery(name = "Review.findByApprovalId", query = "SELECT r FROM Review r WHERE r.approvalId = :approvalId"),
-    @NamedQuery(name = "Review.findByIsbn", query = "SELECT r FROM Review r WHERE r.isbn = :isbn"),
+    @NamedQuery(name = "Review.findByApprovalId", query = "SELECT r FROM Review r WHERE EXISTS( SELECT a FROM r.approvalId a WHERE a.approvalId = :approvalId)"),
+    @NamedQuery(name = "Review.findByIsbn", query = "SELECT r FROM Review r WHERE EXISTS (SELECT 1 FROM r.isbn b WHERE b.isbn = :isbn)"),
     @NamedQuery(name = "Review.findByReviewTitle", query = "SELECT r FROM Review r WHERE r.reviewTitle = :reviewTitle"),
     @NamedQuery(name = "Review.findByReviewText", query = "SELECT r FROM Review r WHERE r.reviewText = :reviewText")})
 public class Review implements Serializable {

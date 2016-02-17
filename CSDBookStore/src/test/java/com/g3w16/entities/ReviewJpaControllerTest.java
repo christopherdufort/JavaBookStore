@@ -64,6 +64,7 @@ public class ReviewJpaControllerTest {
                 //.addPackage(CSDBookStoreDAOImpl.class.getPackage())
                 .addPackage(ReviewJpaController.class.getPackage())
                 .addPackage(Review.class.getPackage())
+                .addPackage(Book.class.getPackage())
                 .addPackage(RollbackFailureException.class.getPackage())
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addAsWebInfResource(new File("src/main/setup/glassfish-resources.xml"), "glassfish-resources.xml")
@@ -83,34 +84,44 @@ public class ReviewJpaControllerTest {
     /**
      * Test of create method, of class ReviewJpaController.
      */
-    @Ignore
     @Test
     public void testCreate() throws Exception {
         System.out.println("create");
+        SimpleDateFormat dateFormater = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        Date date = dateFormater.parse("2016-02-17 16:06:00");
         Review review = new Review();
+        review.setReviewText("hello");
+        review.setRating(5);
+        review.setDateSubmitted(date);
         reviewJpaController.create(review);
+        int result = reviewJpaController.getReviewCount();
+        assertThat(result).isEqualTo(45);
+
     }
 
     /**
      * Test of edit method, of class ReviewJpaController.
      */
-    @Ignore
     @Test
     public void testEdit() throws Exception {
         System.out.println("edit");
-        Review review = new Review();
+        Review review = reviewJpaController.findReview(1);
+        review.setRating(5);
         reviewJpaController.edit(review);
+        Review new_review = reviewJpaController.findReview(1);
+        assertThat(new_review.getRating()).isEqualTo(5);
     }
 
     /**
      * Test of destroy method, of class ReviewJpaController.
      */
-    @Ignore
     @Test
     public void testDestroy() throws Exception {
         System.out.println("destroy");
-        Integer id = 1;
+        Integer id = 10;
         reviewJpaController.destroy(id);
+        int result = reviewJpaController.getReviewCount();
+        assertThat(result).isEqualTo(43);
     }
 
     /**
@@ -153,9 +164,10 @@ public class ReviewJpaControllerTest {
     @Test
     public void testFindReviewByUserId() {
         System.out.println("findReviewByUserId");
-        Integer userId = 1;
-        List<Review> expResult = reviewJpaController.findReviewByUserId(userId);
-        assertThat(expResult).hasSize(44);
+        RegisteredUser user = new RegisteredUser();
+        user.setUserId(1);
+        List<Review> expResult = reviewJpaController.findReviewByUserId(user);
+        assertThat(expResult).hasSize(39);
     }
 
     /**
@@ -164,9 +176,9 @@ public class ReviewJpaControllerTest {
     @Test
     public void testFindReviewByDateSubmitted() throws ParseException {
         System.out.println("findReviewByDateSubmitted");
-        String inputDate = "2015-12-24 00:00:00";
-        Date dateSubmitted = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a").parse(inputDate);
-        List<Review> expResult = reviewJpaController.findReviewByDateSubmitted(dateSubmitted);
+        SimpleDateFormat dateFormater = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        Date date = dateFormater.parse("2015-12-24 00:00:00");
+        List<Review> expResult = reviewJpaController.findReviewByDateSubmitted(date);
         assertThat(expResult).hasSize(1);
     }
 
@@ -176,8 +188,9 @@ public class ReviewJpaControllerTest {
     @Test
     public void testFindReviewByApprovalId() {
         System.out.println("findReviewByApprovalId");
-        Integer approvalId = 2;
-        List<Review> expResult = reviewJpaController.findReviewByApprovalId(approvalId);
+        Approval approval = new Approval();
+        approval.setApprovalId(2);
+        List<Review> expResult = reviewJpaController.findReviewByApprovalId(approval);
         assertThat(expResult).hasSize(3);
     }
 
@@ -187,9 +200,9 @@ public class ReviewJpaControllerTest {
     @Test
     public void testFindReviewByIsbn() {
         System.out.println("findReviewByIsbn");
-        Book isbn = new Book();
-        isbn.setIsbn("978-0679600213");
-        List<Review> expResult = reviewJpaController.findReviewByIsbn(isbn);
+        Book book = new Book();
+        book.setIsbn("978-0679600213");
+        List<Review> expResult = reviewJpaController.findReviewByIsbn(book);
         assertThat(expResult).hasSize(3);
     }
 

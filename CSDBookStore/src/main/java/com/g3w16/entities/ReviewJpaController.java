@@ -146,7 +146,6 @@ public class ReviewJpaController implements Serializable {
     }
 
     public void destroy(Integer id) throws NonexistentEntityException, RollbackFailureException, Exception {
-        EntityManager em = null;
         try {
             utx.begin();
             Review review;
@@ -204,9 +203,9 @@ public class ReviewJpaController implements Serializable {
         return em.find(Review.class, id);
     }
 
-    public List<Review> findReviewByUserId(Integer userId) {
+    public List<Review> findReviewByUserId(RegisteredUser registeredUser) {
         Query q = em.createNamedQuery("Review.findByUserId");
-        q.setParameter("userId", userId);
+        q.setParameter("userId", registeredUser.getUserId());
         return q.getResultList();
     }
 
@@ -216,16 +215,15 @@ public class ReviewJpaController implements Serializable {
         return q.getResultList();
     }
 
-    public List<Review> findReviewByApprovalId(Integer approvalId) {
+    public List<Review> findReviewByApprovalId(Approval approval) {
         Query q = em.createNamedQuery("Review.findByApprovalId");
-        q.setParameter("approvalId", approvalId);
+        q.setParameter("approvalId", approval.getApprovalId());
         return q.getResultList();
     }
 
     public List<Review> findReviewByIsbn(Book book) {
         Query q = em.createNamedQuery("Review.findByIsbn");
-        String isbn=book.getIsbn();
-        q.setParameter("isbn", isbn);
+        q.setParameter("isbn", book.getIsbn());
         return q.getResultList();
     }
 
