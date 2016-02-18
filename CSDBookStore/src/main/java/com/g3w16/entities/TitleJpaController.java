@@ -138,7 +138,7 @@ public class TitleJpaController implements Serializable {
     }
     
     public List<Title> findAll() {
-        Query q = em.createNamedQuery("findAll", Title.class);
+        Query q = em.createNamedQuery("Title.findAll", Title.class);
         return q.getResultList();
     }
     
@@ -147,7 +147,7 @@ public class TitleJpaController implements Serializable {
     }
     
     public Title findTitleByName(String title) {
-        Query q = em.createNamedQuery("findByTitle", Title.class);
+        Query q = em.createNamedQuery("Title.findByTitle", Title.class);
         q.setParameter("title", title);
         return (Title) q.getSingleResult();
     }

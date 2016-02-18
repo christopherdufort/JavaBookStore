@@ -215,7 +215,7 @@ public class RegisteredUserJpaController implements Serializable {
     }
     
     public RegisteredUser findUserByEmail(String email) {
-        Query q = em.createNamedQuery("findByEmailAddress", RegisteredUser.class);
+        Query q = em.createNamedQuery("RegisteredUser.findByEmailAddress", RegisteredUser.class);
         q.setParameter("emailAddress", email);
         return (RegisteredUser) q.getSingleResult();
     }

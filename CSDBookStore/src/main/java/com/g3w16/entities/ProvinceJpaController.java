@@ -138,7 +138,7 @@ public class ProvinceJpaController implements Serializable {
     }
     
     public List<Province> findAll() {
-        Query q = em.createNamedQuery("findAll", Province.class);
+        Query q = em.createNamedQuery("Province.findAll", Province.class);
         return q.getResultList();
     }
     
@@ -147,7 +147,7 @@ public class ProvinceJpaController implements Serializable {
     }
     
     public Province findProvinceByName(String name) {
-        Query q = em.createNamedQuery("findByProvince", Province.class);
+        Query q = em.createNamedQuery("Province.findByProvince", Province.class);
         q.setParameter("province", name);
         return (Province) q.getSingleResult();
     }

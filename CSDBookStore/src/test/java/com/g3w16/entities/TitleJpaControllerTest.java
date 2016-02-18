@@ -22,6 +22,7 @@ import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.sql.DataSource;
 import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
@@ -29,11 +30,13 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
+import org.junit.runner.RunWith;
 
 /**
  *
  * @author Giuseppe Campanelli
  */
+@RunWith(Arquillian.class)
 public class TitleJpaControllerTest {
     
     @Deployment
@@ -56,8 +59,8 @@ public class TitleJpaControllerTest {
         final WebArchive webArchive = ShrinkWrap.create(WebArchive.class)
                 .setWebXML(new File("src/main/webapp/WEB-INF/web.xml"))
                 //.addPackage(CSDBookStoreDAOImpl.class.getPackage())
-                .addPackage(ReviewJpaController.class.getPackage())
-                .addPackage(Review.class.getPackage())
+                .addPackage(TitleJpaController.class.getPackage())
+                .addPackage(Title.class.getPackage())
                 .addPackage(RollbackFailureException.class.getPackage())
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addAsWebInfResource(new File("src/main/setup/glassfish-resources.xml"), "glassfish-resources.xml")
@@ -92,7 +95,7 @@ public class TitleJpaControllerTest {
     @Test
     public void testEdit() throws Exception {
         System.out.println("edit");
-        Title title = new Title(1, "Mr.");
+        Title title = titleJpaController.findTitleById(1);
         title.setTitle("Mister");
         titleJpaController.edit(title);
         assertEquals(title, titleJpaController.findTitleByName("Mister"));
@@ -132,7 +135,7 @@ public class TitleJpaControllerTest {
     public void testFindTitleById() {
         System.out.println("findTitle");
         Integer id = 1;
-        Title expResult = new Title(1, "Mr.");
+        Title expResult = new Title(id, "Mr.");
         Title result = titleJpaController.findTitleById(id);
         assertEquals(expResult, result);
     }
@@ -144,7 +147,7 @@ public class TitleJpaControllerTest {
     public void testFindTitleByName() {
         System.out.println("findProvinceByName");
         String title = "Mr.";
-        Title expResult = new Title(1, "Mr.");
+        Title expResult = new Title(1, title);
         Title result = titleJpaController.findTitleByName(title);
         assertEquals(expResult, result);
     }
