@@ -64,7 +64,6 @@ public class ReviewJpaControllerTest {
                 //.addPackage(CSDBookStoreDAOImpl.class.getPackage())
                 .addPackage(ReviewJpaController.class.getPackage())
                 .addPackage(Review.class.getPackage())
-                .addPackage(Book.class.getPackage())
                 .addPackage(RollbackFailureException.class.getPackage())
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addAsWebInfResource(new File("src/main/setup/glassfish-resources.xml"), "glassfish-resources.xml")
