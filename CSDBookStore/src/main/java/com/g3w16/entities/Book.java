@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -64,6 +65,9 @@ import javax.persistence.TemporalType;
     //@NamedQuery(name = "Book.findByOverallRating", query = "SELECT b FROM Book b WHERE b.overallRating = :overallRating"),
 })
 public class Book implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "bookId")
+    private List<InvoiceDetail> invoiceDetailList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -302,6 +306,14 @@ public class Book implements Serializable {
     @Override
     public String toString() {
         return "com.g3w16.entities.Book[ bookId=" + bookId + " ]";
+    }
+
+    public List<InvoiceDetail> getInvoiceDetailList() {
+        return invoiceDetailList;
+    }
+
+    public void setInvoiceDetailList(List<InvoiceDetail> invoiceDetailList) {
+        this.invoiceDetailList = invoiceDetailList;
     }
     
 }

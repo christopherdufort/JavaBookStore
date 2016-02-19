@@ -25,7 +25,7 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Rita Lazaars
+ * @author Rita Lazaar
  */
 @Entity
 @Table(name = "invoice", catalog = "g3w16", schema = "")

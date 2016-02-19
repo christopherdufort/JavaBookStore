@@ -18,25 +18,23 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 /**
  *
  * @author Rita Lazaar
  */
 @Entity
-@Table(name = "invoice_detail", catalog = "g3w16", schema = "")
+@Table(name = "invoice_detail")
 @NamedQueries({
     @NamedQuery(name = "InvoiceDetail.findAll", query = "SELECT i FROM InvoiceDetail i"),
     @NamedQuery(name = "InvoiceDetail.findByInvoiceDetailId", query = "SELECT i FROM InvoiceDetail i WHERE i.invoiceDetailId = :invoiceDetailId"),
-    @NamedQuery(name = "InvoiceDetail.findByIsbn", query = "SELECT i FROM InvoiceDetail i WHERE i.isbn = :isbn"),
     @NamedQuery(name = "InvoiceDetail.findByPst", query = "SELECT i FROM InvoiceDetail i WHERE i.pst = :pst"),
     @NamedQuery(name = "InvoiceDetail.findByGst", query = "SELECT i FROM InvoiceDetail i WHERE i.gst = :gst"),
     @NamedQuery(name = "InvoiceDetail.findByHst", query = "SELECT i FROM InvoiceDetail i WHERE i.hst = :hst"),
     @NamedQuery(name = "InvoiceDetail.findByBookPrice", query = "SELECT i FROM InvoiceDetail i WHERE i.bookPrice = :bookPrice"),
     @NamedQuery(name = "InvoiceDetail.findByQuantity", query = "SELECT i FROM InvoiceDetail i WHERE i.quantity = :quantity"),
-    @NamedQuery(name = "InvoiceDetail.findByInvoiceId", query = "SELECT i FROM InvoiceDetail i WHERE i.invoiceId = :invoiceId"),
-})
-    
+    @NamedQuery(name = "InvoiceDetail.findByInvoiceId", query = "SELECT i FROM InvoiceDetail i WHERE i.invoiceId = :invoiceId")})
 public class InvoiceDetail implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -45,9 +43,6 @@ public class InvoiceDetail implements Serializable {
     @Basic(optional = false)
     @Column(name = "invoice_detail_id")
     private Integer invoiceDetailId;
-    @Basic(optional = false)
-    @Column(name = "isbn")
-    private String isbn;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "pst")
     private BigDecimal pst;
@@ -58,8 +53,12 @@ public class InvoiceDetail implements Serializable {
     @Column(name = "book_price")
     private BigDecimal bookPrice;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "quantity")
     private int quantity;
+    @JoinColumn(name = "book_id", referencedColumnName = "book_id")
+    @ManyToOne(optional = false)
+    private Book bookId;
     @JoinColumn(name = "invoice_id", referencedColumnName = "invoice_id")
     @ManyToOne(optional = false)
     private Invoice invoiceId;
@@ -71,9 +70,8 @@ public class InvoiceDetail implements Serializable {
         this.invoiceDetailId = invoiceDetailId;
     }
 
-    public InvoiceDetail(Integer invoiceDetailId, String isbn, int quantity) {
+    public InvoiceDetail(Integer invoiceDetailId, int quantity) {
         this.invoiceDetailId = invoiceDetailId;
-        this.isbn = isbn;
         this.quantity = quantity;
     }
 
@@ -83,14 +81,6 @@ public class InvoiceDetail implements Serializable {
 
     public void setInvoiceDetailId(Integer invoiceDetailId) {
         this.invoiceDetailId = invoiceDetailId;
-    }
-
-    public String getIsbn() {
-        return isbn;
-    }
-
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
     }
 
     public BigDecimal getPst() {
@@ -131,6 +121,14 @@ public class InvoiceDetail implements Serializable {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public Book getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(Book bookId) {
+        this.bookId = bookId;
     }
 
     public Invoice getInvoiceId() {

@@ -26,6 +26,7 @@ import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.sql.DataSource;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -82,65 +83,80 @@ public class InvoiceJpaControllerTest {
     private DataSource ds;
 
     @Inject
-    private Invoice invoice;
-
-    @Inject
     private InvoiceJpaController invoiceJpaController;
-    
+
     /**
-     * @author Rita Lazaar 
-     * 
-     * This is testing the creating a new invoice. 
+     * @author Rita Lazaar
+     *
+     * This is testing the creating a new invoice.
      */
     @Test
     public void testCreate() throws Exception {
-        
+
         System.out.println("create");
+
         Invoice invoice = new Invoice();
-        invoice.setInvoiceId(100);
-        invoice.setSaleDate(Date.from(Instant.MIN));
+        invoice.setInvoiceId(null);
+        invoice.setSaleDate(null);
         invoice.setTotalGrossValueOfSale(BigDecimal.ZERO);
         invoice.setTotalNetValueOfSale(BigDecimal.ONE);
         invoice.setUserNumber(1);
-        
-       
+
         invoiceJpaController.create(invoice);
-        
-        Invoice retrieved =  invoiceJpaController.findInvoice(100);
-        
-        assertEquals(invoice.getInvoiceId(), retrieved.getInvoiceId());
-        
-      
-    }
 
+        Invoice retrieved = invoiceJpaController.findInvoice(7);
+
+        assertThat(invoice).isEqualTo(retrieved);
+        //assertEquals(invoice.getInvoiceId(), retrieved.getInvoiceId());
+
+    }
 
     /**
      * Test of findInvoiceEntities method, of class InvoiceJpaController.
-     * Finding all invoices. 
+     * Finding all invoices.
      */
     @Test
-    public void testFindInvoiceEntities_0args() {
+    public void testFindAllInvoiceEntities() throws Exception {
         System.out.println("findInvoiceEntities");
-       
-        List<Invoice> expResult = null;
+
+        invoiceJpaController.create(new Invoice(null, 2));
+        invoiceJpaController.create(new Invoice(null, 3));
+        invoiceJpaController.create(new Invoice(null, 1));
+
         List<Invoice> result = invoiceJpaController.findInvoiceEntities();
-        assertEquals(expResult, result);
-       
+
+        assertThat(result.size()).isEqualTo(9);
+
     }
 
     /**
      * Test of findInvoiceEntities method, of class InvoiceJpaController.
+     * Finding all invoices.
      */
     @Test
-    public void testFindInvoiceEntities_int_int() {
+    public void testFindAllInvoiceEntitiesOnlyOne() throws Exception {
         System.out.println("findInvoiceEntities");
-        int maxResults = 0;
-        int firstResult = 0;
-        InvoiceJpaController instance = null;
-        List<Invoice> expResult = null;
-        List<Invoice> result = invoiceJpaController.findInvoiceEntities(maxResults, firstResult);
-        assertEquals(expResult, result);
-      
+
+        invoiceJpaController.create(new Invoice(null, 2));
+
+        List<Invoice> result = invoiceJpaController.findInvoiceEntities();
+        //6 entries + 1 in database
+        assertThat(result.size()).isEqualTo(7);
+
+    }
+
+    /**
+     * Test of findInvoiceEntities method, of class InvoiceJpaController.
+     * Finding all invoices.
+     */
+    @Test
+    public void testFindAllInvoiceEntitiesWithNoData() throws Exception {
+        System.out.println("findInvoiceEntities");
+
+        List<Invoice> result = invoiceJpaController.findInvoiceEntities();
+        //originally 6 entries in tables
+        assertThat(result.size()).isEqualTo(6);
+
     }
 
     /**
@@ -149,12 +165,10 @@ public class InvoiceJpaControllerTest {
     @Test
     public void testFindInvoice() {
         System.out.println("findInvoice");
-        Integer id = null;
-        InvoiceJpaController instance = null;
-        Invoice expResult = null;
-        Invoice result = invoiceJpaController.findInvoice(id);
-        assertEquals(expResult, result);
-       
+
+        Invoice result = invoiceJpaController.findInvoice(2);
+        assertThat(result.getInvoiceId()).isEqualTo(2);
+
     }
 
     /**
@@ -163,14 +177,14 @@ public class InvoiceJpaControllerTest {
     @Test
     public void testGetInvoiceCount() {
         System.out.println("getInvoiceCount");
-        InvoiceJpaController instance = null;
-        int expResult = 0;
+
+        int expResult = 6;
         int result = invoiceJpaController.getInvoiceCount();
         assertEquals(expResult, result);
-       
+
     }
 // --- END OF TESTING  ----- 
-    
+
     /**
      * This routine is courtesy of Bartosz Majsak who also solved my Arquillian
      * remote server problem

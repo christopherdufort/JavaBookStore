@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS `book` (
   `isbn` varchar(14) NOT NULL,
   `title` varchar(200) NOT NULL,
   `publisher` varchar(70) NOT NULL,
-  `publish_date` timestamp NOT NULL,
+  `publish_date` timestamp NULL,
   `page_number` int(5) NOT NULL,
   `wholesale_price` decimal(15,2) NOT NULL,
   `list_price` decimal(15,2) DEFAULT NULL,
@@ -116,7 +116,7 @@ DROP TABLE IF EXISTS `invoice_detail`;
 CREATE TABLE IF NOT EXISTS `invoice_detail` (
   `invoice_detail_id` int(11) NOT NULL,
   `invoice_id` int(11) NOT NULL,
-  `isbn` varchar(25) NOT NULL,
+  `book_id` int(6) NOT NULL,
   `pst` decimal(12,2) DEFAULT NULL,
   `gst` decimal(12,2) DEFAULT NULL,
   `hst` decimal(12,2) DEFAULT NULL,
@@ -199,7 +199,8 @@ ALTER TABLE `invoice`
   
 ALTER TABLE `invoice_detail`
   ADD PRIMARY KEY (`invoice_detail_id`),
-  ADD KEY `invoice_fk` (`invoice_id`);
+  ADD KEY `invoice_fk` (`invoice_id`),
+  ADD KEY `book_fk` (`book_id`);
   
 ALTER TABLE `news_feed`
   ADD PRIMARY KEY (`news_feed_id`),
@@ -284,7 +285,8 @@ ALTER TABLE `book_genre`
   ADD CONSTRAINT `book_genre_subgenre_id_fk` FOREIGN KEY (`genre_id`) REFERENCES `genre` (`genre_id`) ON DELETE CASCADE;
 
 ALTER TABLE `invoice_detail`
-  ADD CONSTRAINT `invoice_fk` FOREIGN KEY (`invoice_id`) REFERENCES `invoice` (`invoice_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `invoice_fk` FOREIGN KEY (`invoice_id`) REFERENCES `invoice` (`invoice_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `book_fk` FOREIGN KEY (`book_id`) REFERENCES `book` (`book_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE `registered_user`
   ADD CONSTRAINT `registered_user_ibfk_1` FOREIGN KEY (`title_id`) REFERENCES `title` (`title_id`) ON DELETE CASCADE,

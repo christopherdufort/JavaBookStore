@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.io.StringReader;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.LinkedList;
@@ -21,6 +22,7 @@ import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.sql.DataSource;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -41,9 +43,6 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class InvoiceDetailJpaControllerTest {
-
-    public InvoiceDetailJpaControllerTest() {
-    }
 
     @Deployment
     public static WebArchive deploy() {
@@ -76,8 +75,6 @@ public class InvoiceDetailJpaControllerTest {
     @Resource(name = "java:app/jdbc/g3w16")
     private DataSource ds;
 
-  
-
     @Inject
     private InvoiceDetailJpaController invoiceDetailJpaController;
 
@@ -87,10 +84,20 @@ public class InvoiceDetailJpaControllerTest {
     @Test
     public void testCreate() throws Exception {
         System.out.println("create");
-        InvoiceDetail invoiceDetail = null;
 
+        InvoiceDetail invoiceDetail = new InvoiceDetail(null,5);
+        Book book = new Book(2);
+        invoiceDetail.setBookId(book);
+        invoiceDetail.setBookPrice(BigDecimal.ONE);
+        invoiceDetail.setGst(BigDecimal.ONE);
+        invoiceDetail.setHst(BigDecimal.ONE);
+        invoiceDetail.setInvoiceId(new Invoice(2));
         invoiceDetailJpaController.create(invoiceDetail);
 
+        InvoiceDetail retrieved = invoiceDetailJpaController.findInvoiceDetail(6);
+
+        assertThat(invoiceDetail).isEqualTo(retrieved);
+
     }
 
     /**
@@ -98,12 +105,32 @@ public class InvoiceDetailJpaControllerTest {
      * InvoiceDetailJpaController.
      */
     @Test
-    public void testFindInvoiceDetailEntities_0args() {
+    public void testFindInvoiceDetailEntitiesNoArgs() {
         System.out.println("findInvoiceDetailEntities");
-      
-        List<InvoiceDetail> expResult = null;
+
         List<InvoiceDetail> result = invoiceDetailJpaController.findInvoiceDetailEntities();
-        assertEquals(expResult, result);
+        assertThat(result.size()).isEqualTo(5);
+
+    }
+    
+    /**
+     * Test of findInvoiceDetailEntities method, of class
+     * InvoiceDetailJpaController.
+     */
+    @Test
+    public void testFindInvoiceDetailEntitiesWithOne() throws Exception {
+        System.out.println("findInvoiceDetailEntities");
+
+        InvoiceDetail invoiceDetail = new InvoiceDetail(null,5);
+        Book book = new Book(4);
+        invoiceDetail.setBookId(book);
+        invoiceDetail.setBookPrice(BigDecimal.ONE);
+        invoiceDetail.setGst(BigDecimal.ONE);
+        invoiceDetail.setHst(BigDecimal.ONE);
+        invoiceDetail.setInvoiceId(new Invoice(3));
+        invoiceDetailJpaController.create(invoiceDetail);
+        List<InvoiceDetail> result = invoiceDetailJpaController.findInvoiceDetailEntities();
+        assertThat(result.size()).isEqualTo(6);
 
     }
 
@@ -112,14 +139,37 @@ public class InvoiceDetailJpaControllerTest {
      * InvoiceDetailJpaController.
      */
     @Test
-    public void testFindInvoiceDetailEntities_int_int() {
+    public void testFindInvoiceDetailEntitiesWithNewCreated() throws Exception {
         System.out.println("findInvoiceDetailEntities");
-        int maxResults = 0;
-        int firstResult = 0;
-       
-        List<InvoiceDetail> expResult = null;
-        List<InvoiceDetail> result = invoiceDetailJpaController.findInvoiceDetailEntities(maxResults, firstResult);
-        assertEquals(expResult, result);
+
+        InvoiceDetail invoiceDetail = new InvoiceDetail(null,5);
+        Book book = new Book(2);
+        invoiceDetail.setBookId(book);
+        invoiceDetail.setBookPrice(BigDecimal.ONE);
+        invoiceDetail.setGst(BigDecimal.ONE);
+        invoiceDetail.setHst(BigDecimal.ONE);
+        invoiceDetail.setInvoiceId(new Invoice(2));
+        
+        InvoiceDetail invoiceDetail2 = new InvoiceDetail(null,5);
+        invoiceDetail2.setBookId(book);
+        invoiceDetail2.setBookPrice(BigDecimal.ONE);
+        invoiceDetail2.setGst(BigDecimal.ONE);
+        invoiceDetail2.setHst(BigDecimal.ONE);
+        invoiceDetail2.setInvoiceId(new Invoice(2));
+        
+        InvoiceDetail invoiceDetail3 = new InvoiceDetail(null,5);
+        invoiceDetail3.setBookId(book);
+        invoiceDetail3.setBookPrice(BigDecimal.ONE);
+        invoiceDetail3.setGst(BigDecimal.ONE);
+        invoiceDetail3.setHst(BigDecimal.ONE);
+        invoiceDetail3.setInvoiceId(new Invoice(2));
+        
+        invoiceDetailJpaController.create(invoiceDetail);
+        invoiceDetailJpaController.create(invoiceDetail2);
+        invoiceDetailJpaController.create(invoiceDetail3);
+
+        List<InvoiceDetail> result = invoiceDetailJpaController.findInvoiceDetailEntities();
+        assertThat(result.size()).isEqualTo(8);
 
     }
 
@@ -129,12 +179,21 @@ public class InvoiceDetailJpaControllerTest {
     @Test
     public void testFindInvoiceDetail() {
         System.out.println("findInvoiceDetail");
-        Integer id = null;
 
-        InvoiceDetail expResult = null;
-        InvoiceDetail result = invoiceDetailJpaController.findInvoiceDetail(id);
-        assertEquals(expResult, result);
+        InvoiceDetail result = invoiceDetailJpaController.findInvoiceDetail(2);
+        assertThat(result.getInvoiceDetailId()).isEqualTo(2);
     }
+    
+    @Test
+    public void testFindInvoiceDetailByInvoice() {
+        System.out.println("findInvoiceDetail");
+
+       List<InvoiceDetail> result = invoiceDetailJpaController.findInvoiceDetailByInvoice(new Invoice(1));
+        assertThat(result.size()).isEqualTo(2);
+    }
+    
+    
+    
 
 // ---- END OF THE TESTS ---
     /**
