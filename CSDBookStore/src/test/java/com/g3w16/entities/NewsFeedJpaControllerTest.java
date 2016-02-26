@@ -196,7 +196,7 @@ public class NewsFeedJpaControllerTest {
     public void successfulNewsFeedCount() throws Exception{
         //insert new objects into db
         newsFeedJpaController.create(new NewsFeed(1,"www.countmenews1.com"));
-         newsFeedJpaController.create(new NewsFeed(2,"www.countmenews2.com"));
+        newsFeedJpaController.create(new NewsFeed(2,"www.countmenews2.com"));
         newsFeedJpaController.create(new NewsFeed(3,"www.deletemenews.com"));
 
         //destroy the record in the table based on its id
