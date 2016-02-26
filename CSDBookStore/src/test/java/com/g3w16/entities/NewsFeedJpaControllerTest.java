@@ -91,118 +91,119 @@ public class NewsFeedJpaControllerTest {
     @Test
     public void successfulUpdateOfNewsFeed() throws Exception{
         //insert a new object into db
-        adJpaController.create(new Ad(null,"ad2.jpg"));
+        newsFeedJpaController.create(new NewsFeed(null,"www.booknews2.com"));
         
         //create a new object with same id and different name
-        Ad modifiedAd = new Ad(1,"modifiedAd2.jpg");
+        NewsFeed modifiedNewsFeed = new NewsFeed(1,"www.modifiedbooknews2.com");
         
         //update the record in the table based on its id
-        adJpaController.edit(modifiedAd);
+        newsFeedJpaController.edit(modifiedNewsFeed);
         
-        assertThat(adJpaController.findAdById(1)).isEqualToComparingFieldByField(modifiedAd);      
+        assertThat(newsFeedJpaController.findNewsFeedById(1)).isEqualToComparingFieldByField(modifiedNewsFeed);      
     }
     
     @Test
     public void successfulDeleteOfNewsFeed() throws Exception{
-        Ad originalAd = new Ad(1,"ad3.jpg");
+        NewsFeed originalNewsFeed = new NewsFeed(1,"www.deletemenews.com");
         //insert a new object into db
-        adJpaController.create(originalAd);
+        newsFeedJpaController.create(originalNewsFeed);
       
         //destroy the record in the table based on its id
-        adJpaController.destroy(1);
+        newsFeedJpaController.destroy(1);
         
         //should be nothing in table
-        assertThat(adJpaController.getAdCount()).isEqualTo(0);      
+        assertThat(newsFeedJpaController.getNewsFeedCount()).isEqualTo(0);      
     }
     
     @Test
     public void successfulFindAllNewsFeed() throws Exception{
         //insert several objects into db
-        adJpaController.create(new Ad(null,"ad4.jpg"));
-        adJpaController.create(new Ad(null,"ad5.jpg"));
-        adJpaController.create(new Ad(null,"ad6.jpg"));
+        newsFeedJpaController.create(new NewsFeed(1,"www.news1.com"));
+        newsFeedJpaController.create(new NewsFeed(2,"www.news2.com"));
+        newsFeedJpaController.create(new NewsFeed(3,"www.news3.com"));
         
-        //get a list of all the ads in the db
-        List<Ad> allAds = adJpaController.findAllAds();
+        //get a list of all the news feeds in the db
+        List<NewsFeed> allFeeds = newsFeedJpaController.findAllNewsFeeds();
         
         //should be 3 records in the db
-        assertThat(allAds.size()).isEqualTo(3);      
+        assertThat(allFeeds.size()).isEqualTo(3); 
     }
     
     @Test
     public void successfulNewsFeedEntities() throws Exception{
         //insert several objects into db
-        adJpaController.create(new Ad(null,"ad7.jpg"));
-        adJpaController.create(new Ad(null,"ad8.jpg"));
-        adJpaController.create(new Ad(null,"ad9.jpg"));
-        adJpaController.create(new Ad(null,"ad10.jpg"));
+        newsFeedJpaController.create(new NewsFeed(1,"www.countmenews1.com"));
+        newsFeedJpaController.create(new NewsFeed(2,"www.countmenews2.com"));
+        newsFeedJpaController.create(new NewsFeed(3,"www.countmenews3.com"));
+        newsFeedJpaController.create(new NewsFeed(4,"www.countmenews4.com"));
         
         //get a list of two objects in the db starting at number 2
-        List<Ad> someAds = adJpaController.findAdEntities(2, 2);
-        
+        List<NewsFeed> someFeeds = newsFeedJpaController.findNewsFeedPagination(2, 2);
+      
         //should retrieve 2 records
-        assertThat(someAds.size()).isEqualTo(2);      
+        assertThat(someFeeds.size()).isEqualTo(2);      
     }
     @Test
     public void newsFieldEntitiesByFieldEquality() throws Exception{
         //insert several objects into db
-        adJpaController.create(new Ad(null,"ad7.jpg"));
-        adJpaController.create(new Ad(null,"ad8.jpg"));
-        Ad TargetAd = new Ad(null,"ad9.jpg");
-        adJpaController.create(TargetAd);
-        adJpaController.create(new Ad(null,"ad10.jpg"));
+        newsFeedJpaController.create(new NewsFeed(1,"www.newsfield1.com"));
+        newsFeedJpaController.create(new NewsFeed(2,"www.newsfield2.com"));
+        
+        NewsFeed targetNewsFeed = new NewsFeed(3,"www.newsfield3.com");
+        newsFeedJpaController.create(targetNewsFeed);
+        newsFeedJpaController.create(new NewsFeed(4,"www.newsfield4.com"));
         
         //get a list of two objects in the db starting at number 2
-        List<Ad> someAds = adJpaController.findAdEntities(2, 2);
+        List<NewsFeed> someFeeds = newsFeedJpaController.findNewsFeedPagination(2, 1);
+        System.out.println("!!!!!!!!!!!! in the db there are " + newsFeedJpaController.getNewsFeedCount());
+        System.out.println("!!!!!!!!!!!! some feeds" + someFeeds.get(0).getNewsFeedId());
+        System.out.println("!!!!!!!!!!!! some feeds" + someFeeds.get(1).getNewsFeedId());
         
         //check that the second thing retrieved is the right file name and id
-        assertThat(someAds.get(1)).isEqualToComparingFieldByField(TargetAd);
+        assertThat(someFeeds.get(1)).isEqualToComparingFieldByField(targetNewsFeed);
 
     }
     
     @Test
     public void successfulFindNewsFeedByID() throws Exception{
         //insert new objects into db
-        adJpaController.create(new Ad(null,"ad11.jpg"));
-        Ad expectedAd = new Ad(null,"ad12.jpg");
-        adJpaController.create(expectedAd);
+        newsFeedJpaController.create(new NewsFeed(1,"www.newsFeedId1.com"));
+        NewsFeed expectedNewsFeed = new NewsFeed(2,"www.newsFeedId2.com");
+        newsFeedJpaController.create(expectedNewsFeed);
         
         
         //find by id
-        Ad actualAd = adJpaController.findAdById(2);
+        NewsFeed actualNewsFeed = newsFeedJpaController.findNewsFeedById(2);
         
         //should find second record with that filename and id
-        assertThat(actualAd).isEqualToComparingFieldByField(expectedAd);
+        assertThat(actualNewsFeed).isEqualToComparingFieldByField(expectedNewsFeed);
         
     }
     
     @Test
     public void successfulFindNewsFeedByLink() throws Exception{
         //insert new objects into db
-        adJpaController.create(new Ad(null,"ad13.jpg"));
+          newsFeedJpaController.create(new NewsFeed(1,"www.NewsFeedLink.com"));
         
-        //find by filename
-        Ad foundBean = adJpaController.findAdByFilename("ad13.jpg");
-        
+        //find by news feed link
+       NewsFeed foundNewsFeed = newsFeedJpaController.findNewsFeedByLink("www.NewsFeedLink.com");
+               
         //should find a record with id of 1
-        assertThat(foundBean.getAdId()).isEqualTo(1);      
+        assertThat(foundNewsFeed.getNewsFeedId()).isEqualTo(1);      
     }
     
     @Test
     public void successfulNewsFeedCount() throws Exception{
         //insert new objects into db
-        adJpaController.create(new Ad(null,"ad14.jpg"));
-        adJpaController.create(new Ad(null,"ad15.jpg"));
-        adJpaController.create(new Ad(null,"ad16.jpg"));
-        
-        
+        newsFeedJpaController.create(new NewsFeed(1,"www.countmenews1.com"));
+         newsFeedJpaController.create(new NewsFeed(2,"www.countmenews2.com"));
+        newsFeedJpaController.create(new NewsFeed(3,"www.deletemenews.com"));
+
         //destroy the record in the table based on its id
-        adJpaController.destroy(3);
-        
-        System.out.println("FOUND...." + adJpaController.getAdCount());
+        newsFeedJpaController.destroy(3);
         
         //should find 2 records after 3 inserted 1 deleted
-        assertThat(adJpaController.getAdCount()).isEqualTo(2);     
+        assertThat(newsFeedJpaController.getNewsFeedCount()).isEqualTo(2);     
     }
     
     //-----------------------------------------------------END OF TEST METHODS----------------------------------
