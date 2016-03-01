@@ -130,6 +130,8 @@ public class SurveyJpaControllerTest {
         List<Survey> someSurveys = surveyJpaController.findSurveyEntities(4,2);
         
         List<Integer> expectedListOfId = new ArrayList<>();
+        expectedListOfId.add(3); expectedListOfId.add(4);
+        expectedListOfId.add(5); expectedListOfId.add(6);
         List<Integer> actualListOfId = new ArrayList<>();
         
         for( Survey survey : someSurveys){
