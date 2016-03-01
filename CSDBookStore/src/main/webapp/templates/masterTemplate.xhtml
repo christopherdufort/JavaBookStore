@@ -12,8 +12,10 @@
         <title><ui:insert name="title">Facelets Template</ui:insert></title>
         <!-- Global CSS -->
         <link rel="stylesheet" href="http://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css"/>
-        <link rel="stylesheet" href="css/customized.css"/>
-        <link rel="stylesheet" href="foundation-icons/foundation-icons.css"/>
+        <link rel="stylesheet" href="resources/css/customized.css"/>
+<!--        <h:outputStylesheet name="resources/css/customized.css"/>-->
+        <link rel="stylesheet" href="resources/foundation-icons/foundation-icons.css"/>
+<!--        <h:outputStylesheet name="resources/foundation-icons/foundation-icons.css"/>-->
         <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Comfortaa"/>
     </h:head>
 
@@ -55,7 +57,7 @@
             </div>
         </div>
         <!-- START OF FOOTER -->
-        <footer>
+        <footer class="top-bar" >
             <div class="row">
                 <div class="medium-6 columns">
                     <ul class="menu">
@@ -66,11 +68,16 @@
                 </div>
                 <div class="medium-6 columns">
                     <ul class="menu float-right">
-                        <li class="menu-text">Copyright</li>
+                        <li class="menu-text">Copyright &copy; 2016</li>
                     </ul>
                 </div>
             </div>
         </footer>
         <!-- END OF FOOTER -->
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script src="http://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.js"></script>
+        <script>
+            $(document).foundation();
+        </script>
     </h:body>
 </html>
