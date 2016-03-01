@@ -125,7 +125,7 @@ public class Book implements Serializable {
         @JoinColumn(name = "genre_id", referencedColumnName = "genre_id")})
     @ManyToMany
     private List<Genre> genreList;
-    @OneToMany(mappedBy = "book_id")
+    @OneToMany(mappedBy = "isbn") //CHANGED TO ISBN 
     private List<Review> reviewList;
 
     public Book() {
