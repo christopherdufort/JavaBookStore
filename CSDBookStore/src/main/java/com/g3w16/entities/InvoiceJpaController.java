@@ -27,13 +27,14 @@ import javax.transaction.UserTransaction;
  */
 @Named
 @RequestScoped
-public class InvoiceJpaController implements Serializable {
+public class InvoiceJpaController implements InvoiceJpaControllerInterface {
 
     @Resource
     private UserTransaction utx;
     @PersistenceContext
     private EntityManager em;
 
+    @Override
     public void create(Invoice invoice) throws RollbackFailureException, Exception {
         if (invoice.getInvoiceDetailList() == null) {
             invoice.setInvoiceDetailList(new ArrayList<InvoiceDetail>());
@@ -67,6 +68,7 @@ public class InvoiceJpaController implements Serializable {
         }
     }
 
+    @Override
     public void edit(Invoice invoice) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
         try {
             utx.begin();
@@ -122,6 +124,7 @@ public class InvoiceJpaController implements Serializable {
         }
     }
 
+    @Override
     public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
         try {
             utx.begin();
@@ -155,10 +158,12 @@ public class InvoiceJpaController implements Serializable {
         }
     }
 
+    @Override
     public List<Invoice> findInvoiceEntities() {
         return findInvoiceEntities(true, -1, -1);
     }
 
+    @Override
     public List<Invoice> findInvoiceEntities(int maxResults, int firstResult) {
         return findInvoiceEntities(false, maxResults, firstResult);
     }
@@ -172,16 +177,19 @@ public class InvoiceJpaController implements Serializable {
         return q.getResultList();
     }
 
+    @Override
     public Invoice findInvoice(Integer id) {
         return em.find(Invoice.class, id);
     }
 
+    @Override
     public List<Invoice> findInvoiceByUserNumber(Integer userNumber) {
         Query q = em.createNamedQuery("Invoice.findByUserNumber", Invoice.class);
         q.setParameter("userNumber", userNumber);
         return q.getResultList();
     }
 
+    @Override
     public int getInvoiceCount() {
         Query q = em.createQuery("select count(o) from Invoice as o");
         return ((Long) q.getSingleResult()).intValue();

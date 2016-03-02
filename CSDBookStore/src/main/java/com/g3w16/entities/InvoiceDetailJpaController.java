@@ -28,7 +28,7 @@ import javax.transaction.UserTransaction;
  */
 @Named
 @SessionScoped
-public class InvoiceDetailJpaController implements Serializable {
+public class InvoiceDetailJpaController implements InvoiceDetailJpaControllerInterface {
 
     @Resource
     private UserTransaction utx;
@@ -36,6 +36,15 @@ public class InvoiceDetailJpaController implements Serializable {
     @PersistenceContext
     private EntityManager em;
 
+    /**
+     * This method allows the entity object to be created for Invoice Detail and it will be related to the
+     * appropriate entity objects : book and invoice. 
+     * 
+     * @param invoiceDetail
+     * @throws RollbackFailureException
+     * @throws Exception 
+     */
+    @Override
     public void create(InvoiceDetail invoiceDetail) throws RollbackFailureException, Exception {
         try {
             utx.begin();
@@ -69,6 +78,7 @@ public class InvoiceDetailJpaController implements Serializable {
         } 
     }
 
+    @Override
     public void edit(InvoiceDetail invoiceDetail) throws NonexistentEntityException, RollbackFailureException, Exception {
         try {
             utx.begin();
@@ -120,6 +130,7 @@ public class InvoiceDetailJpaController implements Serializable {
         }  
     }
 
+    @Override
     public void destroy(Integer id) throws NonexistentEntityException, RollbackFailureException, Exception {
         try {
             utx.begin();
@@ -152,10 +163,12 @@ public class InvoiceDetailJpaController implements Serializable {
         }
     }
 
+    @Override
     public List<InvoiceDetail> findInvoiceDetailEntities() {
         return findInvoiceDetailEntities(true, -1, -1);
     }
 
+    @Override
     public List<InvoiceDetail> findInvoiceDetailEntities(int maxResults, int firstResult) {
         return findInvoiceDetailEntities(false, maxResults, firstResult);
     }
@@ -173,12 +186,14 @@ public class InvoiceDetailJpaController implements Serializable {
         
     }
 
+    @Override
     public InvoiceDetail findInvoiceDetail(Integer id) {
         
             return em.find(InvoiceDetail.class, id);
         
     }
 
+    @Override
     public List<InvoiceDetail> findInvoiceDetailByInvoice(Invoice invoiceId) {
         Query q = em.createNamedQuery("InvoiceDetail.findByInvoiceId", InvoiceDetail.class);
         q.setParameter("invoiceId", invoiceId);
@@ -186,6 +201,7 @@ public class InvoiceDetailJpaController implements Serializable {
 
     }
 
+    @Override
     public int getInvoiceDetailCount() {
         
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();

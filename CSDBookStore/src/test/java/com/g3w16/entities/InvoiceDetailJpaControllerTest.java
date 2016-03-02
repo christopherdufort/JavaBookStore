@@ -192,6 +192,17 @@ public class InvoiceDetailJpaControllerTest {
         assertThat(result.size()).isEqualTo(2);
     }
     
+    @Test 
+    public void testFindInvoiceFails1() {
+    
+        
+        System.out.println("failing find invoice process");
+        
+        List <InvoiceDetail> result = invoiceDetailJpaController.findInvoiceDetailEntities();
+        // all invoice details are present but since they are being deleted
+        // this cannot be found in the database 
+        
+    }
     
     
 
