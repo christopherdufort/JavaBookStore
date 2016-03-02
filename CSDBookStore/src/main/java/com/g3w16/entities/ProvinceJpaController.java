@@ -18,7 +18,8 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 
 /**
- *
+ * Controller for the Province entity.
+ * 
  * @author Giuseppe Campanelli
  */
 public class ProvinceJpaController implements Serializable {
@@ -28,6 +29,14 @@ public class ProvinceJpaController implements Serializable {
     @PersistenceContext
     private EntityManager em;
 
+    /**
+     * Creates a province in the database.
+     * 
+     * @param province Province to create
+     * 
+     * @throws RollbackFailureException
+     * @throws Exception 
+     */
     public void create(Province province) throws RollbackFailureException, Exception {
         if (province.getRegisteredUserList() == null) {
             province.setRegisteredUserList(new ArrayList<RegisteredUser>());
@@ -61,6 +70,15 @@ public class ProvinceJpaController implements Serializable {
         }
     }
 
+    /**
+     * Edits a province in the database.
+     * 
+     * @param province Updated province
+     * 
+     * @throws NonexistentEntityException
+     * @throws RollbackFailureException
+     * @throws Exception 
+     */
     public void edit(Province province) throws NonexistentEntityException, RollbackFailureException, Exception {
         try {
             utx.begin();
@@ -110,6 +128,15 @@ public class ProvinceJpaController implements Serializable {
         }
     }
 
+    /**
+     * Removes a province from the database.
+     * 
+     * @param id Id of the province to remove.
+     * 
+     * @throws NonexistentEntityException
+     * @throws RollbackFailureException
+     * @throws Exception 
+     */
     public void destroy(Integer id) throws NonexistentEntityException, RollbackFailureException, Exception {
         try {
             utx.begin();
@@ -137,21 +164,45 @@ public class ProvinceJpaController implements Serializable {
         }
     }
     
+    /**
+     * Gets all provinces.
+     * 
+     * @return all provinces
+     */
     public List<Province> findAll() {
         Query q = em.createNamedQuery("Province.findAll", Province.class);
         return q.getResultList();
     }
     
+    /**
+     * Gets the province by id.
+     * 
+     * @param id Id of the province
+     * 
+     * @return province with that id
+     */
     public Province findProvinceById(int id) {
         return em.find(Province.class, id);
     }
     
+    /**
+     * Gets the province by name.
+     * 
+     * @param name Name of the province.
+     * 
+     * @return province with that name
+     */
     public Province findProvinceByName(String name) {
         Query q = em.createNamedQuery("Province.findByProvince", Province.class);
         q.setParameter("province", name);
         return (Province) q.getSingleResult();
     }
 
+    /**
+     * Gets the amount of provinces in the database.
+     * 
+     * @return amount of provinces
+     */
     public int getProvinceCount() {
         Query q = em.createQuery("select count(o) from Province as o");
         return ((Long) q.getSingleResult()).intValue();

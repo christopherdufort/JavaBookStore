@@ -33,7 +33,8 @@ import org.junit.Before;
 import org.junit.runner.RunWith;
 
 /**
- *
+ * Tests for the Title Entity.
+ * 
  * @author Giuseppe Campanelli
  */
 @RunWith(Arquillian.class)

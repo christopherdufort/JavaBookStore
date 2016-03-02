@@ -20,7 +20,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- *
+ * Province Entity for a selected country.
+ * 
  * @author Giuseppe Campanelli
  */
 @Entity
@@ -49,62 +50,136 @@ public class Province implements Serializable {
     @OneToMany(mappedBy = "provinceId")
     private List<RegisteredUser> registeredUserList;
 
+    /**
+     * Default constructor
+     */
     public Province() {
     }
 
+    /**
+     * One parameter constructor.
+     * 
+     * @param provinceId Id of the province
+     */
     public Province(Integer provinceId) {
         this.provinceId = provinceId;
     }
 
+    /**
+     * Two parameter constructor.
+     * 
+     * @param provinceId Id of the province
+     * @param province Name of the province
+     */
     public Province(Integer provinceId, String province) {
         this.provinceId = provinceId;
         this.province = province;
     }
 
+    /**
+     * Gets the province id.
+     * 
+     * @return province id
+     */
     public Integer getProvinceId() {
         return provinceId;
     }
 
+    /**
+     * Sets the province id.
+     * 
+     * @param provinceId Id of the province
+     */
     public void setProvinceId(Integer provinceId) {
         this.provinceId = provinceId;
     }
 
+    /**
+     * Gets the province name.
+     * 
+     * @return province name
+     */
     public String getProvince() {
         return province;
     }
 
+    /**
+     * Sets the name of the province.
+     * 
+     * @param province Name of the province.
+     */
     public void setProvince(String province) {
         this.province = province;
     }
 
+    /**
+     * Gets the pst of the province.
+     * 
+     * @return pst
+     */
     public BigDecimal getPst() {
         return pst;
     }
 
+    /**
+     * Sets the pst of the province.
+     * 
+     * @param pst pst tax
+     */
     public void setPst(BigDecimal pst) {
         this.pst = pst;
     }
 
+    /**
+     * Gets the gst of the province.
+     * 
+     * @return gst
+     */
     public BigDecimal getGst() {
         return gst;
     }
 
+    /**
+     * Sets the gst of the province.
+     * 
+     * @param gst gst tax
+     */
     public void setGst(BigDecimal gst) {
         this.gst = gst;
     }
 
+    /**
+     * Gets the hst of the province.
+     * 
+     * @return hst
+     */
     public BigDecimal getHst() {
         return hst;
     }
 
+    /**
+     * Sets the hst of the province.
+     * 
+     * @param hst hst tax
+     */
     public void setHst(BigDecimal hst) {
         this.hst = hst;
     }
 
+    /**
+     * Gets a list of all users associated with that province.
+     * 
+     * @return list of users
+     */
     public List<RegisteredUser> getRegisteredUserList() {
         return registeredUserList;
     }
 
+    /**
+     * Sets the list of all users associate with that province.
+     * 
+     * @param registeredUserList List of users
+     */
     public void setRegisteredUserList(List<RegisteredUser> registeredUserList) {
         this.registeredUserList = registeredUserList;
     }

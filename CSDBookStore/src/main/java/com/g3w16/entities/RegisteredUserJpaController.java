@@ -18,7 +18,8 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 
 /**
- *
+ * Controller for the RegisteredUser entity.
+ * 
  * @author Giuseppe Campanelli
  */
 public class RegisteredUserJpaController implements Serializable {
@@ -28,6 +29,14 @@ public class RegisteredUserJpaController implements Serializable {
     @PersistenceContext
     private EntityManager em;
 
+    /**
+     * Creates a user in the database.
+     * 
+     * @param registeredUser Registered user to add
+     * 
+     * @throws RollbackFailureException
+     * @throws Exception 
+     */
     public void create(RegisteredUser registeredUser) throws RollbackFailureException, Exception {
         if (registeredUser.getReviewList() == null) {
             registeredUser.setReviewList(new ArrayList<Review>());
@@ -79,6 +88,15 @@ public class RegisteredUserJpaController implements Serializable {
         }
     }
 
+    /**
+     * Edits a user in the database.
+     * 
+     * @param registeredUser Updated user
+     * 
+     * @throws NonexistentEntityException
+     * @throws RollbackFailureException
+     * @throws Exception 
+     */
     public void edit(RegisteredUser registeredUser) throws NonexistentEntityException, RollbackFailureException, Exception {
         try {
             utx.begin();
@@ -156,6 +174,15 @@ public class RegisteredUserJpaController implements Serializable {
         }
     }
 
+    /**
+     * Removes a user from the database.
+     * 
+     * @param id Id of the user to remove
+     * 
+     * @throws NonexistentEntityException
+     * @throws RollbackFailureException
+     * @throws Exception 
+     */
     public void destroy(Integer id) throws NonexistentEntityException, RollbackFailureException, Exception {
         try {
             utx.begin();
@@ -193,10 +220,23 @@ public class RegisteredUserJpaController implements Serializable {
         }
     }
 
+    /**
+     * Gets all users.
+     * 
+     * @return all users
+     */
     public List<RegisteredUser> findAll() {
         return findRegisteredUserEntities(true, -1, -1);
     }
 
+    /**
+     * Gets all user within a specified range.
+     * 
+     * @param maxResults Max users to get
+     * @param firstResult User to start getting from
+     * 
+     * @return selected range of users
+     */
     public List<RegisteredUser> findUsersWithRange(int maxResults, int firstResult) {
         return findRegisteredUserEntities(false, maxResults, firstResult);
     }
@@ -210,16 +250,35 @@ public class RegisteredUserJpaController implements Serializable {
         return q.getResultList();
     }
 
+    /**
+     * Gets a user by id.
+     * 
+     * @param id Id of the user
+     * 
+     * @return user with that id
+     */
     public RegisteredUser findUserById(Integer id) {
         return em.find(RegisteredUser.class, id);
     }
     
+    /**
+     * Gets a user by email address.
+     * 
+     * @param email Email address of the user
+     * 
+     * @return user with that email address
+     */
     public RegisteredUser findUserByEmail(String email) {
         Query q = em.createNamedQuery("RegisteredUser.findByEmailAddress", RegisteredUser.class);
         q.setParameter("emailAddress", email);
         return (RegisteredUser) q.getSingleResult();
     }
 
+    /**
+     * Gets the total amount of users.
+     * 
+     * @return total amount of users
+     */
     public int getUsersCount() {
         Query q = em.createQuery("select count(o) from RegisteredUser as o");
         return ((Long) q.getSingleResult()).intValue();

@@ -34,7 +34,8 @@ import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
 
 /**
- *
+ * Tests for the Province entity.
+ * 
  * @author Giuseppe Campanelli
  */
 @RunWith(Arquillian.class)

@@ -18,7 +18,8 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 
 /**
- *
+ * Controller of the Title entity.
+ * 
  * @author Giuseppe Campanelli
  */
 public class TitleJpaController implements Serializable {
@@ -28,6 +29,14 @@ public class TitleJpaController implements Serializable {
     @PersistenceContext
     private EntityManager em;
 
+    /**
+     * Creates a title in the database.
+     * 
+     * @param title Title to be added to the database
+     * 
+     * @throws RollbackFailureException
+     * @throws Exception 
+     */
     public void create(Title title) throws RollbackFailureException, Exception {
         if (title.getRegisteredUserList() == null) {
             title.setRegisteredUserList(new ArrayList<RegisteredUser>());
@@ -61,6 +70,15 @@ public class TitleJpaController implements Serializable {
         }
     }
 
+    /**
+     * Edits an existing Title in the database.
+     * 
+     * @param title Updated title
+     * 
+     * @throws NonexistentEntityException
+     * @throws RollbackFailureException
+     * @throws Exception 
+     */
     public void edit(Title title) throws NonexistentEntityException, RollbackFailureException, Exception {
         try {
             utx.begin();
@@ -110,6 +128,15 @@ public class TitleJpaController implements Serializable {
         }
     }
 
+    /**
+     * Removes a Title from the database
+     * 
+     * @param id Id of the title to be removed
+     * 
+     * @throws NonexistentEntityException
+     * @throws RollbackFailureException
+     * @throws Exception 
+     */
     public void destroy(Integer id) throws NonexistentEntityException, RollbackFailureException, Exception {
         try {
             utx.begin();
@@ -137,21 +164,45 @@ public class TitleJpaController implements Serializable {
         }
     }
     
+    /**
+     * Gets all titles.
+     * 
+     * @return all titles
+     */
     public List<Title> findAll() {
         Query q = em.createNamedQuery("Title.findAll", Title.class);
         return q.getResultList();
     }
     
+    /**
+     * Gets a title by id.
+     * 
+     * @param id Id of title to get
+     * 
+     * @return title with specific id
+     */
     public Title findTitleById(int id) {
         return em.find(Title.class, id);
     }
     
+    /**
+     * Gets a title by its name.
+     * 
+     * @param title Name of the title
+     * 
+     * @return title with specific name
+     */
     public Title findTitleByName(String title) {
         Query q = em.createNamedQuery("Title.findByTitle", Title.class);
         q.setParameter("title", title);
         return (Title) q.getSingleResult();
     }
 
+    /**
+     * Gets the amount of titles in the database.
+     * 
+     * @return total amount of titles
+     */
     public int getTitleCount() {
         Query q = em.createQuery("select count(o) from Title as o");
         return ((Long) q.getSingleResult()).intValue();

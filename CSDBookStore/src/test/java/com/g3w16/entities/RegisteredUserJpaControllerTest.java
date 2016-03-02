@@ -32,8 +32,9 @@ import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
 
 /**
- *
- * @author Joey
+ * Tests for the user entity.
+ * 
+ * @author Giuseppe Campanelli
  */
 @RunWith(Arquillian.class)
 public class RegisteredUserJpaControllerTest {

@@ -14,7 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- *
+ * Title Entity of a User.
+ * 
  * @author Giuseppe Campanelli
  */
 @Entity
@@ -23,7 +24,7 @@ import javax.persistence.Table;
     @NamedQuery(name = "Title.findAll", query = "SELECT object(t) FROM Title t"),
     @NamedQuery(name = "Title.findByTitle", query = "SELECT object(t) FROM Title t WHERE t.title = :title"),})
 public class Title implements Serializable {
-
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,38 +37,82 @@ public class Title implements Serializable {
     @OneToMany(mappedBy = "titleId")
     private List<RegisteredUser> registeredUserList;
 
+    /**
+     * Default constructor.
+     */
     public Title() {
     }
 
+    /**
+     * One parameter constructor.
+     * 
+     * @param titleId Id of the title
+     */
     public Title(Integer titleId) {
         this.titleId = titleId;
     }
 
+    /**
+     * Two parameter constructor.
+     * 
+     * @param titleId Id of the title
+     * @param title Title of the title entity
+     */
     public Title(Integer titleId, String title) {
         this.titleId = titleId;
         this.title = title;
     }
 
+    /**
+     * Gets the id of the title.
+     * 
+     * @return title id
+     */
     public Integer getTitleId() {
         return titleId;
     }
 
+    /**
+     * Sets the id of a title entity.
+     * 
+     * @param titleId Id of a title
+     */
     public void setTitleId(Integer titleId) {
         this.titleId = titleId;
     }
 
+    /**
+     * Gets the title of the entity.
+     * 
+     * @return title of the entity
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     * Sets the title of the entity.
+     * 
+     * @param title Title of the entity
+     */
     public void setTitle(String title) {
         this.title = title;
     }
 
+    /**
+     * Gets a list of all users associated with a specific title.
+     * 
+     * @return list of users
+     */
     public List<RegisteredUser> getRegisteredUserList() {
         return registeredUserList;
     }
 
+    /**
+     * Sets the list of users associated with a specific title.
+     * 
+     * @param registeredUserList List of users
+     */
     public void setRegisteredUserList(List<RegisteredUser> registeredUserList) {
         this.registeredUserList = registeredUserList;
     }
