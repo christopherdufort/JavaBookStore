@@ -13,7 +13,6 @@ import javax.annotation.Resource;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
@@ -99,7 +98,13 @@ public class NewsFeedJpaController implements Serializable {
     public List<NewsFeed> findAllNewsFeeds() {
         return findNewsFeedEntities(true, -1, -1);
     }
-
+    
+    /**
+     * zero based counting in db for first result, max results includes first found?
+     * @param maxResults
+     * @param firstResult
+     * @return 
+     */
     public List<NewsFeed> findNewsFeedPagination(int maxResults, int firstResult) {
         return findNewsFeedEntities(false, maxResults, firstResult);
     }

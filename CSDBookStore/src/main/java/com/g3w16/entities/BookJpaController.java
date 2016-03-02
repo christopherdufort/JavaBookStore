@@ -478,7 +478,54 @@ public class BookJpaController implements Serializable {
         q.setParameter("authorId", author.getAuthorId());
         return q.getResultList();
     }
+    
+    public Book findBookEntitiesByInvoiceDetail(InvoiceDetail invoiceDetail){
+        return findBookEntitiesByInvoiceDetail(invoiceDetail, true, false, -1, -1);
+    }
+    
+    public Book findBookEntitiesByInvoiceDetail(InvoiceDetail invoiceDetail, int maxResults, int firstResult){
+        return findBookEntitiesByInvoiceDetail(invoiceDetail, false, false, maxResults, firstResult);
+    }
+    
+    private Book findBookEntitiesByInvoiceDetail(InvoiceDetail invoiceDetail, boolean all, boolean asClient, int maxResuts, int firstResult){
+        Query q;
+        if (asClient){ // I keep it because .. we never know it may be useful one day
+            q = em.createNamedQuery("Book.findByInvoiceDetail");
+        }else{
+            q = em.createNamedQuery("Book.findByInvoiceDetail");
+        }
+        if(!all){
+            q.setMaxResults(maxResuts);
+            q.setFirstResult(firstResult);
+        }
+        q.setParameter("invoiceDetailId", invoiceDetail.getInvoiceDetailId());
+        // Suddenly .. a cast is required ... ?
+        return (Book) q.getSingleResult();
+    }
 
+    public List<Book> findBookEntitiesByInvoice(Invoice invoice){
+        return findBookEntitiesByInvoice(invoice, true, false, -1, -1);
+    }
+    
+    public List<Book> findBookEntitiesByInvoice(Invoice invoice, int maxResults, int firstResult){
+        return findBookEntitiesByInvoice(invoice, false, false, maxResults, firstResult);
+    }
+    
+    private List<Book> findBookEntitiesByInvoice(Invoice invoice, boolean all, boolean asClient, int maxResults, int firstResult){
+        Query q;
+        if (asClient){ // same then before, i don't know the future so I kept it here
+            q = em.createNamedQuery("Book.findByInvoice");
+        }else{
+            q = em.createNamedQuery("Book.findByInvoice");
+        }
+        if (!all){
+            q.setMaxResults(maxResults);
+            q.setFirstResult(firstResult);
+        }
+        q.setParameter("invoiceId", invoice.getInvoiceId());
+        return q.getResultList();
+    }
+    
     public Book findBookEntitiesById(Integer id) {
         return em.find(Book.class, id);
     }

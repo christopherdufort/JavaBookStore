@@ -54,6 +54,10 @@ public class BookTest {
     private FormatJpaController formatController;
     @Inject
     private GenreJpaController genreController;
+    @Inject
+    private InvoiceJpaController invoiceController;
+    @Inject
+    private InvoiceDetailJpaController invoiceDetailController;
     
     /**
      * Test of creation method for entity : Book
@@ -590,6 +594,31 @@ public class BookTest {
         System.out.println("> Book > Fetching ( count )");
         assertEquals(bookController.getBookCount(), 103);
     }
+    
+    /**
+     * Test of fetching method for entity : Book
+     * @author Jonas Faure
+     * @throws java.lang.Exception
+     */
+    @Test
+    public void testFindBookEntitiesByInvoice() throws Exception{
+        System.out.println("> Book > Fetching ( some, by invoice )");
+        
+    }
+    
+    /**
+     * Test of fetching method for entity : Book
+     * @author Jonas Faure
+     * @throws java.lang.Exception
+     */
+    @Test
+    public void testFindBookEntitiesByInvoiceDetail() throws Exception{
+        System.out.println("> Book > Fetching ( one, by invoiceDetail )");
+        InvoiceDetail invoiceDetail = invoiceDetailController.findInvoiceDetail(1);
+        assertEquals(bookController.findBookEntitiesByInvoiceDetail(invoiceDetail).getIsbn(), "978-0894864025");
+    }
+    
+    
     
     
     //
