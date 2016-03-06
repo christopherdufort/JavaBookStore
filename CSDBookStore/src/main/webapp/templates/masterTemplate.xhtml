@@ -6,8 +6,8 @@
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <h:outputStylesheet name="./css/default.css"/>
-        <h:outputStylesheet name="./css/cssLayout.css"/>
+<!--        <h:outputStylesheet name="./css/default.css"/>
+        <h:outputStylesheet name="./css/cssLayout.css"/>-->
         <!-- The title of each page is defined on each facelet template client-->
         <title><ui:insert name="title">Facelets Template</ui:insert></title>
         <!-- Global CSS -->
@@ -25,7 +25,6 @@
             <button class="menu-icon" type="button" data-toggle=""></button>
             <div class="title-bar-title">Menu</div>
         </div>
-
         <div class="top-bar" id="main-menu">
             <div class="top-bar-left">
                 <ul class="dropdown menu" data-dropdown-menu="">
@@ -37,25 +36,22 @@
                     <li><input type="search" placeholder="Search"/></li>
                     <li><button type="button" class="button">Search</button></li>
                     <li><a class ="fi-shopping-cart" href="login.xhtml"> Cart</a></li>
-                    <li><a href="login.xhtml">Login</a></li>
-                    <li><a href="signin.xhtml">Sign up</a></li>
+                    <li><a href="faces/login.xhtml">Login</a></li>
+                    <li><a href="faces/signin.xhtml">Sign up</a></li>
+                    <li><a href="">FR</a></li>
                 </ul>
             </div>
         </div>
         <!-- END TOP NAV BAR -->
+        
+        <!-- CENTER PUT EACH PAGE CONTENT HERE -->
         <div>
-            <div id="left">
-                <ui:insert name="left">Left</ui:insert>
-            </div>
-            <div>
-                <div id="right">
-                    <ui:insert name="right">Right</ui:insert>
-                </div>
-                <div id="content" class="right_content">
-                    <ui:insert name="content">Content</ui:insert>
-                </div>
+            <div id="content" class="right_content">
+                <ui:insert name="content">Content</ui:insert>
             </div>
         </div>
+        <!-- END OF CENTER CONTENT  -->
+        
         <!-- START OF FOOTER -->
         <footer class="top-bar" >
             <div class="row">
@@ -68,7 +64,7 @@
                 </div>
                 <div class="medium-6 columns">
                     <ul class="menu float-right">
-                        <li class="menu-text">Copyright &copy; 2016</li>
+                        <li class="menu-text">Copyright &copy; 2016 g3w16 - All Rights Reserved. </li>
                     </ul>
                 </div>
             </div>
