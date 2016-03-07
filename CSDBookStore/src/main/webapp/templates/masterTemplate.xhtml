@@ -6,54 +6,58 @@
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<!--        <h:outputStylesheet name="./css/default.css"/>
-        <h:outputStylesheet name="./css/cssLayout.css"/>-->
+        <!--        <h:outputStylesheet name="./css/default.css"/>
+                <h:outputStylesheet name="./css/cssLayout.css"/>-->
         <!-- The title of each page is defined on each facelet template client-->
         <title><ui:insert name="title">Facelets Template</ui:insert></title>
         <!-- Global CSS -->
         <link rel="stylesheet" href="http://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css"/>
         <link rel="stylesheet" href="resources/css/customized.css"/>
-<!--        <h:outputStylesheet name="resources/css/customized.css"/>-->
+        <!--        <h:outputStylesheet name="resources/css/customized.css"/>-->
         <link rel="stylesheet" href="resources/foundation-icons/foundation-icons.css"/>
-<!--        <h:outputStylesheet name="resources/foundation-icons/foundation-icons.css"/>-->
+        <!--        <h:outputStylesheet name="resources/foundation-icons/foundation-icons.css"/>-->
         <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Comfortaa"/>
     </h:head>
 
     <h:body>
-        <!-- TOP NAV BAR -->
-        <div class="title-bar" data-responsive-toggle="main-menu" data-hide-for="medium">
-            <button class="menu-icon" type="button" data-toggle=""></button>
-            <div class="title-bar-title">Menu</div>
-        </div>
-        <div class="top-bar" id="main-menu">
-            <div class="top-bar-left">
-                <ul class="dropdown menu" data-dropdown-menu="">
-                    <li><a class="menu-text main-title" href="faces/homePage.xhtml"> bibliotech</a></li>
-                </ul>
+        <!-- Wrapper used to keep content above footer push -->
+        <div class="wrapper">
+            <!-- TOP HEADER AND NAV BAR -->
+            <div class="title-bar" data-responsive-toggle="main-menu" data-hide-for="medium">
+                <button class="menu-icon" type="button" data-toggle=""></button>
+                <div class="title-bar-title">Menu</div>
             </div>
-            <div class="top-bar-right">
-                <ul class="menu" data-responsive-menu="drilldown medium-dropdown">
-                    <li><input type="search" placeholder="Search"/></li>
-                    <li><button type="button" class="button">Search</button></li>
-                    <li><a class ="fi-shopping-cart" href="login.xhtml"> Cart</a></li>
-                    <li><a href="faces/login.xhtml">Login</a></li>
-                    <li><a href="faces/signin.xhtml">Sign up</a></li>
-                    <li><a href="">FR</a></li>
-                </ul>
+            <div class="top-bar" id="main-menu">
+                <div class="top-bar-left">
+                    <ul class="dropdown menu" data-dropdown-menu="">
+                        <li><a class="menu-text main-title" href="home.xhtml"> bibliotech</a></li>
+                    </ul>
+                </div>
+                <div class="top-bar-right">
+                    <ul class="menu" data-responsive-menu="drilldown medium-dropdown">
+                        <li><input type="search" placeholder="Search"/></li>
+                        <li><button type="button" class="button">Search</button></li>
+                        <li><a class ="fi-shopping-cart" href="faces/login.xhtml"> Cart</a></li>
+                        <li><a href="faces/login.xhtml">Login</a></li>
+                        <li><a href="faces/signin.xhtml">Sign up</a></li>
+                        <li><a href="">FR</a></li>
+                    </ul>
+                </div>
             </div>
-        </div>
-        <!-- END TOP NAV BAR -->
-        
+            <!-- END TOP HEADER AND NAV BAR -->
+
         <!-- CENTER PUT EACH PAGE CONTENT HERE -->
-        <div>
+            <!--Each unique page content goes inside this div -->
             <div id="content" class="right_content">
                 <ui:insert name="content">Content</ui:insert>
             </div>
+            <!-- This empty div is used to push the footer to the bottom of each page -->
+            <div class="push"></div>
         </div>
         <!-- END OF CENTER CONTENT  -->
-        
+
         <!-- START OF FOOTER -->
-        <footer class="top-bar" >
+        <footer class="top-bar footer" >
             <div class="row">
                 <div class="medium-6 columns">
                     <ul class="menu">
