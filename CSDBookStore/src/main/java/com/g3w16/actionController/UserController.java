@@ -10,12 +10,20 @@ import com.g3w16.beans.AuthBean;
 import com.g3w16.beans.SigninBean;
 import com.g3w16.entities.RegisteredUser;
 import com.g3w16.entities.RegisteredUserJpaController;
+import com.g3w16.entities.viewController.UserAuthView;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
+import javax.persistence.NoResultException;
 
 /**
  *
  * @author jesuisnuageux
  */
+@Named
+@RequestScoped
 public class UserController {
     
     @Inject
@@ -30,8 +38,14 @@ public class UserController {
     }
     
     public RegisteredUser authenticate(AuthBean authBean) throws InvalidCredentialsException{
-        RegisteredUser registeredUser = registeredUserJpaController.findUserByEmail(authBean.getEmail());
-        if (registeredUser.getPassword().equals(authBean.getPassword())){
+        RegisteredUser registeredUser;
+        try{
+            registeredUser = registeredUserJpaController.findUserByEmail(authBean.getEmail());
+        }catch(NoResultException ex){
+            throw new InvalidCredentialsException();
+        }
+        Logger.getLogger(UserAuthView.class.getName()).log(Level.INFO, "Real user password : {0}", registeredUser.getPassword());
+        if (!registeredUser.getPassword().equals(authBean.getPassword())){
             throw new InvalidCredentialsException();
         }
         return registeredUser;
