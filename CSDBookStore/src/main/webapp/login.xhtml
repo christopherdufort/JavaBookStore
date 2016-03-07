@@ -1,10 +1,11 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <body>
         <ui:composition template="./templates/masterTemplate.xhtml">
-            
+
             <ui:define name="title">
                 Login
             </ui:define>
@@ -13,9 +14,11 @@
                 <div class="row">
                     <div class="medium-6 medium-centered large-4 large-centered columns">
 
-                        <form>
+                        <h:form id="auth_form">
                             <div class="row column log-in-form">
                                 <h4 class="text-center">Log in with your email account</h4>
+                                <h:message for="auth_form" style="color:red">
+                                </h:message>
                                 <label>Email
                                     <input type="text" placeholder="somebody@example.com"></input>
                                 </label>
@@ -23,13 +26,13 @@
                                     <input type="password" placeholder="Password"></input>
                                 </label>
                                 <input id="show-password" type="checkbox"><label for="show-password">Show password</label></input>
-                                    <p><a type="submit" class="button expanded">Log In</a></p>
-                                    <p class="text-center"><a href="#">Forgot your password?</a></p>   
+                                <p><a type="submit" class="button expanded" href="UserAuthView.authenticate()">Log In</a></p>
+                                <p class="text-center"><a href="resetPassword.xhtml">Forgot your password?</a></p>   
                             </div>
-                        </form>
+                        </h:form>
                     </div>
                 </div>
-                
+
             </ui:define>
 
         </ui:composition>
