@@ -47,7 +47,7 @@ public class UserAuthView {
             FacesContext.getCurrentInstance().addMessage("auth_form", new FacesMessage("Username or password is incorrect"));
             return null;
         }
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("email", authBean.getEmail());
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user_id", authBean.getEmail());
         return "home"; // TODO: Change that, it's ugly to use hardcoded filename to redirect !!
     }
 }

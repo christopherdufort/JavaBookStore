@@ -31,19 +31,19 @@ public class AuthenticationController implements SystemEventListener, Serializab
     
     public void isClient(ComponentSystemEvent event) throws IOException{
         Logger.getLogger(AuthenticationController.class.getName()).log(Level.INFO, "AuthenticationController.isClient invoked !");
-        String email = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().getOrDefault("email", null);
+        String email = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().getOrDefault("user_id", null);
         if ( email!=null && !userController.isClient(email) ){
             FacesContext.getCurrentInstance().getExternalContext().redirect("faces/login.xhtml");
         }
     }
     
     public void logout(ComponentSystemEvent event) throws IOException{
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("email");
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("user_id");
         FacesContext.getCurrentInstance().getExternalContext().redirect("faces/home.xhtml");
     }
     
     public boolean isClient(){
-        String email = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().getOrDefault("email", null);
+        String email = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().getOrDefault("user_id", null);
         if (email == null){
             return false;
         }
