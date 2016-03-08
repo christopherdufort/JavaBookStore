@@ -42,9 +42,7 @@ public class UserAuthView {
             // return home will redirect to the home page if authentication is successful
             //   else, we re-render the page with an h:message thing
         }catch (InvalidCredentialsException ex) {
-            // TODO: place this hardcoded message in the exception.
-            //          It'd look better to me
-            FacesContext.getCurrentInstance().addMessage("auth_form", new FacesMessage("Username or password is incorrect"));
+            FacesContext.getCurrentInstance().addMessage("auth_form", new FacesMessage(ex.toString()));
             return null;
         }
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user_id", authBean.getEmail());
