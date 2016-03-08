@@ -5,11 +5,17 @@
  */
 package com.g3w16.beans;
 
+import java.io.Serializable;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
+
 /**
  *
  * @author jesuisnuageux
  */
-public class SignupBean {
+@Named
+@SessionScoped
+public class SignupBean implements Serializable{
     private String email;
     private String password;
     private String confirm_password;

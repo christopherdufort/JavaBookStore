@@ -24,6 +24,7 @@
                             <div class="row column log-in-form">
                                 <h4 class="text-center">Sign up</h4>
                                 <h:message for="signup_form" style="color:red">
+                                </h:message>
                                 <label>Email
                                     <h:inputText value="#{signupBean.email}"></h:inputText>
                                 </label>
@@ -33,7 +34,7 @@
                                 <label>Confirm Password
                                     <h:inputText value="#{signupBean.confirm_password}"></h:inputText>
                                 </label>
-                                <p><h:commandLink value="Do Signin" class="button expanded" action="#{userSignupView.signin(signinBean)}" ></h:commandLink></p>
+                                <p><h:commandLink value="Do Signin" class="button expanded" action="#{userSignupView.signup()}" ></h:commandLink></p>
                             </div>
                         </h:form>
                     </div>
