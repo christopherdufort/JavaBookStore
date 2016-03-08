@@ -1,12 +1,13 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- Author: Giuseppe Campanelli -->
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <body>
         <ui:composition template="./templates/masterTemplate.xhtml">
             <ui:define name="title">
-                Book Page
+                <h:outputText value="Big Magic: Creative Living Beyond Fear"/>
             </ui:define>
             
             <ui:define name="content">
@@ -14,10 +15,9 @@
                     <nav aria-label="You are here:" role="navigation">
                         <ul class="breadcrumbs">
                             <li><a href="home.xhtml">Home</a></li>
-                            <li><a href="#">Mystery</a></li>
-
+                            <li><a href="#"><h:outputText value="Mystery"/></a></li>
                             <li>
-                                <span class="show-for-sr">Current: </span> Big Magic: Creative Living Beyond Fear
+                                <!--<span class="show-for-sr">Current: </span>--><h:outputText value="Big Magic: Creative Living Beyond Fear"/>
                             </li>
                         </ul>
                     </nav>
@@ -42,35 +42,66 @@
                     </div>
                     <div class="medium-6 large-5 columns">
                         <h3><h:outputText value="Big Magic: Creative Living Beyond Fear"/></h3>
-                        <h5><h:outputText value="Elizabeth Gilbert"/></h5>
+                        <h5><h:outputText value="[32] rateit - stars"/></h5>
+                        <h5><h:outputText value="Elizabeth Gilbert"/></h5> <!--authors concatenated-->
                         <p><h:outputText value="Readers of all ages and walks of life have drawn inspiration and empowerment from Elizabeth Gilbert’s books for years. Now this beloved author digs deep into her own generative process to share her wisdom and unique perspective about creativity. With profound empathy and radiant generosity, she offers potent insights into the mysterious nature of inspiration."/></p>	
                         <h:form id="buyBookNow">
                             <div class="row">
                                 <div class="small-3 columns">
-                                    <label for="middle-label" class="middle">Quantity</label>
+                                    <label for="middle-label" class="middle">List Price:</label>
+                                </div>
+                                <div class="small-9 columns">
+                                    <strike><h:outputText value="$29.99"/></strike>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="small-3 columns">
+                                    <label for="middle-label" class="middle">Price:</label>
+                                </div>
+                                <div class="small-9 columns">
+                                    <h:outputText value="$19.99"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="small-3 columns">
+                                    <label for="middle-label" class="middle">Quantity:</label>
                                 </div>
                                 <div class="small-9 columns">
                                     <h:inputText id="middle-label" value="1"/>
                                 </div>
                             </div>
-                            <a href="#" class="button large expanded">Buy Now</a>
+                            <a href="#" class="button large expanded">Add To Cart <i class="fi-shopping-cart"/></a>
                         </h:form>
-                        <div class="small secondary expanded button-group">
-                            <a class="button">Facebook</a>
-                            <a class="button">Twitter</a>
-                            <a class="button">Yo</a>
-                        </div>
                     </div>
                 </div>
                 <div class="column row">
                     <hr/>
                     <ul class="tabs" data-tabs="" id="example-tabs">
-                        <li class="tabs-title is-active"><a href="#panel1" aria-selected="true">Reviews</a></li>
-                        <li class="tabs-title"><a href="#panel2">Similar Products</a></li>
+                        <li class="tabs-title is-active"><a href="#panel1" aria-selected="true">Product Details</a></li>
+                        <li class="tabs-title"><a href="#panel2">Reviews</a></li>
+                        <li class="tabs-title"><a href="#panel3">Similar Products</a></li>
                     </ul>
                     <div class="tabs-content" data-tabs-content="example-tabs">
                         <div class="tabs-panel is-active" id="panel1">
-                            <h4>Reviews</h4>
+                            <div class="media-object stack-for-small">
+                                <div class="media-object-section">
+                                    <b>ISBN:</b>
+                                    <p><h:outputText value="108564665"/></p>
+                                    <b>Publisher:</b>
+                                    <p><h:outputText value="Baur Inc."/></p>
+                                    <b>Publish Date:</b>
+                                    <p><h:outputText value="20/12/2015"/></p>
+                                    <b>Pages:</b>
+                                    <p><h:outputText value="120"/></p>
+                                    <b>Genre:</b>
+                                    <p><h:outputText value="Mystery"/></p> <!-- list of genres concatenated-->
+                                    <b>Formats:</b>
+                                    <p><h:outputText value="PDF, Kindle"/></p> <!-- list of formats concatenated-->
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="tabs-panel" id="panel2">
                             <div class="media-object stack-for-small">
 
                                 <div class="media-object-section">
@@ -90,49 +121,50 @@
                                     <p><h:outputText value="I'm going to improvise. Listen, there's something you should know about me... about inception. An idea is like a virus, resilient, highly contagious. The smallest seed of an idea can grow. It can grow to define or destroy you"/></p>
                                 </div>
                             </div>
-                            <label>My Review</label>
+                            <hr/>
+                            <h5>My Review:</h5>
                             <h:form id="submitReview">
                                 <h:inputTextarea/>
                                 <button class="button">Submit Review</button>
                             </h:form>
                         </div>
-                        <div class="tabs-panel" id="panel2">
+                        <div class="tabs-panel" id="panel3">
                             <div class="row small-up-2 medium-up-3 large-up-6">
                                 <div class="column">
                                     <h:graphicImage class="thumbnail" value="resources/images/978-1623260453.jpg"/>
-                                    <h5><h:outputText value="Nulla At Nulla Justo, Eget"/></h5>
+                                    <h6><h:outputText value="Nulla At Nulla Justo, Eget"/></h6>
                                     <p><h:outputText value="$400"/></p>
-                                    <a href="faces/book.xhtml" class="button small expanded hollow">Buy</a>
+                                    <a href="faces/book.xhtml" class="button small expanded">View</a>
                                 </div>
                                 <div class="column">
                                     <h:graphicImage class="thumbnail" value="resources/images/978-1594634710.jpg"/>
-                                    <h5><h:outputText value="Nulla At Nulla Justo, Eget"/></h5>
+                                    <h6><h:outputText value="Nulla At Nulla Justo, Eget"/></h6>
                                     <p><h:outputText value="$400"/></p>
-                                    <a href="#" class="button small expanded hollow">Buy</a>
+                                    <a href="#" class="button small expanded">View</a>
                                 </div>
                                 <div class="column">
                                     <h:graphicImage class="thumbnail" value="resources/images/978-0785193760.jpg"/>
-                                    <h5><h:outputText value="Nulla At Nulla Justo, Eget"/></h5>
+                                    <h6><h:outputText value="Nulla At Nulla Justo, Eget"/></h6>
                                     <p><h:outputText value="$400"/></p>
-                                    <a href="#" class="button small expanded hollow">Buy</a>
+                                    <a href="#" class="button small expanded">View</a>
                                 </div>
                                 <div class="column">
                                     <h:graphicImage class="thumbnail" value="resources/images/978-1594634710.jpg"/>
-                                    <h5><h:outputText value="Nulla At Nulla Justo, Eget"/></h5>
+                                    <h6><h:outputText value="Nulla At Nulla Justo, Eget"/></h6>
                                     <p><h:outputText value="$400"/></p>
-                                    <a href="#" class="button small expanded hollow">Buy</a>
+                                    <a href="#" class="button small expanded">View</a>
                                 </div>
                                 <div class="column">
                                     <h:graphicImage class="thumbnail" value="resources/images/978-0785193760.jpg"/>
-                                    <h5><h:outputText value="Nulla At Nulla Justo, Eget"/></h5>
+                                    <h6><h:outputText value="Captain America: Vol. 1"/></h6>
                                     <p><h:outputText value="$400"/></p>
-                                    <a href="#" class="button small expanded hollow">Buy</a>
+                                    <a href="#" class="button small expanded">View</a>
                                 </div>
                                 <div class="column">
                                     <h:graphicImage class="thumbnail" value="resources/images/978-1594634710.jpg"/>
-                                    <h5><h:outputText value="Nulla At Nulla Justo, Eget"/></h5>
+                                    <h6><h:outputText value="Nulla At Nulla Justo, Eget"/></h6>
                                     <p><h:outputText value="$400"/></p>
-                                    <a href="#" class="button small expanded hollow">Buy</a>
+                                    <a href="#" class="button small expanded">View</a>
                                 </div>
                             </div>
                         </div>
