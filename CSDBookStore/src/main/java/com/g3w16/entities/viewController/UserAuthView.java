@@ -8,6 +8,7 @@ package com.g3w16.entities.viewController;
 import com.g3w16.actionController.UserController;
 import com.g3w16.actionController.exception.InvalidCredentialsException;
 import com.g3w16.beans.AuthBean;
+import com.g3w16.beans.AuthenticatedUser;
 import com.g3w16.entities.RegisteredUser;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,6 +25,9 @@ import javax.inject.Named;
 @Named
 @RequestScoped
 public class UserAuthView {
+    
+    @Inject
+    AuthenticatedUser authenticatedUser;
 
     @Inject
     UserController userController;
@@ -45,7 +49,7 @@ public class UserAuthView {
             FacesContext.getCurrentInstance().addMessage("auth_form", new FacesMessage(ex.toString()));
             return null;
         }
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user_id", authBean.getEmail());
+        authenticatedUser.setRegisteredUser(registeredUser);
         return "home"; // TODO: Change that, it's ugly to use hardcoded filename to redirect !!
     }
 }

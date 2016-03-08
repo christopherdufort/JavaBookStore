@@ -10,7 +10,6 @@ import com.g3w16.beans.AuthBean;
 import com.g3w16.beans.SigninBean;
 import com.g3w16.entities.RegisteredUser;
 import com.g3w16.entities.RegisteredUserJpaController;
-import com.g3w16.entities.viewController.UserAuthView;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,9 +38,9 @@ public class UserController {
         return registeredUser;
     }
     
-    public boolean isClient(String email){
+    public boolean isClient(RegisteredUser user){
         try{
-            registeredUserJpaController.findUserByEmail(email);
+            registeredUserJpaController.findUserByEmail(user.getEmailAddress());
         }catch(NoResultException ex){
             return false;
         }

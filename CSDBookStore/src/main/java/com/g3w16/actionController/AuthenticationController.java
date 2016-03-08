@@ -5,6 +5,7 @@
  */
 package com.g3w16.actionController;
 
+import com.g3w16.beans.AuthenticatedUser;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.logging.Level;
@@ -29,25 +30,27 @@ public class AuthenticationController implements SystemEventListener, Serializab
     @Inject
     UserController userController;
     
-    public void isClient(ComponentSystemEvent event) throws IOException{
+    @Inject
+    AuthenticatedUser authenticatedUser;
+    
+    public void mustBeClient(ComponentSystemEvent event) throws IOException{
         Logger.getLogger(AuthenticationController.class.getName()).log(Level.INFO, "AuthenticationController.isClient invoked !");
-        String email = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().getOrDefault("user_id", null);
-        if ( email!=null && !userController.isClient(email) ){
+        Logger.getLogger(AuthenticationController.class.getName()).log(Level.INFO, "AuthenticatedUser value is = {0}", (authenticatedUser.getRegisteredUser()==null));
+        if ( authenticatedUser.getRegisteredUser()==null){
             FacesContext.getCurrentInstance().getExternalContext().redirect("faces/login.xhtml");
         }
     }
     
     public void logout(ComponentSystemEvent event) throws IOException{
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("user_id");
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         FacesContext.getCurrentInstance().getExternalContext().redirect("faces/home.xhtml");
     }
     
     public boolean isClient(){
-        String email = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().getOrDefault("user_id", null);
-        if (email == null){
+        if (authenticatedUser.getRegisteredUser() == null){
             return false;
         }
-        return userController.isClient(email);
+        return userController.isClient(authenticatedUser.getRegisteredUser());
     }
 
     @Override
