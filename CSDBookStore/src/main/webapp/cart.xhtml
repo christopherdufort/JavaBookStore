@@ -12,7 +12,7 @@
 
             <ui:define name="event_listener">
                 <f:metadata>
-                    <f:event listener="#{authenticationController.isClient}" type="preRenderView" />
+                    <f:event listener="#{authenticationController.mustBeClient}" type="preRenderView" />
                 </f:metadata>
             </ui:define>
 
