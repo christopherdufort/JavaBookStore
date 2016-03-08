@@ -41,6 +41,12 @@ public class AuthenticationController implements SystemEventListener, Serializab
         }
     }
     
+    public void mustBeAnonymous(ComponentSystemEvent event) throws IOException{
+        if (authenticatedUser.getRegisteredUser()!=null){
+            FacesContext.getCurrentInstance().getExternalContext().redirect("faces/home.xhtml");
+        }
+    }
+    
     public void logout(ComponentSystemEvent event) throws IOException{
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         FacesContext.getCurrentInstance().getExternalContext().redirect("faces/home.xhtml");
