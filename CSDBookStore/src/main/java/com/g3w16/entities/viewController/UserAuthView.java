@@ -36,7 +36,7 @@ public class UserAuthView {
         RegisteredUser registeredUser;
         try {
             registeredUser = userController.authenticate(authBean);
-            // return homePage will redirect to the home page if authentication is successful
+            // return home will redirect to the home page if authentication is successful
             //   else, we re-render the page with an h:message thing
         } catch (InvalidCredentialsException ex) {
             // TODO: replace this hardcoded message by a specific exception 
@@ -47,6 +47,6 @@ public class UserAuthView {
         }
         AuthenticatedUser authenticatedUser = new AuthenticatedUser();
         authenticatedUser.setRegisteredUser(registeredUser);
-        return "homePage"; // TODO: Change that, it's ugly to use hardcoded filename to redirect !!
+        return "home"; // TODO: Change that, it's ugly to use hardcoded filename to redirect !!
     }
 }
