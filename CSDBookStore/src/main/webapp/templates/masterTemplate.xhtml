@@ -17,6 +17,8 @@
         <link rel="stylesheet" href="resources/foundation-icons/foundation-icons.css"/>
         <!--        <h:outputStylesheet name="resources/foundation-icons/foundation-icons.css"/>-->
         <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Comfortaa"/>
+        
+        <ui:insert name="event_listener"></ui:insert>
     </h:head>
 
     <h:body>
@@ -37,9 +39,10 @@
                     <ul class="menu" data-responsive-menu="drilldown medium-dropdown">
                         <li><input type="search" placeholder="Search"/></li>
                         <li><button type="button" class="button">Search</button></li>
-                        <li><a class ="fi-shopping-cart" href="faces/login.xhtml"> Cart</a></li>
-                        <li><a href="faces/login.xhtml">Login</a></li>
-                        <li><a href="faces/signin.xhtml">Sign up</a></li>
+                        <li><h:outputLink rendered="#{authenticationController.isClient()}" class ="fi-shopping-cart"  value="faces/cart.xhtml">Cart</h:outputLink></li>
+                        <li><h:outputLink rendered="#{!authenticationController.isClient()}" value="faces/login.xhtml">Login</h:outputLink>
+                            <h:outputLink rendered="#{authenticationController.isClient()}" value="faces/logout.xhtml">Logout</h:outputLink></li>
+                        <li><h:outputLink rendered="#{!authenticationController.isClient()}" value="faces/signin.xhtml">Sign up</h:outputLink></li>
                         <li><a href="">FR</a></li>
                     </ul>
                 </div>

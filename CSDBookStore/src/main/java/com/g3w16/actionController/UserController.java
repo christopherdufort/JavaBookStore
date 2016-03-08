@@ -11,9 +11,11 @@ import com.g3w16.beans.SigninBean;
 import com.g3w16.entities.RegisteredUser;
 import com.g3w16.entities.RegisteredUserJpaController;
 import com.g3w16.entities.viewController.UserAuthView;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.NoResultException;
@@ -37,6 +39,20 @@ public class UserController {
         return registeredUser;
     }
     
+    public boolean isClient(String email){
+        try{
+            registeredUserJpaController.findUserByEmail(email);
+        }catch(NoResultException ex){
+            return false;
+        }
+        return true;
+    }
+    
+    public void logout() throws IOException{
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("email");
+        FacesContext.getCurrentInstance().getExternalContext().redirect("home");
+    }
+    
     public RegisteredUser authenticate(AuthBean authBean) throws InvalidCredentialsException{
         RegisteredUser registeredUser;
         try{
@@ -44,7 +60,7 @@ public class UserController {
         }catch(NoResultException ex){
             throw new InvalidCredentialsException();
         }
-        Logger.getLogger(UserAuthView.class.getName()).log(Level.INFO, "Real user password : {0}", registeredUser.getPassword());
+        Logger.getLogger(UserController.class.getName()).log(Level.INFO, "Real user password : {0}", registeredUser.getPassword());
         if (!registeredUser.getPassword().equals(authBean.getPassword())){
             throw new InvalidCredentialsException();
         }

@@ -8,7 +8,6 @@ package com.g3w16.entities.viewController;
 import com.g3w16.actionController.UserController;
 import com.g3w16.actionController.exception.InvalidCredentialsException;
 import com.g3w16.beans.AuthBean;
-import com.g3w16.beans.AuthenticatedUser;
 import com.g3w16.entities.RegisteredUser;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,20 +32,22 @@ public class UserAuthView {
     AuthBean authBean;
 
     public String authenticate(AuthBean authBean) {
+        
+        Logger.getLogger(UserAuthView.class.getName()).log(Level.INFO, "Submitted email : {0}", authBean.getEmail());
+        Logger.getLogger(UserAuthView.class.getName()).log(Level.INFO, "Submitted password : {0}", authBean.getPassword());
+        
         RegisteredUser registeredUser;
         try {
             registeredUser = userController.authenticate(authBean);
             // return homePage will redirect to the home page if authentication is successful
             //   else, we re-render the page with an h:message thing
-        } catch (InvalidCredentialsException ex) {
-            // TODO: replace this hardcoded message by a specific exception 
-            //          and place this message in the exception.
-            //          I'd look better to me
+        }catch (InvalidCredentialsException ex) {
+            // TODO: place this hardcoded message in the exception.
+            //          It'd look better to me
             FacesContext.getCurrentInstance().addMessage("auth_form", new FacesMessage("Username or password is incorrect"));
             return null;
         }
-        AuthenticatedUser authenticatedUser = new AuthenticatedUser();
-        authenticatedUser.setRegisteredUser(registeredUser);
-        return "homePage"; // TODO: Change that, it's ugly to use hardcoded filename to redirect !!
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("email", authBean.getEmail());
+        return "home"; // TODO: Change that, it's ugly to use hardcoded filename to redirect !!
     }
 }

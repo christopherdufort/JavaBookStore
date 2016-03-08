@@ -1,0 +1,148 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <body>
+        <ui:composition template="./templates/masterTemplate.xhtml">
+
+            <ui:define name="title">
+                Cart
+            </ui:define>
+
+            <ui:define name="event_listener">
+                <f:metadata>
+                    <f:event listener="#{authenticationController.isClient}" type="preRenderView" />
+                </f:metadata>
+            </ui:define>
+
+            <ui:define name="content">
+
+                <div class="row columns">
+                    <nav aria-label="You are here:" role="navigation">
+                        <ul class="breadcrumbs">
+                            <li><a href="home.html">Home</a></li>
+                            <li><a href="#">Mystery</a></li>
+
+                            <li>
+                                <span class="show-for-sr">Current: </span> Nothing
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="row">
+                    <div class="medium-6 columns">
+                        <img class="thumbnail" src="resources/images/978-1594634710.jpg"></img>
+                        <!-- <div class="row small-up-4">
+                        <div class="column">
+                        <img class="thumbnail" src="http://placehold.it/250x200">
+                        </div>
+                        <div class="column">
+                        <img class="thumbnail" src="http://placehold.it/250x200">
+                        </div>
+                        <div class="column">
+                        <img class="thumbnail" src="http://placehold.it/250x200">
+                        </div>
+                        <div class="column">
+                        <img class="thumbnail" src="http://placehold.it/250x200">
+                        </div>
+                        </div> -->
+                    </div>
+                    <div class="medium-6 large-5 columns">
+                        <h3>Big Magic: Creative Living Beyond Fear</h3>
+                        <h5>Elizabeth Gilbert </h5>
+                        <p>Readers of all ages and walks of life have drawn inspiration and empowerment from Elizabeth Gilbert’s books for years. Now this beloved author digs deep into her own generative process to share her wisdom and unique perspective about creativity. With profound empathy and radiant generosity, she offers potent insights into the mysterious nature of inspiration. </p>	
+                        <div class="row">
+                            <div class="small-3 columns">
+                                <label for="middle-label" class="middle">Quantity</label>
+                            </div>
+                            <div class="small-9 columns">
+                                <input type="text" id="middle-label" placeholder="1"></input>
+                            </div>
+                        </div>
+                        <a href="#" class="button large expanded">Buy Now</a>
+                        <div class="small secondary expanded button-group">
+                            <a class="button">Facebook</a>
+                            <a class="button">Twitter</a>
+                            <a class="button">Yo</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="column row">
+                    <hr>
+                        <ul class="tabs" data-tabs="" id="example-tabs">
+                            <li class="tabs-title is-active"><a href="#panel1" aria-selected="true">Reviews</a></li>
+                            <li class="tabs-title"><a href="#panel2">Similar Products</a></li>
+                        </ul>
+                        <div class="tabs-content" data-tabs-content="example-tabs">
+                            <div class="tabs-panel is-active" id="panel1">
+                                <h4>Reviews</h4>
+                                <div class="media-object stack-for-small">
+
+                                    <div class="media-object-section">
+                                        <h5>Mike Stevenson</h5>
+                                        <p>I'm going to improvise. Listen, there's something you should know about me... about inception. An idea is like a virus, resilient, highly contagious. The smallest seed of an idea can grow. It can grow to define or destroy you.</p>
+                                    </div>
+                                </div>
+                                <div class="media-object stack-for-small">
+                                    <div class="media-object-section">
+                                        <h5>Mike Stevenson</h5>
+                                        <p>I'm going to improvise. Listen, there's something you should know about me... about inception. An idea is like a virus, resilient, highly contagious. The smallest seed of an idea can grow. It can grow to define or destroy you</p>
+                                    </div>
+                                </div>
+                                <div class="media-object stack-for-small">
+                                    <div class="media-object-section">
+                                        <h5>Mike Stevenson</h5>
+                                        <p>I'm going to improvise. Listen, there's something you should know about me... about inception. An idea is like a virus, resilient, highly contagious. The smallest seed of an idea can grow. It can grow to define or destroy you</p>
+                                    </div>
+                                </div>
+                                <label>
+                                    My Review
+                                    <textarea placeholder="None"></textarea>
+                                </label>
+                                <button class="button">Submit Review</button>
+                            </div>
+                            <div class="tabs-panel" id="panel2">
+                                <div class="row medium-up-3 large-up-5">
+                                    <div class="column">
+                                        <img class="thumbnail" src="http://placehold.it/350x200"></img>
+                                        <h5>Other Product <small>$22</small></h5>
+                                        <p>In condimentum facilisis porta. Sed nec diam eu diam mattis viverra. Nulla fringilla, orci ac euismod semper, magna diam.</p>
+                                        <a href="#" class="button hollow tiny expanded">Buy Now</a>
+                                    </div>
+                                    <div class="column">
+                                        <img class="thumbnail" src="http://placehold.it/350x200"></img>
+                                        <h5>Other Product <small>$22</small></h5>
+                                        <p>In condimentum facilisis porta. Sed nec diam eu diam mattis viverra. Nulla fringilla, orci ac euismod semper, magna diam.</p>
+                                        <a href="#" class="button hollow tiny expanded">Buy Now</a>
+                                    </div>
+                                    <div class="column">
+                                        <img class="thumbnail" src="http://placehold.it/350x200"></img>
+                                        <h5>Other Product <small>$22</small></h5>
+                                        <p>In condimentum facilisis porta. Sed nec diam eu diam mattis viverra. Nulla fringilla, orci ac euismod semper, magna diam.</p>
+                                        <a href="#" class="button hollow tiny expanded">Buy Now</a>
+                                    </div>
+                                    <div class="column">
+                                        <img class="thumbnail" src="http://placehold.it/350x200"></img>
+                                        <h5>Other Product <small>$22</small></h5>
+                                        <p>In condimentum facilisis porta. Sed nec diam eu diam mattis viverra. Nulla fringilla, orci ac euismod semper, magna diam.</p>
+                                        <a href="#" class="button hollow tiny expanded">Buy Now</a>
+                                    </div>
+                                    <div class="column">
+                                        <img class="thumbnail" src="http://placehold.it/350x200"></img>
+                                        <h5>Other Product <small>$22</small></h5>
+                                        <p>In condimentum facilisis porta. Sed nec diam eu diam mattis viverra. Nulla fringilla, orci ac euismod semper, magna diam.</p>
+                                        <a href="#" class="button hollow tiny expanded">Buy Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </hr>
+                </div>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
