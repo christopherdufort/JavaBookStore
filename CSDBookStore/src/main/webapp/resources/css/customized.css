@@ -16,7 +16,7 @@ html, body {
 }
 form {
     margin-bottom: 2em;
-    margin-left: 2em;
+    /*margin-left: 2em; needed to align forms on book page*/
 }
 ul {
     list-style-type: none;

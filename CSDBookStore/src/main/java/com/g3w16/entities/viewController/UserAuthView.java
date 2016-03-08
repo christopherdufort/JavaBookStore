@@ -39,7 +39,7 @@ public class UserAuthView {
         RegisteredUser registeredUser;
         try {
             registeredUser = userController.authenticate(authBean);
-            // return homePage will redirect to the home page if authentication is successful
+            // return home will redirect to the home page if authentication is successful
             //   else, we re-render the page with an h:message thing
         }catch (InvalidCredentialsException ex) {
             // TODO: place this hardcoded message in the exception.
