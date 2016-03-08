@@ -7,7 +7,7 @@ package com.g3w16.actionController;
 
 import com.g3w16.actionController.exception.InvalidCredentialsException;
 import com.g3w16.beans.AuthBean;
-import com.g3w16.beans.SigninBean;
+import com.g3w16.beans.SignupBean;
 import com.g3w16.entities.RegisteredUser;
 import com.g3w16.entities.RegisteredUserJpaController;
 import java.io.IOException;
@@ -30,7 +30,7 @@ public class UserController {
     @Inject
     RegisteredUserJpaController registeredUserJpaController;
     
-    public RegisteredUser create(SigninBean signinBean) throws Exception{
+    public RegisteredUser create(SignupBean signinBean) throws Exception{
         RegisteredUser registeredUser = new RegisteredUser();
         registeredUser.setEmailAddress(signinBean.getEmail());
         registeredUser.setPassword(signinBean.getPassword());
