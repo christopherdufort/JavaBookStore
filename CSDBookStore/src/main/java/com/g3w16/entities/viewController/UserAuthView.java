@@ -52,7 +52,7 @@ public class UserAuthView {
         authenticatedUser.setRegisteredUser(registeredUser);
         if (userController.isManager(registeredUser)){
             Logger.getLogger(UserAuthView.class.getName()).log(Level.INFO, "Redirecting to manager index");
-            return "m_index.xhtml";
+            return "m_index";
         }else{
             Logger.getLogger(UserAuthView.class.getName()).log(Level.INFO, "Redirecting to home");
             return "home"; // TODO: Change that, it's ugly to use hardcoded filename to redirect !!
