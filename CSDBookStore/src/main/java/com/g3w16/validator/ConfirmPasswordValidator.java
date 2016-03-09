@@ -24,18 +24,16 @@ public class ConfirmPasswordValidator implements Validator{
 
     @Override
     public void validate(FacesContext fc, UIComponent component, Object o) throws ValidatorException {
-        Logger.getLogger(ConfirmPasswordValidator.class.getName()).log(Level.INFO, "ConfirmPasswordValidate.validate is invoked !");
-        /*
         UIInput passwordInput = (UIInput) component.findComponent("passwordInput");
         String password = (String) passwordInput.getLocalValue();
+        password = password==null ? "" : password;
         if (!password.equals(o.toString())){
             FacesMessage msg = new FacesMessage(
-                    "PasswordConfirmation doesn't match original password"
+                    "confirmation doesn't match original password"
             );
             msg.setSeverity(FacesMessage.SEVERITY_ERROR);
             throw new ValidatorException(msg);
         }
-        */
     }
     
 }
