@@ -5,6 +5,8 @@
  */
 package com.g3w16.validator;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
@@ -21,8 +23,11 @@ import javax.faces.validator.ValidatorException;
 public class ConfirmPasswordValidator implements Validator{
 
     @Override
-    public void validate(FacesContext fc, UIComponent uic, Object o) throws ValidatorException {
-        String password =(String) ((UIInput)uic.findComponent("passwordInput")).getLocalValue();
+    public void validate(FacesContext fc, UIComponent component, Object o) throws ValidatorException {
+        Logger.getLogger(ConfirmPasswordValidator.class.getName()).log(Level.INFO, "ConfirmPasswordValidate.validate is invoked !");
+        /*
+        UIInput passwordInput = (UIInput) component.findComponent("passwordInput");
+        String password = (String) passwordInput.getLocalValue();
         if (!password.equals(o.toString())){
             FacesMessage msg = new FacesMessage(
                     "PasswordConfirmation doesn't match original password"
@@ -30,6 +35,7 @@ public class ConfirmPasswordValidator implements Validator{
             msg.setSeverity(FacesMessage.SEVERITY_ERROR);
             throw new ValidatorException(msg);
         }
+        */
     }
     
 }
