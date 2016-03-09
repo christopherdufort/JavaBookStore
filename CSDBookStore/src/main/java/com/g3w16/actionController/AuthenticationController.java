@@ -38,6 +38,22 @@ public class AuthenticationController implements SystemEventListener, Serializab
         Logger.getLogger(AuthenticationController.class.getName()).log(Level.INFO, "AuthenticatedUser value is = {0}", (authenticatedUser.getRegisteredUser()==null));
         if ( authenticatedUser.getRegisteredUser()==null){
             FacesContext.getCurrentInstance().getExternalContext().redirect("faces/login.xhtml");
+        }else{
+            if (!userController.isClient(authenticatedUser.getRegisteredUser())){
+                FacesContext.getCurrentInstance().getExternalContext().redirect("faces/login.xhtml");
+            }
+        }
+    }
+    
+    public void mustBeManager(ComponentSystemEvent event) throws IOException{
+        Logger.getLogger(AuthenticationController.class.getName()).log(Level.INFO, "AuthenticationController.isClient invoked !");
+        Logger.getLogger(AuthenticationController.class.getName()).log(Level.INFO, "AuthenticatedUser value is = {0}", (authenticatedUser.getRegisteredUser()==null));
+        if ( authenticatedUser.getRegisteredUser()==null){
+            FacesContext.getCurrentInstance().getExternalContext().redirect("faces/login.xhtml");
+        }else{
+            if (!userController.isManager(authenticatedUser.getRegisteredUser())){
+                FacesContext.getCurrentInstance().getExternalContext().redirect("faces/login.xhtml");
+            }
         }
     }
     
@@ -58,6 +74,18 @@ public class AuthenticationController implements SystemEventListener, Serializab
         }
         return userController.isClient(authenticatedUser.getRegisteredUser());
     }
+    
+    public boolean isManager(){
+        if (authenticatedUser.getRegisteredUser() == null){
+            return false;
+        }
+        return userController.isManager(authenticatedUser.getRegisteredUser());
+    }
+    
+    public boolean isAnonymous(){
+        return authenticatedUser.getRegisteredUser() == null;
+    }
+
 
     @Override
     public void processEvent(SystemEvent se) throws AbortProcessingException {

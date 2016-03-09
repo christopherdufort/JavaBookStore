@@ -56,12 +56,23 @@ public class UserController {
     }
 
     public boolean isClient(RegisteredUser user) {
+        RegisteredUser registeredUser;
         try {
-            registeredUserJpaController.findUserByEmail(user.getEmailAddress());
+            registeredUser = registeredUserJpaController.findUserByEmail(user.getEmailAddress());
         } catch (NoResultException ex) {
             return false;
         }
-        return true;
+        return registeredUser.getActive();
+    }
+    
+    public boolean isManager(RegisteredUser user){
+        RegisteredUser registeredUser;
+        try {
+            registeredUser = registeredUserJpaController.findUserByEmail(user.getEmailAddress());
+        } catch (NoResultException ex) {
+            return false;
+        }
+        return registeredUser.getManager() && registeredUser.getActive();
     }
 
     public void logout() throws IOException {
