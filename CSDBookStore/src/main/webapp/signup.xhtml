@@ -26,13 +26,25 @@
                                 <h:message for="signup_form" style="color:red">
                                 </h:message>
                                 <label>Email
-                                    <h:inputText value="#{signupBean.email}"></h:inputText>
+                                    <h:inputText id="emailInput" value="#{signupBean.email}">
+                                        <f:validator validatorId="com.g3w16.validator.EmailValidator"/>
+                                    </h:inputText>
+                                    <h:message for="emailInput" style="color:red">
+                                    </h:message>
                                 </label>
                                 <label>Password
-                                    <h:inputText value="#{signupBean.password}"></h:inputText>
+                                    <h:inputText id="passwordInput" value="#{signupBean.password}">
+                                        <f:validator validatorId="com.g3w16.validator.PasswordValidator"/>
+                                    </h:inputText>
+                                    <h:message for="passwordInput" style="color:red">
+                                    </h:message>
                                 </label>
                                 <label>Confirm Password
-                                    <h:inputText value="#{signupBean.confirm_password}"></h:inputText>
+                                    <h:inputText id="confirmPasswordInput" value="#{signupBean.confirm_password}">
+                                        <f:validator validatorId="com.g3w16.valiadtor.ConfirmPasswordValidator"/>
+                                    </h:inputText>
+                                    <h:message for="confirmPasswordInput" style="color:red">
+                                    </h:message>
                                 </label>
                                 <p><h:commandLink value="Do Signin" class="button expanded" action="#{userSignupView.signup()}" ></h:commandLink></p>
                             </div>

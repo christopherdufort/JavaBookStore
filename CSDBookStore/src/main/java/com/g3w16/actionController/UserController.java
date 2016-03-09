@@ -40,9 +40,13 @@ public class UserController {
         RegisteredUser registeredUser = new RegisteredUser();
         registeredUser.setEmailAddress(signinBean.getEmail());
         registeredUser.setPassword(signinBean.getPassword());
+/*
+        Not needed, handled by ConfirmPasswordValidator
+        
         if (!signinBean.getPassword().equals(signinBean.getConfirm_password())) {
             throw new PasswordConfirmationFailedException();
         }
+*/
         try{
             registeredUserJpaController.create(registeredUser);
         }catch(Exception ex){
