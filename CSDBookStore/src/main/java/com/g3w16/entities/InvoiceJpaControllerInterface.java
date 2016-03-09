@@ -20,10 +20,6 @@ public interface InvoiceJpaControllerInterface extends Serializable {
 
     void create(Invoice invoice) throws RollbackFailureException, Exception;
 
-    void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception;
-
-    void edit(Invoice invoice) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception;
-
     Invoice findInvoice(Integer id);
 
     List<Invoice> findInvoiceByUserNumber(Integer userNumber);

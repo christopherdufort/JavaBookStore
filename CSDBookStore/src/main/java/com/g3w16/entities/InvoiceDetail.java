@@ -35,6 +35,7 @@ import javax.validation.constraints.NotNull;
     @NamedQuery(name = "InvoiceDetail.findByBookPrice", query = "SELECT i FROM InvoiceDetail i WHERE i.bookPrice = :bookPrice"),
     @NamedQuery(name = "InvoiceDetail.findByQuantity", query = "SELECT i FROM InvoiceDetail i WHERE i.quantity = :quantity"),
     @NamedQuery(name = "InvoiceDetail.findByInvoiceId", query = "SELECT i FROM InvoiceDetail i WHERE i.invoiceId = :invoiceId")})
+
 public class InvoiceDetail implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -163,5 +164,5 @@ public class InvoiceDetail implements Serializable {
     public String toString() {
         return "com.g3w16.entities.InvoiceDetail[ invoiceDetailId=" + invoiceDetailId + " ]";
     }
-    
+
 }

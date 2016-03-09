@@ -34,6 +34,14 @@ public class InvoiceJpaController implements InvoiceJpaControllerInterface {
     @PersistenceContext
     private EntityManager em;
 
+    /**
+     * This method allows to create an invoice in the database. We send it an
+     * invoice object and it adds it to the database.
+     *
+     * @param invoice
+     * @throws RollbackFailureException
+     * @throws Exception
+     */
     @Override
     public void create(Invoice invoice) throws RollbackFailureException, Exception {
         if (invoice.getInvoiceDetailList() == null) {
@@ -68,106 +76,38 @@ public class InvoiceJpaController implements InvoiceJpaControllerInterface {
         }
     }
 
-    @Override
-    public void edit(Invoice invoice) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
-        try {
-            utx.begin();
-            Invoice persistentInvoice = em.find(Invoice.class, invoice.getInvoiceId());
-            List<InvoiceDetail> invoiceDetailListOld = persistentInvoice.getInvoiceDetailList();
-            List<InvoiceDetail> invoiceDetailListNew = invoice.getInvoiceDetailList();
-            List<String> illegalOrphanMessages = null;
-            for (InvoiceDetail invoiceDetailListOldInvoiceDetail : invoiceDetailListOld) {
-                if (!invoiceDetailListNew.contains(invoiceDetailListOldInvoiceDetail)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain InvoiceDetail " + invoiceDetailListOldInvoiceDetail + " since its invoiceId field is not nullable.");
-                }
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
-            }
-            List<InvoiceDetail> attachedInvoiceDetailListNew = new ArrayList<InvoiceDetail>();
-            for (InvoiceDetail invoiceDetailListNewInvoiceDetailToAttach : invoiceDetailListNew) {
-                invoiceDetailListNewInvoiceDetailToAttach = em.getReference(invoiceDetailListNewInvoiceDetailToAttach.getClass(), invoiceDetailListNewInvoiceDetailToAttach.getInvoiceDetailId());
-                attachedInvoiceDetailListNew.add(invoiceDetailListNewInvoiceDetailToAttach);
-            }
-            invoiceDetailListNew = attachedInvoiceDetailListNew;
-            invoice.setInvoiceDetailList(invoiceDetailListNew);
-            invoice = em.merge(invoice);
-            for (InvoiceDetail invoiceDetailListNewInvoiceDetail : invoiceDetailListNew) {
-                if (!invoiceDetailListOld.contains(invoiceDetailListNewInvoiceDetail)) {
-                    Invoice oldInvoiceIdOfInvoiceDetailListNewInvoiceDetail = invoiceDetailListNewInvoiceDetail.getInvoiceId();
-                    invoiceDetailListNewInvoiceDetail.setInvoiceId(invoice);
-                    invoiceDetailListNewInvoiceDetail = em.merge(invoiceDetailListNewInvoiceDetail);
-                    if (oldInvoiceIdOfInvoiceDetailListNewInvoiceDetail != null && !oldInvoiceIdOfInvoiceDetailListNewInvoiceDetail.equals(invoice)) {
-                        oldInvoiceIdOfInvoiceDetailListNewInvoiceDetail.getInvoiceDetailList().remove(invoiceDetailListNewInvoiceDetail);
-                        oldInvoiceIdOfInvoiceDetailListNewInvoiceDetail = em.merge(oldInvoiceIdOfInvoiceDetailListNewInvoiceDetail);
-                    }
-                }
-            }
-            utx.commit();
-        } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
-            }
-            String msg = ex.getLocalizedMessage();
-            if (msg == null || msg.length() == 0) {
-                Integer id = invoice.getInvoiceId();
-                if (findInvoice(id) == null) {
-                    throw new NonexistentEntityException("The invoice with id " + id + " no longer exists.");
-                }
-            }
-            throw ex;
-        }
-    }
-
-    @Override
-    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
-        try {
-            utx.begin();
-            Invoice invoice;
-            try {
-                invoice = em.getReference(Invoice.class, id);
-                invoice.getInvoiceId();
-            } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The invoice with id " + id + " no longer exists.", enfe);
-            }
-            List<String> illegalOrphanMessages = null;
-            List<InvoiceDetail> invoiceDetailListOrphanCheck = invoice.getInvoiceDetailList();
-            for (InvoiceDetail invoiceDetailListOrphanCheckInvoiceDetail : invoiceDetailListOrphanCheck) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This Invoice (" + invoice + ") cannot be destroyed since the InvoiceDetail " + invoiceDetailListOrphanCheckInvoiceDetail + " in its invoiceDetailList field has a non-nullable invoiceId field.");
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
-            }
-            em.remove(invoice);
-            utx.commit();
-        } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
-            }
-            throw ex;
-        }
-    }
-
+    /**
+     * This returns a list of all invoices.
+     *
+     * @return
+     */
     @Override
     public List<Invoice> findInvoiceEntities() {
         return findInvoiceEntities(true, -1, -1);
     }
 
+    /**
+     * This method will return a list of invoices based on the bounds we have
+     * given to it.
+     *
+     * @param maxResults
+     * @param firstResult
+     * @return
+     */
     @Override
     public List<Invoice> findInvoiceEntities(int maxResults, int firstResult) {
         return findInvoiceEntities(false, maxResults, firstResult);
     }
 
+    /**
+     * This method will return all invoices if all is true , else it will return
+     * the appropriate list of invoice between maxResults and firstResult.
+     *
+     * @param all
+     * @param maxResults
+     * @param firstResult
+     * @return
+     */
     private List<Invoice> findInvoiceEntities(boolean all, int maxResults, int firstResult) {
         Query q = em.createQuery("select object(o) from Invoice as o");
         if (!all) {
@@ -177,11 +117,24 @@ public class InvoiceJpaController implements InvoiceJpaControllerInterface {
         return q.getResultList();
     }
 
+    /**
+     * This will return one particular invoice based on the id given to the
+     * method.
+     *
+     * @param id
+     * @return
+     */
     @Override
     public Invoice findInvoice(Integer id) {
         return em.find(Invoice.class, id);
     }
 
+    /**
+     * This will return a list of invoices belonging to the user given to it.
+     *
+     * @param userNumber
+     * @return
+     */
     @Override
     public List<Invoice> findInvoiceByUserNumber(Integer userNumber) {
         Query q = em.createNamedQuery("Invoice.findByUserNumber", Invoice.class);
@@ -189,6 +142,11 @@ public class InvoiceJpaController implements InvoiceJpaControllerInterface {
         return q.getResultList();
     }
 
+    /**
+     * This will return a count of all invoices existing in database.
+     *
+     * @return
+     */
     @Override
     public int getInvoiceCount() {
         Query q = em.createQuery("select count(o) from Invoice as o");

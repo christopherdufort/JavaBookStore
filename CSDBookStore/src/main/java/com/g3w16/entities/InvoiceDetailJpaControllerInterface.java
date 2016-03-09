@@ -12,15 +12,11 @@ import java.util.List;
 
 /**
  *
- * @author Rita Lazaar 
+ * @author Rita Lazaar
  */
 public interface InvoiceDetailJpaControllerInterface extends Serializable {
 
     void create(InvoiceDetail invoiceDetail) throws RollbackFailureException, Exception;
-
-    void destroy(Integer id) throws NonexistentEntityException, RollbackFailureException, Exception;
-
-    void edit(InvoiceDetail invoiceDetail) throws NonexistentEntityException, RollbackFailureException, Exception;
 
     InvoiceDetail findInvoiceDetail(Integer id);
 
@@ -31,5 +27,5 @@ public interface InvoiceDetailJpaControllerInterface extends Serializable {
     List<InvoiceDetail> findInvoiceDetailEntities(int maxResults, int firstResult);
 
     int getInvoiceDetailCount();
-    
+
 }

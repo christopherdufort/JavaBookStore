@@ -22,6 +22,7 @@ import javax.persistence.criteria.Root;
 import javax.transaction.UserTransaction;
 
 /**
+ * This is the controller for the invoice detail table.
  *
  * @author Rita Lazaar
  *
@@ -37,12 +38,12 @@ public class InvoiceDetailJpaController implements InvoiceDetailJpaControllerInt
     private EntityManager em;
 
     /**
-     * This method allows the entity object to be created for Invoice Detail and it will be related to the
-     * appropriate entity objects : book and invoice. 
-     * 
+     * This method allows the entity object to be created for Invoice Detail and
+     * it will be related to the appropriate entity objects : book and invoice.
+     *
      * @param invoiceDetail
      * @throws RollbackFailureException
-     * @throws Exception 
+     * @throws Exception
      */
     @Override
     public void create(InvoiceDetail invoiceDetail) throws RollbackFailureException, Exception {
@@ -75,124 +76,76 @@ public class InvoiceDetailJpaController implements InvoiceDetailJpaControllerInt
                 throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
             }
             throw ex;
-        } 
-    }
-
-    @Override
-    public void edit(InvoiceDetail invoiceDetail) throws NonexistentEntityException, RollbackFailureException, Exception {
-        try {
-            utx.begin();
-            InvoiceDetail persistentInvoiceDetail = em.find(InvoiceDetail.class, invoiceDetail.getInvoiceDetailId());
-            Book bookIdOld = persistentInvoiceDetail.getBookId();
-            Book bookIdNew = invoiceDetail.getBookId();
-            Invoice invoiceIdOld = persistentInvoiceDetail.getInvoiceId();
-            Invoice invoiceIdNew = invoiceDetail.getInvoiceId();
-            if (bookIdNew != null) {
-                bookIdNew = em.getReference(bookIdNew.getClass(), bookIdNew.getBookId());
-                invoiceDetail.setBookId(bookIdNew);
-            }
-            if (invoiceIdNew != null) {
-                invoiceIdNew = em.getReference(invoiceIdNew.getClass(), invoiceIdNew.getInvoiceId());
-                invoiceDetail.setInvoiceId(invoiceIdNew);
-            }
-            invoiceDetail = em.merge(invoiceDetail);
-            if (bookIdOld != null && !bookIdOld.equals(bookIdNew)) {
-                bookIdOld.getInvoiceDetailList().remove(invoiceDetail);
-                bookIdOld = em.merge(bookIdOld);
-            }
-            if (bookIdNew != null && !bookIdNew.equals(bookIdOld)) {
-                bookIdNew.getInvoiceDetailList().add(invoiceDetail);
-                bookIdNew = em.merge(bookIdNew);
-            }
-            if (invoiceIdOld != null && !invoiceIdOld.equals(invoiceIdNew)) {
-                invoiceIdOld.getInvoiceDetailList().remove(invoiceDetail);
-                invoiceIdOld = em.merge(invoiceIdOld);
-            }
-            if (invoiceIdNew != null && !invoiceIdNew.equals(invoiceIdOld)) {
-                invoiceIdNew.getInvoiceDetailList().add(invoiceDetail);
-                invoiceIdNew = em.merge(invoiceIdNew);
-            }
-            utx.commit();
-        } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
-            }
-            String msg = ex.getLocalizedMessage();
-            if (msg == null || msg.length() == 0) {
-                Integer id = invoiceDetail.getInvoiceDetailId();
-                if (findInvoiceDetail(id) == null) {
-                    throw new NonexistentEntityException("The invoiceDetail with id " + id + " no longer exists.");
-                }
-            }
-            throw ex;
-        }  
-    }
-
-    @Override
-    public void destroy(Integer id) throws NonexistentEntityException, RollbackFailureException, Exception {
-        try {
-            utx.begin();
-            InvoiceDetail invoiceDetail;
-            try {
-                invoiceDetail = em.getReference(InvoiceDetail.class, id);
-                invoiceDetail.getInvoiceDetailId();
-            } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The invoiceDetail with id " + id + " no longer exists.", enfe);
-            }
-            Book bookId = invoiceDetail.getBookId();
-            if (bookId != null) {
-                bookId.getInvoiceDetailList().remove(invoiceDetail);
-                bookId = em.merge(bookId);
-            }
-            Invoice invoiceId = invoiceDetail.getInvoiceId();
-            if (invoiceId != null) {
-                invoiceId.getInvoiceDetailList().remove(invoiceDetail);
-                invoiceId = em.merge(invoiceId);
-            }
-            em.remove(invoiceDetail);
-            utx.commit();
-        } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
-            }
-            throw ex;
         }
     }
 
+    /**
+     * This will return a list of invoice detail containing all invoice details
+     * existing on the database.
+     *
+     * @return
+     */
     @Override
     public List<InvoiceDetail> findInvoiceDetailEntities() {
         return findInvoiceDetailEntities(true, -1, -1);
     }
 
+    /**
+     * This will return a list of invoice details based on the max result and
+     * the first results values sent into the method. Ï
+     *
+     * @param maxResults
+     * @param firstResult
+     * @return
+     */
     @Override
     public List<InvoiceDetail> findInvoiceDetailEntities(int maxResults, int firstResult) {
         return findInvoiceDetailEntities(false, maxResults, firstResult);
     }
 
+    /**
+     * This method will return a list of invoice details. It will return all of
+     * them if all is true, and a specific range of invoice details based on the
+     * values in maxResults and firstResults.
+     *
+     * @param all
+     * @param maxResults
+     * @param firstResult
+     * @return
+     */
     private List<InvoiceDetail> findInvoiceDetailEntities(boolean all, int maxResults, int firstResult) {
-        
-            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(InvoiceDetail.class));
-            Query q = em.createQuery(cq);
-            if (!all) {
-                q.setMaxResults(maxResults);
-                q.setFirstResult(firstResult);
-            }
-            return q.getResultList();
-        
+
+        CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+        cq.select(cq.from(InvoiceDetail.class));
+        Query q = em.createQuery(cq);
+        if (!all) {
+            q.setMaxResults(maxResults);
+            q.setFirstResult(firstResult);
+        }
+        return q.getResultList();
+
     }
 
+    /**
+     * This method will return an invoice detail based on the id sent to the
+     * method.
+     *
+     * @param id
+     * @return
+     */
     @Override
     public InvoiceDetail findInvoiceDetail(Integer id) {
-        
-            return em.find(InvoiceDetail.class, id);
-        
+
+        return em.find(InvoiceDetail.class, id);
+
     }
 
+    /**
+     * This will return a list of invoice details related to a specific invoice.
+     *
+     * @param invoiceId
+     * @return
+     */
     @Override
     public List<InvoiceDetail> findInvoiceDetailByInvoice(Invoice invoiceId) {
         Query q = em.createNamedQuery("InvoiceDetail.findByInvoiceId", InvoiceDetail.class);
@@ -201,15 +154,21 @@ public class InvoiceDetailJpaController implements InvoiceDetailJpaControllerInt
 
     }
 
+    /**
+     * This method returns the total amount of invoices in the database.
+     *
+     * @return
+     */
     @Override
     public int getInvoiceDetailCount() {
-        
-            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<InvoiceDetail> rt = cq.from(InvoiceDetail.class);
-            cq.select(em.getCriteriaBuilder().count(rt));
-            Query q = em.createQuery(cq);
-            return ((Long) q.getSingleResult()).intValue();
-        
+
+        CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+        Root<InvoiceDetail> rt = cq.from(InvoiceDetail.class);
+        cq.select(em.getCriteriaBuilder().count(rt));
+        Query q = em.createQuery(cq);
+        return ((Long) q.getSingleResult()).intValue();
+
     }
 
+    // missing method for the total sales, sales by client , sales by author, sales by publisher
 }
