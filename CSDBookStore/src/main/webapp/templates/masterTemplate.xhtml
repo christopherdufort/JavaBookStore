@@ -17,7 +17,14 @@
         <link rel="stylesheet" href="resources/foundation-icons/foundation-icons.css"/>
         <!--        <h:outputStylesheet name="resources/foundation-icons/foundation-icons.css"/>-->
         <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Comfortaa"/>
-        
+        <!-- Important Owl stylesheet -->
+        <link rel="stylesheet" href="resources/css/owl.carousel.css"/>
+
+        <!-- Default Theme -->
+        <link rel="stylesheet" href="resources/css/owl.theme.css"/>
+
+
+
         <ui:insert name="event_listener"></ui:insert>
     </h:head>
 
@@ -49,7 +56,7 @@
             </div>
             <!-- END TOP HEADER AND NAV BAR -->
 
-        <!-- CENTER PUT EACH PAGE CONTENT HERE -->
+            <!-- CENTER PUT EACH PAGE CONTENT HERE -->
             <!--Each unique page content goes inside this div -->
             <div id="content" class="right_content">
                 <ui:insert name="content">Content</ui:insert>
@@ -79,9 +86,25 @@
         <!-- END OF FOOTER -->
         <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
         <script src="http://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.js"></script>
+        <!-- Include js plugin -->
+        <script src="resources/js/owl.carousel.js"></script>
         <script>
             $(document).foundation();
+
+            $(document).ready(function () {
+
+                $("#owl-demo").owlCarousel({
+                    navigation: true, // Show next and prev buttons
+                    slideSpeed: 300,
+                    paginationSpeed: 400,
+                    singleItem: true
+
+
+                });
+            });
         </script>
+
+
         <script type="text/javascript" src="https://intercom.zurb.com/scripts/zcom.js"></script>
     </h:body>
 </html>
