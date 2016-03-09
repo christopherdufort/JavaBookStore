@@ -26,14 +26,17 @@
                                 <h:message for="auth_form" style="color:red">
                                 </h:message>
                                 <label>Email
-                                    <h:inputText value="#{authBean.email}" ></h:inputText>
+                                    <h:inputText id="emailInput" value="#{authBean.email}" >
+                                        <f:validator validatorId="com.g3w16.validator.EmailValidator"/>
+                                    </h:inputText>
+                                    <h:message for="emailInput" style="color:red">
+                                    </h:message>
                                 </label>
                                 <label>Password
                                     <h:inputText value="#{authBean.password}" ></h:inputText>
                                 </label>
                                 <!--<input id="show-password" type="checkbox"><label for="show-password">Show password</label></input>-->
                                 <p><h:commandLink value="Do Login" class="button expanded" action="#{userAuthView.authenticate(authBean)}" ></h:commandLink></p>
-                                <!--<p><a type="submit" class="button expanded" href="UserAuthView.authenticate()">Log In</a></p>-->
                                 <p class="text-center"><a href="resetPassword.xhtml">Forgot your password?</a></p>   
                             </div>
                         </h:form>
