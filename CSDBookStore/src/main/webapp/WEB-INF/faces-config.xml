@@ -3,10 +3,15 @@
               xmlns="http://xmlns.jcp.org/xml/ns/javaee"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
-<application>
-    <system-event-listener>
-      <system-event-class>javax.faces.event.PreRenderViewEvent</system-event-class>
-      <system-event-listener-class>com.g3w16.actionController.AuthenticationController</system-event-listener-class>
-    </system-event-listener>
-</application>
+    <application>
+        <system-event-listener>
+            <system-event-class>javax.faces.event.PreRenderViewEvent</system-event-class>
+            <system-event-listener-class>com.g3w16.actionController.AuthenticationController</system-event-listener-class>
+        </system-event-listener>
+        
+        <resource-bundle>
+            <base-name>com.g3w16.bundles.messages</base-name>
+            <var>msgs</var>
+        </resource-bundle>
+    </application>
 </faces-config>

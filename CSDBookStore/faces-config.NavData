@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scene Scope="Project" version="2">
+    <Scope Scope="Faces Configuration Only"/>
+    <Scope Scope="Project">
+        <Node id="welcomePrimefaces.xhtml" x="150" y="750" zoom="true"/>
+        <Node id="portfolio.html" x="650" y="150" zoom="true"/>
+        <Node id="templates/m_masterTemplate.xhtml" x="900" y="600" zoom="true"/>
+        <Node id="book1.html" x="400" y="900" zoom="true"/>
+        <Node id="m_invoices.xhtml" x="150" y="300" zoom="true"/>
+        <Node id="m_books.xhtml" x="400" y="300" zoom="true"/>
+        <Node id="profile.xhtml" x="900" y="300" zoom="true"/>
+        <Node id="home.xhtml" x="400" y="450" zoom="true"/>
+        <Node id="resources/foundation-icons/preview.html" x="400" y="150" zoom="true"/>
+        <Node id="m_users.xhtml" x="1150" y="150" zoom="true"/>
+        <Node id="templates/masterTemplate.xhtml" x="650" y="450" zoom="true"/>
+        <Node id="resources/foundation-icons/preview_1.html" x="900" y="150" zoom="true"/>
+        <Node id="m_surveys.xhtml" x="1400" y="300" zoom="true"/>
+        <Node id="index.xhtml" x="650" y="600" zoom="true"/>
+        <Node id="logout.xhtml" x="1150" y="450" zoom="true"/>
+        <Node id="m_reviews.xhtml" x="400" y="600" zoom="true"/>
+        <Node id="m_news.xhtml" x="150" y="150" zoom="true"/>
+        <Node id="m_reports.xhtml" x="1150" y="300" zoom="true"/>
+        <Node id="cart.xhtml" x="400" y="750" zoom="true"/>
+        <Node id="m_index.xhtml" x="150" y="900" zoom="true"/>
+        <Node id="book.xhtml" x="1650" y="150" zoom="true"/>
+        <Node id="m_ads.xhtml" x="1400" y="150" zoom="true"/>
+        <Node id="signup.xhtml" x="650" y="750" zoom="true"/>
+        <Node id="login.xhtml" x="900" y="450" zoom="true"/>
+        <Node id="results.xhtml" x="150" y="600" zoom="true"/>
+        <Node id="signin.xhtml" x="150" y="450" zoom="true"/>
+        <Node id="resetPassword.xhtml" x="650" y="300" zoom="true"/>
+    </Scope>
+    <Scope Scope="All Faces Configurations"/>
+</Scene>

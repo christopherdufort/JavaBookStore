@@ -24,7 +24,8 @@
                                 <!-- /.panel-heading -->
                                 <div class="panel-body">
                                     <div class="dataTable_wrapper table-responsive">
-                                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                        <h:form>
+                                            <h:dataTable class="table table-striped table-bordered table-hover" id="dataTables-example" value="#{reviewJpaController.findReviewEntities}" var="reviews">
                                             <thead>
                                                 <tr>
                                                     <th>Review_id</th>
@@ -55,7 +56,8 @@
                                                         <button type="button" class="btn btn-default btn-xs">Delete</button></td>
                                                 </tr>       
                                             </tbody>
-                                        </table>
+                                        </h:dataTable>
+                                        </h:form>
                                     </div>
                                     <!-- /.table-responsive -->
                                 </div>

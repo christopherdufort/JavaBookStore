@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
@@ -21,7 +23,7 @@
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
         
-        <title>Biblio Admin</title>
+        <title>#{msgs.biblioAdminTitle}</title>
 
         <f:metadata>
             <f:event listener="#{authenticationController.mustBeManager}" type="preRenderView" />
@@ -41,7 +43,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="index.xhtml">BiblioTech Admin</a>
+                    <a class="navbar-brand" href="index.xhtml">#{msgs.biblioAdminTitle}</a>
                 </div>
                 <!-- /.navbar-header -->
 
