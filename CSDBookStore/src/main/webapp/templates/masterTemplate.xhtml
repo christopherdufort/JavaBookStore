@@ -47,9 +47,9 @@
                         <li><input type="search" placeholder="Search"/></li>
                         <li><button type="button" class="button">Search</button></li>
                         <li><h:outputLink class ="fi-shopping-cart"  value="faces/cart.xhtml">Cart</h:outputLink></li>
-                        <li><h:outputLink rendered="#{!authenticationController.isClient()}" value="faces/login.xhtml">Login</h:outputLink>
-                            <h:outputLink rendered="#{authenticationController.isClient()}" value="faces/logout.xhtml">Logout</h:outputLink></li>
-                        <li><h:outputLink rendered="#{!authenticationController.isClient()}" value="faces/signup.xhtml">Sign up</h:outputLink></li>
+                        <li><h:outputLink rendered="#{authenticationController.isAnonymous()}" value="faces/login.xhtml">Login</h:outputLink>
+                            <h:outputLink rendered="#{!authenticationController.isAnonymous()}" value="faces/logout.xhtml">Logout</h:outputLink></li>
+                        <li><h:outputLink rendered="#{authenticationController.isAnonymous()}" value="faces/signup.xhtml">Sign up</h:outputLink></li>
                         <li><a href="">FR</a></li>
                     </ul>
                 </div>

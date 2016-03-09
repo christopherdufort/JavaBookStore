@@ -62,7 +62,7 @@ public class UserController {
         } catch (NoResultException ex) {
             return false;
         }
-        return !registeredUser.getManager() && registeredUser.getActive();
+        return registeredUser.getActive();
     }
     
     public boolean isManager(RegisteredUser user){

@@ -81,6 +81,10 @@ public class AuthenticationController implements SystemEventListener, Serializab
         }
         return userController.isManager(authenticatedUser.getRegisteredUser());
     }
+    
+    public boolean isAnonymous(){
+        return authenticatedUser.getRegisteredUser() == null;
+    }
 
 
     @Override

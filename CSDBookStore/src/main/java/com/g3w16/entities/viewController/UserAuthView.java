@@ -50,6 +50,12 @@ public class UserAuthView {
             return null;
         }
         authenticatedUser.setRegisteredUser(registeredUser);
-        return "home"; // TODO: Change that, it's ugly to use hardcoded filename to redirect !!
+        if (userController.isManager(registeredUser)){
+            Logger.getLogger(UserAuthView.class.getName()).log(Level.INFO, "Redirecting to manager index");
+            return "m_index.xhtml";
+        }else{
+            Logger.getLogger(UserAuthView.class.getName()).log(Level.INFO, "Redirecting to home");
+            return "home"; // TODO: Change that, it's ugly to use hardcoded filename to redirect !!
+        }
     }
 }
