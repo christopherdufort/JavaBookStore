@@ -8,7 +8,7 @@
         <ui:composition template="./templates/masterTemplate.xhtml">
 
             <ui:define name="title">
-                Signin
+                Signup
             </ui:define>
 
             <ui:define name="event_listener">
@@ -20,20 +20,21 @@
             <ui:define name="content">
                 <div class="row">
                     <div class="medium-6 medium-centered large-4 large-centered columns">
-                        <h:form id="signin_form">
+                        <h:form id="signup_form">
                             <div class="row column log-in-form">
                                 <h4 class="text-center">Sign up</h4>
-                                <h:message for="signin_form" style="color:red"></h:message>
+                                <h:message for="signup_form" style="color:red">
+                                </h:message>
                                 <label>Email
-                                    <h:inputText value="#{signinBean.email}"></h:inputText>
+                                    <h:inputText value="#{signupBean.email}"></h:inputText>
                                 </label>
                                 <label>Password
-                                    <h:inputText value="#{signinBean.password}"></h:inputText>
+                                    <h:inputText value="#{signupBean.password}"></h:inputText>
                                 </label>
                                 <label>Confirm Password
-                                    <h:inputText value="#{signinBean.confirm_password}"></h:inputText>
+                                    <h:inputText value="#{signupBean.confirm_password}"></h:inputText>
                                 </label>
-                                <p><h:commandLink value="Do Signin" class="button expanded" action="#{userSigninView.signin(signinBean)}"></h:commandLink></p>
+                                <p><h:commandLink value="Do Signin" class="button expanded" action="#{userSignupView.signup()}" ></h:commandLink></p>
                             </div>
                         </h:form>
                     </div>
