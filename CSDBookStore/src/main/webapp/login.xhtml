@@ -33,7 +33,8 @@
                                     </h:message>
                                 </label>
                                 <label>Password
-                                    <h:inputText value="#{authBean.password}" ></h:inputText>
+                                    <h:inputText id="passwordInput" value="#{authBean.password}" >
+                                    </h:inputText>
                                 </label>
                                 <!--<input id="show-password" type="checkbox"><label for="show-password">Show password</label></input>-->
                                 <p><h:commandLink value="Do Login" class="button expanded" action="#{userAuthView.authenticate(authBean)}" ></h:commandLink></p>
