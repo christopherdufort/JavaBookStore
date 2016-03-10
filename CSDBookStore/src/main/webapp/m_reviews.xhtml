@@ -35,7 +35,7 @@
 
                                                 <h:column>
                                                     <f:facet name="header">#{msgs.isbn}</f:facet>
-                                                    #{reviews.isbn}
+                                                    #{reviews.isbn.isbn}
                                                 </h:column>
                                                 
                                                 <h:column>
@@ -45,7 +45,7 @@
                                                 
                                                 <h:column>
                                                     <f:facet name="header">#{msgs.user_id}</f:facet>
-                                                    #{reviews.userId}
+                                                    #{reviews.userId.userId}
                                                 </h:column>
                                                 
                                                 <h:column>
@@ -55,7 +55,7 @@
                                                 
                                                  <h:column>
                                                      <f:facet name="header">#{msgs.approval_id}</f:facet>
-                                                     #{reviews.approvalId}
+                                                     #{reviews.approvalId.approvalStatus}
                                                 </h:column>
                                                 
                                                 <h:column>
@@ -69,9 +69,10 @@
                                                 </h:column>
         
                                                 <h:column>
-                                                    <f:facet name="header"><button type="button" class="btn btn-default btn-xs pull-right">#{msgs.add}</button></f:facet>
-                                                        <button type="button" class="btn btn-default btn-xs">#{msgs.edit}</button>
-                                                        <button type="button" class="btn btn-default btn-xs">#{msgs.delete}</button>
+                                                    <f:facet name="header"><button type="button" class="btn btn-success btn-block">#{msgs.add}</button></f:facet>
+                                                    <div><button type="button" class="btn btn-info btn-block">#{msgs.edit}</button></div>
+                                                    <br></br>
+                                                    <div> <button type="button" class="btn btn-danger btn-block">#{msgs.delete}</button></div>
                                                 </h:column>
                                             </h:dataTable>
                                         </h:form>

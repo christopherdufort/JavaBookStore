@@ -22,6 +22,9 @@ public class ManagerView {
 
     // injecting controllers
     @Inject
+    AdJpaController adJpa;
+
+    @Inject
     BookJpaController bookJpaController;
 
     @Inject
@@ -35,7 +38,7 @@ public class ManagerView {
 
     @Inject
     RegisteredUserJpaController userJpa;
-    
+
     @Inject
     NewsFeedJpaController newsFeedJpaController;
 
@@ -43,6 +46,9 @@ public class ManagerView {
     SurveyJpaController surveyJpaController;
 
     //injecting beans
+    @Inject
+    Ad ad;
+
     @Inject
     Book book;
 
@@ -63,6 +69,15 @@ public class ManagerView {
 
     @Inject
     Survey survey;
+
+    /**
+     *
+     *
+     * All adds.
+     */
+    public List<Ad> getAllAds() {
+        return adJpa.findAllAds();
+    }
 
     /**
      *
@@ -99,7 +114,6 @@ public class ManagerView {
         return userJpa.findAll();
 
     }
-
     /**
      * News table methods
      *
