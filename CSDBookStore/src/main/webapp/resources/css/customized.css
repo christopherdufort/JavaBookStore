@@ -112,3 +112,12 @@ li{
     width: 100%;
     height: auto;
 }
+.top-bar-right .button{
+    width: 100%;
+    display: block;
+}
+.dropdown.menu .submenu.first-sub{
+    margin-top: 4px;
+    left: auto;
+    right: 0;
+}

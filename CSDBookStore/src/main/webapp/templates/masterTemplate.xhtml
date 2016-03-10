@@ -46,10 +46,35 @@
                     <ul class="menu" data-responsive-menu="drilldown medium-dropdown">
                         <li><input type="search" placeholder="Search"/></li>
                         <li><button type="button" class="button">Search</button></li>
-                        <li><h:outputLink class ="fi-shopping-cart"  value="faces/cart.xhtml">Cart</h:outputLink></li>
-                        <li><h:outputLink rendered="#{authenticationController.isAnonymous()}" value="faces/login.xhtml">Login</h:outputLink>
-                            <h:outputLink rendered="#{!authenticationController.isAnonymous()}" value="faces/logout.xhtml">Logout</h:outputLink></li>
-                        <li><h:outputLink rendered="#{authenticationController.isAnonymous()}" value="faces/signup.xhtml">Sign up</h:outputLink></li>
+                        <li class="has-dropdown no-click ">
+                            <h:outputLink styleClass=""><i class="fi-torso"></i></h:outputLink>
+                            <ul class="dropdown">
+                                <ui:fragment rendered="#{authenticationController.isAnonymous()}">
+                                    <li>
+                                        <h:outputLink styleClass="button" value="/CSDBookStore/faces/login.xhtml">Login</h:outputLink>
+                                    </li>
+                                    <li>
+                                        <h:outputLink styleClass="button" value="/CSDBookStore/faces/signup.xhtml">Sign up</h:outputLink>
+                                    </li>
+                                </ui:fragment>
+                                <ui:fragment rendered="#{authenticationController.isClient()}">
+                                    <li>
+                                        <h:outputLink styleClass="button" value="#">My Profile</h:outputLink>
+                                    </li>
+                                    <li>
+                                        <h:outputLink styleClass="button fi-shopping-cart" value="/CSDBookStore/faces/cart.xhtml">My Cart</h:outputLink>
+                                    </li>
+                                    <li>
+                                        <h:outputLink styleClass="button" value="/CSDBookStore/faces/logout.xhtml">Logout</h:outputLink>
+                                    </li>
+                                </ui:fragment>
+                                <ui:fragment rendered="#{authenticationController.isManager()}">
+                                    <li>
+                                        <h:outputLink styleClass="button" value="/CSDBookStore/faces/m_index.xhtml">Admin Panel</h:outputLink>
+                                    </li>
+                                </ui:fragment>
+                            </ul>
+                        </li>
                         <li><a href="">FR</a></li>
                     </ul>
                 </div>
@@ -104,7 +129,7 @@
             });
         </script>
 
-
+        <script src="http://foundation.zurb.com/sites/docs/v/5.5.3/assets/js/modernizr.js"></script>
         <script type="text/javascript" src="https://intercom.zurb.com/scripts/zcom.js"></script>
     </h:body>
 </html>
