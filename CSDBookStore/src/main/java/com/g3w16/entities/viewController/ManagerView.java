@@ -14,40 +14,75 @@ import javax.inject.Named;
 /**
  *
  * @author Xin Ma
+ * @author Rita Lazaar
  */
 @Named
 @RequestScoped
 public class ManagerView {
+
+    // injecting controllers
     @Inject
     BookJpaController bookJpaController;
-    
+
     @Inject
     RegisteredUserJpaController registeredUserJpaController;
-    
+
     @Inject
     ReviewJpaController reviewJpaController;
+
+    @Inject
+    InvoiceJpaController invoiceJpa;
     
+    @Inject
+    RegisteredUserJpaController userJpa;
+
+    //injecting beans
     @Inject
     Book book;
-    
-    @Inject 
+
+    @Inject
     RegisteredUser registeredUser;
-    
+
     @Inject
     Review review;
+
+    @Inject
+    Invoice invoice;
     
+    @Inject
+    RegisteredUser user;
+    
+    
+
     /**
-     * 
+     *
      * Review table methods.
      */
-    public List<Review> getAllReview(){
+    public List<Review> getAllReview() {
         return reviewJpaController.findReviewEntities();
     }
-    
+
     /**
      * Book table methods
      */
-    public List<Book> getAllBook(){
+    public List<Book> getAllBook() {
         return bookJpaController.findBookEntities();
+    }
+    /**
+     * Returning all invoices
+     * @return 
+     */
+    public List<Invoice> getAllInvoices() {
+        return invoiceJpa.findInvoiceEntities();
+
+    }
+    
+    /**
+     * Returning all invoices
+     * @return 
+     */
+    public List<RegisteredUser> getAllUsers() {
+        return userJpa.findAll();
+
     }
 }

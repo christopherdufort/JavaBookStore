@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
         <ui:composition template="./templates/m_masterTemplate.xhtml">
@@ -24,57 +25,77 @@
                                 <!-- /.panel-heading -->
                                 <div class="panel-body">
                                     <div class="dataTable_wrapper table-responsive">
-                                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                            <thead>
-                                                <tr>
-                                                    <th>User_id</th>
-                                                    <th>Email_address</th>  
-                                                    <th>Password</th> 
-                                                    <th>Title_id</th>
-                                                    <th>First_name</th>
-                                                    <th>Last_name</th>
-                                                    <th>Company_name</th>
-                                                    <th>Address_one</th>
-                                                    <th>Address_two</th>
-                                                    <th>City</th>
-                                                    <th>Province_id</th>
-                                                    <th>Country</th>
-                                                    <th>Postal_code</th>
-                                                    <th>Home_phone</th>
-                                                    <th>Cell_phone</th>
-                                                    <th>Manager</th>
-                                                    <th>Active</th>
-                                                    <th>
-                                                        <button type="button" class="btn btn-default btn-xs pull-right">
-                                                            Add
-                                                        </button></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>abc123@gmail.com</td>
-                                                    <td>abc123</td>
-                                                    <td>1</td>
-                                                    <td>Felicia</td>
-                                                    <td>Cummerate</td>
-                                                    <td>Dawson College</td>
-                                                    <td>3456 sherbrooke west</td>
-                                                    <td> </td>
-                                                    <td>Montreal</td>
-                                                    <td>1</td>
-                                                    <td>Canada</td>
-                                                    <td>H4B1N1</td>
-                                                    <td>514-235-8924</td>
-                                                    <td>514-999-9999</td>
-                                                    <td>0</td>
-                                                    <td>1</td>
-                                                    <td><button type="button" class="btn btn-default btn-xs">Edit</button>
-                                                        <button type="button" class="btn btn-default btn-xs">Delete</button></td>
-                                                </tr>
-
-                                            </tbody>
-                                        </table>
+                                        <h:form>
+                                            <h:dataTable class="table table-striped table-bordered table-hover" id="dataTables-example" value="#{managerView.allUsers}" var="user">
+                                                <h:column>
+                                                    <f:facet name="header">#{msgs.user_id}</f:facet>
+                                                    #{user.userId}
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">#{msgs.email_address}</f:facet>
+                                                    #{user.emailAddress}
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">#{msgs.title_id}</f:facet>
+                                                    #{user.titleId.title}
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">#{msgs.first_name}</f:facet>
+                                                    #{user.firstName}
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">#{msgs.last_name}</f:facet>
+                                                    #{user.lastName}
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">#{msgs.company_name}</f:facet>
+                                                    #{user.companyName}
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">#{msgs.address_one}</f:facet>
+                                                    #{user.addressOne}
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">#{msgs.address_two}</f:facet>
+                                                    #{user.addressTwo}
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">#{msgs.city}</f:facet>
+                                                    #{user.city}
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">#{msgs.province_id}</f:facet>
+                                                    #{user.provinceId.province}
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">#{msgs.country}</f:facet>
+                                                    #{user.country}
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">#{msgs.postal_code}</f:facet>
+                                                    #{user.postalCode}
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">#{msgs.home_phone}</f:facet>
+                                                    #{user.homePhone}
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">#{msgs.cell_phone}</f:facet>
+                                                    #{user.cellPhone}
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">#{msgs.manager}</f:facet>
+                                                    #{user.manager}
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">#{msgs.active}</f:facet>
+                                                    #{user.active}
+                                                </h:column>
+                                                 <h:column>
+                                                    <f:facet name="header"><button type="button" class="btn btn-default pull-right">#{msgs.add}</button></f:facet>
+                                                </h:column>
+                                            </h:dataTable>
+                                        </h:form>
                                     </div>
                                     <!-- /.table-responsive -->
                                 </div>
