@@ -28,6 +28,12 @@ public class ManagerView {
     ReviewJpaController reviewJpaController;
     
     @Inject
+    NewsFeedJpaController newsFeedJpaController;
+    
+    @Inject
+    SurveyJpaController surveyJpaController;
+    
+    @Inject
     Book book;
     
     @Inject 
@@ -36,8 +42,13 @@ public class ManagerView {
     @Inject
     Review review;
     
+    @Inject 
+    NewsFeed newsFeed;
+    
+    @Inject
+    Survey survey;
+    
     /**
-     * 
      * Review table methods.
      */
     public List<Review> getAllReview(){
@@ -49,5 +60,20 @@ public class ManagerView {
      */
     public List<Book> getAllBook(){
         return bookJpaController.findBookEntities();
+    }
+    
+    /**
+     * News table methods
+     * @return 
+     */
+    public List<NewsFeed> getAllNews(){
+        return newsFeedJpaController.findAllNewsFeeds();
+    }
+    
+    /**
+     * Survey table methods
+     */
+    public List<Survey> getAllSurvey(){
+        return surveyJpaController.findAllSurveys();
     }
 }

@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
         <ui:composition template="./templates/m_masterTemplate.xhtml">
@@ -24,35 +25,45 @@
                                 <!-- /.panel-heading -->
                                 <div class="panel-body">
                                     <div class="dataTable_wrapper table-responsive">
-                                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                            <thead>
-                                                <tr>
-                                                    <th>Survey_id</th>
-                                                    <th>Question</th>
-                                                    <th>Answer_one</th>
-                                                    <th>Answer_two</th>
-                                                    <th>Answer_three</th>
-                                                    <th>Answer_four</th>
-                                                    <th>
-                                                        <button type="button" class="btn btn-default btn-xs pull-right">
-                                                            Add
-                                                        </button></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>Internet Explorer 4.0</td>
-                                                    <td>a</td>
-                                                    <td>b</td>
-                                                    <td>c</td>
-                                                    <td>d</td>
-                                                    <td><button type="button" class="btn btn-default btn-xs">Edit</button>
-                                                        <button type="button" class="btn btn-default btn-xs">Delete</button></td>
-                                                </tr>
+                                       <h:form>
+                                           <h:dataTable class="table table-striped table-bordered table-hover" id="dataTables-example" value="#{managerView.allSurvey}" var="surveys">
+                                             <h:column>
+                                                 <f:facet name="header">#{msgs.survey_id}</f:facet>
+                                                    #{surveys.surveyId}
+                                                </h:column>
 
-                                            </tbody>
-                                        </table>
+                                                <h:column>
+                                                    <f:facet name="header">#{msgs.question}</f:facet>
+                                                    #{surveys.question}
+                                                </h:column>
+                                               
+                                                <h:column>
+                                                    <f:facet name="header">#{msgs.answerOne}</f:facet>
+                                                    #{surveys.answerOne}
+                                                </h:column>
+                                               
+                                               <h:column>
+                                                   <f:facet name="header">#{msgs.answerTwo}</f:facet>
+                                                    #{surveys.answerTwo}
+                                                </h:column>
+                                               
+                                               <h:column>
+                                                   <f:facet name="header">#{msgs.answerThree}</f:facet>
+                                                    #{surveys.answerThree}
+                                                </h:column>
+                                               
+                                                 <h:column>
+                                                     <f:facet name="header">#{msgs.answerDefault}</f:facet>
+                                                    #{surveys.answerDefault}
+                                                </h:column>    
+                                               
+                                               <h:column>
+                                                    <f:facet name="header"><button type="button" class="btn btn-default btn-xs pull-right">#{msgs.add}</button></f:facet>
+                                                        <button type="button" class="btn btn-default btn-xs">#{msgs.edit}</button>
+                                                        <button type="button" class="btn btn-default btn-xs">#{msgs.delete}</button>
+                                                </h:column>
+                                            </h:dataTable>
+                                        </h:form>
                                     </div>
                                     <!-- /.table-responsive -->
                                 </div>
