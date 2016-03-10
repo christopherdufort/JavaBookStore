@@ -32,9 +32,15 @@ public class ManagerView {
 
     @Inject
     InvoiceJpaController invoiceJpa;
-    
+
     @Inject
     RegisteredUserJpaController userJpa;
+    
+    @Inject
+    NewsFeedJpaController newsFeedJpaController;
+
+    @Inject
+    SurveyJpaController surveyJpaController;
 
     //injecting beans
     @Inject
@@ -48,13 +54,18 @@ public class ManagerView {
 
     @Inject
     Invoice invoice;
-    
+
     @Inject
     RegisteredUser user;
-    
-    
+
+    @Inject
+    NewsFeed newsFeed;
+
+    @Inject
+    Survey survey;
 
     /**
+     *
      *
      * Review table methods.
      */
@@ -68,21 +79,41 @@ public class ManagerView {
     public List<Book> getAllBook() {
         return bookJpaController.findBookEntities();
     }
+
     /**
      * Returning all invoices
-     * @return 
+     *
+     * @return
      */
     public List<Invoice> getAllInvoices() {
         return invoiceJpa.findInvoiceEntities();
 
     }
-    
+
     /**
      * Returning all invoices
-     * @return 
+     *
+     * @return
      */
     public List<RegisteredUser> getAllUsers() {
         return userJpa.findAll();
 
     }
+
+    /**
+     * News table methods
+     *
+     * @return
+     */
+    public List<NewsFeed> getAllNews() {
+        return newsFeedJpaController.findAllNewsFeeds();
+    }
+
+    /**
+     * Survey table methods
+     */
+    public List<Survey> getAllSurvey() {
+        return surveyJpaController.findAllSurveys();
+    }
+
 }
