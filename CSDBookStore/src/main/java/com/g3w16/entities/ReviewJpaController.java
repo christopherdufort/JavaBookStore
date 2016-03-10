@@ -26,7 +26,6 @@ import javax.transaction.UserTransaction;
  * @author Xin Ma
  */
 @Named
-@ManagedBean
 @SessionScoped
 public class ReviewJpaController implements Serializable {
 
