@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import java.util.List;
+import javax.annotation.ManagedBean;
 import javax.annotation.Resource;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
@@ -25,6 +26,7 @@ import javax.transaction.UserTransaction;
  * @author Xin Ma
  */
 @Named
+@ManagedBean
 @SessionScoped
 public class ReviewJpaController implements Serializable {
 
@@ -181,8 +183,12 @@ public class ReviewJpaController implements Serializable {
             throw ex;
         }
     }
-
+    
     public List<Review> findReviewEntities() {
+        return findReviewEntities(true, -1, -1);
+    }
+
+    public List<Review> getFindReviewEntities() {
         return findReviewEntities(true, -1, -1);
     }
 
