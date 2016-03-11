@@ -28,12 +28,12 @@
                                     <h:inputText value="#{signinBean.email}"></h:inputText>
                                 </label>
                                 <label>Password
-                                    <h:inputText value="#{signinBean.password}"></h:inputText>
+                                    <h:inputSecret value="#{signinBean.password}"></h:inputSecret>
                                 </label>
                                 <label>Confirm Password
                                     <h:inputText value="#{signinBean.confirm_password}"></h:inputText>
                                 </label>
-                                <p><h:commandLink value="Do Signin" class="button expanded" action="#{userSigninView.signin(signinBean)}"></h:commandLink></p>
+                                <p><h:commandLink value="Sign in" class="button expanded" action="#{userSigninView.signin(signinBean)}"></h:commandLink></p>
                             </div>
                         </h:form>
                     </div>

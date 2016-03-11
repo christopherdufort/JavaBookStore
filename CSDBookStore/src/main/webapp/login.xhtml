@@ -33,11 +33,11 @@
                                     </h:message>
                                 </label>
                                 <label>Password
-                                    <h:inputText id="passwordInput" value="#{authBean.password}" >
-                                    </h:inputText>
+                                    <h:inputSecret id="passwordInput" value="#{authBean.password}" >
+                                    </h:inputSecret>
                                 </label>
                                 <!--<input id="show-password" type="checkbox"><label for="show-password">Show password</label></input>-->
-                                <p><h:commandLink value="Do Login" class="button expanded" action="#{userAuthView.authenticate(authBean)}" ></h:commandLink></p>
+                                <p><h:commandLink value="Log in" class="button expanded" action="#{userAuthView.authenticate(authBean)}" ></h:commandLink></p>
                                 <p class="text-center"><a href="resetPassword.xhtml">Forgot your password?</a></p>   
                             </div>
                         </h:form>

@@ -33,20 +33,20 @@
                                     </h:message>
                                 </label>
                                 <label>Password
-                                    <h:inputText id="passwordInput" value="#{signupBean.password}">
+                                    <h:inputSecret id="passwordInput" value="#{signupBean.password}">
                                         <f:validator validatorId="com.g3w16.validator.PasswordValidator"/>
-                                    </h:inputText>
+                                    </h:inputSecret>
                                     <h:message for="passwordInput" style="color:red">
                                     </h:message>
                                 </label>
                                 <label>Confirm Password
-                                    <h:inputText id="confirmPasswordInput" value="#{signupBean.confirm_password}">
+                                    <h:inputSecret id="confirmPasswordInput" value="#{signupBean.confirm_password}">
                                         <f:validator validatorId="com.g3w16.validator.ConfirmPasswordValidator"/>
-                                    </h:inputText>
+                                    </h:inputSecret>
                                     <h:message for="confirmPasswordInput" style="color:red">
                                     </h:message>
                                 </label>
-                                <p><h:commandLink value="Do Signin" class="button expanded" action="#{userSignupView.signup()}" ></h:commandLink></p>
+                                <p><h:commandLink value="Sign up" class="button expanded" action="#{userSignupView.signup()}" ></h:commandLink></p>
                             </div>
                         </h:form>
                     </div>
