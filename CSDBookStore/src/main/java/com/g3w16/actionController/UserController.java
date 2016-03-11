@@ -40,6 +40,8 @@ public class UserController {
         RegisteredUser registeredUser = new RegisteredUser();
         registeredUser.setEmailAddress(signinBean.getEmail());
         registeredUser.setPassword(signinBean.getPassword());
+        registeredUser.setActive(Boolean.TRUE);
+        registeredUser.setManager(Boolean.FALSE);
 /*
         Not needed, handled by ConfirmPasswordValidator
         
@@ -62,6 +64,10 @@ public class UserController {
         } catch (NoResultException ex) {
             return false;
         }
+        if(registeredUser == null){
+            // that should never happend, but for reason, it does happend
+            return false;
+        }
         return registeredUser.getActive();
     }
     
@@ -70,6 +76,10 @@ public class UserController {
         try {
             registeredUser = registeredUserJpaController.findUserByEmail(user.getEmailAddress());
         } catch (NoResultException ex) {
+            return false;
+        }
+        if(registeredUser == null){
+            // that should never happend, but for reason, it does happend
             return false;
         }
         return registeredUser.getManager() && registeredUser.getActive();
