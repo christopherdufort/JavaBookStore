@@ -1,7 +1,10 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
@@ -17,7 +20,7 @@
 
             <ui:define name="content">
                 <div class="callout secondary">
-                    <form>
+                    <h:form id="profileForm">
                         <div class="row">
                             <div class="small-12 large-6 columns">
                                 <label>Title
@@ -31,34 +34,64 @@
                                 </label>
                             </div>
                             <div class="small-12 large-6 columns">
-                                <label>Last Name
-                                    <input type="text" placeholder="Enter Text"></input>
-                                </label>
+                                <h:outputLabel for="lastName" value="#{msgs.lastName}"/>
+                                <h:inputText id="lastName" label="#{msgs.lastName}"
+                                             pt:placeholder="Enter Text"
+                                             value="#{registeredUserBackingBean.registeredUser.lastName}"
+                                             required="true" requiredMessage="#{msgs.required}">
+                                    <f:validateLength maximum="25"/>
+                                </h:inputText>
+                                <h:message class="error" for="lastName"/>
                             </div>
                             <div class="small-12 large-6 columns">
-                                <label>First Name
-                                    <input type="text" placeholder="Enter Text"></input>
-                                </label>
+                                <h:outputLabel for="firstName" value="#{msgs.firstName}"/>
+                                <h:inputText id="firstName" label="#{msgs.firstName}"
+                                             pt:placeholder="Enter Text"
+                                             value="#{registeredUserBackingBean.registeredUser.firstName}"
+                                             required="true" requiredMessage="#{msgs.required}">
+                                    <f:validateLength maximum="25"/>
+                                </h:inputText>
+                                <h:message class="error" for="firstName"/>
                             </div>
                             <div class="small-12 large-6 columns">
-                                <label>Company / Institution Name
-                                    <input type="text" placeholder="Enter Text"></input>
-                                </label>
+                                <h:outputLabel for="companyName" value="#{msgs.companyName}"/>
+                                <h:inputText id="companyName" label="#{msgs.companyName}"
+                                             pt:placeholder="Enter Text"
+                                             value="#{registeredUserBackingBean.registeredUser.companyName}"
+                                             required="true" requiredMessage="#{msgs.required}">
+                                    <f:validateLength maximum="50"/>
+                                </h:inputText>
+                                <h:message class="error" for="companyName"/>
                             </div>
                             <div class="small-12 large-6 columns">
-                                <label>Address 1
-                                    <input type="text" placeholder="Enter Text"></input>
-                                </label>
+                                <h:outputLabel for="addressOne" value="#{msgs.addressOne}"/>
+                                <h:inputText id="addressOne" label="#{msgs.addressOne}"
+                                             pt:placeholder="Enter Text"
+                                             value="#{registeredUserBackingBean.registeredUser.addressOne}"
+                                             required="true" requiredMessage="#{msgs.required}">
+                                    <f:validateLength maximum="50"/>
+                                </h:inputText>
+                                <h:message class="error" for="addressOne"/>
                             </div>
                             <div class="small-12 large-6 columns">
-                                <label>Address 2
-                                    <input type="text" placeholder="Enter Text"></input>
-                                </label>
+                                <h:outputLabel for="addressTwo" value="#{msgs.addressTwo}"/>
+                                <h:inputText id="addressTwo" label="#{msgs.addressTwo}"
+                                             pt:placeholder="Enter Text"
+                                             value="#{registeredUserBackingBean.registeredUser.addressTwo}"
+                                             required="true" requiredMessage="#{msgs.required}">
+                                    <f:validateLength maximum="50"/>
+                                </h:inputText>
+                                <h:message class="error" for="addressTwo"/>
                             </div>
                             <div class="small-12 large-6 columns">
-                                <label>City
-                                    <input type="text" placeholder="Enter Text"></input>
-                                </label>
+                                <h:outputLabel for="city" value="#{msgs.city}"/>
+                                <h:inputText id="city" label="#{msgs.city}"
+                                             pt:placeholder="Enter Text"
+                                             value="#{registeredUserBackingBean.registeredUser.city}"
+                                             required="true" requiredMessage="#{msgs.required}">
+                                    <f:validateLength maximum="25"/>
+                                </h:inputText>
+                                <h:message class="error" for="city"/>
                             </div>
                             <div class="small-12 large-6 columns">
                                 <label>Province
@@ -80,40 +113,71 @@
                                 </label>
                             </div>
                             <div class="small-12 large-6 columns">
-                                <label>Country
-                                    <input type="text" placeholder="Canada" disabled=""></input>
-                                </label>
+                                <h:outputLabel for="country" value="#{msgs.country}"/>
+                                <h:inputText id="country" label="#{msgs.country}"
+                                             pt:placeholder="Canada"
+                                             value="Canada"
+                                             required="true" requiredMessage="#{msgs.required}">
+                                    <f:validateLength maximum="25"/>
+                                </h:inputText>
+                                <h:message class="error" for="country"/>
                             </div>
                             <div class="small-12 large-6 columns">
-                                <label>Postal Code
-                                    <input type="text" placeholder="Enter Text" ></input>
-                                </label>
+                                <h:outputLabel for="postalCode" value="#{msgs.postalCode}"/>
+                                <h:inputText id="postalCode" label="#{msgs.postalCode}"
+                                             pt:placeholder="Enter Text"
+                                             value="#{registeredUserBackingBean.registeredUser.postalCode}"
+                                             required="true" requiredMessage="#{msgs.required}">
+                                    <f:validateLength maximum="10"/>
+                                </h:inputText>
+                                <h:message class="error" for="postalCode"/>
                             </div>
                             <div class="small-12 large-6 columns">
-                                <label>Home Phone #
-                                    <input type="text" placeholder="Enter Text" ></input>
-                                </label>
+                                <h:outputLabel for="homeNum" value="#{msgs.homeNum}"/>
+                                <h:inputText id="homeNum" label="#{msgs.homeNum}"
+                                             pt:placeholder="Enter Text"
+                                             value="#{registeredUserBackingBean.registeredUser.homePhone}"
+                                             required="true" requiredMessage="#{msgs.required}">
+                                    <f:validateLength maximum="25"/>
+                                </h:inputText>
+                                <h:message class="error" for="homeNum"/>
                             </div>
                             <div class="small-12 large-6 columns">
-                                <label>Cell Phone #
-                                    <input type="text" placeholder="Enter Text" ></input>
-                                </label>
+                                <h:outputLabel for="cellNum" value="#{msgs.cellNum}"/>
+                                <h:inputText id="cellNum" label="#{msgs.cellNum}"
+                                             pt:placeholder="Enter Text"
+                                             value="#{registeredUserBackingBean.registeredUser.cellPhone}"
+                                             required="true" requiredMessage="#{msgs.required}">
+                                    <f:validateLength maximum="25"/>
+                                </h:inputText>
+                                <h:message class="error" for="cellNum"/>
                             </div>
                             <div class="small-12 large-6 columns">
-                                <label>Email
-                                    <input type="text" placeholder="Enter Text" ></input>
-                                </label>
+                                <h:outputLabel for="email" value="#{msgs.email}"/>
+                                <h:inputText id="email" label="#{msgs.email}"
+                                             pt:placeholder="Enter Text"
+                                             value="#{registeredUserBackingBean.registeredUser.emailAddress}"
+                                             required="true" requiredMessage="#{msgs.required}">
+                                    <f:validateLength maximum="50"/>
+                                    <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                </h:inputText>
+                                <h:message class="error" for="email"/>
                             </div>
                             <div class="small-12 large-6 columns">
-                                <label>Password
-                                    <input type="text" placeholder="Enter Text" ></input>
-                                </label>
+                                <h:outputLabel for="password" value="#{msgs.password}"/>
+                                <h:inputSecret id="password" label="#{msgs.password}"
+                                               pt:placeholder="Enter Text"
+                                               value="#{registeredUserBackingBean.registeredUser.password}"
+                                               required="true" requiredMessage="#{msgs.required}">
+                                    <f:validateLength maximum="25"/>
+                                </h:inputSecret>
+                                <h:message class="error" for="password"/>
                             </div>
                             <div class="small-12 large-12 columns">
                                 <button type="submit" class="button">Submit your changes!</button>
                             </div>
                         </div>
-                    </form>
+                    </h:form>
                 </div>
             </ui:define>
 
