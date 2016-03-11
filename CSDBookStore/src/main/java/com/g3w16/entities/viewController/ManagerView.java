@@ -186,16 +186,17 @@ public class ManagerView {
      */
     public BigDecimal getAllTotalSales() {
 
-        BigDecimal total = BigDecimal.ZERO;
+        BigDecimal total = BigDecimal.valueOf(0);
+        double t = 0;
 
         List<Invoice> allInvoices = getAllInvoices();
 
         for (int i = 0; i < allInvoices.size(); i++) {
 
             Invoice in = allInvoices.get(i);
-            total.add(in.getTotalGrossValueOfSale());
+            t += in.getTotalGrossValueOfSale().doubleValue();
         }
-
+        total = BigDecimal.valueOf(t).setScale(2, RoundingMode.CEILING);
         return total;
     }
 
@@ -210,15 +211,16 @@ public class ManagerView {
      */
     public BigDecimal getAllSalesByClient(Date date1, Date date2, Integer user) {
         BigDecimal total = BigDecimal.ZERO;
+        double t = 0;
 
         List<Invoice> allInvoices = getAllInvoicesByDateAndUser(date1, date2, user);
 
         for (int i = 0; i < allInvoices.size(); i++) {
 
             Invoice in = allInvoices.get(i);
-            total.add(in.getTotalGrossValueOfSale());
+            t += in.getTotalGrossValueOfSale().doubleValue();
         }
-
+        total = BigDecimal.valueOf(t).setScale(2, RoundingMode.CEILING);
         return total;
     }
 }
