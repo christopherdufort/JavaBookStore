@@ -18,6 +18,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -156,6 +158,38 @@ public class InvoiceJpaControllerTest {
         List<Invoice> result = invoiceJpaController.findInvoiceEntities();
         //originally 6 entries in tables
         assertThat(result.size()).isEqualTo(6);
+
+    }
+
+    /**
+     * Test of findInvoiceEntities method, of class InvoiceJpaController.
+     * Finding all invoices.
+     */
+    @Test
+    public void testFindAllInvoiceEntitiesWithDate() throws Exception {
+        System.out.println("findInvoiceEntities");
+        Date date1 = Date.from(LocalDateTime.of(2016, Month.FEBRUARY, 1, 0, 0).atZone(ZoneId.systemDefault()).toInstant());
+        Date date2 = Date.from(LocalDateTime.of(2016, Month.FEBRUARY, 3, 0, 0).atZone(ZoneId.systemDefault()).toInstant());
+
+        List<Invoice> result = invoiceJpaController.findInvoiceByDate(date1, date2);
+        //originally 6 entries in tables
+        assertThat(result.size()).isEqualTo(3);
+
+    }
+
+    /**
+     * Test of findInvoiceEntities method, of class InvoiceJpaController finding
+     * by date and user number. Finding all invoices.
+     */
+    @Test
+    public void testFindAllInvoiceEntitiesWithDateandUser() throws Exception {
+        System.out.println("findInvoiceEntities");
+        Date date1 = Date.from(LocalDateTime.of(2016, Month.FEBRUARY, 1, 0, 0).atZone(ZoneId.systemDefault()).toInstant());
+        Date date2 = Date.from(LocalDateTime.of(2016, Month.FEBRUARY, 2, 0, 0).atZone(ZoneId.systemDefault()).toInstant());
+
+        List<Invoice> result = invoiceJpaController.findInvoiceByDateAndUser(date1, date2, 1231);
+        //originally 6 entries in tables
+        assertThat(result.size()).isEqualTo(2);
 
     }
 

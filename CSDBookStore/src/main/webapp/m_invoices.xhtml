@@ -26,34 +26,42 @@
                                 <!-- /.panel-heading -->
                                 <div class="panel-body">
                                     <div class="dataTable_wrapper table-responsive">
-                                         <h:form>
+                                        <h:form>
                                             <h:dataTable class="table table-striped table-bordered table-hover" id="dataTables-example" value="#{managerView.allInvoices}" var="invoice">
                                                 <h:column>
                                                     <f:facet name="header">#{msgs.invoice_id}</f:facet>
-                                                    #{invoice.invoiceId}
+                                                        #{invoice.invoiceId}
                                                 </h:column>
                                                 <h:column>
                                                     <f:facet name="header">#{msgs.sale_date}</f:facet>
-                                                    #{invoice.saleDate}
+                                                        #{invoice.saleDate}
                                                 </h:column>
                                                 <h:column>
                                                     <f:facet name="header">#{msgs.user_id}</f:facet>
-                                                    #{invoice.userNumber}
+                                                        #{invoice.userNumber}
                                                 </h:column>
                                                 <h:column>
                                                     <f:facet name="header">#{msgs.total_net_value_of_sale}</f:facet>
-                                                    #{invoice.totalNetValueOfSale}
+                                                        #{invoice.totalNetValueOfSale}
                                                 </h:column>
                                                 <h:column>
                                                     <f:facet name="header">#{msgs.total_gross_value_of_sale}</f:facet>
-                                                    #{invoice.totalGrossValueOfSale}
+                                                        #{invoice.totalGrossValueOfSale}
                                                 </h:column>
-                                                 <h:column>
-                                                    <f:facet name="header"><button type="button" class="btn btn-success btn-block">#{msgs.add}</button></f:facet>
+                                                <h:column>
+                                                    <f:facet name="header"><button type="button" class="btn btn-success btn-block">#{msgs.add}</button>
+                                                    
+                                                    </f:facet>
+                                                    <button type="button" class="btn btn-info btn-block">#{msgs.details}</button>
                                                 </h:column>
                                             </h:dataTable>
                                         </h:form>
-                                        
+
+                                        <h:outputText value="#{managerView.totalSalesForOneInvoice}">
+
+
+                                        </h:outputText>
+
                                     </div>
                                     <!-- /.table-responsive -->
                                 </div>

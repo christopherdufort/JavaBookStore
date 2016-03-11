@@ -31,6 +31,8 @@ import javax.persistence.TemporalType;
 @Table(name = "invoice", catalog = "g3w16", schema = "")
 @NamedQueries({
     @NamedQuery(name = "Invoice.findAll", query = "SELECT i FROM Invoice i"),
+    @NamedQuery(name = "Invoice.findAllInvoicesByDate", query = "SELECT i FROM Invoice i WHERE i.saleDate >= ?1 and i.saleDate <= ?2"),
+    @NamedQuery(name = "Invoice.findAllInvoicesByDateAndUser", query = "SELECT i FROM Invoice i WHERE i.saleDate >= ?1 and i.saleDate <= ?2 and i.userNumber = ?3"),
     @NamedQuery(name = "Invoice.findByInvoiceId", query = "SELECT i FROM Invoice i WHERE i.invoiceId = :invoiceId"),
     @NamedQuery(name = "Invoice.findBySaleDate", query = "SELECT i FROM Invoice i WHERE i.saleDate = :saleDate"),
     @NamedQuery(name = "Invoice.findByUserNumber", query = "SELECT i FROM Invoice i WHERE i.userNumber = :userNumber"),
@@ -143,5 +145,5 @@ public class Invoice implements Serializable {
     public String toString() {
         return "com.g3w16.entities.Invoice[ invoiceId=" + invoiceId + " ]";
     }
-    
+
 }

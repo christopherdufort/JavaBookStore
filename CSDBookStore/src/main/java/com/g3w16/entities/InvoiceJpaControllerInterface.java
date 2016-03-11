@@ -9,18 +9,23 @@ import com.g3w16.entities.exceptions.IllegalOrphanException;
 import com.g3w16.entities.exceptions.NonexistentEntityException;
 import com.g3w16.entities.exceptions.RollbackFailureException;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
  *
  * @author Rita Lazaar
- * @version SNAPSHOT - 5.3.2
+ * @version SNAPSHOT - 0.0.4
  */
 public interface InvoiceJpaControllerInterface extends Serializable {
 
     void create(Invoice invoice) throws RollbackFailureException, Exception;
 
     Invoice findInvoice(Integer id);
+ // new method
+    List<Invoice> findInvoiceByDate(Date date1, Date date2);
+//new method
+    List<Invoice> findInvoiceByDateAndUser(Date date1, Date date2, Integer userNumber);
 
     List<Invoice> findInvoiceByUserNumber(Integer userNumber);
 
@@ -29,5 +34,5 @@ public interface InvoiceJpaControllerInterface extends Serializable {
     List<Invoice> findInvoiceEntities(int maxResults, int firstResult);
 
     int getInvoiceCount();
-    
+
 }

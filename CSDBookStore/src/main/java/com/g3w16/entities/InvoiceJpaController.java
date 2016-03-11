@@ -12,6 +12,7 @@ import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.enterprise.context.RequestScoped;
@@ -139,6 +140,37 @@ public class InvoiceJpaController implements InvoiceJpaControllerInterface {
     public List<Invoice> findInvoiceByUserNumber(Integer userNumber) {
         Query q = em.createNamedQuery("Invoice.findByUserNumber", Invoice.class);
         q.setParameter("userNumber", userNumber);
+        return q.getResultList();
+    }
+
+    /**
+     * This will return a list of invoices belonging to the user given to it.
+     *
+     * @param userNumber
+     * @return
+     */
+    @Override
+    public List<Invoice> findInvoiceByDate(Date date1, Date date2) {
+        Query q = em.createNamedQuery("Invoice.findAllInvoicesByDate", Invoice.class);
+        q.setParameter(1, date1);
+        q.setParameter(2, date2);
+
+        return q.getResultList();
+    }
+
+    /**
+     * This will return a list of invoices belonging to the user given to it.
+     *
+     * @param userNumber
+     * @return
+     */
+    @Override
+    public List<Invoice> findInvoiceByDateAndUser(Date date1, Date date2, Integer userNumber) {
+        Query q = em.createNamedQuery("Invoice.findAllInvoicesByDateAndUser", Invoice.class);
+        q.setParameter(1, date1);
+        q.setParameter(2, date2);
+        q.setParameter(3, userNumber);
+
         return q.getResultList();
     }
 
