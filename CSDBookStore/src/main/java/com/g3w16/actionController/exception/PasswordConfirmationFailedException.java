@@ -10,7 +10,6 @@ package com.g3w16.actionController.exception;
  * @author jesuisnuageux
  */
 public class PasswordConfirmationFailedException extends Exception {
-    
     @Override
     public String toString(){
         return "password & confirmation doesn't match";
