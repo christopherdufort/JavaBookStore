@@ -110,7 +110,7 @@ public class NewsFeedJpaController implements Serializable {
     }
 
     private List<NewsFeed> findNewsFeedEntities(boolean all, int maxResults, int firstResult) {
-        Query q = em.createQuery("select object(o) from NewsFeed as o");
+        Query q = em.createQuery("select object(o) from NewsFeed as o order by o.newsFeedId ASC");
         if (!all) {
             q.setMaxResults(maxResults);
             q.setFirstResult(firstResult);
