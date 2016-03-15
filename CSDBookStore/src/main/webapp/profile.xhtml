@@ -14,17 +14,21 @@
                 Profile
             </ui:define>
 
-            <!--            <ui:define name="event_listener">
-                            event_listener
-                        </ui:define>-->
+            <ui:define name="event_listener">
+                <f:metadata>
+                    <f:event listener="#{authenticationController.mustBeClient}" type="preRenderView" />
+                </f:metadata>
+            </ui:define>
 
             <ui:define name="content">
                 <div class="callout secondary">
                     <h:form id="profileForm">
                         <div class="row">
                             <div class="small-12 large-6 columns">
+                                <h:message for="profileForm" style="color:red">
+                                </h:message>
                                 <label>Title
-                                    <h:selectOneMenu value="#{profileBackingBean.authenticatedUser.registeredUser.titleId}">
+                                    <h:selectOneMenu value="#{profileBackingBean.titleId}">
                                         <f:selectItems value="#{profileBackingBean.availableTitles}"/>
                                     </h:selectOneMenu>
                                 </label>
@@ -33,7 +37,7 @@
                                 <h:outputLabel for="lastName" value="#{msgs.lastName}"/>
                                 <h:inputText id="lastName" label="#{msgs.lastName}"
                                              pt:placeholder="Enter Text"
-                                             value="#{profileBackingBean.authenticatedUser.registeredUser.lastName}"
+                                             value="#{profileBackingBean.lastName}"
                                              required="true" requiredMessage="#{msgs.required}">
                                     <f:validateLength maximum="25"/>
                                 </h:inputText>
@@ -43,7 +47,7 @@
                                 <h:outputLabel for="firstName" value="#{msgs.firstName}"/>
                                 <h:inputText id="firstName" label="#{msgs.firstName}"
                                              pt:placeholder="Enter Text"
-                                             value="#{profileBackingBean.authenticatedUser.registeredUser.firstName}"
+                                             value="#{profileBackingBean.firstName}"
                                              required="true" requiredMessage="#{msgs.required}">
                                     <f:validateLength maximum="25"/>
                                 </h:inputText>
@@ -53,7 +57,7 @@
                                 <h:outputLabel for="companyName" value="#{msgs.companyName}"/>
                                 <h:inputText id="companyName" label="#{msgs.companyName}"
                                              pt:placeholder="Enter Text"
-                                             value="#{profileBackingBean.authenticatedUser.registeredUser.companyName}"
+                                             value="#{profileBackingBean.companyName}"
                                              required="true" requiredMessage="#{msgs.required}">
                                     <f:validateLength maximum="50"/>
                                 </h:inputText>
@@ -63,7 +67,7 @@
                                 <h:outputLabel for="addressOne" value="#{msgs.addressOne}"/>
                                 <h:inputText id="addressOne" label="#{msgs.addressOne}"
                                              pt:placeholder="Enter Text"
-                                             value="#{profileBackingBean.authenticatedUser.registeredUser.addressOne}"
+                                             value="#{profileBackingBean.addressOne}"
                                              required="true" requiredMessage="#{msgs.required}">
                                     <f:validateLength maximum="50"/>
                                 </h:inputText>
@@ -73,7 +77,7 @@
                                 <h:outputLabel for="addressTwo" value="#{msgs.addressTwo}"/>
                                 <h:inputText id="addressTwo" label="#{msgs.addressTwo}"
                                              pt:placeholder="Enter Text"
-                                             value="#{profileBackingBean.authenticatedUser.registeredUser.addressTwo}"
+                                             value="#{profileBackingBean.addressTwo}"
                                              required="false" requiredMessage="#{msgs.required}">
                                     <f:validateLength maximum="50"/>
                                 </h:inputText>
@@ -83,7 +87,7 @@
                                 <h:outputLabel for="city" value="#{msgs.city}"/>
                                 <h:inputText id="city" label="#{msgs.city}"
                                              pt:placeholder="Enter Text"
-                                             value="#{profileBackingBean.authenticatedUser.registeredUser.city}"
+                                             value="#{profileBackingBean.city}"
                                              required="true" requiredMessage="#{msgs.required}">
                                     <f:validateLength maximum="25"/>
                                 </h:inputText>
@@ -91,7 +95,7 @@
                             </div>
                             <div class="small-12 large-6 columns">
                                 <label>Province
-                                    <h:selectOneMenu value="#{profileBackingBean.authenticatedUser.registeredUser.provinceId}">
+                                    <h:selectOneMenu value="#{profileBackingBean.provinceId}">
                                         <f:selectItems value="#{profileBackingBean.availableProvinces}"/>
                                     </h:selectOneMenu>
                                 </label>
@@ -110,7 +114,7 @@
                                 <h:outputLabel for="postalCode" value="#{msgs.postalCode}"/>
                                 <h:inputText id="postalCode" label="#{msgs.postalCode}"
                                              pt:placeholder="Enter Text"
-                                             value="#{profileBackingBean.authenticatedUser.registeredUser.postalCode}"
+                                             value="#{profileBackingBean.postalCode}"
                                              required="true" requiredMessage="#{msgs.required}">
                                     <f:validateLength maximum="10"/>
                                 </h:inputText>
@@ -120,7 +124,7 @@
                                 <h:outputLabel for="homeNum" value="#{msgs.homeNum}"/>
                                 <h:inputText id="homeNum" label="#{msgs.homeNum}"
                                              pt:placeholder="Enter Text"
-                                             value="#{profileBackingBean.authenticatedUser.registeredUser.homePhone}"
+                                             value="#{profileBackingBean.homePhone}"
                                              required="true" requiredMessage="#{msgs.required}">
                                     <f:validateLength maximum="25"/>
                                 </h:inputText>
@@ -130,7 +134,7 @@
                                 <h:outputLabel for="cellNum" value="#{msgs.cellNum}"/>
                                 <h:inputText id="cellNum" label="#{msgs.cellNum}"
                                              pt:placeholder="Enter Text"
-                                             value="#{profileBackingBean.authenticatedUser.registeredUser.cellPhone}"
+                                             value="#{profileBackingBean.cellPhone}"
                                              required="true" requiredMessage="#{msgs.required}">
                                     <f:validateLength maximum="25"/>
                                 </h:inputText>
@@ -140,7 +144,7 @@
                                 <h:outputLabel for="email" value="#{msgs.email}"/>
                                 <h:inputText id="email" label="#{msgs.email}"
                                              pt:placeholder="Enter Text"
-                                             value="#{profileBackingBean.authenticatedUser.registeredUser.emailAddress}"
+                                             value="#{profileBackingBean.emailAddress}"
                                              required="true" requiredMessage="#{msgs.required}">
                                     <f:validateLength maximum="50"/>
                                     <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
@@ -150,15 +154,15 @@
                             <div class="small-12 large-6 columns">
                                 <h:outputLabel for="password" value="#{msgs.password}"/>
                                 <h:inputSecret id="password" label="#{msgs.password}"
-                                               pt:placeholder="Enter Text"
-                                               value="#{profileBackingBean.authenticatedUser.registeredUser.password}"
+                                               pt:placeholder="**********"
+                                               value="#{profileBackingBean.password}"
                                                required="true" requiredMessage="#{msgs.required}">
                                     <f:validateLength maximum="25"/>
                                 </h:inputSecret>
                                 <h:message class="error" for="password"/>
                             </div>
                             <div class="small-12 large-12 columns">
-                                <h:commandLink value="Update your profile!" class="button" action="#{profileBackingBean.persistChangesToProfile(authenticatedUser)}"></h:commandLink>
+                                <h:commandLink value="Update your profile!" class="button" action="#{profileActionBean.editProfile(authenticatedUser)}"></h:commandLink>
                             </div>
                         </div>
                     </h:form>
