@@ -29,21 +29,21 @@
                                     <h:inputText id="emailInput" value="#{signupBean.email}">
                                         <f:validator validatorId="com.g3w16.validator.EmailValidator"/>
                                     </h:inputText>
-                                    <h:message for="emailInput" style="color:red">
+                                    <h:message class="error" for="emailInput">
                                     </h:message>
                                 </label>
                                 <label>Password
                                     <h:inputSecret id="passwordInput" value="#{signupBean.password}">
                                         <f:validator validatorId="com.g3w16.validator.PasswordValidator"/>
                                     </h:inputSecret>
-                                    <h:message for="passwordInput" style="color:red">
+                                    <h:message class="error" for="passwordInput">
                                     </h:message>
                                 </label>
                                 <label>Confirm Password
                                     <h:inputSecret id="confirmPasswordInput" value="#{signupBean.confirm_password}">
                                         <f:validator validatorId="com.g3w16.validator.ConfirmPasswordValidator"/>
                                     </h:inputSecret>
-                                    <h:message for="confirmPasswordInput" style="color:red">
+                                    <h:message class="error" for="confirmPasswordInput">
                                     </h:message>
                                 </label>
                                 <p><h:commandLink value="Sign up" class="button expanded" action="#{userSignupView.signup()}" ></h:commandLink></p>

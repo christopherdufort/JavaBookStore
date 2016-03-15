@@ -29,7 +29,7 @@ public class ConfirmPasswordValidator implements Validator{
         password = password==null ? "" : password;
         if (!password.equals(o.toString())){
             FacesMessage msg = new FacesMessage(
-                    "confirmation doesn't match original password"
+                    "Confirmation doesn't match original password"
             );
             msg.setSeverity(FacesMessage.SEVERITY_ERROR);
             throw new ValidatorException(msg);

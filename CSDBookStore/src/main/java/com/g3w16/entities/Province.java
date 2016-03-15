@@ -203,9 +203,15 @@ public class Province implements Serializable {
         }
         return true;
     }
-
+    /**
+     * Modified to return just the province name so that it could be used in form.
+     * @author Giuseppe Campanelli
+     * @author Christopher Dufort
+     * @return 
+     */
     @Override
     public String toString() {
-        return "com.g3w16.entities.Province[ provinceId=" + provinceId + " ]";
+//        return "com.g3w16.entities.Province[ provinceId=" + provinceId + " ]";
+        return province;
     }
 }

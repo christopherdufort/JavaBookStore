@@ -136,9 +136,15 @@ public class Title implements Serializable {
         }
         return true;
     }
-
+    /**
+     * Modified to return just the title name so that it could be used in form.
+     * @author Giuseppe Campanelli
+     * @author Christopher Dufort
+     * @return 
+     */
     @Override
     public String toString() {
-        return "com.g3w16.entities.Title[ titleId=" + titleId + " ]";
+//        return "com.g3w16.entities.Title[ titleId=" + titleId + " ]";
+        return title;
     }
 }
