@@ -103,9 +103,56 @@ public class ManagerView {
     /**
      * Book table methods
      */
+    public String preCreateBook() {
+        return "m_createBook";
+    }
+
+    public Book getSelectedBook() {
+        return book;
+    }
+
+    public String createBook() {
+        try {
+            bookJpaController.create(book);
+        } catch (Exception ex) {
+            Logger.getLogger(ManagerView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "m_books";
+    }
+
+    public String editBook(Book b) {
+        book =bookJpaController.findBookEntitiesById(b.getBookId());
+        return "m_editBook";
+    }
+
+    public String updateBook() {
+        try {
+            bookJpaController.edit(book);
+        } catch (Exception ex) {
+            Logger.getLogger(ManagerView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "m_books";
+    }
+
+    public String destroyBook(Book b) {
+        Book current = bookJpaController.findBookEntitiesById(b.getBookId());
+        if (current != null) {
+            try {
+                bookJpaController.destroy(b.getBookId());
+            } catch (RollbackFailureException ex) {
+                Logger.getLogger(ManagerView.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                Logger.getLogger(ManagerView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        return "m_books";
+    }
+    
     public List<Book> getAllBook() {
         return bookJpaController.findBookEntities();
     }
+    // End book table methods
 
     /**
      * Returning all invoices
@@ -187,11 +234,13 @@ public class ManagerView {
 
         return "m_news";
     }
-
+    
     public List<NewsFeed> getAllNews() {
         return newsFeedJpaController.findAllNewsFeeds();
     }
-
+    // end news table method  
+    
+    
     /**
      * Survey table methods
      */
