@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.g3w16</groupId>
     <artifactId>CSDBookStore</artifactId>
-    <version>0.3.10-SNAPSHOT</version> <!-- Increment this by 0.0.1 before each push -->
+    <version>0.4.1-SNAPSHOT</version> <!-- Increment this by 0.0.1 before each push -->
     <packaging>war</packaging>
     <name>CSDBookStore</name>
 
