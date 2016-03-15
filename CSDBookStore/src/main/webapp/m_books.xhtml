@@ -28,7 +28,12 @@
                                     <div class="dataTable_wrapper table-responsive">
                                         <h:form>
                                             <h:dataTable class="table table-striped table-bordered table-hover" id="dataTables-example" value="#{managerView.allBook}" var="books">
-                                             <h:column>
+                                                <h:column>
+                                                    <f:facet name="header"><button type="button" class="btn btn-success btn-block">#{msgs.add}</button></f:facet>
+                                                        <button type="button" class="btn btn-info btn-block">#{msgs.edit}</button>
+                                                        <button type="button" class="btn btn-danger btn-block">#{msgs.delete}</button>
+                                                </h:column>
+                                                <h:column>
                                                     <f:facet name="header">#{msgs.book_id}</f:facet>
                                                     #{books.bookId}
                                                 </h:column>
@@ -91,12 +96,6 @@
                                                 <h:column>
                                                     <f:facet name="header">#{msgs.synopsis}</f:facet>
                                                     #{books.synopsis}
-                                                </h:column>
-        
-                                                <h:column>
-                                                    <f:facet name="header"><button type="button" class="btn btn-success btn-block">#{msgs.add}</button></f:facet>
-                                                        <button type="button" class="btn btn-info btn-block">#{msgs.edit}</button>
-                                                        <button type="button" class="btn btn-danger btn-block">#{msgs.delete}</button>
                                                 </h:column>
                                             </h:dataTable>
                                         </h:form>   
