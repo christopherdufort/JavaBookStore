@@ -24,20 +24,16 @@
                         <div class="row">
                             <div class="small-12 large-6 columns">
                                 <label>Title
-                                    <select>
-                                        <option value="husker">Mr.</option>
-                                        <option value="starbuck">Mrs.</option>
-                                        <option value="hotdog">Ms.</option>
-                                        <option value="apollo">Dr.</option>
-                                        <option value="apollo">Mme.</option>
-                                    </select>
+                                    <h:selectOneMenu value="#{profileBackingBean.selectedTitle}">
+                                        <f:selectItems value="#{profileBackingBean.availableTitles}"/>
+                                    </h:selectOneMenu>
                                 </label>
                             </div>
                             <div class="small-12 large-6 columns">
                                 <h:outputLabel for="lastName" value="#{msgs.lastName}"/>
                                 <h:inputText id="lastName" label="#{msgs.lastName}"
                                              pt:placeholder="Enter Text"
-                                             value="#{registeredUserBackingBean.registeredUser.lastName}"
+                                             value="#{profileBackingBean.registeredUser.lastName}"
                                              required="true" requiredMessage="#{msgs.required}">
                                     <f:validateLength maximum="25"/>
                                 </h:inputText>
@@ -47,7 +43,7 @@
                                 <h:outputLabel for="firstName" value="#{msgs.firstName}"/>
                                 <h:inputText id="firstName" label="#{msgs.firstName}"
                                              pt:placeholder="Enter Text"
-                                             value="#{registeredUserBackingBean.registeredUser.firstName}"
+                                             value="#{profileBackingBean.registeredUser.firstName}"
                                              required="true" requiredMessage="#{msgs.required}">
                                     <f:validateLength maximum="25"/>
                                 </h:inputText>
@@ -57,7 +53,7 @@
                                 <h:outputLabel for="companyName" value="#{msgs.companyName}"/>
                                 <h:inputText id="companyName" label="#{msgs.companyName}"
                                              pt:placeholder="Enter Text"
-                                             value="#{registeredUserBackingBean.registeredUser.companyName}"
+                                             value="#{profileBackingBean.registeredUser.companyName}"
                                              required="true" requiredMessage="#{msgs.required}">
                                     <f:validateLength maximum="50"/>
                                 </h:inputText>
@@ -67,7 +63,7 @@
                                 <h:outputLabel for="addressOne" value="#{msgs.addressOne}"/>
                                 <h:inputText id="addressOne" label="#{msgs.addressOne}"
                                              pt:placeholder="Enter Text"
-                                             value="#{registeredUserBackingBean.registeredUser.addressOne}"
+                                             value="#{profileBackingBean.registeredUser.addressOne}"
                                              required="true" requiredMessage="#{msgs.required}">
                                     <f:validateLength maximum="50"/>
                                 </h:inputText>
@@ -77,7 +73,7 @@
                                 <h:outputLabel for="addressTwo" value="#{msgs.addressTwo}"/>
                                 <h:inputText id="addressTwo" label="#{msgs.addressTwo}"
                                              pt:placeholder="Enter Text"
-                                             value="#{registeredUserBackingBean.registeredUser.addressTwo}"
+                                             value="#{profileBackingBean.registeredUser.addressTwo}"
                                              required="true" requiredMessage="#{msgs.required}">
                                     <f:validateLength maximum="50"/>
                                 </h:inputText>
@@ -87,7 +83,7 @@
                                 <h:outputLabel for="city" value="#{msgs.city}"/>
                                 <h:inputText id="city" label="#{msgs.city}"
                                              pt:placeholder="Enter Text"
-                                             value="#{registeredUserBackingBean.registeredUser.city}"
+                                             value="#{profileBackingBean.registeredUser.city}"
                                              required="true" requiredMessage="#{msgs.required}">
                                     <f:validateLength maximum="25"/>
                                 </h:inputText>
@@ -95,28 +91,16 @@
                             </div>
                             <div class="small-12 large-6 columns">
                                 <label>Province
-                                    <select>
-                                        <option value="QC">Quebec</option>
-                                        <option value="ON">Ontario</option>
-                                        <option value="NS">Nova Scotia</option>
-                                        <option value="NB">New Brunswick</option>
-                                        <option value="MB">Manitoba</option>
-                                        <option value="BC">British Columbia</option>
-                                        <option value="PE">Prince Edward Island</option>
-                                        <option value="SK">Saskatchewan</option>
-                                        <option value="AB">Alberta</option>
-                                        <option value="NL">Newfoundland and Labrador</option>
-                                        <option value="NT">Northwest Territories</option>
-                                        <option value="YT">Yukon</option>
-                                        <option value="NU">Nunavut</option>
-                                    </select>
+                                    <h:selectOneMenu value="#{profileBackingBean.selectedProvince}">
+                                        <f:selectItems value="#{profileBackingBean.availableProvinces}"/>
+                                    </h:selectOneMenu>
                                 </label>
                             </div>
                             <div class="small-12 large-6 columns">
                                 <h:outputLabel for="country" value="#{msgs.country}"/>
                                 <h:inputText id="country" label="#{msgs.country}"
                                              pt:placeholder="Canada"
-                                             value="Canada"
+                                             value="Canada" disabled="true"
                                              required="true" requiredMessage="#{msgs.required}">
                                     <f:validateLength maximum="25"/>
                                 </h:inputText>
@@ -126,7 +110,7 @@
                                 <h:outputLabel for="postalCode" value="#{msgs.postalCode}"/>
                                 <h:inputText id="postalCode" label="#{msgs.postalCode}"
                                              pt:placeholder="Enter Text"
-                                             value="#{registeredUserBackingBean.registeredUser.postalCode}"
+                                             value="#{profileBackingBean.registeredUser.postalCode}"
                                              required="true" requiredMessage="#{msgs.required}">
                                     <f:validateLength maximum="10"/>
                                 </h:inputText>
@@ -136,7 +120,7 @@
                                 <h:outputLabel for="homeNum" value="#{msgs.homeNum}"/>
                                 <h:inputText id="homeNum" label="#{msgs.homeNum}"
                                              pt:placeholder="Enter Text"
-                                             value="#{registeredUserBackingBean.registeredUser.homePhone}"
+                                             value="#{profileBackingBean.registeredUser.homePhone}"
                                              required="true" requiredMessage="#{msgs.required}">
                                     <f:validateLength maximum="25"/>
                                 </h:inputText>
@@ -146,7 +130,7 @@
                                 <h:outputLabel for="cellNum" value="#{msgs.cellNum}"/>
                                 <h:inputText id="cellNum" label="#{msgs.cellNum}"
                                              pt:placeholder="Enter Text"
-                                             value="#{registeredUserBackingBean.registeredUser.cellPhone}"
+                                             value="#{profileBackingBean.registeredUser.cellPhone}"
                                              required="true" requiredMessage="#{msgs.required}">
                                     <f:validateLength maximum="25"/>
                                 </h:inputText>
@@ -156,7 +140,7 @@
                                 <h:outputLabel for="email" value="#{msgs.email}"/>
                                 <h:inputText id="email" label="#{msgs.email}"
                                              pt:placeholder="Enter Text"
-                                             value="#{registeredUserBackingBean.registeredUser.emailAddress}"
+                                             value="#{profileBackingBean.registeredUser.emailAddress}"
                                              required="true" requiredMessage="#{msgs.required}">
                                     <f:validateLength maximum="50"/>
                                     <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
@@ -167,14 +151,14 @@
                                 <h:outputLabel for="password" value="#{msgs.password}"/>
                                 <h:inputSecret id="password" label="#{msgs.password}"
                                                pt:placeholder="Enter Text"
-                                               value="#{registeredUserBackingBean.registeredUser.password}"
+                                               value="#{profileBackingBean.registeredUser.password}"
                                                required="true" requiredMessage="#{msgs.required}">
                                     <f:validateLength maximum="25"/>
                                 </h:inputSecret>
                                 <h:message class="error" for="password"/>
                             </div>
                             <div class="small-12 large-12 columns">
-                                <button type="submit" class="button">Submit your changes!</button>
+                                <button type="submit" class="button">Update your profile!</button>
                             </div>
                         </div>
                     </h:form>
