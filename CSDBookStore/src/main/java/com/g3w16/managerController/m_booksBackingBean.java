@@ -27,7 +27,7 @@ public class m_booksBackingBean {
     Book book;
     
     @Inject
-    BookJpaController bookJpaController;
+    BookJpaController bookJpa;
 
     public String preCreateBook() {
         return "m_createBook";
@@ -39,7 +39,7 @@ public class m_booksBackingBean {
 
     public String createBook() {
         try {
-            bookJpaController.create(book);
+            bookJpa.create(book);
         } catch (Exception ex) {
             Logger.getLogger(m_booksBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -47,13 +47,13 @@ public class m_booksBackingBean {
     }
 
     public String editBook(Book b) {
-        book =bookJpaController.findBookEntitiesById(b.getBookId());
+        book =bookJpa.findBookEntitiesById(b.getBookId());
         return "m_editBook";
     }
 
     public String updateBook() {
         try {
-            bookJpaController.edit(book);
+            bookJpa.edit(book);
         } catch (Exception ex) {
             Logger.getLogger(m_booksBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -61,10 +61,10 @@ public class m_booksBackingBean {
     }
 
     public String destroyBook(Book b) {
-        Book current = bookJpaController.findBookEntitiesById(b.getBookId());
+        Book current = bookJpa.findBookEntitiesById(b.getBookId());
         if (current != null) {
             try {
-                bookJpaController.destroy(b.getBookId());
+                bookJpa.destroy(b.getBookId());
             } catch (RollbackFailureException ex) {
                 Logger.getLogger(m_booksBackingBean.class.getName()).log(Level.SEVERE, null, ex);
             } catch (Exception ex) {
@@ -76,6 +76,10 @@ public class m_booksBackingBean {
     }
     
     public List<Book> getAllBook() {
-        return bookJpaController.findBookEntities();
+        return bookJpa.findBookEntities();
+    }
+    
+    public int getBookCount(){
+        return bookJpa.getBookCount();
     }
 }

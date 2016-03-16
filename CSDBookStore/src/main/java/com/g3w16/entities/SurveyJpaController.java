@@ -120,7 +120,7 @@ public class SurveyJpaController implements Serializable {
     }
 
     private List<Survey> findSurveyEntities(boolean all, int maxResults, int firstResult) {
-        Query q = em.createQuery("select object(o) from Survey as o");
+        Query q = em.createQuery("select object(o) from Survey as o order by o.surveyId ASC");
         if (!all) {
             q.setMaxResults(maxResults);
             q.setFirstResult(firstResult);

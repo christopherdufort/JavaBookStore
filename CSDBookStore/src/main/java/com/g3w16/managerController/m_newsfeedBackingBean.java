@@ -27,7 +27,7 @@ public class m_newsfeedBackingBean {
     NewsFeed newsFeed;
 
     @Inject
-    NewsFeedJpaController newsFeedJpaController;
+    NewsFeedJpaController newsJpa;
 
     public String preCreateNews() {
         return "m_createNews";
@@ -39,7 +39,7 @@ public class m_newsfeedBackingBean {
 
     public String createNews() {
         try {
-            newsFeedJpaController.create(newsFeed);
+            newsJpa.create(newsFeed);
         } catch (Exception ex) {
             Logger.getLogger(m_newsfeedBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -47,13 +47,13 @@ public class m_newsfeedBackingBean {
     }
 
     public String editNews(NewsFeed newsfeed) {
-        newsFeed = newsFeedJpaController.findNewsFeedById(newsfeed.getNewsFeedId());
+        newsFeed = newsJpa.findNewsFeedById(newsfeed.getNewsFeedId());
         return "m_editNews";
     }
 
     public String updateNews() {
         try {
-            newsFeedJpaController.edit(newsFeed);
+            newsJpa.edit(newsFeed);
         } catch (Exception ex) {
             Logger.getLogger(m_newsfeedBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -61,10 +61,10 @@ public class m_newsfeedBackingBean {
     }
 
     public String destroyNews(NewsFeed newsfeed) {
-        NewsFeed current = newsFeedJpaController.findNewsFeedById(newsfeed.getNewsFeedId());
+        NewsFeed current = newsJpa.findNewsFeedById(newsfeed.getNewsFeedId());
         if (current != null) {
             try {
-                newsFeedJpaController.destroy(newsfeed.getNewsFeedId());
+                newsJpa.destroy(newsfeed.getNewsFeedId());
             } catch (RollbackFailureException ex) {
                 Logger.getLogger(m_newsfeedBackingBean.class.getName()).log(Level.SEVERE, null, ex);
             } catch (Exception ex) {
@@ -76,6 +76,10 @@ public class m_newsfeedBackingBean {
     }
 
     public List<NewsFeed> getAllNews() {
-        return newsFeedJpaController.findAllNewsFeeds();
+        return newsJpa.findAllNewsFeeds();
+    }
+    
+    public int getNewsFeedCount(){
+        return newsJpa.getNewsFeedCount();
     }
 }

@@ -81,4 +81,8 @@ public class m_adsBackingBean {
     public List<Ad> getAllAds() {
         return adJpa.findAllAds();
     }
+    
+    public int getAdCount(){
+        return adJpa.getAdCount();
+    }
 }

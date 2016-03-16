@@ -30,9 +30,59 @@ public class m_surveysBackingBean {
     Survey survey;
 
     @Inject
-    SurveyJpaController surveyJpaController;
+    SurveyJpaController surveyJpa;
+
+    public String preCreateSurvey() {
+        return "m_createSurvey";
+    }
+
+    public Survey getSelectedSurvey() {
+        return survey;
+    }
+
+    public String createSurvey() {
+        try {
+            surveyJpa.create(survey);
+        } catch (Exception ex) {
+            Logger.getLogger(m_surveysBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "m_surveys";
+    }
+
+    public String editSurvey(Survey s) {
+        survey = surveyJpa.findSurveyById(s.getSurveyId());
+        return "m_editSurvey";
+    }
+
+    public String updateSurvey() {
+        try {
+            surveyJpa.edit(survey);
+        } catch (Exception ex) {
+            Logger.getLogger(m_surveysBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "m_surveys";
+    }
+
+    public String destroySurvey(Survey s) {
+        Survey current = surveyJpa.findSurveyById(s.getSurveyId());
+        if (current != null) {
+            try {
+                surveyJpa.destroy(s.getSurveyId());
+            } catch (RollbackFailureException ex) {
+                Logger.getLogger(m_surveysBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                Logger.getLogger(m_surveysBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        return "m_surveys";
+    }
 
     public List<Survey> getAllSurvey() {
-        return surveyJpaController.findAllSurveys();
+        return surveyJpa.findAllSurveys();
+    }
+    
+    public int getSurveyCount(){
+        return surveyJpa.getSurveyCount();
     }
 }
