@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
-        <ui:composition template="./templates/m_masterTemplate.xhtml">
+        <ui:composition template="./../templates/m_masterTemplate.xhtml">
             <ui:define name="m_content"> 
                 <div id="page-wrapper">
                     <div class="row">
@@ -28,11 +28,11 @@
                                         <h:form>
                                             <h:panelGrid columns="2">
                                                 <h:outputLabel value="#{msgs.news_link}" for="newsFeedLink"></h:outputLabel>
-                                                <h:inputText id="newsFeedLink" value="#{managerView.selectedNews.newsFeedLink}" />
+                                                <h:inputText id="newsFeedLink" value="#{m_newsfeed.selectedNews.newsFeedLink}" />
                                             </h:panelGrid>
                                             <br />
                                             <h:commandButton value="#{msgs.add}"
-                                                             action="#{managerView.createNews}" class="btn btn-danger btn-xs" />
+                                                             action="#{m_newsfeed.createNews}" class="btn btn-danger btn-xs" />
                                         </h:form>
                                     </div>
                                     <!-- /.table-responsive -->

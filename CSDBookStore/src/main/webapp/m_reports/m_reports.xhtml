@@ -5,7 +5,7 @@
       xmlns:p="http://primefaces.org/ui">
 
     <body>
-        <ui:composition template="./templates/m_masterTemplate.xhtml">
+        <ui:composition template="./../templates/m_masterTemplate.xhtml">
             <ui:define name="m_content"> 
 
                 <div id="page-wrapper">
@@ -25,7 +25,7 @@
                                             <i class="fa fa-comments fa-5x"></i>
                                         </div>
                                         <div class="col-xs-9 text-right">
-                                            <div class="huge"><h:outputText value="#{managerView.allTotalSales}"></h:outputText></div>
+                                            <div class="huge"><h:outputText value="#{m_reports.allTotalSales}"></h:outputText></div>
                                             <div>Total Sales</div>
                                         </div>
                                     </div>
@@ -47,7 +47,7 @@
                                             <i class="fa fa-tasks fa-5x"></i>
                                         </div>
                                         <div class="col-xs-9 text-right">
-                                            <div class="huge"><h:outputText value="#{managerView.totalSalesForOneInvoice}"></h:outputText></div>
+                                            <div class="huge"><h:outputText value="#{m_reports.totalSalesForOneInvoice}"></h:outputText></div>
                                             <div>Sales by Client</div>
                                         </div>
                                     </div>

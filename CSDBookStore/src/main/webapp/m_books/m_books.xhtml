@@ -7,7 +7,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
-        <ui:composition template="./templates/m_masterTemplate.xhtml">
+        <ui:composition template="./../templates/m_masterTemplate.xhtml">
             <ui:define name="m_content">  
                 <div id="page-wrapper">
                     <div class="row">
@@ -27,12 +27,12 @@
                                 <div class="panel-body">
                                     <div class="dataTable_wrapper table-responsive">
                                         <h:form>
-                                            <h:dataTable class="table table-striped table-bordered table-hover" id="dataTables-example" value="#{managerView.allBook}" var="books">
+                                            <h:dataTable class="table table-striped table-bordered table-hover" id="dataTables-example" value="#{m_books.allBook}" var="books">
                                                 <h:column>
-                                                    <f:facet name="header"><h:commandLink value="#{msgs.add}" action="#{managerView.preCreateBook()}" class="btn btn-success btn-xs"/>
+                                                    <f:facet name="header"><h:commandLink value="#{msgs.add}" action="#{m_books.preCreateBook()}" class="btn btn-success btn-xs"/>
                                                     </f:facet>
-                                                    <h:commandLink value="#{msgs.edit}" action="#{managerView.editBook(books)}" class="btn btn-info btn-xs"/>
-                                                    <h:commandLink value="#{msgs.delete}" action="#{managerView.destroyBook(books)}" class="btn btn-danger btn-xs"/>                                                       
+                                                    <h:commandLink value="#{msgs.edit}" action="#{m_books.editBook(books)}" class="btn btn-info btn-xs"/>
+                                                    <h:commandLink value="#{msgs.delete}" action="#{m_books.destroyBook(books)}" class="btn btn-danger btn-xs"/>                                                       
                                                 </h:column>
                                                 <h:column>
                                                     <f:facet name="header">#{msgs.book_id}</f:facet>

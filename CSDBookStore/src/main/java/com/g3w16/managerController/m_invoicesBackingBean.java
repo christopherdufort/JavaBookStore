@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.g3w16.entities.viewController;
+package com.g3w16.managerController;
 
 import com.g3w16.entities.*;
 import com.g3w16.entities.exceptions.RollbackFailureException;
@@ -22,69 +22,35 @@ import javax.inject.Named;
  * @author Xin Ma
  * @author Rita Lazaar
  */
-@Named
+@Named("m_invoices")
 @RequestScoped
-public class ManagerView {
+public class m_invoicesBackingBean {
 
-    // injecting controllers
-   
-  
+    @Inject
+    Invoice invoice;
     
-    
-
-  
-    //injecting beans
-    
-
-
-    
-
-    
+    @Inject
+    InvoiceJpaController invoiceJpa;
 
    
-   
-
-    /**
-     *
-     *
-     * All adds.
-     */
-  
-
-    /**
-     *
-     *
-     * Review table methods.
-     */
-   
-
-    /**
-     * Book table methods
-     */
-    
-    // End book table methods
-
-  
 
     /**
      * Returning all invoices
      *
      * @return
      */
-    
+    public List<Invoice> getAllInvoices() {
+        return invoiceJpa.findInvoiceEntities();
+
+    }
 
     /**
-     * News table methods
+     * Returning all invoices
      *
      * @return
      */
-   
-    // end news table method  
-    
-    
-    /**
-     * Survey table methods
-     */
-   
-    
+    public List<Invoice> getAllInvoicesByDateAndUser(Date date1, Date date2, Integer user) {
+        return invoiceJpa.findInvoiceByDateAndUser(date1, date2, user);
+
+    }
 }
