@@ -32,6 +32,52 @@ public class m_adsBackingBean {
     @Inject
     AdJpaController adJpa;
 
+    public String preCreateAd() {
+        return "m_createAd";
+    }
+
+    public Ad getSelectedAd() {
+        return ad;
+    }
+
+    public String createAd() {
+        try {
+            adJpa.create(ad);
+        } catch (Exception ex) {
+            Logger.getLogger(m_adsBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "m_ads";
+    }
+
+    public String editAd(Ad a) {
+        ad = adJpa.findAdById(a.getAdId());
+        return "m_editAd";
+    }
+
+    public String updateAd() {
+        try {
+            adJpa.edit(ad);
+        } catch (Exception ex) {
+            Logger.getLogger(m_adsBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "m_ads";
+    }
+
+    public String destroyAd(Ad a) {
+        Ad current = adJpa.findAdById(a.getAdId());
+        if (current != null) {
+            try {
+                adJpa.destroy(a.getAdId());
+            } catch (RollbackFailureException ex) {
+                Logger.getLogger(m_adsBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                Logger.getLogger(m_adsBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        return "m_ads";
+    }
+
     public List<Ad> getAllAds() {
         return adJpa.findAllAds();
     }

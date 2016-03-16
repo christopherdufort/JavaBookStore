@@ -154,7 +154,7 @@ public class AdJpaController implements Serializable {
      * @return 
      */
     private List<Ad> findAdEntities(boolean all, int maxResults, int firstResult) {
-        Query q = em.createQuery("select object(o) from Ad as o");
+        Query q = em.createQuery("select object(o) from Ad as o order by o.adId ASC");
         if (!all) {
             q.setMaxResults(maxResults);
             q.setFirstResult(firstResult);

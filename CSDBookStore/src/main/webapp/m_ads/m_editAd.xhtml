@@ -1,3 +1,4 @@
+<!--@author Xin Ma-->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
@@ -7,11 +8,11 @@
 
     <body>
         <ui:composition template="./../templates/m_masterTemplate.xhtml">
-            <ui:define name="m_content"> 
+            <ui:define name="m_content">  
                 <div id="page-wrapper">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header">News</h1>
+                            <h1 class="page-header">Ads</h1>
                         </div>
                         <!-- /.col-lg-12 -->
                     </div>
@@ -20,24 +21,24 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    Edit a News
+                                    Edit an Ad
                                 </div>
                                 <!-- /.panel-heading -->
                                 <div class="panel-body">
                                     <div class="dataTable_wrapper table-responsive">
                                         <h:form>
                                             <h:panelGrid columns="2">
-                                                <h:outputLabel value="#{msgs.news_id}" for="newsFeedId"></h:outputLabel>
-                                                <h:outputText rendered="m_newsfeed.selectedNews.newsFeedId"></h:outputText>
-                                                <h:inputText id="newsFeedId" value="#{m_newsfeed.selectedNews.newsFeedId}"/>
+                                                <h:outputLabel value="#{msgs.ad_id}" for="ad_id"></h:outputLabel>
+                                                <h:outputText rendered="m_ads.selectedAd.adId"></h:outputText>
+                                                <h:inputText id="ad_id" value="#{m_ads.selectedAd.adId}"/>
                                                 
-                                                <h:outputLabel value="#{msgs.news_link}" for="newsFeedLink"></h:outputLabel>
-                                                <h:outputText rendered="m_newsfeed.selectedNews.newsFeedLink"></h:outputText>
-                                                <h:inputText id="newsFeedLink" value="#{m_newsfeed.selectedNews.newsFeedLink}" />
+                                                <h:outputLabel value="#{msgs.ad_filename}" for="ad_filename"></h:outputLabel>
+                                                <h:outputText rendered="m_ads.selectedAd.adFilename"></h:outputText>
+                                                <h:inputText id="ad_filename" value="#{m_ads.selectedAd.adFilename}" />
                                             </h:panelGrid>
                                             <br />
                                             <h:commandButton value="#{msgs.update}"
-                                                             action="#{m_newsfeed.updateNews}" class="btn btn-danger btn-xs" />
+                                                             action="#{m_ads.updateAd}" class="btn btn-danger btn-xs" />
                                         </h:form>
                                     </div>
                                     <!-- /.table-responsive -->

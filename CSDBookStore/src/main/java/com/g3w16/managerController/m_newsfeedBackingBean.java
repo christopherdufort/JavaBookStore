@@ -7,7 +7,6 @@ package com.g3w16.managerController;
 
 import com.g3w16.entities.*;
 import com.g3w16.entities.exceptions.RollbackFailureException;
-import com.g3w16.entities.viewController.ManagerView;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,14 +22,14 @@ import javax.inject.Named;
 @Named("m_newsfeed")
 @RequestScoped
 public class m_newsfeedBackingBean {
-    
+
     @Inject
     NewsFeed newsFeed;
-    
+
     @Inject
     NewsFeedJpaController newsFeedJpaController;
-    
-     public String preCreateNews() {
+
+    public String preCreateNews() {
         return "m_createNews";
     }
 
@@ -42,7 +41,7 @@ public class m_newsfeedBackingBean {
         try {
             newsFeedJpaController.create(newsFeed);
         } catch (Exception ex) {
-            Logger.getLogger(ManagerView.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(m_newsfeedBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "m_news";
     }
@@ -56,7 +55,7 @@ public class m_newsfeedBackingBean {
         try {
             newsFeedJpaController.edit(newsFeed);
         } catch (Exception ex) {
-            Logger.getLogger(ManagerView.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(m_newsfeedBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "m_news";
     }
@@ -67,15 +66,15 @@ public class m_newsfeedBackingBean {
             try {
                 newsFeedJpaController.destroy(newsfeed.getNewsFeedId());
             } catch (RollbackFailureException ex) {
-                Logger.getLogger(ManagerView.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(m_newsfeedBackingBean.class.getName()).log(Level.SEVERE, null, ex);
             } catch (Exception ex) {
-                Logger.getLogger(ManagerView.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(m_newsfeedBackingBean.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
         return "m_news";
     }
-    
+
     public List<NewsFeed> getAllNews() {
         return newsFeedJpaController.findAllNewsFeeds();
     }

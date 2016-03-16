@@ -7,7 +7,6 @@ package com.g3w16.managerController;
 
 import com.g3w16.entities.*;
 import com.g3w16.entities.exceptions.RollbackFailureException;
-import com.g3w16.entities.viewController.ManagerView;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,7 +41,7 @@ public class m_booksBackingBean {
         try {
             bookJpaController.create(book);
         } catch (Exception ex) {
-            Logger.getLogger(ManagerView.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(m_booksBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "m_books";
     }
@@ -56,7 +55,7 @@ public class m_booksBackingBean {
         try {
             bookJpaController.edit(book);
         } catch (Exception ex) {
-            Logger.getLogger(ManagerView.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(m_booksBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "m_books";
     }
@@ -67,9 +66,9 @@ public class m_booksBackingBean {
             try {
                 bookJpaController.destroy(b.getBookId());
             } catch (RollbackFailureException ex) {
-                Logger.getLogger(ManagerView.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(m_booksBackingBean.class.getName()).log(Level.SEVERE, null, ex);
             } catch (Exception ex) {
-                Logger.getLogger(ManagerView.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(m_booksBackingBean.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
