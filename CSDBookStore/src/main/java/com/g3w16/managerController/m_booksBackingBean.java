@@ -22,10 +22,10 @@ import javax.inject.Named;
 @Named("m_books")
 @RequestScoped
 public class m_booksBackingBean {
-    
+
     @Inject
     Book book;
-    
+
     @Inject
     BookJpaController bookJpa;
 
@@ -47,7 +47,7 @@ public class m_booksBackingBean {
     }
 
     public String editBook(Book b) {
-        book =bookJpa.findBookEntitiesById(b.getBookId());
+        book = bookJpa.findBookEntitiesById(b.getBookId());
         return "m_editBook";
     }
 
@@ -61,25 +61,23 @@ public class m_booksBackingBean {
     }
 
     public String destroyBook(Book b) {
-        Book current = bookJpa.findBookEntitiesById(b.getBookId());
-        if (current != null) {
-            try {
-                bookJpa.destroy(b.getBookId());
-            } catch (RollbackFailureException ex) {
-                Logger.getLogger(m_booksBackingBean.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (Exception ex) {
-                Logger.getLogger(m_booksBackingBean.class.getName()).log(Level.SEVERE, null, ex);
-            }
+
+        try {
+            bookJpa.destroy(b.getBookId());
+        } catch (RollbackFailureException ex) {
+            Logger.getLogger(m_booksBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(m_booksBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return "m_books";
     }
-    
+
     public List<Book> getAllBook() {
         return bookJpa.findBookEntities();
     }
-    
-    public int getBookCount(){
+
+    public int getBookCount() {
         return bookJpa.getBookCount();
     }
 }

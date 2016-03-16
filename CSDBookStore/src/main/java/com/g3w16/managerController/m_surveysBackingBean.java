@@ -64,15 +64,13 @@ public class m_surveysBackingBean {
     }
 
     public String destroySurvey(Survey s) {
-        Survey current = surveyJpa.findSurveyById(s.getSurveyId());
-        if (current != null) {
-            try {
-                surveyJpa.destroy(s.getSurveyId());
-            } catch (RollbackFailureException ex) {
-                Logger.getLogger(m_surveysBackingBean.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (Exception ex) {
-                Logger.getLogger(m_surveysBackingBean.class.getName()).log(Level.SEVERE, null, ex);
-            }
+
+        try {
+            surveyJpa.destroy(s.getSurveyId());
+        } catch (RollbackFailureException ex) {
+            Logger.getLogger(m_surveysBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(m_surveysBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return "m_surveys";
@@ -81,8 +79,8 @@ public class m_surveysBackingBean {
     public List<Survey> getAllSurvey() {
         return surveyJpa.findAllSurveys();
     }
-    
-    public int getSurveyCount(){
+
+    public int getSurveyCount() {
         return surveyJpa.getSurveyCount();
     }
 }

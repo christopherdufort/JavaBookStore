@@ -61,15 +61,13 @@ public class m_newsfeedBackingBean {
     }
 
     public String destroyNews(NewsFeed newsfeed) {
-        NewsFeed current = newsJpa.findNewsFeedById(newsfeed.getNewsFeedId());
-        if (current != null) {
-            try {
-                newsJpa.destroy(newsfeed.getNewsFeedId());
-            } catch (RollbackFailureException ex) {
-                Logger.getLogger(m_newsfeedBackingBean.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (Exception ex) {
-                Logger.getLogger(m_newsfeedBackingBean.class.getName()).log(Level.SEVERE, null, ex);
-            }
+
+        try {
+            newsJpa.destroy(newsfeed.getNewsFeedId());
+        } catch (RollbackFailureException ex) {
+            Logger.getLogger(m_newsfeedBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(m_newsfeedBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return "m_news";
@@ -78,8 +76,8 @@ public class m_newsfeedBackingBean {
     public List<NewsFeed> getAllNews() {
         return newsJpa.findAllNewsFeeds();
     }
-    
-    public int getNewsFeedCount(){
+
+    public int getNewsFeedCount() {
         return newsJpa.getNewsFeedCount();
     }
 }

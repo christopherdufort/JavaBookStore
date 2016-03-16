@@ -64,15 +64,13 @@ public class m_adsBackingBean {
     }
 
     public String destroyAd(Ad a) {
-        Ad current = adJpa.findAdById(a.getAdId());
-        if (current != null) {
-            try {
-                adJpa.destroy(a.getAdId());
-            } catch (RollbackFailureException ex) {
-                Logger.getLogger(m_adsBackingBean.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (Exception ex) {
-                Logger.getLogger(m_adsBackingBean.class.getName()).log(Level.SEVERE, null, ex);
-            }
+
+        try {
+            adJpa.destroy(a.getAdId());
+        } catch (RollbackFailureException ex) {
+            Logger.getLogger(m_adsBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(m_adsBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return "m_ads";
@@ -81,8 +79,8 @@ public class m_adsBackingBean {
     public List<Ad> getAllAds() {
         return adJpa.findAllAds();
     }
-    
-    public int getAdCount(){
+
+    public int getAdCount() {
         return adJpa.getAdCount();
     }
 }

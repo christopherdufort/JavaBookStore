@@ -30,9 +30,54 @@ public class m_reviewBackingBean {
     Review review;
 
     @Inject
-    ReviewJpaController reviewJpaController;
+    ReviewJpaController reviewJpa;
+
+    @Inject
+    Approval approval;
+
+    @Inject
+    ApprovalJpaController approvalJpa;
+
+    public Review getSelectedReview() {
+        return review;
+    }
+
+    public String editReview(Review r) {
+        review = reviewJpa.findReview(r.getReviewId());
+        return "m_editReview";
+    }
+
+    public String updateReview(Review r) {
+        try {
+            reviewJpa.edit(r);
+        } catch (Exception ex) {
+            Logger.getLogger(m_reviewBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "m_reviews";
+    }
+
+    public String destroyReview(Review r) {
+
+        try {
+            reviewJpa.destroy(r.getReviewId());
+        } catch (RollbackFailureException ex) {
+            Logger.getLogger(m_reviewBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(m_reviewBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return "m_reviews";
+    }
 
     public List<Review> getAllReview() {
-        return reviewJpaController.findReviewEntities();
+        return reviewJpa.findReviewEntities();
+    }
+
+    public int getReviewCount() {
+        return reviewJpa.getReviewCount();
+    }
+
+    public List<Approval> getAllApproval() {
+        return approvalJpa.findApprovalEntities();
     }
 }
