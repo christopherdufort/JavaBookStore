@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+        <ui:composition template="./../templates/m_masterTemplate.xhtml">
+            <ui:define name="m_content">
+                <div id="page-wrapper">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h1 class="page-header">Users</h1>
+                        </div>
+                        <!-- /.col-lg-12 -->
+                    </div>
+                    <!-- /.row -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Edit an User
+                                </div>
+                                <!-- /.panel-heading -->
+                                <div class="panel-body">
+                                    <div class="dataTable_wrapper table-responsive">
+                                        <h:form>
+                                            <h:panelGrid columns="2">
+                                                <h:outputLabel value="#{msgs.user_id}" for="user_id"></h:outputLabel>
+                                                <h:outputText rendered="m_users.selectedUser.userId"></h:outputText>
+                                                <h:inputText id="user_id" value="#{m_users.selectedUser.userId}"/>
+
+                                                <h:outputLabel value="#{msgs.email_address}" for="email_address"></h:outputLabel>
+                                                <h:outputText rendered="m_users.selectedUser.emailAddress"></h:outputText>
+                                                <h:inputText id="email_address" value="#{m_users.selectedUser.emailAddress}"/>
+
+                                                <h:outputLabel value="#{msgs.title}" for="title"></h:outputLabel>
+                                                <h:outputText rendered="m_users.selectedUser.titleId.title"></h:outputText>
+                                                <h:selectOneMenu id="title" value="#{m_users.selectedUser.titleId.title}" >
+                                                    <f:selectItems value="#{m_users.allTitle}" var="t" itemLabel="#{t.title}" itemValue="#{t.titleId}"/>
+                                                </h:selectOneMenu>
+
+                                                <h:outputLabel value="#{msgs.first_name}" for="first_name"></h:outputLabel>
+                                                <h:outputText rendered="m_users.selectedUser.firstName"></h:outputText>
+                                                <h:inputText id="first_name" value="#{m_users.selectedUser.firstName}"/>
+
+                                                <h:outputLabel value="#{msgs.last_name}" for="last_name"></h:outputLabel>
+                                                <h:outputText rendered="m_users.selectedUser.lastName"></h:outputText>
+                                                <h:inputText id="last_name" value="#{m_users.selectedUser.lastName}"/>
+
+                                                <h:outputLabel value="#{msgs.company_name}" for="company_name"></h:outputLabel>
+                                                <h:outputText rendered="m_users.selectedUser.companyName"></h:outputText>
+                                                <h:inputText id="company_name" value="#{m_users.selectedUser.companyName}"/>
+
+                                                <h:outputLabel value="#{msgs.address_one}" for="address_one"></h:outputLabel>
+                                                <h:outputText rendered="m_users.selectedUser.addressOne"></h:outputText>
+                                                <h:inputText id="address_one" value="#{m_users.selectedUser.addressOne}"/>
+
+                                                <h:outputLabel value="#{msgs.address_two}" for="address_two"></h:outputLabel>
+                                                <h:outputText rendered="m_users.selectedUser.addressTwo"></h:outputText>
+                                                <h:inputText id="address_two" value="#{m_users.selectedUser.addressTwo}"/>
+
+                                                <h:outputLabel value="#{msgs.city}" for="city"></h:outputLabel>
+                                                <h:outputText rendered="m_users.selectedUser.city"></h:outputText>
+                                                <h:inputText id="city" value="#{m_users.selectedUser.city}"/>
+
+                                                <h:outputLabel value="#{msgs.province}" for="province"></h:outputLabel>
+                                                <h:outputText rendered="m_users.selectedUser.provinceId.province"></h:outputText>
+                                                <h:selectOneMenu id="province" value="#{m_users.selectedUser.provinceId.province}">
+                                                    <f:selectItems value="#{m_users.allProvince}" var="p" itemLabel="#{p.province}" itemValue="#{p.provinceId}"/>
+                                                </h:selectOneMenu>
+
+                                                <h:outputLabel value="#{msgs.country}" for="country"></h:outputLabel>
+                                                <h:outputText rendered="m_users.selectedUser.country"></h:outputText>
+                                                <h:inputText id="country" value="#{m_users.selectedUser.country}"/>
+
+                                                <h:outputLabel value="#{msgs.postal_code}" for="postal_code"></h:outputLabel>
+                                                <h:outputText rendered="m_users.selectedUser.postalCode"></h:outputText>
+                                                <h:inputText id="postal_code" value="#{m_users.selectedUser.postalCode}"/>
+
+                                                <h:outputLabel value="#{msgs.home_phone}" for="home_phone"></h:outputLabel>
+                                                <h:outputText rendered="m_users.selectedUser.homePhone"></h:outputText>
+                                                <h:inputText id="home_phone" value="#{m_users.selectedUser.homePhone}"/>
+
+                                                <h:outputLabel value="#{msgs.cell_phone}" for="cell_phone"></h:outputLabel>
+                                                <h:outputText rendered="m_users.selectedUser.cellPhone"></h:outputText>
+                                                <h:inputText id="cell_phone" value="#{m_users.selectedUser.cellPhone}"/>
+
+                                                <h:outputLabel value="#{msgs.manager}" for="manager"></h:outputLabel>
+                                                <h:outputText rendered="m_users.selectedUser.manager"></h:outputText>
+                                                <h:selectOneRadio id="manager" layout="lineDirection" value="#{m_users.selectedUser.manager}">
+                                                    <f:selectItem itemValue="True" itemLabel="True" />
+                                                    <f:selectItem itemValue="False" itemLabel="False" />
+                                                </h:selectOneRadio>
+
+                                                <h:outputLabel value="#{msgs.active}" for="active"></h:outputLabel>
+                                                <h:outputText rendered="m_users.selectedUser.active"></h:outputText>
+                                                <h:selectOneRadio id="active" layout="lineDirection" value="#{m_users.selectedUser.active}">
+                                                    <f:selectItem itemValue="True" itemLabel="True" />
+                                                    <f:selectItem itemValue="False" itemLabel="False" />
+                                                </h:selectOneRadio>
+                                            </h:panelGrid>
+                                            <br />
+                                            <h:commandButton value="#{msgs.update}"
+                                                             action="#{m_users.updateUser}" class="btn btn-danger btn-xs" />
+                                        </h:form>
+                                    </div>
+                                    <!-- /.table-responsive -->
+                                </div>
+                                <!-- /.panel-body -->
+                            </div>
+                            <!-- /.panel -->
+                        </div>
+                        <!-- /.col-lg-12 -->
+                    </div>
+
+                </div>
+                <!-- /#page-wrapper -->
+
+            </ui:define>
+        </ui:composition>
+        <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+        <script>
+            $(document).ready(function () {
+                $('#dataTables-example').DataTable({
+                    responsive: true
+                });
+            });
+        </script>
+
+    </body>
+
+</html>
