@@ -8,7 +8,7 @@
     <body>
         <ui:composition template="./templates/masterTemplate.xhtml">
             <ui:define name="title">
-                <h:outputText value="Big Magic: Creative Living Beyond Fear"/>
+                <h:outputText value="#{bookBB.book.title}"/>
             </ui:define>
             
             <ui:define name="content">
@@ -16,16 +16,16 @@
                     <nav aria-label="You are here:" role="navigation">
                         <ul class="breadcrumbs">
                             <li><a href="home.xhtml">Home</a></li>
-                            <li><a href="#"><h:outputText value="Mystery"/></a></li>
+                            <li><a href="#"><h:outputText value="#{bookBB.genre}"/></a></li>
                             <li>
-                                <!--<span class="show-for-sr">Current: </span>--><h:outputText value="Big Magic: Creative Living Beyond Fear"/>
+                                <!--<span class="show-for-sr">Current: </span>--><h:outputText value="#{bookBB.book.title}"/>
                             </li>
                         </ul>
                     </nav>
                 </div>
                 <div class="row">
                     <div class="medium-6 columns">
-                        <h:graphicImage styleClass="thumbnail" value="resources/images/978-1594634710.jpg"/>
+                        <h:graphicImage styleClass="thumbnail" value="resources/images/#{bookBB.book.isbn}.jpg"/>
                         <!--<div class="row small-up-4">
                         <div class="column">
                         <img class="thumbnail" src="http://placehold.it/250x200"/>
@@ -42,18 +42,18 @@
                         </div>-->
                     </div>
                     <div class="medium-6 large-5 columns">
-                        <h3><h:outputText value="Big Magic: Creative Living Beyond Fear"/></h3>
-                        <p:rating value="4" readonly="true"/>
-                        <label><h:outputText value="[32]"/></label>
-                        <h5><h:outputText value="Elizabeth Gilbert"/></h5> <!--authors concatenated-->
-                        <p><h:outputText value="Readers of all ages and walks of life have drawn inspiration and empowerment from Elizabeth Gilbert’s books for years. Now this beloved author digs deep into her own generative process to share her wisdom and unique perspective about creativity. With profound empathy and radiant generosity, she offers potent insights into the mysterious nature of inspiration."/></p>	
+                        <h3><h:outputText value="#{bookBB.book.title}"/></h3>
+                        <p:rating value="#{bookBB.starsForOverallRating}" readonly="true"/>
+                        <label><h:outputText value="[#{bookBB.reviewsAmount}]"/></label>
+                        <h5><h:outputText value="#{bookBB.authors}"/></h5> <!--authors concatenated-->
+                        <p><h:outputText value="#{bookBB.book.synopsis}"/></p>	
                         <h:form id="buyBookNow">
                             <div class="row">
                                 <div class="small-3 columns">
                                     <label for="middle-label" class="middle">List Price:</label>
                                 </div>
                                 <div class="small-9 columns">
-                                    <strike><h:outputText value="$29.99"/></strike>
+                                    <strike><h:outputText value="$#{bookBB.book.listPrice}"/></strike>
                                 </div>
                             </div>
                             <div class="row">
@@ -61,7 +61,7 @@
                                     <label for="middle-label" class="middle">Price:</label>
                                 </div>
                                 <div class="small-9 columns">
-                                    <h:outputText value="$19.99"/>
+                                    <h:outputText value="$#{bookBB.book.salePrice}"/>
                                 </div>
                             </div>
                             <div class="row">
@@ -88,17 +88,17 @@
                             <div class="media-object stack-for-small">
                                 <div class="media-object-section">
                                     <b>ISBN:</b>
-                                    <p><h:outputText value="108564665"/></p>
+                                    <p><h:outputText value="#{bookBB.book.isbn}"/></p>
                                     <b>Publisher:</b>
-                                    <p><h:outputText value="Baur Inc."/></p>
+                                    <p><h:outputText value="#{bookBB.book.publisher}"/></p>
                                     <b>Publish Date:</b>
-                                    <p><h:outputText value="20/12/2015"/></p>
+                                    <p><h:outputText value="#{bookBB.date}"/></p>
                                     <b>Pages:</b>
-                                    <p><h:outputText value="120"/></p>
+                                    <p><h:outputText value="#{bookBB.book.pageNumber}"/></p>
                                     <b>Genre:</b>
-                                    <p><h:outputText value="Mystery"/></p> <!-- list of genres concatenated-->
+                                    <p><h:outputText value="#{bookBB.genres}"/></p> <!-- list of genres concatenated-->
                                     <b>Formats:</b>
-                                    <p><h:outputText value="PDF, Kindle"/></p> <!-- list of formats concatenated-->
+                                    <p><h:outputText value="#{bookBB.formats}"/></p> <!-- list of formats concatenated-->
                                 </div>
                             </div>
                             
@@ -107,18 +107,21 @@
                             <div class="media-object stack-for-small">
                                 <div class="media-object-section">
                                     <h5><h:outputText value="Mike Stevenson"/></h5>
+                                    <p:rating value="4" readonly="true"/><br/>
                                     <p><h:outputText value="I'm going to improvise. Listen, there's something you should know about me... about inception. An idea is like a virus, resilient, highly contagious. The smallest seed of an idea can grow. It can grow to define or destroy you."/></p>
                                 </div>
                             </div>
                             <div class="media-object stack-for-small">
                                 <div class="media-object-section">
                                     <h5><h:outputText value="Mike Stevenson"/></h5>
+                                    <p:rating value="4" readonly="true"/><br/>
                                     <p><h:outputText value="I'm going to improvise. Listen, there's something you should know about me... about inception. An idea is like a virus, resilient, highly contagious. The smallest seed of an idea can grow. It can grow to define or destroy you"/></p>
                                 </div>
                             </div>
                             <div class="media-object stack-for-small">
                                 <div class="media-object-section">
                                     <h5><h:outputText value="Mike Stevenson"/></h5>
+                                    <p:rating value="4" readonly="true"/><br/>
                                     <p><h:outputText value="I'm going to improvise. Listen, there's something you should know about me... about inception. An idea is like a virus, resilient, highly contagious. The smallest seed of an idea can grow. It can grow to define or destroy you"/></p>
                                 </div>
                             </div>
