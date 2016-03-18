@@ -16,7 +16,7 @@
                     <nav aria-label="You are here:" role="navigation">
                         <ul class="breadcrumbs">
                             <li><a href="home.xhtml">Home</a></li>
-                            <li><a href="#"><h:outputText value="#{bookBB.genre}"/></a></li>
+                            <li><a href="#"><h:outputText value="#{bookBB.genreName}"/></a></li>
                             <li>
                                 <!--<span class="show-for-sr">Current: </span>--><h:outputText value="#{bookBB.book.title}"/>
                             </li>
@@ -104,31 +104,19 @@
                             
                         </div>
                         <div class="tabs-panel" id="panel2">
-                            <div class="media-object stack-for-small">
-                                <div class="media-object-section">
-                                    <h5><h:outputText value="Mike Stevenson"/></h5>
-                                    <p:rating value="4" readonly="true"/><br/>
-                                    <p><h:outputText value="I'm going to improvise. Listen, there's something you should know about me... about inception. An idea is like a virus, resilient, highly contagious. The smallest seed of an idea can grow. It can grow to define or destroy you."/></p>
+                            <ui:repeat var="item" value="#{bookBB.book.reviewList}">
+                                <div class="media-object stack-for-small">
+                                    <div class="media-object-section">
+                                        <h5><h:outputText value="#{item.reviewTitle}"/></h5>
+                                        <p:rating value="#{item.rating}" readonly="true"/><label>by <h:outputText value="#{item.userId.firstName} #{item.userId.lastName}"/></label>
+                                        <p><h:outputText value="#{item.reviewText}"/></p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="media-object stack-for-small">
-                                <div class="media-object-section">
-                                    <h5><h:outputText value="Mike Stevenson"/></h5>
-                                    <p:rating value="4" readonly="true"/><br/>
-                                    <p><h:outputText value="I'm going to improvise. Listen, there's something you should know about me... about inception. An idea is like a virus, resilient, highly contagious. The smallest seed of an idea can grow. It can grow to define or destroy you"/></p>
-                                </div>
-                            </div>
-                            <div class="media-object stack-for-small">
-                                <div class="media-object-section">
-                                    <h5><h:outputText value="Mike Stevenson"/></h5>
-                                    <p:rating value="4" readonly="true"/><br/>
-                                    <p><h:outputText value="I'm going to improvise. Listen, there's something you should know about me... about inception. An idea is like a virus, resilient, highly contagious. The smallest seed of an idea can grow. It can grow to define or destroy you"/></p>
-                                </div>
-                            </div>
+                            </ui:repeat>
                             <hr/>
                             <h5>My Review:</h5>
                             <h:form id="submitReview">
-                                <p:rating value="1"/>
+                                <p:rating value="0"/>
                                 <br/>
                                 <h:inputTextarea/>
                                 <h:commandButton styleClass="button" value="Submit Review"/>
@@ -136,42 +124,14 @@
                         </div>
                         <div class="tabs-panel" id="panel3">
                             <div class="row small-up-2 medium-up-3 large-up-6">
+                                <ui:repeat var="item" value="#{bookBB.similarProducts}">
                                 <div class="column">
-                                    <h:graphicImage styleClass="thumbnail" value="resources/images/978-1623260453.jpg"/>
-                                    <h6><h:outputText value="Nulla At Nulla Justo, Eget"/></h6>
-                                    <p><h:outputText value="$400"/></p>
-                                    <h:commandButton styleClass="button small expanded" value="View"/>
+                                    <h:graphicImage styleClass="thumbnail" value="resources/images/#{bookBB.book.isbn}.jpg"/>
+                                    <h6><h:outputText value="#{item.title}"/></h6>
+                                    <p><strike><h:outputText value="$#{item.listPrice}"/></strike><h:outputText value=" $#{item.salePrice}"/></p>
+                                    <h:form><h:commandButton styleClass="button small expanded" value="View" action="#{homeBB.displayBook(item.bookId)}"/></h:form>
                                 </div>
-                                <div class="column">
-                                    <h:graphicImage styleClass="thumbnail" value="resources/images/978-1594634710.jpg"/>
-                                    <h6><h:outputText value="Nulla At Nulla Justo, Eget"/></h6>
-                                    <p><h:outputText value="$400"/></p>
-                                    <h:commandButton styleClass="button small expanded" value="View"/>
-                                </div>
-                                <div class="column">
-                                    <h:graphicImage styleClass="thumbnail" value="resources/images/978-0785193760.jpg"/>
-                                    <h6><h:outputText value="Nulla At Nulla Justo, Eget"/></h6>
-                                    <p><h:outputText value="$400"/></p>
-                                    <h:commandButton styleClass="button small expanded" value="View"/>
-                                </div>
-                                <div class="column">
-                                    <h:graphicImage styleClass="thumbnail" value="resources/images/978-1594634710.jpg"/>
-                                    <h6><h:outputText value="Nulla At Nulla Justo, Eget"/></h6>
-                                    <p><h:outputText value="$400"/></p>
-                                    <h:commandButton styleClass="button small expanded" value="View"/>
-                                </div>
-                                <div class="column">
-                                    <h:graphicImage styleClass="thumbnail" value="resources/images/978-0785193760.jpg"/>
-                                    <h6><h:outputText value="Captain America: Vol. 1"/></h6>
-                                    <p><h:outputText value="$400"/></p>
-                                    <h:commandButton styleClass="button small expanded" value="View"/>
-                                </div>
-                                <div class="column">
-                                    <h:graphicImage styleClass="thumbnail" value="resources/images/978-1594634710.jpg"/>
-                                    <h6><h:outputText value="Nulla At Nulla Justo, Eget"/></h6>
-                                    <p><h:outputText value="$400"/></p>
-                                    <h:commandButton styleClass="button small expanded" value="View"/>
-                                </div>
+                                </ui:repeat>
                             </div>
                         </div>
                     </div>

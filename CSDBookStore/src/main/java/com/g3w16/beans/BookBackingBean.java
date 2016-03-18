@@ -67,7 +67,7 @@ public class BookBackingBean implements Serializable {
     }
     
     public int getStarsForOverallRating() {
-        return book.getOverallRating().intValue();
+        return book.getOverallRating().intValue(); //fix overall rating --> update it when a review is added to a book since it is a field in the db
     }
     
     public int getReviewsAmount() {
@@ -110,11 +110,24 @@ public class BookBackingBean implements Serializable {
         this.genre = genre;
     }
     
-    public String getGenre() {
+    public Genre getGenre() {
         if (genre == null) {
             genre = book.getGenreList().get(0);
         }
-        return genre.getGenreName();
+        return genre;
+    }
+    
+    public String getGenreName() {
+        return getGenre().getGenreName();
+    }
+    
+    public List<Book> getSimilarProducts() {
+        return bookJpaController.findBookEntitiesByGenre(getGenre(), 6, 0); //add in all book images
+    }
+    
+    public String displayBook(Book book) {
+        setBook(book);
+        return "book";
     }
     
 }

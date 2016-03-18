@@ -39,4 +39,15 @@ public class HomeBackingBean implements Serializable {
         return "book";
     }
     
+    public List<Book> getSimilarProducts() {
+        return bookJpaController.findBookEntitiesAsClient(4, 0);
+    }
+    
+    public List<Book> getSimilarProducts2() {
+        return bookJpaController.findBookEntitiesAsClient(6, 0);
+    }
+    
+    public List<Book> getSimilarProducts3() {
+        return bookJpaController.findBookEntitiesAsClient(3, 0);
+    }
 }
