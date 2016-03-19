@@ -56,8 +56,6 @@ public class ProfileBackingBean implements Serializable {
     
     public ProfileBackingBean(){
         super();
-        
-
     }
     
     @PostConstruct

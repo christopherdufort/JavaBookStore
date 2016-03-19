@@ -2,7 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -44,8 +46,19 @@
                 </div>
                 <div class="top-bar-right">
                     <ul class="menu" data-responsive-menu="drilldown medium-dropdown">
-                        <li><input type="search" placeholder="Search"/></li>
-                        <li><button type="button" class="button">Search</button></li>
+                        <!-- Primary Search Bar -->
+                        <li>
+                            <h:form style="margin-bottom: 0;">
+                                <h:selectOneMenu style="width:9em" value="#{searchBackingBean.searchChoice}">
+                                    <f:selectItems value="#{searchBackingBean.availableChoices}"/>
+                                </h:selectOneMenu>
+                                <h:inputText class="main-search" id="lastName" pt:placeholder="Search text"
+                                             value="#{searchBackingBean.searchContent}">
+                                </h:inputText>
+                                <h:commandLink value="Search!" class="manual-button" action="#{searchActionBean.performSearch(searchBackingBean)}"></h:commandLink>
+                            </h:form>
+                        </li>
+                        <!-- Authentication login/register-->
                         <li class="has-dropdown no-click ">
                             <h:outputLink styleClass=""><i class="fi-torso"></i></h:outputLink>
                             <ul class="dropdown">
@@ -115,16 +128,12 @@
         <script src="resources/js/owl.carousel.js"></script>
         <script>
             $(document).foundation();
-
             $(document).ready(function () {
-
                 $("#owl-demo").owlCarousel({
                     navigation: true, // Show next and prev buttons
                     slideSpeed: 300,
                     paginationSpeed: 400,
                     singleItem: true
-
-
                 });
             });
         </script>

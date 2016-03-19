@@ -158,3 +158,64 @@ li{
     -webkit-transform:rotate(360deg);
   }
 }
+
+.prefix{
+    border-style: solid;
+    border-width: 1px;
+    display: block;
+    font-size: 0.77778rem;
+    height: 2.05556rem;
+    line-height: 2.05556rem;
+    overflow: visible;
+    padding-bottom: 0;
+    padding-top: 0;
+    position: relative;
+    text-align: center;
+    width: 100%;
+    z-index: 2;
+    background: #f2f2f2;
+    border-right: none;
+    color: #333333;
+    border-color: #cccccc;
+}
+
+.main-search{
+    display: inline;
+    width: auto;
+    margin-left: 0.5rem;
+}
+
+.manual-button{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border-radius: 0;
+    border-style: solid;
+    border-width: 0;
+    cursor: pointer;
+    font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif !important;
+    font-weight: normal;
+    line-height: normal;
+    margin: 0 0 1.11111rem;
+    margin-right: 1rem;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    display: inline;
+    padding: 0.88889rem 1.77778rem 0.94444rem 1.77778rem;
+    font-size: 0.88889rem;
+    background-color: #008CBA;
+    border-color: #007095;
+    color: #FFFFFF;
+    transition: background-color 300ms ease-out;
+}
+
+.is-drilldown{
+    overflow:visible !important;
+    height:auto !important;
+}
+.js-drilldown-back::before{
+    margin-top: 6px !important;
+}
+li .js-drilldown-back .top-bar ul li {
+    background: #666;
+}
