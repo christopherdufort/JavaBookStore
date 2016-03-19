@@ -82,30 +82,14 @@
                                 <hr/>
                             </div>
                             <div class="row small-up-2 large-up-4">
+                                <ui:repeat var="item" value="#{homeBB.similarProducts}">
                                 <div class="column">
-                                    <img class="thumbnail" src="resources/images/B00M60RKW8.jpg"></img>
-                                    <h5>The Girl On The Train</h5>
-                                    <p>$18.99</p>
-                                    <a href="faces/book.xhtml" class="button expanded">Buy</a>
+                                    <h:graphicImage styleClass="thumbnail" value="resources/images/978-0785193760.jpg"/>
+                                    <h6><h:outputText value="#{item.title}"/></h6>
+                                    <p><strike><h:outputText value="$#{item.listPrice}"/></strike><h:outputText value=" $#{item.salePrice}"/></p>
+                                    <h:form><h:commandButton styleClass="button small expanded" value="View" action="#{homeBB.displayBook(item.bookId)}"/></h:form>
                                 </div>
-                                <div class="column">
-                                    <img class="thumbnail" src="resources/images/978-1594634710.jpg"></img>
-                                    <h5>Big Magic</h5>
-                                    <p>$39.99</p>
-                                    <a href="faces/book.xhtml" class="button expanded">Buy</a>
-                                </div>
-                                <div class="column">
-                                    <img class="thumbnail" src="resources/images/978-0785193760.jpg"></img>
-                                    <h5>Captain America</h5>
-                                    <p>$15.99</p>
-                                    <h:form><h:commandButton type="submit" class="button expanded" value="View" action="#{homeBB.displayBook(60)}"/></h:form>
-                                </div>
-                                <div class="column">
-                                    <img class="thumbnail" src="resources/images/978-1743214411.jpg"></img>
-                                    <h5>Italian </h5>
-                                    <p>$40.00</p>
-                                    <a href="faces/book.xhtml" class="button expanded">Buy</a>
-                                </div>
+                                </ui:repeat>
                             </div>
                             <hr/>
                             <div class="row column">
@@ -119,134 +103,58 @@
                                 <hr/>
                             </div>
                             <div class="row small-up-2 medium-up-3 large-up-6">
-                                <div class="column">
-                                    <img class="thumbnail" src="resources/images/978-1623260453.jpg"></img>
-                                    <h5>Nulla At Nulla Justo, Eget</h5>
-                                    <p>$400</p>
-                                    <a href="faces/book.xhtml" class="button small expanded hollow">Buy</a>
-                                </div>
-                                <div class="column">
-                                    <img class="thumbnail" src="resources/images/978-1594634710.jpg"></img>
-                                    <h5>Nulla At Nulla Justo, Eget</h5>
-                                    <p>$400</p>
-                                    <a href="#" class="button small expanded hollow">Buy</a>
-                                </div>
-                                <div class="column">
-                                    <img class="thumbnail" src="resources/images/978-0785193760.jpg"></img>
-                                    <h5>Nulla At Nulla Justo, Eget</h5>
-                                    <p>$400</p>
-                                    <a href="#" class="button small expanded hollow">Buy</a>
-                                </div>
-                                <div class="column">
-                                    <img class="thumbnail" src="resources/images/978-1594634710.jpg"></img>
-                                    <h5>Nulla At Nulla Justo, Eget</h5>
-                                    <p>$400</p>
-                                    <a href="#" class="button small expanded hollow">Buy</a>
-                                </div>
-                                <div class="column">
-                                    <img class="thumbnail" src="resources/images/978-0785193760.jpg"></img>
-                                    <h5>Nulla At Nulla Justo, Eget</h5>
-                                    <p>$400</p>
-                                    <a href="#" class="button small expanded hollow">Buy</a>
-                                </div>
-                                <div class="column">
-                                    <img class="thumbnail" src="resources/images/978-1594634710.jpg"></img>
-                                    <h5>Nulla At Nulla Justo, Eget</h5>
-                                    <p>$400</p>
-                                    <a href="#" class="button small expanded hollow">Buy</a>
-                                </div>
+                                <ui:repeat var="item" value="#{homeBB.similarProducts2}">
+                                    <div class="column">
+                                        <h:graphicImage styleClass="thumbnail" value="resources/images/978-0785193760.jpg"/>
+                                        <h6><h:outputText value="#{item.title}"/></h6>
+                                        <p><strike><h:outputText value="$#{item.listPrice}"/></strike><h:outputText value=" $#{item.salePrice}"/></p>
+                                        <h:form><h:commandButton styleClass="button small expanded" value="View" action="#{homeBB.displayBook(item.bookId)}"/></h:form>
+                                    </div>
+                                </ui:repeat>
                             </div>
                             <hr/>
                             <div class="row">
                                 <div class="medium-4 columns">
-                                    <h4>Top Products</h4>
-                                    <div class="media-object">
-                                        <div class="media-object-section">
-                                            <img class="thumbnail" src="resources/images/978-1582705248.jpg"></img>
+                                    <h4>Section 1</h4>
+                                    <ui:repeat var="item" value="#{homeBB.similarProducts3}">
+                                        <div class="media-object">
+                                            <div class="media-object-section">
+                                                <img class="thumbnail" src="resources/images/978-1582705248.jpg"></img>
+                                            </div>
+                                            <div class="media-object-section">
+                                                <h6><h:outputText value="#{item.title}"/></h6>
+                                                <h:form><h:commandButton styleClass="button small expanded" value="View" action="#{homeBB.displayBook(item.bookId)}"/></h:form>
+                                            </div>
                                         </div>
-                                        <div class="media-object-section">
-                                            <h5>Nunc Eu Ullamcorper Orci</h5>
-                                            <p>Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque.</p>
-                                        </div>
-                                    </div>
-                                    <div class="media-object">
-                                        <div class="media-object-section">
-                                            <img class="thumbnail" src="resources/images/978-1491917954.jpg"></img>
-                                        </div>
-                                        <div class="media-object-section">
-                                            <h5>Nunc Eu Ullamcorper Orci</h5>
-                                            <p>Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque.</p>
-                                        </div>
-                                    </div>
-                                    <div class="media-object">
-                                        <div class="media-object-section">
-                                            <img class="thumbnail" src="resources/images/978-1582705248.jpg"></img>
-                                        </div>
-                                        <div class="media-object-section">
-                                            <h5>Nunc Eu Ullamcorper Orci</h5>
-                                            <p>Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque.</p>
-                                        </div>
-                                    </div>
+                                    </ui:repeat>
                                 </div>
                                 <div class="medium-4 columns">
-                                    <h4>Top Products</h4>
-                                    <div class="media-object">
-                                        <div class="media-object-section">
-                                            <img class="thumbnail" src="resources/images/978-1491917954.jpg"></img>
+                                    <h4>Section 2</h4>
+                                    <ui:repeat var="item" value="#{homeBB.similarProducts3}">
+                                        <div class="media-object">
+                                            <div class="media-object-section">
+                                                <img class="thumbnail" src="resources/images/978-1582705248.jpg"></img>
+                                            </div>
+                                            <div class="media-object-section">
+                                                <h6><h:outputText value="#{item.title}"/></h6>
+                                                <h:form><h:commandButton styleClass="button small expanded" value="View" action="#{homeBB.displayBook(item.bookId)}"/></h:form>
+                                            </div>
                                         </div>
-                                        <div class="media-object-section">
-                                            <h5>Nunc Eu Ullamcorper Orci</h5>
-                                            <p>Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque.</p>
-                                        </div>
-                                    </div>
-                                    <div class="media-object">
-                                        <div class="media-object-section">
-                                            <img class="thumbnail" src="resources/images/978-1582705248.jpg"></img>
-                                        </div>
-                                        <div class="media-object-section">
-                                            <h5>Nunc Eu Ullamcorper Orci</h5>
-                                            <p>Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque.</p>
-                                        </div>
-                                    </div>
-                                    <div class="media-object">
-                                        <div class="media-object-section">
-                                            <img class="thumbnail" src="resources/images/978-1491917954.jpg"></img>
-                                        </div>
-                                        <div class="media-object-section">
-                                            <h5>Nunc Eu Ullamcorper Orci</h5>
-                                            <p>Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque.</p>
-                                        </div>
-                                    </div>
+                                    </ui:repeat>
                                 </div>
                                 <div class="medium-4 columns">
-                                    <h4>Top Products</h4>
-                                    <div class="media-object">
-                                        <div class="media-object-section">
-                                            <img class="thumbnail" src="resources/images/978-1582705248.jpg"></img>
+                                    <h4>Section 3</h4>
+                                    <ui:repeat var="item" value="#{homeBB.similarProducts3}">
+                                        <div class="media-object">
+                                            <div class="media-object-section">
+                                                <img class="thumbnail" src="resources/images/978-1582705248.jpg"></img>
+                                            </div>
+                                            <div class="media-object-section">
+                                                <h6><h:outputText value="#{item.title}"/></h6>
+                                                <h:form><h:commandButton styleClass="button small expanded" value="View" action="#{homeBB.displayBook(item.bookId)}"/></h:form>
+                                            </div>
                                         </div>
-                                        <div class="media-object-section">
-                                            <h5>Nunc Eu Ullamcorper Orci</h5>
-                                            <p>Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque.</p>
-                                        </div>
-                                    </div>
-                                    <div class="media-object">
-                                        <div class="media-object-section">
-                                            <img class="thumbnail" src="resources/images/978-1491917954.jpg"></img>
-                                        </div>
-                                        <div class="media-object-section">
-                                            <h5>Nunc Eu Ullamcorper Orci</h5>
-                                            <p>Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque.</p>
-                                        </div>
-                                    </div>
-                                    <div class="media-object">
-                                        <div class="media-object-section">
-                                            <img class="thumbnail" src="resources/images/978-1582705248.jpg"></img>
-                                        </div>
-                                        <div class="media-object-section">
-                                            <h5>Nunc Eu Ullamcorper Orci</h5>
-                                            <p>Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque.</p>
-                                        </div>
-                                    </div>
+                                    </ui:repeat>
                                 </div>
                             </div>
                         </div>
