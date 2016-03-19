@@ -28,6 +28,7 @@ public class ProfileActionBean {
     ProfileBackingBean profileBackingBean;
 
     public String editProfile(ProfileBackingBean profileBackingBean) {
+        System.out.println("Trying to edit the profile");
         try {
             userController.editProfile(profileBackingBean);
         } catch (Exception ex) {

@@ -111,7 +111,9 @@ public class UserController {
     }
     
     public void editProfile(ProfileBackingBean profileBackingBean) throws Exception{
-
+        
+        System.out.println("in Edit Profile");
+        
         //Update the fields of the currently logged in user and then persist to the db.
         RegisteredUser userToUpdate = authenticatedUser.getRegisteredUser();
         userToUpdate.setEmailAddress(profileBackingBean.getEmailAddress());

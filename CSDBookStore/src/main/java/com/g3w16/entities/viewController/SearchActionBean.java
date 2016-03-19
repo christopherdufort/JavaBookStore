@@ -7,6 +7,8 @@ package com.g3w16.entities.viewController;
 
 import com.g3w16.actionController.BookController;
 import com.g3w16.beans.SearchBackingBean;
+import com.g3w16.entities.Book;
+import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -25,24 +27,33 @@ public class SearchActionBean {
     @Inject
     SearchBackingBean searchBackingBean;
     
-
+    private List<Book> searchResults;
+    
     public String performSearch(SearchBackingBean searchBackingBean) {
-        switch (searchBackingBean.getSearchContent()) {
+        switch (searchBackingBean.getSearchChoice()) {
             case "Title":
-                bookController.searchByTitle(searchBackingBean.getSearchChoice());
+                searchResults = bookController.searchByTitle(searchBackingBean.getSearchContent());
+                System.out.println("SearchResults found = " + searchResults.size());
                 break;
             case "Isbn":
-                bookController.searchByIsbn(searchBackingBean.getSearchChoice());
+                searchResults = bookController.searchByIsbn(searchBackingBean.getSearchContent());
+                System.out.println("SearchResults found = " + searchResults.size());
                 break;
             case "Author":
-                bookController.searchByAuthor(searchBackingBean.getSearchChoice());
+                searchResults = bookController.searchByAuthor(searchBackingBean.getSearchContent());
+                System.out.println("SearchResults found = " + searchResults.size());
                 break;
             case "Publisher":
-                bookController.searchByPublisher(searchBackingBean.getSearchChoice());
+                searchResults = bookController.searchByPublisher(searchBackingBean.getSearchContent());
+                System.out.println("SearchResults found = " + searchResults.size());
                 break;
             default:          
         }
         return "results";
+    }
+    
+    public List<Book> getSearchResults(){
+        return searchResults;
     }
 
 }

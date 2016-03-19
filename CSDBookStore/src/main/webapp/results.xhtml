@@ -1,7 +1,10 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
@@ -14,141 +17,167 @@
             <ui:define name="content">
                 <div class="off-canvas-wrapper">
                     <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper="">
-                      
+
                         <div class="off-canvas position-left" id="my-info" data-off-canvas="">
-                            
-                                <div class="row column">
+
+                            <div class="row column">
+                                <br/>
+                                <img class="thumbnail" src="http://placehold.it/550x350"></img>
+                                <ul class="side-nav" role="navigation">
+                                    <h4>Refine Your Search</h4>
+                                    <li class="divider"></li>
+                                    <h5><li class="heading">By Genre</li></h5>
+                                    <li><a href="#">Computer &amp; Technology</a></li>
+                                    <li><a href="#">Travel</a></li>
+                                    <li><a href="#">Comics &amp; Graphic Novels</a></li>
+                                    <li><a href="#">Religion &amp; Spirituality</a></li>
+                                    <li><a href="#">Mystery, Thriller &amp; Suspense</a></li>
                                     <br/>
-                                    <img class="thumbnail" src="http://placehold.it/550x350"></img>
-                                    <ul class="side-nav" role="navigation">
-                                        <h4>Refine Your Search</h4>
-                                        <li class="divider"></li>
-                                        <h5><li class="heading">By Genre</li></h5>
-                                        <li><a href="#">Computer &amp; Technology</a></li>
-                                        <li><a href="#">Travel</a></li>
-                                        <li><a href="#">Comics &amp; Graphic Novels</a></li>
-                                        <li><a href="#">Religion &amp; Spirituality</a></li>
-                                        <li><a href="#">Mystery, Thriller &amp; Suspense</a></li>
-                                        <br/>
-                                        <h5><li class="heading">By Available Formats</li></h5>
-                                        <li><a href="#">WORD</a></li>
-                                        <li><a href="#">HTML</a></li>
-                                        <li><a href="#">MOBI</a></li>
-                                        <li><a href="#">ePub</a></li>
-                                        <li><a href="#">RTF</a></li>
-                                        <li><a href="#">TXT</a></li>
-                                        <li><a href="#">PDF</a></li>
-                                        <li><a href="#">DigitalComics</a></li>
-                                        <br/>
-                                        <h5><li class="heading">By Overall Rating</li></h5>
-                                        <li><a href="#">>= 5</a></li>
-                                        <li><a href="#">>= 4</a></li>
-                                        <li><a href="#">>= 3</a></li>
-                                        <li><a href="#">>= 2</a></li>
-                                        <li><a href="#">>= 1</a></li>
-                                        <br/>
-                                        <h5><li class="heading">By Release Date</li></h5>
-                                        <li><a href="#">Last 30 Days</a></li>
-                                        <li><a href="#">Last 6 Months</a></li>
-                                        <li><a href="#">Last 1 Year</a></li>
-                                        <li><a href="#">Last 5 Years</a></li>
-                                        <br/>
-                                        <h5><li class="heading">Include Non Available</li></h5>
-                                        <li><input type="checkbox" name="available" value="available"> True</input></li>
-                                    </ul>
-                                    <p>Duis aliquet egestas purus in blandit. Curabitur vulputate, ligula lacinia scelerisque tempor, lacus lacus ornare ante, ac egestas est urna sit amet arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed molestie augue sit amet leo.</p>
+                                    <h5><li class="heading">By Available Formats</li></h5>
+                                    <li><a href="#">WORD</a></li>
+                                    <li><a href="#">HTML</a></li>
+                                    <li><a href="#">MOBI</a></li>
+                                    <li><a href="#">ePub</a></li>
+                                    <li><a href="#">RTF</a></li>
+                                    <li><a href="#">TXT</a></li>
+                                    <li><a href="#">PDF</a></li>
+                                    <li><a href="#">DigitalComics</a></li>
+                                    <br/>
+                                    <h5><li class="heading">By Overall Rating</li></h5>
+                                    <h:selectOneMenu value="#{resultsBackingBean.ratingLimit}">
+                                        <li><f:selectItem itemValue="5star" itemLabel="5 Stars" /></li>
+                                        <li><f:selectItem itemValue="4star" itemLabel="Atleast 4 stars" /></li>
+                                        <li><f:selectItem itemValue="3star" itemLabel="Atleast 3 stars" /></li>
+                                        <li><f:selectItem itemValue="2star" itemLabel="Atleast 2 stars" /></li>
+                                        <li><f:selectItem itemValue="1star" itemLabel="Atleast 1 star" /></li>
+                                    </h:selectOneMenu>
+                                    <br/>
+                                    <h5><li class="heading">By Release Date</li></h5>
+                                    <li><input type="checkbox" name="30days" value="30days"> Last 30 Days</input></li>
+                                    <li><input type="checkbox" name="6months" value="30days"> Last 6 Months</input></li>
+                                    <li><input type="checkbox" name="1year" value="30days"> Last 1 Year</input></li>
+                                    <li><input type="checkbox" name="5years" value="30days"> Last 5 Years</input></li>
+                                    <br/>
+                                    <h5><li class="heading">Include Non Available</li></h5>
+                                    <li><input type="checkbox" name="available" value="available"> True</input></li>
+                                </ul>
+                                <p>Duis aliquet egestas purus in blandit. Curabitur vulputate, ligula lacinia scelerisque tempor, lacus lacus ornare ante, ac egestas est urna sit amet arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed molestie augue sit amet leo.</p>
+                            </div>
+                        </div>
+                        <div class="off-canvas-content" data-off-canvas-content="">
+                            <div class="title-bar">
+                                <div class="title-bar-left">
+                                    <button class="menu-icon" type="button" data-toggle="my-info"></button>
+                                    <span class="title-bar-title">Advanced Search</span>
                                 </div>
                             </div>
-                        <div class="off-canvas-content" data-off-canvas-content="">
-                                <div class="title-bar">
-                                    <div class="title-bar-left">
-                                        <button class="menu-icon" type="button" data-toggle="my-info"></button>
-                                        <span class="title-bar-title">Advanced Search</span>
-                                    </div>
+                            <div class="callout primary">
+                                <div class="row column">
+                                    <h1>Results of your search for: #{resultsBackingBean.searchContent}</h1>
+                                    <p class="lead">Total results found: #{resultsBackingBean.count}</p>
                                 </div>
-                                <div class="callout primary">
-                                    <div class="row column">
-                                        <h1>Results of your search for: </h1>
-                                        <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus luctus urna sed urna ultricies ac tempor dui sagittis. In condimentum facilisis porta. Sed nec diam eu diam mattis viverra. Nulla fringilla.</p>
-                                    </div>
-                                </div>
-                                <div class="row small-up-2 medium-up-3 large-up-4">
+                            </div>
+                            <div class="row small-up-2 medium-up-3 large-up-4">
+                                <h:form>
+                                    <!--THIS WORKS BUT I DONT WANT A TABLE-->
+                                    <h:dataTable value="#{resultsBackingBean.searchResults}" var="book">
+                                        <div class="media-object">
+                                            <div class="media-object-section">
+                                                <img class="thumbnail" src="resources/images/978-1582705248.jpg"></img>
+                                            </div>
+                                            <div class="media-object-section">
+                                                <h:column>
+                                                    <f:facet name="header">Title</f:facet>
+                                                        #{book.title}
+                                                </h:column>
+                                                <h:column>
+                                                 <f:facet name="header">Publisher</f:facet>
+                                                        #{book.publisher}
+                                                </h:column>
+                                            </div>
+                                        </div>
+                                    </h:dataTable>
+                                </h:form>
+                                <!--WHY DOES THIS NOT WORK-->
+                                <ui:repeat value="#{resultBackingBean.searchResults}" var="book">
                                     <div class="media-object">
                                         <div class="media-object-section">
                                             <img class="thumbnail" src="resources/images/978-1582705248.jpg"></img>
                                         </div>
                                         <div class="media-object-section">
-                                            <h4>Book Tittle</h4>
-                                            <h4>ISBN: 93347865503 </h4>
-                                            <h6>by Author Name</h6>
-                                            <h6>Publish Date: Jan 01 2015 </h6>
-                                            <h5>Sale Price</h5> 
-                                            <p>Available?</p>
+                                            <h4><h:outputText value="#{book.title}"/></h4>
+                                            <h4><h:outputText value="#{book.isbn}"/></h4>
+                                            <h6><h:outputText value="#{book.author}"/></h6>
+                                            <h6><h:outputText value="#{book.publishDate}"/></h6>
+                                            <h5><h:outputText value="#{book.salePrice}"/></h5> 
+                                            <p><h:outputText value="#{book.available}"/></p>
                                         </div>
                                     </div>
-                                    <hr/>
-                                    <div class="media-object">
-                                        <div class="media-object-section">
-                                            <img class="thumbnail" src="resources/images/978-1582705248.jpg"></img>
-                                        </div>
-                                        <div class="media-object-section">
-                                            <h4>Book Tittle</h4>
-                                            <h4>ISBN: 93347865503 </h4>
-                                            <h6>by Author Name</h6>
-                                            <h6>Publish Date: Jan 01 2015 </h6>
-                                            <h5>Sale Price</h5> 
-                                            <p>Available?</p>
-                                        </div>
+                                </ui:repeat>
+                                <hr/>
+                                <!--I WANT IT ALL TO LOOK LIKE THIS-->
+                                <div class="media-object">
+                                    <div class="media-object-section">
+                                        <img class="thumbnail" src="resources/images/978-1582705248.jpg"></img>
                                     </div>
-                                    <hr/>
-                                    <div class="media-object">
-                                        <div class="media-object-section">
-                                            <img class="thumbnail" src="resources/images/978-1582705248.jpg"></img>
-                                        </div>
-                                        <div class="media-object-section">
-                                            <h4>Book Tittle</h4>
-                                            <h4>ISBN: 93347865503 </h4>
-                                            <h6>by Author Name</h6>
-                                            <h6>Publish Date: Jan 01 2015 </h6>
-                                            <h5>Sale Price</h5> 
-                                            <p>Available?</p>
-                                        </div>
-                                    </div>
-                                    <hr/>
-                                    <div class="media-object">
-                                        <div class="media-object-section">
-                                            <img class="thumbnail" src="resources/images/978-1582705248.jpg"></img>
-                                        </div>
-                                        <div class="media-object-section">
-                                            <h4>Book Tittle</h4>
-                                            <h4>ISBN: 93347865503 </h4>
-                                            <h6>by Author Name</h6>
-                                            <h6>Publish Date: Jan 01 2015 </h6>
-                                            <h5>Sale Price</h5> 
-                                            <p>Available?</p>
-                                        </div>
-                                    </div>
-                                    <hr/>
-                                    <div class="media-object">
-                                        <div class="media-object-section">
-                                            <img class="thumbnail" src="resources/images/978-1582705248.jpg"></img>
-                                        </div>
-                                        <div class="media-object-section">
-                                            <h4>Book Tittle</h4>
-                                            <h4>ISBN: 93347865503 </h4>
-                                            <h6>by Author Name</h6>
-                                            <h6>Publish Date: Jan 01 2015 </h6>
-                                            <h5>Sale Price</h5> 
-                                            <p>Available?</p>
-                                        </div>
+                                    <div class="media-object-section">
+                                        <h4>Book Tittle</h4>
+                                        <h4>ISBN: 93347865503 </h4>
+                                        <h6>by Author Name</h6>
+                                        <h6>Publish Date: Jan 01 2015 </h6>
+                                        <h5>Sale Price</h5> 
+                                        <p>Available?</p>
                                     </div>
                                 </div>
                                 <hr/>
+                                <div class="media-object">
+                                    <div class="media-object-section">
+                                        <img class="thumbnail" src="resources/images/978-1582705248.jpg"></img>
+                                    </div>
+                                    <div class="media-object-section">
+                                        <h4>Book Tittle</h4>
+                                        <h4>ISBN: 93347865503 </h4>
+                                        <h6>by Author Name</h6>
+                                        <h6>Publish Date: Jan 01 2015 </h6>
+                                        <h5>Sale Price</h5> 
+                                        <p>Available?</p>
+                                    </div>
+                                </div>
+                                <hr/>
+                                <div class="media-object">
+                                    <div class="media-object-section">
+                                        <img class="thumbnail" src="resources/images/978-1582705248.jpg"></img>
+                                    </div>
+                                    <div class="media-object-section">
+                                        <h4>Book Tittle</h4>
+                                        <h4>ISBN: 93347865503 </h4>
+                                        <h6>by Author Name</h6>
+                                        <h6>Publish Date: Jan 01 2015 </h6>
+                                        <h5>Sale Price</h5> 
+                                        <p>Available?</p>
+                                    </div>
+                                </div>
+                                <hr/>
+                                <div class="media-object">
+                                    <div class="media-object-section">
+                                        <img class="thumbnail" src="resources/images/978-1582705248.jpg"></img>
+                                    </div>
+                                    <div class="media-object-section">
+                                        <h4>Book Tittle</h4>
+                                        <h4>ISBN: 93347865503 </h4>
+                                        <h6>by Author Name</h6>
+                                        <h6>Publish Date: Jan 01 2015 </h6>
+                                        <h5>Sale Price</h5> 
+                                        <p>Available?</p>
+                                    </div>
+                                </div>
                             </div>
-                        
-                            
+                            <hr/>
                         </div>
+
+
                     </div>
+                </div>
             </ui:define>
 
         </ui:composition>
