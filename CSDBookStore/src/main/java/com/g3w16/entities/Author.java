@@ -115,10 +115,17 @@ public class Author implements Serializable {
         }
         return true;
     }
-
+    
+    /**
+     * Modified to simply display the authors name to be used on the webpage.
+     * @author Joey
+     * @author Christopher Dufort
+     * @return 
+     */
     @Override
     public String toString() {
-        return "com.g3w16.entities.Author[ authorId=" + authorId + " ]";
+        return authorName;
+//        return "com.g3w16.entities.Author[ authorId=" + authorId + " ]";
     }
     
 }

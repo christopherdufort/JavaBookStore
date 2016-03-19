@@ -78,104 +78,26 @@
                                 </div>
                             </div>
                             <div class="row small-up-2 medium-up-3 large-up-4">
-                                <h:form>
-                                    <!--THIS WORKS BUT I DONT WANT A TABLE-->
-                                    <h:dataTable value="#{resultsBackingBean.searchResults}" var="book">
-                                        <div class="media-object">
-                                            <div class="media-object-section">
-                                                <img class="thumbnail" src="resources/images/978-1582705248.jpg"></img>
-                                            </div>
-                                            <div class="media-object-section">
-                                                <h:column>
-                                                    <f:facet name="header">Title</f:facet>
-                                                        #{book.title}
-                                                </h:column>
-                                                <h:column>
-                                                 <f:facet name="header">Publisher</f:facet>
-                                                        #{book.publisher}
-                                                </h:column>
-                                            </div>
-                                        </div>
-                                    </h:dataTable>
-                                </h:form>
-                                <!--WHY DOES THIS NOT WORK-->
-                                <ui:repeat value="#{resultBackingBean.searchResults}" var="book">
+                                <ui:repeat value="#{resultsBackingBean.searchResults}" var="book">
                                     <div class="media-object">
                                         <div class="media-object-section">
-                                            <img class="thumbnail" src="resources/images/978-1582705248.jpg"></img>
+                                            <img class="thumbnail" src="resources/images/#{book.isbn}_s.jpg"></img>
                                         </div>
                                         <div class="media-object-section">
-                                            <h4><h:outputText value="#{book.title}"/></h4>
-                                            <h4><h:outputText value="#{book.isbn}"/></h4>
-                                            <h6><h:outputText value="#{book.author}"/></h6>
-                                            <h6><h:outputText value="#{book.publishDate}"/></h6>
-                                            <h5><h:outputText value="#{book.salePrice}"/></h5> 
-                                            <p><h:outputText value="#{book.available}"/></p>
+                                            <h4>#{msgs.title}: <h:outputText value="#{book.title}"/></h4>
+                                            <h4>#{msgs.isbn}: <h:outputText value="#{book.isbn}"/></h4>
+                                            <h6>#{msgs.author}: <h:outputText value="#{book.authorList.get(0)}"/></h6>
+                                            <h6>#{msgs.publishDate}: <h:outputText value="#{book.publishDate}"/></h6>
+                                            <h5>#{msgs.salePrice}: <h:outputText value="#{book.salePrice}"/></h5> 
+                                            <p>#{msgs.available}: <h:outputText value="#{book.available}"/></p>
                                         </div>
                                     </div>
+                                    <hr/>
                                 </ui:repeat>
-                                <hr/>
-                                <!--I WANT IT ALL TO LOOK LIKE THIS-->
-                                <div class="media-object">
-                                    <div class="media-object-section">
-                                        <img class="thumbnail" src="resources/images/978-1582705248.jpg"></img>
-                                    </div>
-                                    <div class="media-object-section">
-                                        <h4>Book Tittle</h4>
-                                        <h4>ISBN: 93347865503 </h4>
-                                        <h6>by Author Name</h6>
-                                        <h6>Publish Date: Jan 01 2015 </h6>
-                                        <h5>Sale Price</h5> 
-                                        <p>Available?</p>
-                                    </div>
-                                </div>
-                                <hr/>
-                                <div class="media-object">
-                                    <div class="media-object-section">
-                                        <img class="thumbnail" src="resources/images/978-1582705248.jpg"></img>
-                                    </div>
-                                    <div class="media-object-section">
-                                        <h4>Book Tittle</h4>
-                                        <h4>ISBN: 93347865503 </h4>
-                                        <h6>by Author Name</h6>
-                                        <h6>Publish Date: Jan 01 2015 </h6>
-                                        <h5>Sale Price</h5> 
-                                        <p>Available?</p>
-                                    </div>
-                                </div>
-                                <hr/>
-                                <div class="media-object">
-                                    <div class="media-object-section">
-                                        <img class="thumbnail" src="resources/images/978-1582705248.jpg"></img>
-                                    </div>
-                                    <div class="media-object-section">
-                                        <h4>Book Tittle</h4>
-                                        <h4>ISBN: 93347865503 </h4>
-                                        <h6>by Author Name</h6>
-                                        <h6>Publish Date: Jan 01 2015 </h6>
-                                        <h5>Sale Price</h5> 
-                                        <p>Available?</p>
-                                    </div>
-                                </div>
-                                <hr/>
-                                <div class="media-object">
-                                    <div class="media-object-section">
-                                        <img class="thumbnail" src="resources/images/978-1582705248.jpg"></img>
-                                    </div>
-                                    <div class="media-object-section">
-                                        <h4>Book Tittle</h4>
-                                        <h4>ISBN: 93347865503 </h4>
-                                        <h6>by Author Name</h6>
-                                        <h6>Publish Date: Jan 01 2015 </h6>
-                                        <h5>Sale Price</h5> 
-                                        <p>Available?</p>
-                                    </div>
-                                </div>
+                             
                             </div>
                             <hr/>
                         </div>
-
-
                     </div>
                 </div>
             </ui:define>

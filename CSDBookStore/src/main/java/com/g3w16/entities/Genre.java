@@ -107,10 +107,17 @@ public class Genre implements Serializable {
         }
         return true;
     }
-
+    
+    /**
+     * Modified to return the genre's name to be used on the webpage.
+     * @author Jonas Faure
+     * @author Christopher Dufort
+     * @return 
+     */
     @Override
     public String toString() {
-        return "com.g3w16.entities.Genre[ genreId=" + genreId + " ]";
+        //return "com.g3w16.entities.Genre[ genreId=" + genreId + " ]";
+        return genreName;
     }
     
 }

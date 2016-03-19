@@ -8,6 +8,7 @@ package com.g3w16.actionController;
 import com.g3w16.beans.SearchBackingBean;
 import com.g3w16.entities.Book;
 import com.g3w16.entities.BookJpaController;
+import com.g3w16.entities.Genre;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -42,5 +43,9 @@ public class BookController {
 
     public List<Book> searchByPublisher(String publisher) {
         throw new NotImplementedException();
+    }
+    
+    public List<Book> browseByGenre(Genre genre){
+        return bookJpaController.findBookEntitiesByGenreAsClient(genre);
     }
 }

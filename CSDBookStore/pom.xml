@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.g3w16</groupId>
     <artifactId>CSDBookStore</artifactId>
-    <version>0.4.6-SNAPSHOT</version> <!-- Increment this by 0.0.1 before each push -->
+    <version>0.4.7-SNAPSHOT</version> <!-- Increment this by 0.0.1 before each push -->
     <packaging>war</packaging>
     <name>CSDBookStore</name>
 
@@ -88,6 +88,18 @@
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
             <version>5.1</version>
+        </dependency>
+        
+        <!--Dependencies for ROME - rss feeds -->
+        <dependency>
+            <groupId>rome</groupId>
+            <artifactId>rome</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jdom</groupId>
+            <artifactId>jdom</artifactId>
+            <version>1.1</version>
         </dependency>
 
     </dependencies>
