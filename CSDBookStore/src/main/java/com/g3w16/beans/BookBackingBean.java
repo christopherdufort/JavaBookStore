@@ -6,21 +6,16 @@
 package com.g3w16.beans;
 
 import com.g3w16.entities.Author;
-import com.g3w16.entities.AuthorJpaController;
 import com.g3w16.entities.Book;
 import com.g3w16.entities.BookJpaController;
 import com.g3w16.entities.Format;
-import com.g3w16.entities.FormatJpaController;
 import com.g3w16.entities.Genre;
-import com.g3w16.entities.GenreJpaController;
-import com.g3w16.entities.Province;
 import com.g3w16.entities.Review;
 import com.g3w16.entities.ReviewJpaController;
-import com.g3w16.entities.Title;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -101,9 +96,9 @@ public class BookBackingBean implements Serializable {
         return formats;
     }
     
-    public String getDate() {
+    public String formatDate(Date date) {
         SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-MM-dd");
-        return dt1.format(book.getPublishDate());
+        return dt1.format(date);
     }
     
     public void setGenre(Genre genre) {
