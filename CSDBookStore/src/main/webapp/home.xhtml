@@ -16,7 +16,6 @@
                     <f:event listener="#{homeBB.setNewsFeedAttributes}" type="preRenderView" /> 
                 </f:metadata>
             </ui:define>
-            
 
             <ui:define name="content">
                 <!-- START OF CAROSEL -->
@@ -68,13 +67,7 @@
                                 <ul class="newsfeed">
                                     <li class="divider"></li>
                                     <li><h5>#{homeBB.newsFeedTitle}</h5></li>
-                                    <li><p>#{homeBB.newsFeedDescription}</p></li>
-<!--                                    <li><h5>Ingram to buy Perseus&apos;s distribution business</h5></li>
-                                    <li><p>A few days ago Perseus Book Group announced that Hachette would be buying their publishing arm, but it was unclear what would happen 
-                                            to their large distribution operation until yesterday when it was announced that this was to be bought by Ingram Content Group. 
-                                            Perseus&apos;s distribution business, which serves 600 publishers and has sales estimated at $300 million a year
-                                            includes Publishers Group West, Consortium Book Sales &amp; Distribution, Legato Publishers Group, Perseus Distribution, Perseus Academic and Constellation digital services.</p>
-                                    </li>              -->
+                                    <li><p>#{homeBB.newsFeedDescription}</p></li>         
                                 </ul>
                             </div>
                             <div class="panel">
@@ -94,11 +87,15 @@
                             </div>
                             <div class="row small-up-2 large-up-4">
                                 <ui:repeat var="item" value="#{homeBB.similarProducts}">
-                                    <div class="column">
-                                        <h:graphicImage styleClass="thumbnail" value="resources/images/#{item.isbn}_s.jpg"/>
-                                        <h6><h:outputText value="#{item.title}"/></h6>
-                                        <p><strike><h:outputText value="$#{item.listPrice}"/></strike><h:outputText value=" $#{item.salePrice}"/></p>
-                                        <h:form><h:commandButton styleClass="button small expanded" value="View" action="#{homeBB.displayBook(item.bookId)}"/></h:form>
+                                    <div class="column ">
+                                        <h:graphicImage styleClass="thumbnail" value="resources/images/#{item.isbn}.jpg"/>
+                                        <h:form><h6><h:commandLink value="#{item.title}" action="#{homeBB.displayBook(item.bookId)}"/></h6></h:form>
+                                        <ui:fragment rendered="#{item.listPrice == item.salePrice}">
+                                            <p><h:outputText value="$#{item.listPrice}"/></p>
+                                        </ui:fragment>
+                                        <ui:fragment rendered="#{item.listPrice != item.salePrice}">
+                                            <p><strike><h:outputText value="$#{item.listPrice}"/></strike>&nbsp;<h:outputText styleClass="red" value="$#{item.salePrice}"/></p>
+                                        </ui:fragment>
                                     </div>
                                 </ui:repeat>
                             </div>
@@ -115,11 +112,15 @@
                             </div>
                             <div class="row small-up-2 medium-up-3 large-up-6">
                                 <ui:repeat var="item" value="#{homeBB.similarProducts2}">
-                                    <div class="column">
-                                        <h:graphicImage styleClass="thumbnail" value="resources/images/#{item.isbn}_s.jpg"/>
-                                        <h6><h:outputText value="#{item.title}"/></h6>
-                                        <p><strike><h:outputText value="$#{item.listPrice}"/></strike><h:outputText value=" $#{item.salePrice}"/></p>
-                                        <h:form><h:commandButton styleClass="button small expanded" value="View" action="#{homeBB.displayBook(item.bookId)}"/></h:form>
+                                    <div class="column ">
+                                        <h:graphicImage styleClass="thumbnail" value="resources/images/#{item.isbn}.jpg"/>
+                                        <h:form><h6><h:commandLink value="#{item.title}" action="#{homeBB.displayBook(item.bookId)}"/></h6></h:form>
+                                        <ui:fragment rendered="#{item.listPrice == item.salePrice}">
+                                            <p><h:outputText value="$#{item.listPrice}"/></p>
+                                        </ui:fragment>
+                                        <ui:fragment rendered="#{item.listPrice != item.salePrice}">
+                                            <p><strike><h:outputText value="$#{item.listPrice}"/></strike>&nbsp;<h:outputText styleClass="red" value="$#{item.salePrice}"/></p>
+                                        </ui:fragment>
                                     </div>
                                 </ui:repeat>
                             </div>

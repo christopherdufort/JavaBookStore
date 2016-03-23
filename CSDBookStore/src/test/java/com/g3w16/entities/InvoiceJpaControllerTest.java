@@ -6,7 +6,7 @@
 package com.g3w16.entities;
 
 import com.g3w16.entities.exceptions.RollbackFailureException;
-import com.sun.jdo.spi.persistence.utility.logging.Logger;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;

@@ -26,13 +26,21 @@ import javax.inject.Named;
 @RequestScoped
 public class m_invoicesBackingBean {
 
-    @Inject
-    Invoice invoice;
+   
+    private Invoice invoice;
     
     @Inject
     InvoiceJpaController invoiceJpa;
 
-   
+    public Invoice getInvoice(){
+        if(invoice==null)
+            invoice=new Invoice();
+        return invoice;
+    }
+    
+    public void setInvoice(Invoice invoice){
+        this.invoice=invoice;
+    }
 
     /**
      * Returning all invoices

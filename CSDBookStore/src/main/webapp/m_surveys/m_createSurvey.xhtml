@@ -28,23 +28,23 @@
                                         <h:form>
                                             <h:panelGrid columns="2">
                                                 <h:outputLabel value="#{msgs.question}" for="question"></h:outputLabel>
-                                                <h:inputText id="question" value="#{m_surveys.selectedSurvey.question}" />
+                                                <h:inputText id="question" value="#{m_surveys.survey.question}" />
                                             </h:panelGrid>
                                             <h:panelGrid columns="2">
                                                 <h:outputLabel value="#{msgs.answerOne}" for="answerOne"></h:outputLabel>
-                                                <h:inputText id="answerOne" value="#{m_surveys.selectedSurvey.answerOne}" />
+                                                <h:inputText id="answerOne" value="#{m_surveys.survey.answerOne}" />
                                             </h:panelGrid>
                                             <h:panelGrid columns="2">
                                                 <h:outputLabel value="#{msgs.answerTwo}" for="answerTwo"></h:outputLabel>
-                                                <h:inputText id="answerTwo" value="#{m_surveys.selectedSurvey.answerTwo}" />
+                                                <h:inputText id="answerTwo" value="#{m_surveys.survey.answerTwo}" />
                                             </h:panelGrid>
                                             <h:panelGrid columns="2">
                                                 <h:outputLabel value="#{msgs.answerThree}" for="answerThree"></h:outputLabel>
-                                                <h:inputText id="answerThree" value="#{m_surveys.selectedSurvey.answerThree}" />
+                                                <h:inputText id="answerThree" value="#{m_surveys.survey.answerThree}" />
                                             </h:panelGrid>
                                             <h:panelGrid columns="2">
                                                 <h:outputLabel value="#{msgs.answerDefault}" for="answerDefault"></h:outputLabel>
-                                                <h:inputText id="answerDefault" value="#{m_surveys.selectedSurvey.answerDefault}" />
+                                                <h:inputText id="answerDefault" value="#{m_surveys.survey.answerDefault}" />
                                             </h:panelGrid>
                                             <br />
                                             <h:commandButton value="#{msgs.add}"

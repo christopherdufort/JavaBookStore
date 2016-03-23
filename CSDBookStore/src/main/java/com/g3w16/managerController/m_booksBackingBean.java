@@ -23,8 +23,8 @@ import javax.inject.Named;
 @RequestScoped
 public class m_booksBackingBean {
 
-    @Inject
-    Book book;
+   
+    private Book book;
 
     @Inject
     BookJpaController bookJpa;
@@ -33,8 +33,15 @@ public class m_booksBackingBean {
         return "m_createBook";
     }
 
-    public Book getSelectedBook() {
+    public Book getBook() {
+        if(book==null){
+            book=new Book();
+        }
         return book;
+    }
+    
+    public void setBook(Book book){
+        this.book=book;
     }
 
     public String createBook() {

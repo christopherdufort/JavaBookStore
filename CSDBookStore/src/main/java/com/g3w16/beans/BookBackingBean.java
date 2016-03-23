@@ -16,6 +16,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -30,7 +31,7 @@ public class BookBackingBean implements Serializable {
     
     private Book book;
     private Review review;
-    private Genre genre;
+    private List<Book> similarProducts;
     
     @Inject
     private BookJpaController bookJpaController;
@@ -101,28 +102,19 @@ public class BookBackingBean implements Serializable {
         return dt1.format(date);
     }
     
-    public void setGenre(Genre genre) {
-        this.genre = genre;
-    }
-    
-    public Genre getGenre() {
-        if (genre == null) {
-            genre = book.getGenreList().get(0);
-        }
-        return genre;
-    }
-    
     public String getGenreName() {
-        return getGenre().getGenreName();
+        return book.getGenreList().get(0).getGenreName();
     }
     
     public List<Book> getSimilarProducts() {
-        return bookJpaController.findBookEntitiesByGenre(getGenre(), 6, 0); //add in all book images
+        return bookJpaController.findBookEntitiesByGenre(book.getGenreList().get(0), 6, 0); //add in all book images
     }
     
     public String displayBook(Book book) {
         setBook(book);
         return "book";
+        //ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        //ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
     }
     
 }

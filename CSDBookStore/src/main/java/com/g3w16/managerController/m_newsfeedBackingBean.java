@@ -23,8 +23,8 @@ import javax.inject.Named;
 @RequestScoped
 public class m_newsfeedBackingBean {
 
-    @Inject
-    NewsFeed newsFeed;
+   
+    private NewsFeed newsFeed;
 
     @Inject
     NewsFeedJpaController newsJpa;
@@ -33,8 +33,14 @@ public class m_newsfeedBackingBean {
         return "m_createNews";
     }
 
-    public NewsFeed getSelectedNews() {
+    public NewsFeed getNewsFeed() {
+        if(newsFeed==null)
+            newsFeed=new NewsFeed();
         return newsFeed;
+    }
+    
+    public void setNews(NewsFeed newsFeed){
+        this.newsFeed=newsFeed;
     }
 
     public String createNews() {
