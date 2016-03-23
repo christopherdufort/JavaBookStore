@@ -38,11 +38,6 @@ public class BookBackingBean implements Serializable {
     @Inject
     private ReviewJpaController reviewJpaController;
     
-    @PostConstruct
-    public void init() {
-        similarProducts = bookJpaController.findBookEntitiesByGenre(book.getGenreList().get(0), 6, 0); //add in all book images
-    }
-    
     public Book getBook() {
         if (book == null)
             book = new Book();
@@ -112,7 +107,7 @@ public class BookBackingBean implements Serializable {
     }
     
     public List<Book> getSimilarProducts() {
-        return similarProducts;
+        return bookJpaController.findBookEntitiesByGenre(book.getGenreList().get(0), 6, 0); //add in all book images
     }
     
     public String displayBook(Book book) {
