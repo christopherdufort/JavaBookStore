@@ -26,8 +26,8 @@ import javax.inject.Named;
 @RequestScoped
 public class m_reportsBackingBean {
 
-    @Inject
-    InvoiceDetail invoiceDetail;
+    
+    private InvoiceDetail invoiceDetail;
     
     @Inject
     m_invoicesBackingBean m_invoicesBackingBean;
@@ -35,6 +35,15 @@ public class m_reportsBackingBean {
     @Inject
     InvoiceDetailJpaController invoiceDetailJpa;
 
+    public InvoiceDetail getInvoiceDetail(){
+        if(invoiceDetail==null)
+            invoiceDetail=new InvoiceDetail();
+        return invoiceDetail;
+    }
+    
+    public void setInvoiceDetail(InvoiceDetail invoiceDetail){
+        this.invoiceDetail=invoiceDetail;
+    }
     /**
      * This method calculates the total sales that exist for one invoice.
      * Including taxes.
