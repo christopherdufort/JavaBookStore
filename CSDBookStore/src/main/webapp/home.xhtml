@@ -84,11 +84,15 @@
                             </div>
                             <div class="row small-up-2 large-up-4">
                                 <ui:repeat var="item" value="#{homeBB.similarProducts}">
-                                    <div class="column">
-                                        <h:graphicImage styleClass="thumbnail" value="resources/images/#{item.isbn}_s.jpg"/>
-                                        <h6><h:outputText value="#{item.title}"/></h6>
-                                        <p><strike><h:outputText value="$#{item.listPrice}"/></strike><h:outputText value=" $#{item.salePrice}"/></p>
-                                        <h:form><h:commandButton styleClass="button small expanded" value="View" action="#{homeBB.displayBook(item.bookId)}"/></h:form>
+                                    <div class="column ">
+                                        <h:graphicImage styleClass="thumbnail" value="resources/images/#{item.isbn}.jpg"/>
+                                        <h:form><h6><h:commandLink value="#{item.title}" action="#{homeBB.displayBook(item.bookId)}"/></h6></h:form>
+                                        <ui:fragment rendered="#{item.listPrice == item.salePrice}">
+                                            <p><h:outputText value="$#{item.listPrice}"/></p>
+                                        </ui:fragment>
+                                        <ui:fragment rendered="#{item.listPrice != item.salePrice}">
+                                            <p><strike><h:outputText value="$#{item.listPrice}"/></strike>&nbsp;<h:outputText styleClass="red" value="$#{item.salePrice}"/></p>
+                                        </ui:fragment>
                                     </div>
                                 </ui:repeat>
                             </div>
@@ -105,11 +109,15 @@
                             </div>
                             <div class="row small-up-2 medium-up-3 large-up-6">
                                 <ui:repeat var="item" value="#{homeBB.similarProducts2}">
-                                    <div class="column">
-                                        <h:graphicImage styleClass="thumbnail" value="resources/images/#{item.isbn}_s.jpg"/>
-                                        <h6><h:outputText value="#{item.title}"/></h6>
-                                        <p><strike><h:outputText value="$#{item.listPrice}"/></strike><h:outputText value=" $#{item.salePrice}"/></p>
-                                        <h:form><h:commandButton styleClass="button small expanded" value="View" action="#{homeBB.displayBook(item.bookId)}"/></h:form>
+                                    <div class="column ">
+                                        <h:graphicImage styleClass="thumbnail" value="resources/images/#{item.isbn}.jpg"/>
+                                        <h:form><h6><h:commandLink value="#{item.title}" action="#{homeBB.displayBook(item.bookId)}"/></h6></h:form>
+                                        <ui:fragment rendered="#{item.listPrice == item.salePrice}">
+                                            <p><h:outputText value="$#{item.listPrice}"/></p>
+                                        </ui:fragment>
+                                        <ui:fragment rendered="#{item.listPrice != item.salePrice}">
+                                            <p><strike><h:outputText value="$#{item.listPrice}"/></strike>&nbsp;<h:outputText styleClass="red" value="$#{item.salePrice}"/></p>
+                                        </ui:fragment>
                                     </div>
                                 </ui:repeat>
                             </div>
