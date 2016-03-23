@@ -37,8 +37,8 @@
 
                                                 <h:outputLabel value="#{msgs.title}" for="title"></h:outputLabel>
                                                 <h:outputText rendered="m_users.selectedUser.titleId.title"></h:outputText>
-                                                <h:selectOneMenu id="title" value="#{m_users.user.titleId.title}" >
-                                                    <f:selectItems value="#{m_users.allTitle}" var="t" itemLabel="#{t.title}" itemValue="#{t.titleId}"/>
+                                                <h:selectOneMenu id="title" value="#{m_users.user.titleId}" >
+                                                    <f:selectItems value="#{m_users.allTitle}" var="t" itemLabel="#{t.title}" itemValue="#{t}"/>
                                                 </h:selectOneMenu>
 
                                                 <h:outputLabel value="#{msgs.first_name}" for="first_name"></h:outputLabel>
@@ -67,8 +67,8 @@
 
                                                 <h:outputLabel value="#{msgs.province}" for="province"></h:outputLabel>
                                                 <h:outputText rendered="m_users.selectedUser.provinceId.province"></h:outputText>
-                                                <h:selectOneMenu id="province" value="#{m_users.user.provinceId.province}">
-                                                    <f:selectItems value="#{m_users.allProvince}" var="p" itemLabel="#{p.province}" itemValue="#{p.provinceId}"/>
+                                                <h:selectOneMenu id="province" value="#{m_users.user.provinceId}">
+                                                    <f:selectItems value="#{m_users.allProvince}" var="p" itemLabel="#{p.province}" itemValue="#{p}"/>
                                                 </h:selectOneMenu>
 
                                                 <h:outputLabel value="#{msgs.country}" for="country"></h:outputLabel>

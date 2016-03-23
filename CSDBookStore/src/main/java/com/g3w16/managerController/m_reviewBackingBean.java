@@ -58,18 +58,12 @@ public class m_reviewBackingBean {
         this.approval = approval;
     }
 
-    public String editReview(Review r) {
-        review = reviewJpa.findReview(r.getReviewId());
-        return "m_editReview";
-    }
-
-    public String updateReview(Review r, Approval a) {
+    public void editReview(Review r) {    
         try {
-            reviewJpa.update(r, a);
+            reviewJpa.edit(r);  
         } catch (Exception ex) {
             Logger.getLogger(m_reviewBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return "m_reviews";
     }
 
     public String destroyReview(Review r) {
@@ -95,5 +89,19 @@ public class m_reviewBackingBean {
 
     public List<Approval> getAllApproval() {
         return approvalJpa.findApprovalEntities();
+    }
+
+    public Approval getApprovalobject(String str) {
+        switch (str) {
+            case "Approved":               
+                return new Approval(1);
+
+            case "Pending":             
+                return new Approval(2);
+                
+            case "Denied":
+                return new Approval(3);
+        }
+        return null;
     }
 }
