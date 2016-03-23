@@ -7,7 +7,10 @@ package com.g3w16.entities.viewController;
 
 import com.g3w16.actionController.UserController;
 import com.g3w16.beans.ProfileBackingBean;
-import javax.enterprise.context.RequestScoped;
+import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -19,18 +22,22 @@ import javax.inject.Named;
  * @author Christopher
  */
 @Named
-@RequestScoped
-public class ProfileActionBean {
+@SessionScoped
+public class ProfileActionBean implements Serializable{
     @Inject
-    UserController userController;
+    private UserController userController;
 
     @Inject
-    ProfileBackingBean profileBackingBean;
+    private ProfileBackingBean profileBackingBean;
+    
+    public ProfileActionBean(){
+        Logger.getLogger(this.getClass().getName()).log(Level.INFO, "ProfileActionBean was constructed via CDI");
+    }
 
-    public String editProfile(ProfileBackingBean profileBackingBean) {
-        System.out.println("Trying to edit the profile");
+    public String editProfile() {
+        Logger.getLogger(this.getClass().getName()).log(Level.INFO, "EditProfile in profile action bean is invoked!");
         try {
-            userController.editProfile(profileBackingBean);
+            userController.editProfile();
         } catch (Exception ex) {
             FacesContext.getCurrentInstance().addMessage("profileForm", new FacesMessage(ex.toString()));
             return null; //Go No where

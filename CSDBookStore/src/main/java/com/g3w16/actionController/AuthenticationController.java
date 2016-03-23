@@ -22,6 +22,7 @@ import javax.inject.Named;
 /**
  *
  * @author jesuisnuageux
+ * @author Christopher Dufort
  */
 @Named
 @RequestScoped
@@ -32,6 +33,13 @@ public class AuthenticationController implements SystemEventListener, Serializab
     
     @Inject
     AuthenticatedUser authenticatedUser;
+    
+    /**
+     * created for testing
+     */
+    public AuthenticationController() {
+        Logger.getLogger(this.getClass().getName()).log(Level.INFO, "AuthenticationController constructor is invoked!");
+    }
     
     public void mustBeClient(ComponentSystemEvent event) throws IOException{
         Logger.getLogger(AuthenticationController.class.getName()).log(Level.INFO, "AuthenticationController.isClient invoked !");

@@ -15,6 +15,7 @@ import com.g3w16.entities.RegisteredUser;
 import com.g3w16.entities.RegisteredUserJpaController;
 import com.g3w16.entities.exceptions.RollbackFailureException;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
@@ -34,13 +35,17 @@ import javax.persistence.NoResultException;
  */
 @Named
 @RequestScoped
-public class UserController {
+public class UserController implements Serializable {
 
     @Inject
-    RegisteredUserJpaController registeredUserJpaController;
+    private RegisteredUserJpaController registeredUserJpaController;
     
     @Inject
     private AuthenticatedUser authenticatedUser;
+    
+    @Inject
+    private ProfileBackingBean profileBackingBean;
+    
 
     public RegisteredUser create(SignupBean signinBean) throws Exception {
         RegisteredUser registeredUser = new RegisteredUser();
@@ -110,9 +115,9 @@ public class UserController {
         return registeredUser;
     }
     
-    public void editProfile(ProfileBackingBean profileBackingBean) throws Exception{
+    public void editProfile() throws Exception{
         
-        System.out.println("in Edit Profile");
+        Logger.getLogger(this.getClass().getName()).log(Level.INFO, "EditProfile in user controller is invoked!");
         
         //Update the fields of the currently logged in user and then persist to the db.
         RegisteredUser userToUpdate = authenticatedUser.getRegisteredUser();
