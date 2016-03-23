@@ -31,31 +31,55 @@ import javax.inject.Named;
 @RequestScoped
 public class m_usersBackingBean {
 
-    @Inject
-    RegisteredUser user;
+    
+    private RegisteredUser user;
     
     @Inject
     RegisteredUserJpaController userJpa;
     
-    @Inject
-    Title title;
+    
+    private Title title;
     
     @Inject 
     TitleJpaController titleJpa;
     
-    @Inject
-    Province province;
+    
+    private Province province;
     
     @Inject
     ProvinceJpaController provinceJpa;
     
-    public RegisteredUser getSelectedUser() {
+    public RegisteredUser getUser() {
         if (user == null) {
             user = new RegisteredUser();
         }
         return user;
     }
+    
+    public void setUser(RegisteredUser user){
+        this.user=user;
+    }
+    
+    public Title getTitle(){
+        if(title==null)
+            title=new Title();
+        return title;
+    }
+    
+    public void setTitle(Title title){
+        this.title=title;
+    }
+    
+    public Province getProvince(){
+        if(province==null)
+            province=new Province();
+        return province;
+    }
 
+    public void setProvince(Province province){
+        this.province=province;
+    }
+    
     public String editUser(RegisteredUser u) {
         user = userJpa.findUserById(u.getUserId());
         return "m_editUser";

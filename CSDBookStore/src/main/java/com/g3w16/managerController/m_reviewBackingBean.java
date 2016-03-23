@@ -26,20 +26,36 @@ import javax.inject.Named;
 @RequestScoped
 public class m_reviewBackingBean {
 
-    @Inject
-    Review review;
+    private Review review;
 
     @Inject
     ReviewJpaController reviewJpa;
 
-    @Inject
-    Approval approval;
+    private Approval approval;
 
     @Inject
     ApprovalJpaController approvalJpa;
 
-    public Review getSelectedReview() {
+    public Review getReview() {
+        if (review == null) {
+            review = new Review();
+        }
         return review;
+    }
+
+    public void setReview(Review review) {
+        this.review = review;
+    }
+
+    public Approval getApproval() {
+        if (approval == null) {
+            approval = new Approval();
+        }
+        return approval;
+    }
+
+    public void setApproval(Approval approval) {
+        this.approval = approval;
     }
 
     public String editReview(Review r) {
@@ -47,9 +63,9 @@ public class m_reviewBackingBean {
         return "m_editReview";
     }
 
-    public String updateReview(Review r) {
+    public String updateReview(Review r, Approval a) {
         try {
-            reviewJpa.edit(r);
+            reviewJpa.update(r, a);
         } catch (Exception ex) {
             Logger.getLogger(m_reviewBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }

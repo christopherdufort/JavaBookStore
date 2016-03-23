@@ -29,11 +29,11 @@
                                             <h:panelGrid columns="2">
                                                 <h:outputLabel value="#{msgs.news_id}" for="newsFeedId"></h:outputLabel>
                                                 <h:outputText rendered="m_newsfeed.selectedNews.newsFeedId"></h:outputText>
-                                                <h:inputText id="newsFeedId" value="#{m_newsfeed.selectedNews.newsFeedId}"/>
+                                                <h:inputText id="newsFeedId" value="#{m_newsfeed.newsFeed.newsFeedId}"/>
                                                 
                                                 <h:outputLabel value="#{msgs.news_link}" for="newsFeedLink"></h:outputLabel>
                                                 <h:outputText rendered="m_newsfeed.selectedNews.newsFeedLink"></h:outputText>
-                                                <h:inputText id="newsFeedLink" value="#{m_newsfeed.selectedNews.newsFeedLink}" />
+                                                <h:inputText id="newsFeedLink" value="#{m_newsfeed.newsFeed.newsFeedLink}" />
                                             </h:panelGrid>
                                             <br />
                                             <h:commandButton value="#{msgs.update}"

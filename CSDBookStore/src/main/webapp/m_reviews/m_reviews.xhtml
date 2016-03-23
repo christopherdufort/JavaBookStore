@@ -29,7 +29,7 @@
                                         <h:form>
                                             <h:dataTable class="table table-striped table-bordered table-hover" id="dataTables-example" value="#{m_reviews.allReview}" var="reviews">
                                                 <h:column>
-                                                    <h:commandLink value="#{msgs.edit}" action="#{m_reviews.updateReview(reviews)}" class="btn btn-info btn-xs"/>
+<!--                                                    <h:commandLink value="#{msgs.edit}" action="#{m_reviews.updateReview(reviews)}" class="btn btn-info btn-xs"/>-->
                                                     <h:commandLink value="#{msgs.delete}" action="#{m_reviews.destroyReview(reviews)}" class="btn btn-danger btn-xs"/>                            
                                                 </h:column>
                                                 <h:column>
@@ -59,7 +59,7 @@
 
                                                 <h:column>
                                                     <f:facet name="header">#{msgs.approval_id}</f:facet>
-                                                    <h:selectOneMenu id="title" value="#{reviews.approvalId.approvalStatus}" >
+                                                    <h:selectOneMenu id="title" value="#{reviews.approvalId.approvalStatus}" onchange="#{m_reviews.updateReview(reviews,a)}">
                                                         <f:selectItems value="#{m_reviews.allApproval}" var="a" itemLabel="#{a.approvalStatus}" itemValue="#{a.approvalId}"/>
                                                     </h:selectOneMenu>
                                                 </h:column>

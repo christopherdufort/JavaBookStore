@@ -28,40 +28,40 @@
                                         <h:form>
                                             <h:panelGrid columns="2">
                                                 <h:outputLabel value="#{msgs.isbn}" for="isbn"></h:outputLabel>
-                                                <h:inputText id="isbn" value="#{m_books.selectedBook.isbn}" />
+                                                <h:inputText id="isbn" value="#{m_books.book.isbn}" />
 
                                                 <h:outputLabel value="#{msgs.title}" for="title"></h:outputLabel>
-                                                <h:inputText id="title" value="#{m_books.selectedBook.title}" />
+                                                <h:inputText id="title" value="#{m_books.book.title}" />
 
                                                 <h:outputLabel value="#{msgs.publisher}" for="publisher"></h:outputLabel>
-                                                <h:inputText id="publisher" value="#{m_books.selectedBook.publisher}" />
+                                                <h:inputText id="publisher" value="#{m_books.book.publisher}" />
 
                                                 <h:outputLabel value="#{msgs.publish_date}" for="publish_date"></h:outputLabel>
-                                                <h:inputText id="publish_date" value="#{m_books.selectedBook.publishDate}" />
+                                                <h:inputText id="publish_date" value="#{m_books.book.publishDate}" />
 
                                                 <h:outputLabel value="#{msgs.page_number}" for="page_number"></h:outputLabel>
-                                                <h:inputText id="page_number" value="#{m_books.selectedBook.pageNumber}" />
+                                                <h:inputText id="page_number" value="#{m_books.book.pageNumber}" />
 
                                                 <h:outputLabel value="#{msgs.wholesale_price}" for="wholesale_price"></h:outputLabel>
-                                                <h:inputText id="whole_price" value="#{m_books.selectedBook.wholesalePrice}" />
+                                                <h:inputText id="whole_price" value="#{m_books.book.wholesalePrice}" />
 
                                                 <h:outputLabel value="#{msgs.list_price}" for="list_price"></h:outputLabel>
-                                                <h:inputText id="list_price" value="#{m_books.selectedBook.listPrice}" />
+                                                <h:inputText id="list_price" value="#{m_books.book.listPrice}" />
 
                                                 <h:outputLabel value="#{msgs.sale_price}" for="sale_price"></h:outputLabel>
-                                                <h:inputText id="sale_price" value="#{m_books.selectedBook.salePrice}" />
+                                                <h:inputText id="sale_price" value="#{m_books.book.salePrice}" />
 
                                                 <h:outputLabel value="#{msgs.date_entered}" for="date_entered"></h:outputLabel>
-                                                <h:inputText id="date_entered" value="#{m_books.selectedBook.dateEntered}" />
+                                                <h:inputText id="date_entered" value="#{m_books.book.dateEntered}" />
 
                                                 <h:outputLabel value="#{msgs.available}" for="available"></h:outputLabel>
-                                                <h:inputText id="available" value="#{m_books.selectedBook.available}" />
+                                                <h:inputText id="available" value="#{m_books.book.available}" />
 
                                                 <h:outputLabel value="#{msgs.overall_rating}" for="overall_rating"></h:outputLabel>
-                                                <h:inputText id="overall_rating" value="#{m_books.selectedBook.overallRating}" />
+                                                <h:inputText id="overall_rating" value="#{m_books.book.overallRating}" />
 
                                                 <h:outputLabel value="#{msgs.synopsis}" for="synopsis"></h:outputLabel>
-                                                <h:inputTextarea id="synopsis" value="#{m_books.selectedBook.synopsis}"/>
+                                                <h:inputTextarea id="synopsis" value="#{m_books.book.synopsis}"/>
 
                                             </h:panelGrid>
                                             <br />
