@@ -39,6 +39,10 @@
                                                         #{user.emailAddress}
                                                 </h:column>
                                                 <h:column>
+                                                    <f:facet name="header">#{msgs.password}</f:facet>
+                                                        #{user.password}
+                                                </h:column>
+                                                <h:column>
                                                     <f:facet name="header">#{msgs.title}</f:facet>
                                                         #{user.titleId.title}
                                                 </h:column>
@@ -93,6 +97,10 @@
                                                 <h:column>
                                                     <f:facet name="header">#{msgs.active}</f:facet>
                                                         #{user.active}
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">#{msgs.total_reviews}</f:facet>
+                                                    #{user.reviewList.size()}
                                                 </h:column>
                                             </h:dataTable>
                                         </h:form>

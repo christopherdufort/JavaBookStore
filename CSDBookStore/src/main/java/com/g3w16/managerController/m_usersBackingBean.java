@@ -26,60 +26,81 @@ import javax.inject.Named;
  * @author Xin Ma
  * @author Rita Lazaar
  */
-
 @Named("m_users")
 @RequestScoped
 public class m_usersBackingBean {
 
-    
     private RegisteredUser user;
-    
+
     @Inject
     RegisteredUserJpaController userJpa;
-    
-    
+
     private Title title;
-    
-    @Inject 
+
+    @Inject
     TitleJpaController titleJpa;
-    
-    
+
+    @Inject
+    ReviewJpaController reviewJpa;
+
     private Province province;
-    
+
     @Inject
     ProvinceJpaController provinceJpa;
-    
+
+    private String selectedTitle;
+
+    private String selectedProvince;
+
+    public String getSelectedTitle() {
+        return selectedTitle;
+    }
+
+    public void setSelectedTitle(String selectedTitle) {
+        this.selectedTitle = selectedTitle;
+    }
+
+    public String getSelectedProvince() {
+        return selectedProvince;
+    }
+
+    public void setSelectedProvince(String selectedProvince) {
+        this.selectedProvince = selectedProvince;
+    }
+
     public RegisteredUser getUser() {
         if (user == null) {
             user = new RegisteredUser();
         }
         return user;
     }
-    
-    public void setUser(RegisteredUser user){
-        this.user=user;
+
+    public void setUser(RegisteredUser user) {
+        this.user = user;
     }
-    
-    public Title getTitle(){
-        if(title==null)
-            title=new Title();
+
+    public Title getTitle() {
+        if (title == null) {
+            title = new Title();
+        }
         return title;
     }
-    
-    public void setTitle(Title title){
-        this.title=title;
+
+    public void setTitle(Title title) {
+        this.title = title;
     }
-    
-    public Province getProvince(){
-        if(province==null)
-            province=new Province();
+
+    public Province getProvince() {
+        if (province == null) {
+            province = new Province();
+        }
         return province;
     }
 
-    public void setProvince(Province province){
-        this.province=province;
+    public void setProvince(Province province) {
+        this.province = province;
     }
-    
+
     public String editUser(RegisteredUser u) {
         user = userJpa.findUserById(u.getUserId());
         return "m_editUser";
@@ -87,6 +108,9 @@ public class m_usersBackingBean {
 
     public String updateUser() {
         try {
+            user.setTitleId(titleJpa.findTitleByName(selectedTitle));
+            user.setProvinceId(provinceJpa.findProvinceByName(selectedProvince));
+            user.setReviewList(reviewJpa.findReviewByUserId(user));
             userJpa.edit(user);
         } catch (Exception ex) {
             Logger.getLogger(m_usersBackingBean.class.getName()).log(Level.SEVERE, null, ex);
@@ -106,8 +130,12 @@ public class m_usersBackingBean {
     public List<Title> getAllTitle() {
         return titleJpa.findAll();
     }
-    
-    public List<Province> getAllProvince(){
+
+    public List<Province> getAllProvince() {
         return provinceJpa.findAll();
+    }
+
+    public String cancel(){
+        return "m_users";
     }
 }
