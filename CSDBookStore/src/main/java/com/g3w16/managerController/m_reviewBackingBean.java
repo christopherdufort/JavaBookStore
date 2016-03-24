@@ -36,6 +36,42 @@ public class m_reviewBackingBean {
     @Inject
     ApprovalJpaController approvalJpa;
 
+    @Inject
+    BookJpaController bookJpa;
+
+    @Inject
+    RegisteredUserJpaController userJpa;
+
+    private String isbn;
+
+    private String userId;
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    private String selectedApproval;
+
+    public String getSelectedApproval() {
+        return selectedApproval;
+    }
+
+    public void setSelectedApproval(String selectedApproval) {
+        this.selectedApproval = selectedApproval;
+    }
+
     public Review getReview() {
         if (review == null) {
             review = new Review();
@@ -58,25 +94,19 @@ public class m_reviewBackingBean {
         this.approval = approval;
     }
 
-    public void editReview(Review r) {    
+    public void editReview(Review r) {
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + selectedApproval);
         try {
-            reviewJpa.edit(r);  
+            review = reviewJpa.findReview(r.getReviewId());
+            //review.setIsbn(bookJpa.findBookEntitiesById(review.getIsbn().getBookId()));
+            //review.setUserId(userJpa.findUserById(review.getUserId().getUserId()));
+            review.setApprovalId(approvalJpa.findByApprovalStatus(selectedApproval));
+            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + review.getApprovalId());
+
+            reviewJpa.edit(review);
         } catch (Exception ex) {
             Logger.getLogger(m_reviewBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    public String destroyReview(Review r) {
-
-        try {
-            reviewJpa.destroy(r.getReviewId());
-        } catch (RollbackFailureException ex) {
-            Logger.getLogger(m_reviewBackingBean.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(m_reviewBackingBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return "m_reviews";
     }
 
     public List<Review> getAllReview() {
@@ -91,17 +121,8 @@ public class m_reviewBackingBean {
         return approvalJpa.findApprovalEntities();
     }
 
-    public Approval getApprovalobject(String str) {
-        switch (str) {
-            case "Approved":               
-                return new Approval(1);
-
-            case "Pending":             
-                return new Approval(2);
-                
-            case "Denied":
-                return new Approval(3);
-        }
-        return null;
+    public Approval setSelApproval(String s) {
+        return approvalJpa.findByApprovalStatus(s);
     }
+
 }

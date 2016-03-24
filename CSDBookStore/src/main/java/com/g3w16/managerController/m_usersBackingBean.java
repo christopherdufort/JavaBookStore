@@ -26,6 +26,7 @@ import javax.inject.Named;
  * @author Xin Ma
  * @author Rita Lazaar
  */
+@ManagedBean
 @Named("m_users")
 @RequestScoped
 public class m_usersBackingBean {
@@ -137,5 +138,13 @@ public class m_usersBackingBean {
 
     public String cancel(){
         return "m_users";
+    }
+    
+    public Title selTitle(String s){
+        return titleJpa.findTitleByName(s);
+    }
+    
+    public Province selProvince(String s){
+        return provinceJpa.findProvinceByName(s);
     }
 }

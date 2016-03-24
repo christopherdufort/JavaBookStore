@@ -165,6 +165,12 @@ public class ApprovalJpaController implements Serializable {
         return em.find(Approval.class, id);
     }
 
+    public Approval findByApprovalStatus(String approvalStatus) {
+        Query q = em.createNamedQuery("Approval.findByApprovalStatus", Approval.class);
+        q.setParameter("approvalStatus", approvalStatus);
+        return (Approval) q.getSingleResult();
+    }
+
     public int getApprovalCount() {
         Query q = em.createQuery("select count(o) from Approval as o");
         return ((Long) q.getSingleResult()).intValue();
