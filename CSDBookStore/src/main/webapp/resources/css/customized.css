@@ -242,3 +242,8 @@ li .js-drilldown-back .top-bar ul li {
 .noMargin {
     margin: 0px;
 }
+
+.smallBook {
+    max-height: 150px;
+    max-width: 150px;
+}
