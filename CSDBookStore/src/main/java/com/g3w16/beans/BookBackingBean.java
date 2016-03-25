@@ -16,8 +16,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -26,12 +25,11 @@ import javax.inject.Named;
  * @author Giuseppe Campanelli
  */
 @Named("bookBB")
-@RequestScoped
+@SessionScoped
 public class BookBackingBean implements Serializable {
     
     private Book book;
     private Review review;
-    private List<Book> similarProducts;
     
     @Inject
     private BookJpaController bookJpaController;
@@ -112,9 +110,8 @@ public class BookBackingBean implements Serializable {
     
     public String displayBook(Book book) {
         setBook(book);
+        
         return "book";
-        //ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-        //ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
     }
     
 }

@@ -29,17 +29,10 @@ import javax.inject.Named;
 public class HomeBackingBean implements Serializable {
 
     @Inject
-    private BookBackingBean bookBB;
-    @Inject
     private BookJpaController bookJpaController;
 
     private String newsFeedTitle;
     private String newsFeedDescription;
-
-    public String displayBook(int id) {
-        bookBB.setBook(bookJpaController.findBookEntitiesById(id));
-        return "book";
-    }
 
     public List<Book> getSimilarProducts() {
         return bookJpaController.findBookEntitiesAsClient(4, 0);

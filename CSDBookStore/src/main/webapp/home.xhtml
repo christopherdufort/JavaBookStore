@@ -89,7 +89,7 @@
                                 <ui:repeat var="item" value="#{homeBB.similarProducts}">
                                     <div class="column ">
                                         <h:graphicImage styleClass="thumbnail" value="resources/images/#{item.isbn}.jpg"/>
-                                        <h:form><h6><h:commandLink value="#{item.title}" action="#{homeBB.displayBook(item.bookId)}"/></h6></h:form>
+                                        <h:form><h6><h:commandLink value="#{item.title}" action="#{bookBB.displayBook(item)}"/></h6></h:form>
                                         <ui:fragment rendered="#{item.listPrice == item.salePrice}">
                                             <p><h:outputText value="$#{item.listPrice}"/></p>
                                         </ui:fragment>
@@ -114,7 +114,7 @@
                                 <ui:repeat var="item" value="#{homeBB.similarProducts2}">
                                     <div class="column ">
                                         <h:graphicImage styleClass="thumbnail" value="resources/images/#{item.isbn}.jpg"/>
-                                        <h:form><h6><h:commandLink value="#{item.title}" action="#{homeBB.displayBook(item.bookId)}"/></h6></h:form>
+                                        <h:form><h6><h:commandLink value="#{item.title}" action="#{bookBB.displayBook(item)}"/></h6></h:form>
                                         <ui:fragment rendered="#{item.listPrice == item.salePrice}">
                                             <p><h:outputText value="$#{item.listPrice}"/></p>
                                         </ui:fragment>
@@ -135,7 +135,7 @@
                                             </div>
                                             <div class="media-object-section">
                                                 <h6><h:outputText value="#{item.title}"/></h6>
-                                                <h:form><h:commandButton styleClass="button small expanded" value="View" action="#{homeBB.displayBook(item.bookId)}"/></h:form>
+                                                <h:form><h:commandButton styleClass="button small expanded" value="View" action="#{bookBB.displayBook(item)}"/></h:form>
                                             </div>
                                         </div>
                                     </ui:repeat>
@@ -149,7 +149,7 @@
                                             </div>
                                             <div class="media-object-section">
                                                 <h6><h:outputText value="#{item.title}"/></h6>
-                                                <h:form><h:commandButton styleClass="button small expanded" value="View" action="#{homeBB.displayBook(item.bookId)}"/></h:form>
+                                                <h:form><h:commandButton styleClass="button small expanded" value="View" action="#{bookBB.displayBook(item)}"/></h:form>
                                             </div>
                                         </div>
                                     </ui:repeat>
@@ -163,7 +163,7 @@
                                             </div>
                                             <div class="media-object-section">
                                                 <h6><h:outputText value="#{item.title}"/></h6>
-                                                <h:form><h:commandButton styleClass="button small expanded" value="View" action="#{homeBB.displayBook(item.bookId)}"/></h:form>
+                                                <h:form><h:commandButton styleClass="button small expanded" value="View" action="#{bookBB.displayBook(item)}"/></h:form>
                                             </div>
                                         </div>
                                     </ui:repeat>
