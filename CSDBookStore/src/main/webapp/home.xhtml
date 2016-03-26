@@ -14,7 +14,7 @@
 
             <ui:define name="event_listener">
                 <f:metadata>
-                    <f:event listener="#{homeBB.setNewsFeedAttributes}" type="preRenderView" /> 
+                    <f:event listener="#{feedBean.setNewsFeedAttributes}" type="preRenderView" /> 
                 </f:metadata>
             </ui:define>
 
@@ -67,8 +67,8 @@
                                 <h4>News Feed</h4>
                                 <ul class="newsfeed">
                                     <li class="divider"></li>
-                                    <li><h5>#{homeBB.newsFeedTitle}</h5></li>
-                                    <li><p>#{homeBB.newsFeedDescription}</p></li>         
+                                    <li><h5>#{feedBean.newsFeedTitle}</h5></li>
+                                    <li><p>#{feedBean.newsFeedDescription}</p></li>         
                                 </ul>
                             </div>
                             <div class="panel">

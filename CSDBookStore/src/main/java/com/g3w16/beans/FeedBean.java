@@ -25,18 +25,9 @@ import javax.inject.Named;
  *
  * @author Giuseppe Campanelli
  */
-@Named("homeBB")
+@Named()
 @RequestScoped
-public class HomeBackingBean implements Serializable {
-
-    @Inject
-    AuthenticatedUser authenticatedUser;
-    
-    @Inject
-    BookController bookController;
-    
-    @Inject
-    private BookJpaController bookJpaController;
+public class FeedBean implements Serializable {
 
     private String newsFeedTitle;
     private String newsFeedDescription;
