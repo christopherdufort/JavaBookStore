@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- Author: Giuseppe Campanelli -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <body>
+        <ui:composition template="./templates/masterTemplate.xhtml">
+
+            <ui:define name="title">
+                Check Out
+            </ui:define>
+            
+            <ui:define name="event_listener">
+                <f:metadata>
+                    <f:event listener="#{authenticationController.mustBeClient}" type="preRenderView" />
+                    <f:event listener="#{userController.validateAccountInfo}" type="preRenderView" />
+                </f:metadata>
+            </ui:define>
+
+            <ui:define name="content">
+                <div class="row columns">
+                    <nav aria-label="You are here:" role="navigation">
+                        <ul class="breadcrumbs">
+                            <li><a href="home.html">Home</a></li>
+                            <li><a href="cart.xhtml">Shopping Cart</a></li>
+                            <li>Check Out</li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="row">
+                    <div class="large-12 columns">
+                        <table width="100%">
+                            <tr>
+                                <td><h4>Order Summary</h4></td>
+                            </tr>
+                            <ui:repeat var="item" value="#{checkoutBB.order}">
+                                <tr>
+                                    <td><b>#{item.title}</b></td>
+                                    <td>$#{item.salePrice}</td>
+                                </tr>
+                            </ui:repeat>
+                            <tr>
+                                <td><b>Subtotal</b></td>
+                                <td>$#{checkoutBB.subtotal}</td>
+                            </tr>
+                            <tr>
+                                <td><b>GST</b></td>
+                                <td>$#{checkoutBB.calculateGst(authenticatedUser.registeredUser.provinceId.gst)}</td>
+                            </tr>
+                            <c:if test="#{authenticatedUser.registeredUser.provinceId.pst != 0}">
+                                <c:if test="#{authenticatedUser.registeredUser.provinceId == 'Quebec'}">
+                                    <td><b>QST</b></td>
+                                </c:if>
+                                <c:if test="#{authenticatedUser.registeredUser.provinceId != 'Quebec'}">
+                                    <td><b>PST</b></td>
+                                </c:if>
+                                <td>$#{checkoutBB.calculateProvincialTax(authenticatedUser.registeredUser.provinceId.pst)}</td>
+                            </c:if>
+                            <c:if test="#{authenticatedUser.registeredUser.provinceId.hst != null}">
+                                <td><b>HST</b></td>
+                                <td>$#{checkoutBB.calculateProvincialTax(authenticatedUser.registeredUser.provinceId.hst)}</td>
+                            </c:if>
+                            <tr>
+                                <td><b>Total</b></td>
+                                <td>$#{checkoutBB.calcTotal()}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </ui:define>
+            
+            <ui:define name="bottom">
+                bottom
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

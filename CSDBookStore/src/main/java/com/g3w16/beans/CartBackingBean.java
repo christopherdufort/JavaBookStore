@@ -7,7 +7,6 @@ package com.g3w16.beans;
 
 import com.g3w16.entities.Author;
 import com.g3w16.entities.Book;
-import com.g3w16.entities.BookJpaController;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -23,6 +22,9 @@ import javax.inject.Named;
 @Named("cartBB")
 @SessionScoped
 public class CartBackingBean implements Serializable {
+    
+    @Inject
+    private CheckoutBackingBean checkoutBB;
     
     private List<Book> cart = new ArrayList<Book>();
     
@@ -60,5 +62,13 @@ public class CartBackingBean implements Serializable {
         }
         return authors;
     }
+    
+    public String checkOut() {
+        checkoutBB.setOrder(cart);
+        checkoutBB.setSubtotal(getTotal());
+        
+        return "checkout";
+    }
+    
     //FacesContext.getCurrentInstance().getViewRoot().setLocale(new Locale("fr"));;
 }

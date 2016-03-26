@@ -144,5 +144,11 @@ public class UserController implements Serializable {
             Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public void validateAccountInfo() throws IOException {
+        if (authenticatedUser.getRegisteredUser().getAddressOne() == null) {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("profile.xhtml");
+        }
+    }
         
 }
