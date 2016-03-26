@@ -35,7 +35,7 @@ public class UserAuthView {
     @Inject
     AuthBean authBean;
 
-    public String authenticate(AuthBean authBean) {
+    public String authenticate() {
         
         Logger.getLogger(UserAuthView.class.getName()).log(Level.INFO, "Submitted email : {0}", authBean.getEmail());
         Logger.getLogger(UserAuthView.class.getName()).log(Level.INFO, "Submitted password : {0}", authBean.getPassword());
