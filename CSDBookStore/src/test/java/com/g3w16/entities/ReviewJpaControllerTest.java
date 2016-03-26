@@ -64,6 +64,7 @@ public class ReviewJpaControllerTest {
                 //.addPackage(CSDBookStoreDAOImpl.class.getPackage())
                 .addPackage(ReviewJpaController.class.getPackage())
                 .addPackage(Review.class.getPackage())
+                .addPackage(Approval.class.getPackage())
                 .addPackage(RollbackFailureException.class.getPackage())
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addAsWebInfResource(new File("src/main/setup/glassfish-resources.xml"), "glassfish-resources.xml")
@@ -105,10 +106,11 @@ public class ReviewJpaControllerTest {
     public void testEdit() throws Exception {
         System.out.println("edit");
         Review review = reviewJpaController.findReview(1);
-        review.setRating(5);
+        Approval a = new Approval(2);
+        review.setApprovalId(a);
         reviewJpaController.edit(review);
         Review new_review = reviewJpaController.findReview(1);
-        assertThat(new_review.getRating()).isEqualTo(5);
+        assertThat(new_review.getApprovalId().getApprovalId()).isEqualTo(2);
     }
 
     /**

@@ -5,39 +5,47 @@
  */
 package com.g3w16.beans;
 
+import com.g3w16.actionController.UserController;
 import com.g3w16.entities.Province;
 import com.g3w16.entities.ProvinceJpaController;
-import com.g3w16.entities.RegisteredUserJpaController;
 import com.g3w16.entities.Title;
 import com.g3w16.entities.TitleJpaController;
 import java.io.Serializable;
 import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
  * backing bean for profile.xhtml
+ *
  * @author Christopher Dufort
  */
 @Named
-@RequestScoped
+@SessionScoped
 public class ProfileBackingBean implements Serializable {
- 
+
+    @Inject
+    private UserController userController;
+
     @Inject
     private AuthenticatedUser authenticatedUser;
-    
+
     //Find more abstract solution?
     @Inject
     private TitleJpaController titleJpaController;
+
     @Inject
     private ProvinceJpaController provinceJpaController;
+
     //Find more abstract solution?
-    private List<Title> availableTitles; 
+    private List<Title> availableTitles;
     private List<Province> availableProvinces;
-    
-    
+
     private String emailAddress;
     private String password;
     private String firstName;
@@ -52,14 +60,13 @@ public class ProfileBackingBean implements Serializable {
     private String cellPhone;
     private Title titleId;
     private Province provinceId;
-    
-    
-    public ProfileBackingBean(){
+
+    public ProfileBackingBean() {
         super();
     }
-    
-    @PostConstruct
-    public void init(){
+
+    //@PostConstruct
+    public void init() {
         this.emailAddress = authenticatedUser.getRegisteredUser().getEmailAddress();
         this.password = authenticatedUser.getRegisteredUser().getPassword();
         this.firstName = authenticatedUser.getRegisteredUser().getFirstName();
@@ -74,23 +81,25 @@ public class ProfileBackingBean implements Serializable {
         this.cellPhone = authenticatedUser.getRegisteredUser().getCellPhone();
         this.titleId = authenticatedUser.getRegisteredUser().getTitleId();
         this.provinceId = authenticatedUser.getRegisteredUser().getProvinceId();
-        
+
         //Find more abstract solution?
         availableTitles = titleJpaController.findAll();
         availableProvinces = provinceJpaController.findAll();
     }
+
     //Find more abstract solution?
-    public List<Title> getAvailableTitles(){
+    public List<Title> getAvailableTitles() {
         return availableTitles;
     }
+
     //Find more abstract solution?
-    public List<Province> getAvailableProvinces(){
+    public List<Province> getAvailableProvinces() {
         return availableProvinces;
     }
 
     /**
      * Gets the email of the user.
-     * 
+     *
      * @return email of user
      */
     public String getEmailAddress() {
@@ -99,7 +108,7 @@ public class ProfileBackingBean implements Serializable {
 
     /**
      * Sets the email of a user.
-     * 
+     *
      * @param emailAddress Email of the user
      */
     public void setEmailAddress(String emailAddress) {
@@ -108,7 +117,7 @@ public class ProfileBackingBean implements Serializable {
 
     /**
      * Gets the password of the user.
-     * 
+     *
      * @return user password
      */
     public String getPassword() {
@@ -117,7 +126,7 @@ public class ProfileBackingBean implements Serializable {
 
     /**
      * Sets the password of the user.
-     * 
+     *
      * @param password Password of the user
      */
     public void setPassword(String password) {
@@ -126,7 +135,7 @@ public class ProfileBackingBean implements Serializable {
 
     /**
      * Gets the first name of the user.
-     * 
+     *
      * @return first name of user
      */
     public String getFirstName() {
@@ -135,7 +144,7 @@ public class ProfileBackingBean implements Serializable {
 
     /**
      * Sets the first name of the user.
-     * 
+     *
      * @param firstName First name
      */
     public void setFirstName(String firstName) {
@@ -144,7 +153,7 @@ public class ProfileBackingBean implements Serializable {
 
     /**
      * Gets the last name of the user.
-     * 
+     *
      * @return last name of user
      */
     public String getLastName() {
@@ -153,17 +162,16 @@ public class ProfileBackingBean implements Serializable {
 
     /**
      * Sets the last name of the user.
-     * 
+     *
      * @param lastName Last name
      */
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-    
     /**
      * Gets the company name of the user.
-     * 
+     *
      * @return company name of the user
      */
     public String getCompanyName() {
@@ -172,7 +180,7 @@ public class ProfileBackingBean implements Serializable {
 
     /**
      * Sets the company name of the user.
-     * 
+     *
      * @param companyName Company name
      */
     public void setCompanyName(String companyName) {
@@ -181,7 +189,7 @@ public class ProfileBackingBean implements Serializable {
 
     /**
      * Gets the first address of the user.
-     * 
+     *
      * @return address one of the user
      */
     public String getAddressOne() {
@@ -190,16 +198,16 @@ public class ProfileBackingBean implements Serializable {
 
     /**
      * Sets address one of the user.
-     * 
+     *
      * @param addressOne Address one
      */
     public void setAddressOne(String addressOne) {
         this.addressOne = addressOne;
     }
-    
+
     /**
      * Gets the second address of the user.
-     * 
+     *
      * @return address two of the user
      */
     public String getAddressTwo() {
@@ -208,7 +216,7 @@ public class ProfileBackingBean implements Serializable {
 
     /**
      * Sets address two of the user.
-     * 
+     *
      * @param addressTwo Address two
      */
     public void setAddressTwo(String addressTwo) {
@@ -217,7 +225,7 @@ public class ProfileBackingBean implements Serializable {
 
     /**
      * Gets the city of the user.
-     * 
+     *
      * @return city of the user
      */
     public String getCity() {
@@ -226,7 +234,7 @@ public class ProfileBackingBean implements Serializable {
 
     /**
      * Sets the city of the user.
-     * 
+     *
      * @param city City
      */
     public void setCity(String city) {
@@ -235,7 +243,7 @@ public class ProfileBackingBean implements Serializable {
 
     /**
      * Gets the country of the user.
-     * 
+     *
      * @return country of the user
      */
     public String getCountry() {
@@ -244,7 +252,7 @@ public class ProfileBackingBean implements Serializable {
 
     /**
      * Sets the country of the user.
-     * 
+     *
      * @param country Country
      */
     public void setCountry(String country) {
@@ -253,7 +261,7 @@ public class ProfileBackingBean implements Serializable {
 
     /**
      * Gets the postal code of the user.
-     * 
+     *
      * @return postal code of the user
      */
     public String getPostalCode() {
@@ -262,7 +270,7 @@ public class ProfileBackingBean implements Serializable {
 
     /**
      * Sets the postal code of the user.
-     * 
+     *
      * @param postalCode Postal code
      */
     public void setPostalCode(String postalCode) {
@@ -271,7 +279,7 @@ public class ProfileBackingBean implements Serializable {
 
     /**
      * Gets the home phone of the user.
-     * 
+     *
      * @return home phone of the user
      */
     public String getHomePhone() {
@@ -280,7 +288,7 @@ public class ProfileBackingBean implements Serializable {
 
     /**
      * Sets the home phone of the user.
-     * 
+     *
      * @param homePhone Home phone
      */
     public void setHomePhone(String homePhone) {
@@ -289,7 +297,7 @@ public class ProfileBackingBean implements Serializable {
 
     /**
      * Gets the cell phone of the user.
-     * 
+     *
      * @return cell phone of the user
      */
     public String getCellPhone() {
@@ -298,16 +306,16 @@ public class ProfileBackingBean implements Serializable {
 
     /**
      * Sets the cell phone of the user.
-     * 
+     *
      * @param cellPhone Cell phone
      */
     public void setCellPhone(String cellPhone) {
         this.cellPhone = cellPhone;
     }
-    
+
     /**
      * Gets the title id of the user.
-     * 
+     *
      * @return title id of the user
      */
     public Title getTitleId() {
@@ -316,7 +324,7 @@ public class ProfileBackingBean implements Serializable {
 
     /**
      * Sets the title id of the user.
-     * 
+     *
      * @param titleId Title id
      */
     public void setTitleId(Title titleId) {
@@ -325,7 +333,7 @@ public class ProfileBackingBean implements Serializable {
 
     /**
      * Gets the province id of the user.
-     * 
+     *
      * @return province id of the user
      */
     public Province getProvinceId() {
@@ -334,7 +342,7 @@ public class ProfileBackingBean implements Serializable {
 
     /**
      * Sets the province id of the user.
-     * 
+     *
      * @param provinceId Province id
      */
     public void setProvinceId(Province provinceId) {

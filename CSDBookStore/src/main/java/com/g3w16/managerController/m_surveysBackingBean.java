@@ -26,8 +26,8 @@ import javax.inject.Named;
 @RequestScoped
 public class m_surveysBackingBean {
 
-    @Inject
-    Survey survey;
+    
+    private Survey survey;
 
     @Inject
     SurveyJpaController surveyJpa;
@@ -36,8 +36,14 @@ public class m_surveysBackingBean {
         return "m_createSurvey";
     }
 
-    public Survey getSelectedSurvey() {
+    public Survey getSurvey() {
+        if(survey==null)
+            survey=new Survey();
         return survey;
+    }
+    
+    public void setSurvey(Survey survey){
+        this.survey=survey;
     }
 
     public String createSurvey() {

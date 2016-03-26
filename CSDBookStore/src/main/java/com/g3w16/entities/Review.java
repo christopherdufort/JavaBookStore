@@ -37,7 +37,8 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Review.findByApprovalId", query = "SELECT r FROM Review r WHERE EXISTS( SELECT a FROM r.approvalId a WHERE a.approvalId = :approvalId)"),
     @NamedQuery(name = "Review.findByIsbn", query = "SELECT r FROM Review r WHERE EXISTS (SELECT 1 FROM r.isbn b WHERE b.isbn = :isbn)"),
     @NamedQuery(name = "Review.findByReviewTitle", query = "SELECT r FROM Review r WHERE r.reviewTitle = :reviewTitle"),
-    @NamedQuery(name = "Review.findByReviewText", query = "SELECT r FROM Review r WHERE r.reviewText = :reviewText")})
+    @NamedQuery(name = "Review.findByReviewText", query = "SELECT r FROM Review r WHERE r.reviewText = :reviewText"),
+})
 public class Review implements Serializable {
 
     private static final long serialVersionUID = 1L;

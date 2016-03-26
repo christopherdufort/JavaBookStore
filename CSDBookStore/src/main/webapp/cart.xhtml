@@ -3,7 +3,8 @@
 <!-- Author: Giuseppe Campanelli -->
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
     <body>
         <ui:composition template="./templates/masterTemplate.xhtml">
 
@@ -29,95 +30,53 @@
                                     <h5>Item</h5>
                                 </div>
                                 <div class="small-4 columns">
-                                    <h5>Subtotal</h5>
+                                    <h5>Price</h5>
                                 </div>
                             </div>
                             <hr/>
-                            <div class="row">
-                                <div class="small-8 columns">
-                                    <div class="row">
-                                        <div class="large-2 columns">
-                                            <h:graphicImage styleClass="thumbnail" value="resources/images/978-1594634710.jpg"/>
-                                        </div>
-                                        <div class="large-10 columns">
-                                            <div class="row">
+                            <ui:repeat var="item" value="#{cartBB.cart}">
+                                <div class="row">
+                                    <div class="small-8 columns">
+                                        <div class="row">
+                                            <div class="large-2 columns">
+                                                <h:graphicImage styleClass="thumbnail smallBook" value="resources/images/#{item.isbn}.jpg"/>
+                                            </div>
+                                            <div class="large-10 columns">
                                                 <div class="large-12 columns">
-                                                    <h3><a href="/faces/book.xhtml"><h:outputText value="Big Magic: Creative Living Beyond Fear"/></a></h3>
-                                                    <div class="row">
-                                                        <div class="large-12 columns">
-                                                            <h5><h:outputText value="Elizabeth Gilbert"/></h5>
-                                                        </div>
-                                                    </div>
+                                                    <h4><h:commandLink value="#{item.title}" action="#{bookBB.displayBook(item)}"/></h4>
                                                 </div>
-                                            </div>		
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="small-4 columns">
-                                    <div class="row">
-                                        <div class="large-6 columns">
-                                            <h:inputText value="1" onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;"/>
-                                        </div>
-                                        <div class="large-6 columns">
-                                            <span class="price">$<h:outputText value="25.00"/></span>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="large-12 columns">
-                                            <h:commandLink action="removeFromCart">Remove</h:commandLink>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr/>
-                            
-                            <div class="row">
-                                <div class="small-8 columns">
-                                    <div class="row">
-                                        <div class="large-2 columns">
-                                            <h:graphicImage styleClass="thumbnail" value="resources/images/978-0785193760.jpg"/>
-                                        </div>
-                                        <div class="large-10 columns">
-                                            <div class="row">
                                                 <div class="large-12 columns">
-                                                    <h3><a href="/faces/book.xhtml"><h:outputText value="Captain America"/></a></h3>
-                                                    <div class="row">
-                                                        <div class="large-12 columns">
-                                                            <h5><h:outputText value="Nader"/></h5>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>		
+                                                    <h6><h:outputText value="#{cartBB.getAuthors(item)}"/></h6>
+                                                </div>		
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="small-4 columns">
+                                        <div class="row">
+                                            <div class="large-3 columns">
+                                                <h5>$<h:outputText value="#{item.salePrice}"/></h5>
+                                            </div>
+                                            <div class="large-9 columns">
+                                                <h:commandLink action="#{cartBB.removeFromCart(item)}">Remove</h:commandLink>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="small-4 columns">
-                                    <div class="row">
-                                        <div class="large-6 columns">
-                                            <h:inputText value="1" onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;"/>
-                                        </div>
-                                        <div class="large-6 columns">
-                                            <span class="price">$<h:outputText value="15.00"/></span>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="large-12 columns">
-                                            <h:commandLink action="removeFromCart">Remove</h:commandLink>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr/>
+                                <hr/>
+                            </ui:repeat>
 
                             <div class="row">
                                 <div class="large-8 columns">
-                                    <a href="faces/home.xhtml">Continue shopping</a>
+                                    <a href="home.xhtml">Continue shopping</a>
                                 </div>
                                 <div class="large-4 columns">
-                                    <h4>Subtotal: <em>$<h:outputText value="40.00"/></em></h4>
-                                    <h:commandButton styleClass="button" value="Update Cart"/>
-                                    <span class="or">&nbsp;</span>
-                                    <h:commandButton styleClass="button" value="Check Out"/>
+                                    <h4>Subtotal: <em>$<h:outputText value="#{cartBB.total}"/></em></h4>
+                                    <c:if test="#{cartBB.cart.size() != 0}">
+                                        <h:commandButton styleClass="button" value="Check Out" action="#{cartBB.checkOut()}"/>
+                                    </c:if>
+                                    <c:if test="#{cartBB.cart.size() == 0}">
+                                        <h:commandButton styleClass="button disabled" value="Check Out" action="#{cartBB.checkOut()}"/>
+                                    </c:if>
                                 </div>
                             </div>
                         </h:form>

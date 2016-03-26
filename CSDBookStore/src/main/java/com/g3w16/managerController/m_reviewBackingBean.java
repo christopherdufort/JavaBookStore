@@ -26,47 +26,87 @@ import javax.inject.Named;
 @RequestScoped
 public class m_reviewBackingBean {
 
-    @Inject
-    Review review;
+    private Review review;
 
     @Inject
     ReviewJpaController reviewJpa;
 
-    @Inject
-    Approval approval;
+    private Approval approval;
 
     @Inject
     ApprovalJpaController approvalJpa;
 
-    public Review getSelectedReview() {
+    @Inject
+    BookJpaController bookJpa;
+
+    @Inject
+    RegisteredUserJpaController userJpa;
+
+    private String isbn;
+
+    private String userId;
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    private String selectedApproval;
+
+    public String getSelectedApproval() {
+        return selectedApproval;
+    }
+
+    public void setSelectedApproval(String selectedApproval) {
+        this.selectedApproval = selectedApproval;
+    }
+
+    public Review getReview() {
+        if (review == null) {
+            review = new Review();
+        }
         return review;
     }
 
-    public String editReview(Review r) {
-        review = reviewJpa.findReview(r.getReviewId());
-        return "m_editReview";
+    public void setReview(Review review) {
+        this.review = review;
     }
 
-    public String updateReview(Review r) {
+    public Approval getApproval() {
+        if (approval == null) {
+            approval = new Approval();
+        }
+        return approval;
+    }
+
+    public void setApproval(Approval approval) {
+        this.approval = approval;
+    }
+
+    public void editReview(Review r) {
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + selectedApproval);
         try {
-            reviewJpa.edit(r);
+            review = reviewJpa.findReview(r.getReviewId());
+            //review.setIsbn(bookJpa.findBookEntitiesById(review.getIsbn().getBookId()));
+            //review.setUserId(userJpa.findUserById(review.getUserId().getUserId()));
+            review.setApprovalId(approvalJpa.findByApprovalStatus(selectedApproval));
+            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + review.getApprovalId());
+
+            reviewJpa.edit(review);
         } catch (Exception ex) {
             Logger.getLogger(m_reviewBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return "m_reviews";
-    }
-
-    public String destroyReview(Review r) {
-
-        try {
-            reviewJpa.destroy(r.getReviewId());
-        } catch (RollbackFailureException ex) {
-            Logger.getLogger(m_reviewBackingBean.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(m_reviewBackingBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return "m_reviews";
     }
 
     public List<Review> getAllReview() {
@@ -80,4 +120,9 @@ public class m_reviewBackingBean {
     public List<Approval> getAllApproval() {
         return approvalJpa.findApprovalEntities();
     }
+
+    public Approval setSelApproval(String s) {
+        return approvalJpa.findByApprovalStatus(s);
+    }
+
 }

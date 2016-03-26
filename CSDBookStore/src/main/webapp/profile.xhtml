@@ -16,6 +16,7 @@
 
             <ui:define name="event_listener">
                 <f:metadata>
+                    <f:event listener="#{profileBackingBean.init}" type="preRenderView" /> 
                     <f:event listener="#{authenticationController.mustBeClient}" type="preRenderView" />
                 </f:metadata>
             </ui:define>
@@ -153,16 +154,17 @@
                             </div>
                             <div class="small-12 large-6 columns">
                                 <h:outputLabel for="password" value="#{msgs.password}"/>
-                                <h:inputSecret id="password" label="#{msgs.password}"
+                                <!--make this inputSecret -->
+                                <h:inputText id="password" label="#{msgs.password}"
                                                pt:placeholder="**********"
                                                value="#{profileBackingBean.password}"
                                                required="true" requiredMessage="#{msgs.required}">
                                     <f:validateLength maximum="25"/>
-                                </h:inputSecret>
+                                </h:inputText>
                                 <h:message class="error" for="password"/>
                             </div>
                             <div class="small-12 large-12 columns">
-                                <h:commandLink value="Update your profile!" class="button" action="#{profileActionBean.editProfile(profileBackingBean)}"></h:commandLink>
+                                <h:commandLink value="Update your profile!" class="button" action="#{profileActionBean.editProfile}"></h:commandLink>
                             </div>
                         </div>
                     </h:form>

@@ -26,8 +26,8 @@ import javax.inject.Named;
 @RequestScoped
 public class m_adsBackingBean {
 
-    @Inject
-    Ad ad;
+    
+    private Ad ad;
 
     @Inject
     AdJpaController adJpa;
@@ -36,8 +36,14 @@ public class m_adsBackingBean {
         return "m_createAd";
     }
 
-    public Ad getSelectedAd() {
+    public Ad getAd() {
+        if(ad==null)
+            ad=new Ad();
         return ad;
+    }
+    
+    public void setAd(Ad ad){
+        this.ad=ad;
     }
 
     public String createAd() {

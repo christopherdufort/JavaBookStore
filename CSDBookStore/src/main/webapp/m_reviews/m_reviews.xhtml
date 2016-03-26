@@ -28,50 +28,54 @@
                                     <div class="dataTable_wrapper table-responsive">
                                         <h:form>
                                             <h:dataTable class="table table-striped table-bordered table-hover" id="dataTables-example" value="#{m_reviews.allReview}" var="reviews">
-                                                <h:column>
-                                                    <h:commandLink value="#{msgs.edit}" action="#{m_reviews.updateReview(reviews)}" class="btn btn-info btn-xs"/>
-                                                    <h:commandLink value="#{msgs.delete}" action="#{m_reviews.destroyReview(reviews)}" class="btn btn-danger btn-xs"/>                            
+                                                <h:column> 
+                                                    <h:commandLink value="#{msgs.edit}" action="#{m_reviews.editReview(reviews)}" class="btn btn-info btn-xs"/>                                                                               
                                                 </h:column>
                                                 <h:column>
-                                                    <f:facet name="header">#{msgs.review_id}</f:facet>
-                                                        #{reviews.reviewId}
-                                                </h:column>
-
-                                                <h:column>
-                                                    <f:facet name="header">#{msgs.isbn}</f:facet>
-                                                        #{reviews.isbn.isbn}
-                                                </h:column>
-
-                                                <h:column>
-                                                    <f:facet name="header">#{msgs.date_submitted}</f:facet>
-                                                        #{reviews.dateSubmitted}
-                                                </h:column>
-
-                                                <h:column>
-                                                    <f:facet name="header">#{msgs.user_id}</f:facet>
-                                                        #{reviews.userId.userId}
-                                                </h:column>
-
-                                                <h:column>
-                                                    <f:facet name="header">#{msgs.rating}</f:facet>
-                                                        #{reviews.rating}
-                                                </h:column>
-
-                                                <h:column>
-                                                    <f:facet name="header">#{msgs.approval_id}</f:facet>
-                                                    <h:selectOneMenu id="title" value="#{reviews.approvalId.approvalStatus}" >
-                                                        <f:selectItems value="#{m_reviews.allApproval}" var="a" itemLabel="#{a.approvalStatus}" itemValue="#{a.approvalId}"/>
+                                                    <h:outputText rendered="reviews.approvalId.approvalStatus"></h:outputText>
+                                                    <h:selectOneMenu id="approval" value="#{m_reviews.selectedApproval}">                                                            
+                                                        <f:selectItems value="#{m_reviews.allApproval}" var="a" itemLabel="#{a.approvalStatus}" itemValue="#{a.approvalStatus}"/>
                                                     </h:selectOneMenu>
                                                 </h:column>
 
                                                 <h:column>
+                                                    <f:facet name="header">#{msgs.approval_id}</f:facet>
+                                                    <h:outputText value="#{reviews.approvalId.approvalStatus}"></h:outputText>:
+                                                </h:column>
+
+                                                <h:column>
+                                                    <f:facet name="header">#{msgs.review_id}</f:facet>
+                                                    <h:outputText value="#{reviews.reviewId}"></h:outputText>:
+                                                </h:column>
+
+                                                <h:column>
+                                                    <f:facet name="header">#{msgs.isbn}</f:facet>
+                                                    <h:outputText value="#{reviews.isbn.isbn}"></h:outputText>
+                                                </h:column>
+
+                                                <h:column>
+                                                    <f:facet name="header">#{msgs.date_submitted}</f:facet>
+                                                    <h:outputText value="#{reviews.dateSubmitted}"></h:outputText>
+                                                </h:column>
+
+                                                <h:column>
+                                                    <f:facet name="header">#{msgs.user_id}</f:facet>
+                                                    <h:outputText value="#{reviews.userId.userId}"></h:outputText>
+                                                </h:column>
+
+                                                <h:column>
+                                                    <f:facet name="header">#{msgs.rating}</f:facet>
+                                                    <h:outputText value="#{reviews.rating}"></h:outputText>
+                                                </h:column>
+
+                                                <h:column>
                                                     <f:facet name="header">#{msgs.review_title}</f:facet>
-                                                        #{reviews.reviewTitle}
+                                                    <h:outputText value="#{reviews.reviewTitle}"></h:outputText>
                                                 </h:column>
 
                                                 <h:column>
                                                     <f:facet name="header">#{msgs.review_text}</f:facet>
-                                                        #{reviews.reviewText}
+                                                    <h:outputText value="#{reviews.reviewText}"></h:outputText>
                                                 </h:column>
                                             </h:dataTable>
                                         </h:form>

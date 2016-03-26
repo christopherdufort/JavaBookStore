@@ -24,4 +24,9 @@
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
     </servlet-mapping>
+    <!-- Load custom tag into JSF web application -->
+    <context-param>
+        <param-name>facelets.LIBRARIES</param-name>
+        <param-value>/WEB-INF/bookstore.taglib.xml</param-value>
+    </context-param>
 </web-app>

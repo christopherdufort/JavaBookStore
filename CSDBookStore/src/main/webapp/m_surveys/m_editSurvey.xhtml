@@ -29,32 +29,32 @@
                                             <h:panelGrid columns="2">
                                                 <h:outputLabel value="#{msgs.survey_id}" for="survey_id"></h:outputLabel>
                                                  <h:outputText rendered="m_surveys.selectedSurvey.surveyId"></h:outputText>
-                                                <h:inputText id="survey_id" value="#{m_surveys.selectedSurvey.surveyId}" />
+                                                <h:inputText id="survey_id" value="#{m_surveys.survey.surveyId}" />
                                             </h:panelGrid>
                                             <h:panelGrid columns="2">
                                                 <h:outputLabel value="#{msgs.question}" for="question"></h:outputLabel>
                                                  <h:outputText rendered="m_surveys.selectedSurvey.question"></h:outputText>
-                                                <h:inputText id="question" value="#{m_surveys.selectedSurvey.question}" />
+                                                <h:inputText id="question" value="#{m_surveys.survey.question}" />
                                             </h:panelGrid>
                                             <h:panelGrid columns="2">
                                                 <h:outputLabel value="#{msgs.answerOne}" for="answerOne"></h:outputLabel>
                                                  <h:outputText rendered="m_surveys.selectedSurvey.answerOne"></h:outputText>
-                                                <h:inputText id="answerOne" value="#{m_surveys.selectedSurvey.answerOne}" />
+                                                <h:inputText id="answerOne" value="#{m_surveys.survey.answerOne}" />
                                             </h:panelGrid>
                                             <h:panelGrid columns="2">
                                                 <h:outputLabel value="#{msgs.answerTwo}" for="answerTwo"></h:outputLabel>
                                                  <h:outputText rendered="m_surveys.selectedSurvey.answerTwo"></h:outputText>
-                                                <h:inputText id="answerTwo" value="#{m_surveys.selectedSurvey.answerTwo}" />
+                                                <h:inputText id="answerTwo" value="#{m_surveys.survey.answerTwo}" />
                                             </h:panelGrid>
                                             <h:panelGrid columns="2">
                                                 <h:outputLabel value="#{msgs.answerThree}" for="answerThree"></h:outputLabel>
                                                  <h:outputText rendered="m_surveys.selectedSurvey.answerThree"></h:outputText>
-                                                <h:inputText id="answerThree" value="#{m_surveys.selectedSurvey.answerThree}" />
+                                                <h:inputText id="answerThree" value="#{m_surveys.survey.answerThree}" />
                                             </h:panelGrid>
                                             <h:panelGrid columns="2">
                                                 <h:outputLabel value="#{msgs.answerDefault}" for="answerDefault"></h:outputLabel>
                                                  <h:outputText rendered="m_surveys.selectedSurvey.answerDefault"></h:outputText>
-                                                <h:inputText id="answerDefault" value="#{m_surveys.selectedSurvey.answerDefault}" />
+                                                <h:inputText id="answerDefault" value="#{m_surveys.survey.answerDefault}" />
                                             </h:panelGrid>
                                             <br />
                                             <h:commandButton value="#{msgs.update}"

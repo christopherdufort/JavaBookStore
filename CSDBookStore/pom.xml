@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.g3w16</groupId>
     <artifactId>CSDBookStore</artifactId>
-    <version>0.4.7-SNAPSHOT</version> <!-- Increment this by 0.0.1 before each push -->
+    <version>0.4.8-SNAPSHOT</version> <!-- Increment this by 0.0.1 before each push -->
     <packaging>war</packaging>
     <name>CSDBookStore</name>
 
@@ -25,13 +25,6 @@
     </dependencyManagement>
 
     <dependencies>
-
-        <dependency>
-            <groupId>org.glassfish.main.extras</groupId>
-            <artifactId>glassfish-embedded-all</artifactId>
-            <version>4.1.1</version>
-            <scope>provided</scope>
-        </dependency>
         <dependency>
             <groupId>org.jboss.arquillian.container</groupId>
             <artifactId>arquillian-glassfish-embedded-3.1</artifactId>

@@ -13,6 +13,8 @@ import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
@@ -22,6 +24,8 @@ import javax.transaction.UserTransaction;
  * 
  * @author Giuseppe Campanelli
  */
+@Named
+@SessionScoped
 public class TitleJpaController implements Serializable {
 
     @Resource

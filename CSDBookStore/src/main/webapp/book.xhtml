@@ -4,6 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
       xmlns:p="http://primefaces.org/ui">
     <body>
         <ui:composition template="./templates/masterTemplate.xhtml">
@@ -14,65 +15,61 @@
             <ui:define name="content">
                 <div class="row columns">
                     <nav aria-label="You are here:" role="navigation">
+                        <h:form>
                         <ul class="breadcrumbs">
                             <li><a href="home.xhtml">Home</a></li>
-                            <li><a href="#"><h:outputText value="#{bookBB.genreName}"/></a></li>
+                            <li><a href="#"><h:commandLink value="#{bookBB.genreName}" action="#{searchActionBean.browseGenre(bookBB.genreName)}"/></a></li>
                             <li>
-                                <!--<span class="show-for-sr">Current: </span>--><h:outputText value="#{bookBB.book.title}"/>
+                                <h:outputText value="#{bookBB.book.title}"/>
                             </li>
                         </ul>
+                        </h:form>
                     </nav>
                 </div>
                 <div class="row">
                     <div class="medium-6 columns">
-                        <h:graphicImage styleClass="thumbnail" value="resources/images/#{bookBB.book.isbn}.jpg"/>
-                        <!--<div class="row small-up-4">
-                        <div class="column">
-                        <img class="thumbnail" src="http://placehold.it/250x200"/>
-                        </div>
-                        <div class="column">
-                        <img class="thumbnail" src="http://placehold.it/250x200"/>
-                        </div>
-                        <div class="column">
-                        <img class="thumbnail" src="http://placehold.it/250x200"/>
-                        </div>
-                        <div class="column">
-                        <img class="thumbnail" src="http://placehold.it/250x200"/>
-                        </div>
-                        </div>-->
+                        <h:graphicImage styleClass="thumbnail imageMax" value="resources/images/#{bookBB.book.isbn}.jpg"/>
                     </div>
                     <div class="medium-6 large-5 columns">
-                        <h3><h:outputText value="#{bookBB.book.title}"/></h3>
-                        <p:rating value="#{bookBB.starsForOverallRating}" readonly="true"/>
-                        <label><h:outputText value="[#{bookBB.reviewsAmount}]"/></label>
+                        <h3 class="noMargin"><h:outputText value="#{bookBB.book.title}"/></h3>
+                        <table class="plainTable">
+                            <tr>
+                                <td class="noPadding"><label><p:rating value="#{bookBB.starsForOverallRating}" readonly="true"/></label></td>
+                                <td class="noPadding"><label>&nbsp;<h:outputText value="[#{bookBB.reviewsAmount}]"/></label></td>
+                            </tr>
+                        </table>
                         <h5><h:outputText value="#{bookBB.authors}"/></h5> <!--authors concatenated-->
                         <p><h:outputText value="#{bookBB.book.synopsis}"/></p>	
                         <h:form id="buyBookNow">
-                            <div class="row">
-                                <div class="small-3 columns">
-                                    <label for="middle-label" class="middle">List Price:</label>
+                            <c:if test="#{bookBB.book.listPrice != bookBB.book.salePrice}">
+                                <div class="row">
+                                    <div class="small-3 columns">
+                                        <label for="middle-label" class="middle">List Price:</label>
+                                    </div>
+                                    <div class="small-9 columns">
+                                        <label for="middle-label" class="middle"><strike><h:outputText value="$#{bookBB.book.listPrice}"/></strike></label>
+                                    </div>
                                 </div>
-                                <div class="small-9 columns">
-                                    <strike><h:outputText value="$#{bookBB.book.listPrice}"/></strike>
+                                <div class="row">
+                                    <div class="small-3 columns">
+                                        <label for="middle-label" class="middle">Sale Price:</label>
+                                    </div>
+                                    <div class="small-9 columns">
+                                        <label for="middle-label" class="middle"><h:outputText styleClass="red" value="$#{bookBB.book.salePrice}"/></label>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="small-3 columns">
-                                    <label for="middle-label" class="middle">Price:</label>
+                            </c:if>
+                            <c:if test="#{bookBB.book.listPrice == bookBB.book.salePrice}">
+                                <div class="row">
+                                    <div class="small-3 columns">
+                                        <label for="middle-label" class="middle">Price:</label>
+                                    </div>
+                                    <div class="small-9 columns">
+                                        <label for="middle-label" class="middle"><h:outputText value="$#{bookBB.book.listPrice}"/></label>
+                                    </div>
                                 </div>
-                                <div class="small-9 columns">
-                                    <h:outputText value="$#{bookBB.book.salePrice}"/>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="small-3 columns">
-                                    <label for="middle-label" class="middle">Quantity:</label>
-                                </div>
-                                <div class="small-9 columns">
-                                    <h:inputText id="middle-label" value="1" onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;"/>
-                                </div>
-                            </div>
-                            <h:commandLink styleClass="button large expanded">Add To Cart <i class="fi-shopping-cart"/></h:commandLink> <!-- not a commandButton like the submit review-->
+                            </c:if>
+                            <h:commandLink styleClass="button large expanded" action="#{cartBB.addToCart(bookBB.book)}">Add To Cart <i class="fi-shopping-cart"/></h:commandLink> <!-- not a commandButton like the submit review-->
                         </h:form>
                     </div>
                 </div>
@@ -92,7 +89,7 @@
                                     <b>Publisher:</b>
                                     <p><h:outputText value="#{bookBB.book.publisher}"/></p>
                                     <b>Publish Date:</b>
-                                    <p><h:outputText value="#{bookBB.date}"/></p>
+                                    <p><h:outputText value="#{bookBB.formatDate(bookBB.book.publishDate)}"/></p>
                                     <b>Pages:</b>
                                     <p><h:outputText value="#{bookBB.book.pageNumber}"/></p>
                                     <b>Genre:</b>
@@ -101,13 +98,12 @@
                                     <p><h:outputText value="#{bookBB.formats}"/></p> <!-- list of formats concatenated-->
                                 </div>
                             </div>
-                            
                         </div>
                         <div class="tabs-panel" id="panel2">
                             <ui:repeat var="item" value="#{bookBB.book.reviewList}">
                                 <div class="media-object stack-for-small">
                                     <div class="media-object-section">
-                                        <h5><h:outputText value="#{item.reviewTitle}"/></h5>
+                                        <h5><h:outputText value="#{item.reviewTitle}"/></h5><h:outputText value="#{bookBB.formatDate(item.dateSubmitted)}"/>
                                         <p:rating value="#{item.rating}" readonly="true"/><label>by <h:outputText value="#{item.userId.firstName} #{item.userId.lastName}"/></label>
                                         <p><h:outputText value="#{item.reviewText}"/></p>
                                     </div>
@@ -125,12 +121,16 @@
                         <div class="tabs-panel" id="panel3">
                             <div class="row small-up-2 medium-up-3 large-up-6">
                                 <ui:repeat var="item" value="#{bookBB.similarProducts}">
-                                <div class="column">
-                                    <h:graphicImage styleClass="thumbnail" value="resources/images/#{bookBB.book.isbn}.jpg"/>
-                                    <h6><h:outputText value="#{item.title}"/></h6>
-                                    <p><strike><h:outputText value="$#{item.listPrice}"/></strike><h:outputText value=" $#{item.salePrice}"/></p>
-                                    <h:form><h:commandButton styleClass="button small expanded" value="View" action="#{homeBB.displayBook(item.bookId)}"/></h:form>
-                                </div>
+                                    <div class="column ">
+                                        <h:graphicImage styleClass="thumbnail" value="resources/images/#{item.isbn}.jpg"/>
+                                        <h:form><h6><h:commandLink value="#{item.title}" action="#{bookBB.displayBook(item)}"/></h6></h:form>
+                                        <ui:fragment rendered="#{item.listPrice == item.salePrice}">
+                                            <p><h:outputText value="$#{item.listPrice}"/></p>
+                                        </ui:fragment>
+                                        <ui:fragment rendered="#{item.listPrice != item.salePrice}">
+                                            <p><strike><h:outputText value="$#{item.listPrice}"/></strike>&nbsp;<h:outputText styleClass="red" value="$#{item.salePrice}"/></p>
+                                        </ui:fragment>
+                                    </div>
                                 </ui:repeat>
                             </div>
                         </div>

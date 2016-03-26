@@ -5,49 +5,120 @@
  */
 package com.g3w16.beans;
 
-import com.g3w16.entities.AuthorJpaController;
+import com.g3w16.actionController.BookController;
 import com.g3w16.entities.Book;
 import com.g3w16.entities.BookJpaController;
-import com.g3w16.entities.FormatJpaController;
-import com.g3w16.entities.GenreJpaController;
-import com.g3w16.entities.Province;
-import com.g3w16.entities.Review;
-import com.g3w16.entities.ReviewJpaController;
-import com.g3w16.entities.Title;
+import com.sun.syndication.feed.synd.SyndEntry;
+import com.sun.syndication.feed.synd.SyndFeed;
+import com.sun.syndication.io.SyndFeedInput;
+import com.sun.syndication.io.XmlReader;
 import java.io.Serializable;
+import java.net.URL;
+import java.util.Iterator;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
  * backing bean for book.xhtml
+ *
  * @author Giuseppe Campanelli
  */
 @Named("homeBB")
 @RequestScoped
 public class HomeBackingBean implements Serializable {
+
+    @Inject
+    AuthenticatedUser authenticatedUser;
     
     @Inject
-    private BookBackingBean bookBB;
+    BookController bookController;
+    
     @Inject
     private BookJpaController bookJpaController;
-    
-    public String displayBook(int id) {
-        bookBB.setBook(bookJpaController.findBookEntitiesById(id));
-        return "book";
-    }
-    
+
+    private String newsFeedTitle;
+    private String newsFeedDescription;
+
     public List<Book> getSimilarProducts() {
         return bookJpaController.findBookEntitiesAsClient(4, 0);
     }
-    
+
     public List<Book> getSimilarProducts2() {
         return bookJpaController.findBookEntitiesAsClient(6, 0);
     }
-    
+
     public List<Book> getSimilarProducts3() {
         return bookJpaController.findBookEntitiesAsClient(3, 0);
+    }
+    
+    public List<Book> getNewestBook(){
+        int limit = 4;
+        return bookController.getNewestBook(limit);
+    }
+    
+    public List<Book> getBestRankedBook(){
+        int limit = 6;
+        return bookController.getBestRankedBook(limit);
+    }
+    
+    public List<Book> getSuggestedBook(){
+        int limit = 3;
+        if (authenticatedUser.getLast_genre()==null){
+            return bookController.getRandomBook(limit);
+        }
+        return bookController.getSuggestedBook(authenticatedUser.getLast_genre(), limit);
+    }
+
+    public String getNewsFeedTitle() {
+        return newsFeedTitle;
+    }
+
+    public void setNewsFeedTitle(String newsFeedTitle) {
+        this.newsFeedTitle = newsFeedTitle;
+    }
+
+    public String getNewsFeedDescription() {
+        return newsFeedDescription;
+    }
+
+    public void setNewsFeedDescription(String newsFeedDescription) {
+        this.newsFeedDescription = newsFeedDescription;
+    }
+
+    private SyndFeed getRssFeed() throws Exception {
+        URL feedUrl = new URL("http://www.bookbrowse.com/rss/book_news.rss");
+        SyndFeedInput input = new SyndFeedInput();
+        SyndFeed feed = input.build(new XmlReader(feedUrl));
+        return feed;
+    }
+
+    @SuppressWarnings("unchecked")
+    public void setNewsFeedAttributes() throws Exception {
+
+        SyndFeed syndFeed = getRssFeed();
+
+        List entries = syndFeed.getEntries();
+        Iterator itEntries = entries.iterator();
+
+        SyndEntry entry = (SyndEntry) itEntries.next(); //skip the tutorial
+        if (entry != null) {
+            //set DESCRIPTION
+            if (syndFeed.getDescription() != null && !syndFeed.getDescription().equals("")) {
+                String description = entry.getDescription().getValue();
+                setNewsFeedDescription(description);
+            } else {
+                setNewsFeedDescription("NO DESCRIPTION AVAILABLE for FEED");
+            }
+            //set TITLE 
+            if (syndFeed.getTitle() != null && !syndFeed.getTitle().equals("")) {
+                String title = entry.getTitle();
+                setNewsFeedTitle(title);
+            } else {
+                setNewsFeedDescription("NO TITLE AVAILABLE for FEED");
+            }
+        }
+//        }
     }
 }

@@ -6,22 +6,17 @@
 package com.g3w16.beans;
 
 import com.g3w16.entities.Author;
-import com.g3w16.entities.AuthorJpaController;
 import com.g3w16.entities.Book;
 import com.g3w16.entities.BookJpaController;
 import com.g3w16.entities.Format;
-import com.g3w16.entities.FormatJpaController;
 import com.g3w16.entities.Genre;
-import com.g3w16.entities.GenreJpaController;
-import com.g3w16.entities.Province;
 import com.g3w16.entities.Review;
 import com.g3w16.entities.ReviewJpaController;
-import com.g3w16.entities.Title;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -30,12 +25,11 @@ import javax.inject.Named;
  * @author Giuseppe Campanelli
  */
 @Named("bookBB")
-@RequestScoped
+@SessionScoped
 public class BookBackingBean implements Serializable {
     
     private Book book;
     private Review review;
-    private Genre genre;
     
     @Inject
     private BookJpaController bookJpaController;
@@ -101,32 +95,22 @@ public class BookBackingBean implements Serializable {
         return formats;
     }
     
-    public String getDate() {
+    public String formatDate(Date date) {
         SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-MM-dd");
-        return dt1.format(book.getPublishDate());
-    }
-    
-    public void setGenre(Genre genre) {
-        this.genre = genre;
-    }
-    
-    public Genre getGenre() {
-        if (genre == null) {
-            genre = book.getGenreList().get(0);
-        }
-        return genre;
+        return dt1.format(date);
     }
     
     public String getGenreName() {
-        return getGenre().getGenreName();
+        return book.getGenreList().get(0).getGenreName();
     }
     
     public List<Book> getSimilarProducts() {
-        return bookJpaController.findBookEntitiesByGenre(getGenre(), 6, 0); //add in all book images
+        return bookJpaController.findBookEntitiesByGenre(book.getGenreList().get(0), 6, 0); //add in all book images
     }
     
     public String displayBook(Book book) {
         setBook(book);
+        
         return "book";
     }
     

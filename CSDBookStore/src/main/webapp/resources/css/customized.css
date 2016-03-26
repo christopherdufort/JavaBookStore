@@ -15,8 +15,8 @@ html, body {
     height: 4em;
 }
 form {
-    margin-bottom: 2em;
-    /*margin-left: 2em; change this part to custom form class*/
+    /*margin-bottom: 2em;
+    margin-left: 2em; change this part to custom form class*/
 }
 ul {
     list-style-type: none;
@@ -218,4 +218,32 @@ li{
 }
 li .js-drilldown-back .top-bar ul li {
     background: #666;
+}
+
+.imageMax {
+    max-height: 500px;
+    max-width: 500px;
+}
+
+.red {
+    color: #e60000;
+}
+
+.plainTable {
+    margin: 0px;
+    border: none;
+    border-collapse: separate;
+}
+
+.noPadding {
+    padding: 0px;
+}
+
+.noMargin {
+    margin: 0px;
+}
+
+.smallBook {
+    max-height: 150px;
+    max-width: 150px;
 }

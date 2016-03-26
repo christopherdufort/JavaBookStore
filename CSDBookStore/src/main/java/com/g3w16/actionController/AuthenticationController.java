@@ -22,6 +22,7 @@ import javax.inject.Named;
 /**
  *
  * @author jesuisnuageux
+ * @author Christopher Dufort
  */
 @Named
 @RequestScoped
@@ -33,14 +34,21 @@ public class AuthenticationController implements SystemEventListener, Serializab
     @Inject
     AuthenticatedUser authenticatedUser;
     
+    /**
+     * created for testing
+     */
+    public AuthenticationController() {
+        Logger.getLogger(this.getClass().getName()).log(Level.INFO, "AuthenticationController constructor is invoked!");
+    }
+    
     public void mustBeClient(ComponentSystemEvent event) throws IOException{
         Logger.getLogger(AuthenticationController.class.getName()).log(Level.INFO, "AuthenticationController.isClient invoked !");
         Logger.getLogger(AuthenticationController.class.getName()).log(Level.INFO, "AuthenticatedUser.getRegisteredUser value is null ? = {0}", (authenticatedUser.getRegisteredUser()==null));
         if ( authenticatedUser.getRegisteredUser()==null){
-            FacesContext.getCurrentInstance().getExternalContext().redirect("faces/login.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
         }else{
             if (!userController.isClient(authenticatedUser.getRegisteredUser())){
-                FacesContext.getCurrentInstance().getExternalContext().redirect("faces/login.xhtml");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
             }
         }
     }
@@ -49,23 +57,23 @@ public class AuthenticationController implements SystemEventListener, Serializab
         Logger.getLogger(AuthenticationController.class.getName()).log(Level.INFO, "AuthenticationController.isClient invoked !");
         Logger.getLogger(AuthenticationController.class.getName()).log(Level.INFO, "AuthenticatedUser value is = {0}", (authenticatedUser.getRegisteredUser()==null));
         if ( authenticatedUser.getRegisteredUser()==null){
-            FacesContext.getCurrentInstance().getExternalContext().redirect("faces/login.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
         }else{
             if (!userController.isManager(authenticatedUser.getRegisteredUser())){
-                FacesContext.getCurrentInstance().getExternalContext().redirect("faces/login.xhtml");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
             }
         }
     }
     
     public void mustBeAnonymous(ComponentSystemEvent event) throws IOException{
         if (authenticatedUser.getRegisteredUser()!=null){
-            FacesContext.getCurrentInstance().getExternalContext().redirect("faces/home.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("home.xhtml");
         }
     }
     
     public void logout(ComponentSystemEvent event) throws IOException{
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        FacesContext.getCurrentInstance().getExternalContext().redirect("faces/home.xhtml");
+        FacesContext.getCurrentInstance().getExternalContext().redirect("home.xhtml");
     }
     
     public boolean isClient(){

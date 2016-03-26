@@ -13,5 +13,8 @@
             <base-name>com.g3w16.bundles.messages</base-name>
             <var>msgs</var>
         </resource-bundle>
+  
     </application>
+    
+    
 </faces-config>
