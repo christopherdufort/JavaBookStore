@@ -35,7 +35,7 @@ public class AuthenticationController implements SystemEventListener, Serializab
     
     public void mustBeClient(ComponentSystemEvent event) throws IOException{
         Logger.getLogger(AuthenticationController.class.getName()).log(Level.INFO, "AuthenticationController.isClient invoked !");
-        Logger.getLogger(AuthenticationController.class.getName()).log(Level.INFO, "AuthenticatedUser value is = {0}", (authenticatedUser.getRegisteredUser()==null));
+        Logger.getLogger(AuthenticationController.class.getName()).log(Level.INFO, "AuthenticatedUser.getRegisteredUser value is null ? = {0}", (authenticatedUser.getRegisteredUser()==null));
         if ( authenticatedUser.getRegisteredUser()==null){
             FacesContext.getCurrentInstance().getExternalContext().redirect("faces/login.xhtml");
         }else{
@@ -89,12 +89,12 @@ public class AuthenticationController implements SystemEventListener, Serializab
 
     @Override
     public void processEvent(SystemEvent se) throws AbortProcessingException {
-        Logger.getLogger(AuthenticationController.class.getName()).log(Level.INFO, "processEvent has been called");
+        //Logger.getLogger(AuthenticationController.class.getName()).log(Level.INFO, "processEvent has been called");
     }
 
     @Override
     public boolean isListenerForSource(Object o) {
-        Logger.getLogger(AuthenticationController.class.getName()).log(Level.INFO, "isListenerForSource has been called -> always true");
+        //Logger.getLogger(AuthenticationController.class.getName()).log(Level.INFO, "isListenerForSource has been called -> always true");
         return true;
     }
 }
