@@ -9,6 +9,7 @@ import com.g3w16.beans.SearchBackingBean;
 import com.g3w16.entities.Book;
 import com.g3w16.entities.BookJpaController;
 import com.g3w16.entities.Genre;
+import com.g3w16.entities.Review;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -47,5 +48,21 @@ public class BookController {
     
     public List<Book> browseByGenre(Genre genre){
         return bookJpaController.findBookEntitiesByGenreAsClient(genre);
+    }
+    
+    public List<Book> getNewestBook(int limit){
+        return bookJpaController.findNewBook(limit);
+    }
+
+    public List<Book> getBestRankedBook(int limit) {
+        return bookJpaController.findBestRankedBook(limit);
+    }
+
+    public List<Book> getSuggestedBook(Genre genre, int limit) {
+        return bookJpaController.findBookEntitiesByGenre(genre,0,limit);
+    }
+
+    public List<Book> getRandomBook(int limit) {
+        return bookJpaController.findBookEntitiesAsClient(limit, 12);
     }
 }
