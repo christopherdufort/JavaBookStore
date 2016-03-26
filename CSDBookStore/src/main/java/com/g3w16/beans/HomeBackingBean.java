@@ -41,36 +41,6 @@ public class HomeBackingBean implements Serializable {
     private String newsFeedTitle;
     private String newsFeedDescription;
 
-    public List<Book> getSimilarProducts() {
-        return bookJpaController.findBookEntitiesAsClient(4, 0);
-    }
-
-    public List<Book> getSimilarProducts2() {
-        return bookJpaController.findBookEntitiesAsClient(6, 0);
-    }
-
-    public List<Book> getSimilarProducts3() {
-        return bookJpaController.findBookEntitiesAsClient(3, 0);
-    }
-    
-    public List<Book> getNewestBook(){
-        int limit = 4;
-        return bookController.getNewestBook(limit);
-    }
-    
-    public List<Book> getBestRankedBook(){
-        int limit = 6;
-        return bookController.getBestRankedBook(limit);
-    }
-    
-    public List<Book> getSuggestedBook(){
-        int limit = 3;
-        if (authenticatedUser.getLast_genre()==null){
-            return bookController.getRandomBook(limit);
-        }
-        return bookController.getSuggestedBook(authenticatedUser.getLast_genre(), limit);
-    }
-
     public String getNewsFeedTitle() {
         return newsFeedTitle;
     }
