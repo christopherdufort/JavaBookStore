@@ -5,7 +5,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:c="http://java.sun.com/jsp/jstl/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:bf="http://bookstore/facelets">
     <body>
         <ui:composition template="./templates/masterTemplate.xhtml">
             <ui:define name="title">
@@ -121,16 +122,11 @@
                         <div class="tabs-panel" id="panel3">
                             <div class="row small-up-2 medium-up-3 large-up-6">
                                 <ui:repeat var="item" value="#{bookBB.similarProducts}">
-                                    <div class="column ">
-                                        <h:graphicImage styleClass="thumbnail" value="resources/images/#{item.isbn}.jpg"/>
-                                        <h:form><h6><h:commandLink value="#{item.title}" action="#{bookBB.displayBook(item)}"/></h6></h:form>
-                                        <ui:fragment rendered="#{item.listPrice == item.salePrice}">
-                                            <p><h:outputText value="$#{item.listPrice}"/></p>
-                                        </ui:fragment>
-                                        <ui:fragment rendered="#{item.listPrice != item.salePrice}">
-                                            <p><strike><h:outputText value="$#{item.listPrice}"/></strike>&nbsp;<h:outputText styleClass="red" value="$#{item.salePrice}"/></p>
-                                        </ui:fragment>
-                                    </div>
+                                    <bf:displayBook
+                                        itemImg="resources/images/#{item.isbn}.jpg"
+                                        itemTitle="#{item.title}"
+                                        itemListPrice="#{item.listPrice}"
+                                        itemSalePrice="#{item.salePrice}"/>
                                 </ui:repeat>
                             </div>
                         </div>
