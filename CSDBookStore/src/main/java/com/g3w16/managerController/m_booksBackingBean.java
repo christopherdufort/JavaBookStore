@@ -79,6 +79,10 @@ public class m_booksBackingBean {
 
         return "m_books";
     }
+    
+    public String cancel(){
+        return "m_books";   
+    }
 
     public List<Book> getAllBook() {
         return bookJpa.findBookEntities();

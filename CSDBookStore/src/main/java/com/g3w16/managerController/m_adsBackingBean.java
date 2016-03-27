@@ -78,6 +78,11 @@ public class m_adsBackingBean {
 
         return "m_ads";
     }
+    
+     public String cancel() { 
+        return "m_ads";
+    }
+    
 
     public List<Ad> getAllAds() {
         return adJpa.findAllAds();

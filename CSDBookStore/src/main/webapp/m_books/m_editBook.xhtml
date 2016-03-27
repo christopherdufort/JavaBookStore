@@ -82,7 +82,10 @@
                                             </h:panelGrid>
                                             <br />
                                             <h:commandButton value="#{msgs.update}"
-                                                             action="#{m_books.updateBook}" class="btn btn-danger btn-xs" />
+                                                             action="#{m_books.updateBook}" class="btn btn-success btn-xs" />
+                                             <h:outputText value="&#160;" />
+                                            <h:commandButton value="#{msgs.cancel}"
+                                                             action="#{m_books.cancel()}" class="btn btn-danger btn-xs" />
                                         </h:form>
                                     </div>
                                     <!-- /.table-responsive -->

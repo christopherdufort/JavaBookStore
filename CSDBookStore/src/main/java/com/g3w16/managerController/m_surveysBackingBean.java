@@ -79,6 +79,10 @@ public class m_surveysBackingBean {
         return "m_surveys";
     }
 
+     public String cancel() { 
+        return "m_surveys";
+    }
+    
     public List<Survey> getAllSurvey() {
         return surveyJpa.findAllSurveys();
     }

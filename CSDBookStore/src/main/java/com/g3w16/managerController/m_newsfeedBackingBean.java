@@ -79,6 +79,10 @@ public class m_newsfeedBackingBean {
         return "m_news";
     }
 
+    public String cancel() { 
+        return "m_news";
+    }
+    
     public List<NewsFeed> getAllNews() {
         return newsJpa.findAllNewsFeeds();
     }

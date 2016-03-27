@@ -40,6 +40,7 @@ public class TitleConverter implements Converter {
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         return value.toString();
+       
     }
 
 }

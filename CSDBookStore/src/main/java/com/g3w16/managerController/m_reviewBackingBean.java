@@ -6,10 +6,13 @@
 package com.g3w16.managerController;
 
 import com.g3w16.entities.*;
+import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -18,9 +21,9 @@ import javax.inject.Named;
  * @author Xin Ma
  * @author Rita Lazaar
  */
-@Named("m_reviews")
-@RequestScoped
-public class m_reviewBackingBean {
+@ManagedBean(name = "m_reviews")
+@SessionScoped
+public class m_reviewBackingBean  implements Serializable {
 
     private Review review;
 
@@ -38,35 +41,35 @@ public class m_reviewBackingBean {
     @Inject
     RegisteredUserJpaController userJpa;
 
-    private String isbn;
+//    private String isbn;
+//
+//    private String userId;
+//
+//    public String getIsbn() {
+//        return isbn;
+//    }
+//
+//    public void setIsbn(String isbn) {
+//        this.isbn = isbn;
+//    }
+//
+//    public String getUserId() {
+//        return userId;
+//    }
+//
+//    public void setUserId(String userId) {
+//        this.userId = userId;
+//    }
 
-    private String userId;
+   // private String selectedApproval;
 
-    public String getIsbn() {
-        return isbn;
-    }
-
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    private String selectedApproval;
-
-    public String getSelectedApproval() {
-        return selectedApproval;
-    }
-
-    public void setSelectedApproval(String selectedApproval) {
-        this.selectedApproval = selectedApproval;
-    }
+//    public String getSelectedApproval() {
+//        return selectedApproval;
+//    }
+//
+//    public void setSelectedApproval(String selectedApproval) {
+//        this.selectedApproval = selectedApproval;
+//    }
 
     public Review getReview() {
         if (review == null) {
@@ -91,15 +94,15 @@ public class m_reviewBackingBean {
     }
 
     public void editReview(Review r) {
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + selectedApproval);
+      System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>editReview:  approval id:" + r.getApprovalId());
         try {
-            review = reviewJpa.findReview(r.getReviewId());
-            //review.setIsbn(bookJpa.findBookEntitiesById(review.getIsbn().getBookId()));
-            //review.setUserId(userJpa.findUserById(review.getUserId().getUserId()));
-            review.setApprovalId(approvalJpa.findByApprovalStatus(selectedApproval));
-            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + review.getApprovalId());
+//            review = reviewJpa.findReview(r.getReviewId());
+//            //review.setIsbn(bookJpa.findBookEntitiesById(review.getIsbn().getBookId()));
+//            //review.setUserId(userJpa.findUserById(review.getUserId().getUserId()));
+//            review.setApprovalId(approvalJpa.findByApprovalStatus(selectedApproval));
+//            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + review.getApprovalId());
 
-            reviewJpa.edit(review);
+            reviewJpa.edit(r);
         } catch (Exception ex) {
             Logger.getLogger(m_reviewBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -116,9 +119,9 @@ public class m_reviewBackingBean {
     public List<Approval> getAllApproval() {
         return approvalJpa.findApprovalEntities();
     }
-
-    public Approval setSelApproval(String s) {
-        return approvalJpa.findByApprovalStatus(s);
-    }
+//
+//    public Approval setSelApproval(String s) {
+//        return approvalJpa.findByApprovalStatus(s);
+//    }
 
 }

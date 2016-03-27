@@ -33,14 +33,10 @@
                                                 </h:column>
                                                 <h:column>
                                                     <h:outputText rendered="reviews.approvalId.approvalStatus"></h:outputText>
-                                                    <h:selectOneMenu id="approval" value="#{m_reviews.selectedApproval}">                                                            
+                                                    <h:selectOneMenu id="approval" value="#{reviews.approvalId}">   
+                                                        <f:converter converterId="com.g3w16.converter.ApprovalConverter"/>
                                                         <f:selectItems value="#{m_reviews.allApproval}" var="a" itemLabel="#{a.approvalStatus}" itemValue="#{a.approvalStatus}"/>
-                                                    </h:selectOneMenu>
-                                                </h:column>
-
-                                                <h:column>
-                                                    <f:facet name="header">#{msgs.approval_id}</f:facet>
-                                                    <h:outputText value="#{reviews.approvalId.approvalStatus}"></h:outputText>:
+                                                    </h:selectOneMenu>                                 
                                                 </h:column>
 
                                                 <h:column>

@@ -27,10 +27,10 @@
                                 <div class="panel-body">
                                     <div class="dataTable_wrapper table-responsive">
                                         <h:form>
-                                            <h:panelGrid columns="2">
+                                            <h:panelGrid columns="3">
                                                 <h:outputLabel value="#{msgs.ad_id}" for="ad_id"></h:outputLabel>
-                                                <h:outputText rendered="m_ads.selectedAd.adId"></h:outputText>
-                                                <h:inputText id="ad_id" value="#{m_ads.ad.adId}"/>
+                                                <h:outputText  value="#{m_ads.ad.adId}"></h:outputText>
+                                                <h:inputHidden id="ad_id" value="#{m_ads.ad.adId}"/>
                                                 
                                                 <h:outputLabel value="#{msgs.ad_filename}" for="ad_filename"></h:outputLabel>
                                                 <h:outputText rendered="m_ads.selectedAd.adFilename"></h:outputText>
@@ -38,7 +38,10 @@
                                             </h:panelGrid>
                                             <br />
                                             <h:commandButton value="#{msgs.update}"
-                                                             action="#{m_ads.updateAd}" class="btn btn-danger btn-xs" />
+                                                             action="#{m_ads.updateAd}" class="btn btn-success btn-xs" />
+                                            <h:outputText value="&#160;" />
+                                            <h:commandButton value="#{msgs.cancel}"
+                                                             action="#{m_ads.cancel()}" class="btn btn-danger btn-xs" />
                                         </h:form>
                                     </div>
                                     <!-- /.table-responsive -->

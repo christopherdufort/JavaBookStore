@@ -28,7 +28,7 @@
                                         <h:form>
                                             <h:dataTable class="table table-striped table-bordered table-hover" id="dataTables-example" value="#{m_users.allUsers}" var="user">
                                                 <h:column>
-                                                    <h:commandLink value="#{msgs.edit}" action="#{m_users.editUser(user)}" class="btn btn-info btn-xs"/>
+                                                    <h:commandLink value="#{msgs.details}" action="#{m_users.viewUser(user)}" class="btn btn-info btn-xs"/>
                                                 </h:column>
                                                 <h:column>
                                                     <f:facet name="header">#{msgs.user_id}</f:facet>
@@ -100,7 +100,7 @@
                                                 </h:column>
                                                 <h:column>
                                                     <f:facet name="header">#{msgs.total_reviews}</f:facet>
-                                                    #{user.reviewList.size()}
+                                                        #{user.reviewList.size()}
                                                 </h:column>
                                             </h:dataTable>
                                         </h:form>

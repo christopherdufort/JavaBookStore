@@ -26,10 +26,10 @@
                                 <div class="panel-body">
                                     <div class="dataTable_wrapper table-responsive">
                                         <h:form>
-                                            <h:panelGrid columns="2">
+                                            <h:panelGrid columns="3">
                                                 <h:outputLabel value="#{msgs.survey_id}" for="survey_id"></h:outputLabel>
-                                                 <h:outputText rendered="m_surveys.selectedSurvey.surveyId"></h:outputText>
-                                                <h:inputText id="survey_id" value="#{m_surveys.survey.surveyId}" />
+                                                 <h:outputText value="#{m_surveys.survey.surveyId}"></h:outputText>
+                                                <h:inputHidden id="survey_id" value="#{m_surveys.survey.surveyId}" />
                                             </h:panelGrid>
                                             <h:panelGrid columns="2">
                                                 <h:outputLabel value="#{msgs.question}" for="question"></h:outputLabel>
@@ -58,7 +58,10 @@
                                             </h:panelGrid>
                                             <br />
                                             <h:commandButton value="#{msgs.update}"
-                                                             action="#{m_surveys.updateSurvey}" class="btn btn-danger btn-xs" />
+                                                             action="#{m_surveys.updateSurvey}" class="btn btn-success btn-xs" />
+                                            <h:outputText value="&#160;" />
+                                             <h:commandButton value="#{msgs.cancel}"
+                                                             action="#{m_surveys.cancel()}" class="btn btn-danger btn-xs" />
                                         </h:form>
                                     </div>
                                     <!-- /.table-responsive -->

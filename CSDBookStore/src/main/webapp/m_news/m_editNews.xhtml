@@ -26,10 +26,10 @@
                                 <div class="panel-body">
                                     <div class="dataTable_wrapper table-responsive">
                                         <h:form>
-                                            <h:panelGrid columns="2">
+                                            <h:panelGrid columns="3">
                                                 <h:outputLabel value="#{msgs.news_id}" for="newsFeedId"></h:outputLabel>
-                                                <h:outputText rendered="m_newsfeed.selectedNews.newsFeedId"></h:outputText>
-                                                <h:inputText id="newsFeedId" value="#{m_newsfeed.newsFeed.newsFeedId}"/>
+                                                <h:outputText id="newsFeedId" value="#{m_newsfeed.newsFeed.newsFeedId}"></h:outputText>
+                                                <h:inputHidden value="#{m_newsfeed.newsFeed.newsFeedId}"/>
                                                 
                                                 <h:outputLabel value="#{msgs.news_link}" for="newsFeedLink"></h:outputLabel>
                                                 <h:outputText rendered="m_newsfeed.selectedNews.newsFeedLink"></h:outputText>
@@ -37,7 +37,10 @@
                                             </h:panelGrid>
                                             <br />
                                             <h:commandButton value="#{msgs.update}"
-                                                             action="#{m_newsfeed.updateNews}" class="btn btn-danger btn-xs" />
+                                                             action="#{m_newsfeed.updateNews}" class="btn btn-success btn-xs" />
+                                            <h:outputText value="&#160;" />
+                                            <h:commandButton value="#{msgs.cancel}"
+                                                             action="#{m_newsfeed.cancel()}" class="btn btn-danger btn-xs" />
                                         </h:form>
                                     </div>
                                     <!-- /.table-responsive -->

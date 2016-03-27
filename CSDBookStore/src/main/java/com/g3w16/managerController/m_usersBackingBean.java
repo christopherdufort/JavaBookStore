@@ -79,6 +79,11 @@ public class m_usersBackingBean implements Serializable {
         return "m_editUser";
     }
 
+    public String viewUser(RegisteredUser u) {
+        user = userJpa.findUserById(u.getUserId());
+        return "m_viewUser";
+    }
+
     public String updateUser() {
         try {
             user.setReviewList(reviewJpa.findReviewByUserId(user));
