@@ -44,7 +44,8 @@
 
                                                 <h:outputLabel value="#{msgs.title}" for="title"></h:outputLabel>
                                                 <h:outputText rendered="m_users.user.titleId.title"></h:outputText>
-                                                <h:selectOneMenu id="title" value="#{m_users.selectedTitle}" >
+                                                <h:selectOneMenu id="title" value="#{m_users.user.titleId}" >
+                                                    <f:converter converterId="com.g3w16.converter.TitleConverter"/>
                                                     <f:selectItems value="#{m_users.allTitle}" var="t" itemLabel="#{t.title}" itemValue="#{t.title}"/>
                                                 </h:selectOneMenu>
                                                 <h:message for="title" errorStyle="color:red; display:block"/>
@@ -81,7 +82,8 @@
 
                                                 <h:outputLabel value="#{msgs.province}" for="province"></h:outputLabel>
                                                 <h:outputText rendered="m_users.user.provinceId.province"></h:outputText>
-                                                <h:selectOneMenu id="province" value="#{m_users.selectedProvince}">
+                                                <h:selectOneMenu id="province" value="#{m_users.user.provinceId}">
+                                                    <f:converter converterId="com.g3w16.converter.ProvinceConverter"/>
                                                     <f:selectItems value="#{m_users.allProvince}" var="p" itemLabel="#{p.province}" itemValue="#{p.province}"/>
                                                 </h:selectOneMenu>
                                                 <h:message for="province" errorStyle="color:red; display:block"/>

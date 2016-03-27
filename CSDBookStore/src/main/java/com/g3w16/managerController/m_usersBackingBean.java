@@ -6,30 +6,22 @@
 package com.g3w16.managerController;
 
 import com.g3w16.entities.*;
-import com.g3w16.entities.exceptions.RollbackFailureException;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.Date;
+import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.ManagedBean;
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
-import javax.faces.model.SelectItem;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
-import javax.inject.Named;
 
 /**
  *
  * @author Xin Ma
  * @author Rita Lazaar
  */
-@ManagedBean
-@Named("m_users")
-@RequestScoped
-public class m_usersBackingBean {
+@ManagedBean(name = "m_users")
+@SessionScoped
+public class m_usersBackingBean implements Serializable {
 
     private RegisteredUser user;
 
@@ -48,26 +40,6 @@ public class m_usersBackingBean {
 
     @Inject
     ProvinceJpaController provinceJpa;
-
-    private String selectedTitle;
-
-    private String selectedProvince;
-
-    public String getSelectedTitle() {
-        return selectedTitle;
-    }
-
-    public void setSelectedTitle(String selectedTitle) {
-        this.selectedTitle = selectedTitle;
-    }
-
-    public String getSelectedProvince() {
-        return selectedProvince;
-    }
-
-    public void setSelectedProvince(String selectedProvince) {
-        this.selectedProvince = selectedProvince;
-    }
 
     public RegisteredUser getUser() {
         if (user == null) {
@@ -109,8 +81,6 @@ public class m_usersBackingBean {
 
     public String updateUser() {
         try {
-            user.setTitleId(titleJpa.findTitleByName(selectedTitle));
-            user.setProvinceId(provinceJpa.findProvinceByName(selectedProvince));
             user.setReviewList(reviewJpa.findReviewByUserId(user));
             userJpa.edit(user);
         } catch (Exception ex) {
@@ -136,15 +106,7 @@ public class m_usersBackingBean {
         return provinceJpa.findAll();
     }
 
-    public String cancel(){
+    public String cancel() {
         return "m_users";
-    }
-    
-    public Title selTitle(String s){
-        return titleJpa.findTitleByName(s);
-    }
-    
-    public Province selProvince(String s){
-        return provinceJpa.findProvinceByName(s);
     }
 }
