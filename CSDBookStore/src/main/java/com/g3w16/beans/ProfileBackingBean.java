@@ -67,6 +67,7 @@ public class ProfileBackingBean implements Serializable {
 
     //@PostConstruct
     public void init() {
+        Logger.getLogger(this.getClass().getName()).log(Level.INFO, "init of ProfileBackingBean is called");
         this.emailAddress = authenticatedUser.getRegisteredUser().getEmailAddress();
         this.password = authenticatedUser.getRegisteredUser().getPassword();
         this.firstName = authenticatedUser.getRegisteredUser().getFirstName();

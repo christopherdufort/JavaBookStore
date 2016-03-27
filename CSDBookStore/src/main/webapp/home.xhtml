@@ -36,12 +36,12 @@
                         <!-- START OF SIDEBAR -->
                         <div class="large-3 medium-4 columns">
                             <div class="panel">
-                                <h4>Welcome!</h4>
+                                <h4>#{msgs.welcome}!</h4>
                                 <p>Let us know what you think about our new website! Remember it is still under construction and some things may be broken but we would still love for you to<a href=""> leave us feedback</a> about what you think of the design.</p>
                             </div>
                             <div id="genreNav" class="panel">
                                 <ul class="side-nav" role="navigation">
-                                    <h4><li class="heading"> Browse Genre</li></h4>
+                                    <h4><li class="heading">#{msgs.browseGenre}</li></h4>
                                     <li class="divider"></li>
                                     <h:form>
                                         <ui:repeat value="#{browseGenreBackingBean.availableGenres}" var="genre">
@@ -83,7 +83,7 @@
                         <div class="large-9 medium-8 columns">
 
                             <div class="row column text-center">
-                                <h2>Our Newest Products</h2>
+                                <h2>#{msgs.newProducts}</h2>
                                 <hr/>
                             </div>
                             <div class="row small-up-2 large-up-4">
@@ -103,7 +103,7 @@
                             </div>
                             <hr/>
                             <div class="row column text-center">
-                                <h2>Some Other Neat Products</h2>
+                                <h2>#{msgs.discountedProducts}</h2>
                                 <hr/>
                             </div>
                             <div class="row small-up-2 medium-up-3 large-up-6">
