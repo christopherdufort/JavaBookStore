@@ -6,10 +6,6 @@
 package com.g3w16.managerController;
 
 import com.g3w16.entities.*;
-import com.g3w16.entities.exceptions.RollbackFailureException;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
