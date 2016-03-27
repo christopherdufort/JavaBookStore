@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<facelet-taglib>
+    <namespace>http://bookstore/facelets</namespace>
+    <tag>
+	<tag-name>displayBookSmall</tag-name>
+	<source>tags/bookstore/displayBookSmall.xhtml</source>
+    </tag>
+    <tag>
+        <tag-name>displayBook</tag-name>
+        <source>tags/bookstore/displayBook.xhtml</source>
+    </tag>
+</facelet-taglib>

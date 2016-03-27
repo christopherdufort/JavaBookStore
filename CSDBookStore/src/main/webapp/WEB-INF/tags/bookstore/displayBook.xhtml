@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+    Created by Jonas Faure
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:body>
+        <ui:composition>
+            <div class="column ">
+                <h:graphicImage styleClass="thumbnail" value="#{itemImg}"/>
+                <h:form><h6><h:commandLink value="#{itemTitle}" action="#{bookUrl}"/></h6></h:form>
+                <ui:fragment rendered="#{itemListPrice == itemSalePrice}">
+                    <p><h:outputText value="$#{itemListPrice}"/></p>
+                </ui:fragment>
+                <ui:fragment rendered="#{itemListPrice != itemSalePrice}">
+                    <p><strike><h:outputText value="$#{itemListPrice}"/></strike>&nbsp;<h:outputText styleClass="red" value="$#{itemSalePrice}"/></p>
+                </ui:fragment>
+            </div>
+        </ui:composition>
+    </h:body>
+</html>
