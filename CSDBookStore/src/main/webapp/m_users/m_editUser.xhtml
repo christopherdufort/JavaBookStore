@@ -81,10 +81,12 @@
                                                 <h:message for="city" errorStyle="color:red; display:block"/>
 
                                                 <h:outputLabel value="#{msgs.province}" for="province"></h:outputLabel>
+
                                                 <h:outputText rendered="m_users.user.provinceId.province"></h:outputText>
                                                 <h:selectOneMenu id="province" value="#{m_users.user.provinceId}">
                                                     <f:converter converterId="com.g3w16.converter.ProvinceConverter"/>
                                                     <f:selectItems value="#{m_users.allProvince}" var="p" itemLabel="#{p.province}" itemValue="#{p.province}"/>
+
                                                 </h:selectOneMenu>
                                                 <h:message for="province" errorStyle="color:red; display:block"/>
 

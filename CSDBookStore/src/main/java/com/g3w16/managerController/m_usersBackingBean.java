@@ -91,6 +91,8 @@ public class m_usersBackingBean implements Serializable {
         } catch (Exception ex) {
             Logger.getLogger(m_usersBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
+         Logger.getLogger(m_usersBackingBean.class.getName()).log(Level.INFO, null, "Does it go here?");
+        
         return "m_users";
     }
 

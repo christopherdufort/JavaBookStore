@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -60,6 +60,7 @@ public class m_surveysBackingBean {
     public String updateSurvey() {
         try {
             surveyJpa.edit(survey);
+            
         } catch (Exception ex) {
             Logger.getLogger(m_surveysBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -69,7 +70,8 @@ public class m_surveysBackingBean {
     public String destroySurvey(Survey s) {
 
         try {
-            surveyJpa.destroy(s.getSurveyId());
+           // surveyJpa.destroy(s.getSurveyId());
+            surveyJpa.destroySurvey(survey);
         } catch (RollbackFailureException ex) {
             Logger.getLogger(m_surveysBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
