@@ -123,27 +123,33 @@
                                     <h4>Section 1</h4>
                                     <ui:repeat var="item" value="#{homeView.suggestedBook}">
                                         <bf:displayBookSmall
-                                            itemImg="resources/images/#{item.isbn}_s.jpg"
+                                            itemImg="resources/images/#{item.isbn}.jpg"
                                             itemTitle="#{item.title}"
-                                            bookUrl="#{bookBB.displayBook(item)}"/>
+                                            bookUrl="#{bookBB.displayBook(item)}"
+                                            itemListPrice="#{item.listPrice}"
+                                            itemSalePrice="#{item.salePrice}"/>
                                     </ui:repeat>
                                 </div>
                                 <div class="medium-4 columns">
                                     <h4>Section 2</h4>
                                     <ui:repeat var="item" value="#{homeView.suggestedBook}">
                                         <bf:displayBookSmall
-                                            itemImg="resources/images/#{item.isbn}_s.jpg"
+                                            itemImg="resources/images/#{item.isbn}.jpg"
                                             itemTitle="#{item.title}"
-                                            bookUrl="#{bookBB.displayBook(item)}"/>
+                                            bookUrl="#{bookBB.displayBook(item)}"
+                                            itemListPrice="#{item.listPrice}"
+                                            itemSalePrice="#{item.salePrice}"/>
                                     </ui:repeat>
                                 </div>
                                 <div class="medium-4 columns">
                                     <h4>Section 3</h4>
                                     <ui:repeat var="item" value="#{homeView.suggestedBook}">
                                         <bf:displayBookSmall
-                                            itemImg="resources/images/#{item.isbn}_s.jpg"
+                                            itemImg="resources/images/#{item.isbn}.jpg"
                                             itemTitle="#{item.title}"
-                                            bookUrl="#{bookBB.displayBook(item)}"/>
+                                            bookUrl="#{bookBB.displayBook(item)}"
+                                            itemListPrice="#{item.listPrice}"
+                                            itemSalePrice="#{item.salePrice}"/>
                                     </ui:repeat>
                                 </div>
                             </div>
