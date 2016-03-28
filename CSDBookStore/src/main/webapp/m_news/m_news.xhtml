@@ -28,11 +28,11 @@
                                         <h:form>
                                             <h:dataTable class="table table-striped table-bordered table-hover" id="dataTables-example" value="#{m_newsfeed.allNews}" var="news">
                                                 <h:column>
-                                                    <f:facet name="header"><h:commandLink value="#{msgs.add}" action="#{m_newsfeed.preCreateNews()}" class="btn btn-success btn-xs"/>
+                                                    <f:facet name="header"><h:commandLink value="#{msgs.add}" action="#{m_newsfeed.preCreateNews()}" class="btn btn-success btn-block"/>
                                                     </f:facet>
-                                                    <h:commandLink value="#{msgs.edit}" action="#{m_newsfeed.editNews(news)}" class="btn btn-info btn-xs"/>
+                                                    <h:commandLink value="#{msgs.edit}" action="#{m_newsfeed.editNews(news)}" class="btn btn-info btn-block"/>
                                                     <h:outputText value="&#160;" />
-                                                    <h:commandLink value="#{msgs.delete}" action="#{m_newsfeed.destroyNews(news)}" class="btn btn-danger btn-xs"/>                                                       
+                                                    <h:commandLink value="#{msgs.delete}" action="#{m_newsfeed.destroyNews(news)}" class="btn btn-danger btn-block"/>                                                       
                                                 </h:column>
                                                 <h:column>
                                                     <f:facet name="header">#{msgs.news_id}</f:facet>

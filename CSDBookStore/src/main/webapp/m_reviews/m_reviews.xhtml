@@ -29,7 +29,7 @@
                                         <h:form>
                                             <h:dataTable class="table table-striped table-bordered table-hover" id="dataTables-example" value="#{m_reviews.allReview}" var="reviews">
                                                 <h:column> 
-                                                    <h:commandLink value="#{msgs.edit}" action="#{m_reviews.editReview(reviews)}" class="btn btn-info btn-xs"/>                                                                               
+                                                    <h:commandLink value="#{msgs.edit}" action="#{m_reviews.editReview(reviews)}" class="btn btn-info btn-block"/>                                                                               
                                                 </h:column>
                                                 <h:column>
                                                     <h:outputText rendered="reviews.approvalId.approvalStatus"></h:outputText>

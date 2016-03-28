@@ -53,8 +53,10 @@ public class m_reportsBackingBean {
      * @version 0.0.1 - testing
      * @return
      */
-    public BigDecimal getTotalSalesForOneInvoice() {
+    public BigDecimal getTotalSalesForOneInvoice(Invoice invoice) {
         Invoice id = new Invoice(1);
+        //this is a test value
+        // originally it should come from the invoice that we send it
         BigDecimal detailTotal = BigDecimal.valueOf(0);
         double total = 0;
 

@@ -27,38 +27,48 @@
                                 <div class="panel-body">
                                     <div class="dataTable_wrapper table-responsive">
                                         <h:form>
-                                            <h:dataTable class="table table-striped table-bordered table-hover" id="dataTables-example" value="#{m_invoices.allInvoices}" var="invoice">
-                                                <h:column>
-                                                    <f:facet name="header"><button type="button" class="btn btn-success btn-block">#{msgs.add}</button>
-                                                    
+
+                                            <p:dataTable class="table table-striped table-bordered table-hover" widgetVar="invoicesTable" id="dataTables-example" value="#{m_invoices.allInvoices}"  var="invoice" filteredValue="#{m_invoices.searchedInvoices}" sortMode="multiple">
+                                                <f:facet name="header">
+                                                    <p:outputPanel>
+                                                        <h:outputText value="Search all fields:" />
+                                                        <p:inputText id="globalFilter" onkeyup="PF('invoicesTable').filter()" style="width:150px" placeholder="Enter keyword"/>
+                                                    </p:outputPanel>
+                                                </f:facet>
+
+
+                                                <p:column>
+                                                    <f:facet name="header">
+                                                             <button type="button" class="btn btn-success btn-block">#{msgs.add}</button>
+
                                                     </f:facet>
                                                     <h:commandLink value="#{msgs.details}" action ="#{m_invoices.getDetailsPage(invoice)}" class="btn btn-info btn-block"/>
-                                                </h:column>
-                                                <h:column>
+                                                </p:column>
+                                                <p:column filterBy="#{invoice.invoiceId}"  filterMatchMode="contains" sortBy="#{invoice.invoiceId}">
                                                     <f:facet name="header">#{msgs.invoice_id}</f:facet>
                                                         #{invoice.invoiceId}
-                                                </h:column>
-                                                <h:column>
+                                                </p:column>
+                                                <p:column filterBy="#{invoice.saleDate}"  filterMatchMode="contains" sortBy="#{invoice.saleDate}">
                                                     <f:facet name="header">#{msgs.sale_date}</f:facet>
                                                         #{invoice.saleDate}
-                                                </h:column>
-                                                <h:column>
+                                                </p:column>
+                                                <p:column filterBy="#{invoice.userNumber}"  filterMatchMode="contains" sortBy="#{invoice.userNumber}">
                                                     <f:facet name="header">#{msgs.user_id}</f:facet>
                                                         #{invoice.userNumber}
-                                                </h:column>
-                                                <h:column>
+                                                </p:column>
+                                                <p:column filterBy="#{invoice.totalNetValueOfSale}"  filterMatchMode="contains" sortBy="#{invoice.totalNetValueOfSale}">
                                                     <f:facet name="header">#{msgs.total_net_value_of_sale}</f:facet>
                                                         #{invoice.totalNetValueOfSale}
-                                                </h:column>
-                                                <h:column>
-                                                    <f:facet name="header">#{msgs.total_gross_value_of_sale}</f:facet>
-                                                        #{invoice.totalGrossValueOfSale}
-                                                </h:column>
-                                                
-                                            </h:dataTable>
+                                                </p:column>
+                                                <p:column filterBy="#{invoice.totalGrossValueOfSale}"  filterMatchMode="contains" headerText="#{msgs.total_gross_value_of_sale}" sortBy="#{invoice.totalGrossValueOfSale}  ">
+
+                                                    <h:outputText value="#{invoice.totalGrossValueOfSale}" /> 
+                                                </p:column>
+
+                                            </p:dataTable>
                                         </h:form>
 
-                                       
+
                                     </div>
                                     <!-- /.table-responsive -->
                                 </div>

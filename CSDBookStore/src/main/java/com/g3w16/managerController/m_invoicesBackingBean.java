@@ -23,8 +23,13 @@ public class m_invoicesBackingBean {
 
 //    @Inject
 //    Invoice invoice;
+    private String searchInvoice;
+
     private Invoice invoice;
     private InvoiceDetail invoiceDetail;
+
+    private List<Invoice> all;
+    private List<Invoice> searched;
 //    private Date date1;
 //    private Date date2;
 
@@ -33,6 +38,14 @@ public class m_invoicesBackingBean {
 
     @Inject
     InvoiceDetailJpaController invoiceDetailJpa;
+
+    public String getText() {
+        return searchInvoice;
+    }
+
+    public void setText(String searchInvoice) {
+        this.searchInvoice = searchInvoice;
+    }
 
     public Invoice getInvoice() {
         if (invoice == null) {
@@ -57,6 +70,18 @@ public class m_invoicesBackingBean {
     public String getInvoiceDetailPage() {
         return "m_invoiceDetails";
     }
+    
+    public List<Invoice> getSearchedInvoices() {
+        return searched;
+    }
+ 
+    public void setSearchedInvoices(List<Invoice> searched) {
+        this.searched = searched;
+    }
+
+//    public void setAllInvoices(List<Invoice> all) {
+//        this.all = all;
+//    }
 
     /**
      * Returning all invoices
@@ -64,8 +89,14 @@ public class m_invoicesBackingBean {
      * @return
      */
     public List<Invoice> getAllInvoices() {
-        return invoiceJpa.findInvoiceEntities();
 
+        all = invoiceJpa.findInvoiceEntities();
+        //  all= invoiceJpa.findInvoiceEntities();
+//         for(int i =0; i<invoiceJpa.findInvoiceEntities().size();i++){
+//         
+//             all.add(invoice)
+//         }
+        return all;
     }
 
     /**
@@ -98,6 +129,17 @@ public class m_invoicesBackingBean {
         this.invoice = invoiceJpa.findInvoice(invoice.getInvoiceId());
 
         return "m_invoiceDetails";
+    }
+
+    public void handleSearchInvoice() {
+
+        all = invoiceJpa.findInvoiceByUserNumber(Integer.parseInt(searchInvoice));
+
+    }
+
+    public String cancel() {
+
+        return "m_invoices";
     }
 
 }
