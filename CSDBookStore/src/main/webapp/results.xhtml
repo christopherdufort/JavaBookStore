@@ -13,6 +13,12 @@
             <ui:define name="title">
                 Results
             </ui:define>
+            
+            <ui:define name="event_listener">
+                <f:metadata>
+                    <f:event listener="#{resultsBackingBean.init()}" type="preRenderView" /> 
+                </f:metadata>
+            </ui:define>
 
             <ui:define name="content">
                 <div class="off-canvas-wrapper">
