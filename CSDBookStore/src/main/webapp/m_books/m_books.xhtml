@@ -31,76 +31,77 @@
                                                 <h:column>
                                                     <f:facet name="header"><h:commandLink value="#{msgs.add}" action="#{m_books.preCreateBook()}" class="btn btn-success btn-block"/>
                                                     </f:facet>
-                                                    <h:commandLink value="#{msgs.edit}" action="#{m_books.editBook(books)}" class="btn btn-info btn-block"/>
+                                                    <h:commandLink value="#{msgs.edit}" action="#{m_books.editBook(books.bookId)}" class="btn btn-info btn-block"/>
+                                                    <h:commandLink value="#{msgs.details}" action="#{m_books.bookDetails(books)}" class="btn btn-info btn-block"/>
                                                     <h:commandLink value="#{msgs.delete}" action="#{m_books.destroyBook(books)}" class="btn btn-danger btn-block"/>                                                       
                                                 </h:column>
                                                 <h:column>
                                                     <f:facet name="header">#{msgs.book_id}</f:facet>
-                                                    #{books.bookId}
+                                                        #{books.bookId}
                                                 </h:column>
 
                                                 <h:column>
                                                     <f:facet name="header">#{msgs.isbn}</f:facet>
-                                                    #{books.isbn}
+                                                        #{books.isbn}
                                                 </h:column>
-                                                
+
                                                 <h:column>
                                                     <f:facet name="header">#{msgs.title}</f:facet>
-                                                    #{books.title}
+                                                        #{books.title}
                                                 </h:column>
-                                                
-                                                <h:column>
-                                                    <f:facet name="header">#{msgs.publisher}</f:facet>
-                                                    #{books.publisher}
-                                                </h:column>
-                                                
-                                                <h:column>
-                                                    <f:facet name="header">#{msgs.publish_date}</f:facet>
-                                                    #{books.publishDate}
-                                                </h:column>
-                                                
-                                                 <h:column>
-                                                     <f:facet name="header">#{msgs.page_number}</f:facet>
-                                                     #{books.pageNumber}
-                                                </h:column>
-                                                
-                                                <h:column>
-                                                    <f:facet name="header">#{msgs.wholesale_price}</f:facet>
-                                                    #{books.wholesalePrice}
-                                                </h:column>
-                                                
-                                                <h:column>
-                                                    <f:facet name="header">#{msgs.list_price}</f:facet>
-                                                    #{books.listPrice}
-                                                </h:column>
-                                                
-                                                <h:column>
-                                                    <f:facet name="header">#{msgs.sale_price}</f:facet>
-                                                    #{books.salePrice}
-                                                </h:column>
-                                                
-                                                <h:column>
-                                                    <f:facet name="header">#{msgs.date_entered}</f:facet>
-                                                    #{books.dateEntered}
-                                                </h:column>
-                                                
+
+                                                <!--                                                <h:column>
+                                                                                                    <f:facet name="header">#{msgs.publisher}</f:facet>
+                                                #{books.publisher}
+                                            </h:column>
+                                            
+                                            <h:column>
+                                                <f:facet name="header">#{msgs.publish_date}</f:facet>
+                                                #{books.publishDate}
+                                            </h:column>
+                                            
+                                             <h:column>
+                                                 <f:facet name="header">#{msgs.page_number}</f:facet>
+                                                #{books.pageNumber}
+                                           </h:column>
+                                           
+                                           <h:column>
+                                               <f:facet name="header">#{msgs.wholesale_price}</f:facet>
+                                                #{books.wholesalePrice}
+                                            </h:column>
+                                            
+                                            <h:column>
+                                                <f:facet name="header">#{msgs.list_price}</f:facet>
+                                                #{books.listPrice}
+                                            </h:column>
+                                            
+                                            <h:column>
+                                                <f:facet name="header">#{msgs.sale_price}</f:facet>
+                                                #{books.salePrice}
+                                            </h:column>
+                                            
+                                            <h:column>
+                                                <f:facet name="header">#{msgs.date_entered}</f:facet>
+                                                #{books.dateEntered}
+                                            </h:column>-->
+
                                                 <h:column>
                                                     <f:facet name="header">#{msgs.available}</f:facet>
-                                                    #{books.available}
+                                                        #{books.available}
                                                 </h:column>
-                                                
-                                                <h:column>
-                                                    <f:facet name="header">#{msgs.overall_rating}</f:facet>
-                                                    #{books.overallRating}
-                                                </h:column>
-                                                
-                                                <h:column>
-                                                    <f:facet name="header">#{msgs.synopsis}</f:facet>
-                                                    #{books.synopsis}
-                                                </h:column>
+
+                                                <!--                                                <h:column>
+                                                                                                    <f:facet name="header">#{msgs.overall_rating}</f:facet>
+                                                #{books.overallRating}
+                                            </h:column>
+                                            
+                                            <h:column>
+                                                <f:facet name="header">#{msgs.synopsis}</f:facet>
+                                                #{books.synopsis}
+                                            </h:column>-->
                                             </h:dataTable>
                                         </h:form>   
-                                            
+
                                     </div>
                                     <!-- /.table-responsive -->  
                                 </div>

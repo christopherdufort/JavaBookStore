@@ -44,8 +44,12 @@ public class LocalizationBean implements Serializable{
         return currentLocale;
     }
     
+    public void setCurrentLocale(Locale currentLocale) {
+        this.currentLocale= currentLocale;
+    }
+    
     public String getCurrentLanguage() {
-        return currentLocale.getLanguage();
+        return "FR";
     }
 
     public void setCurrentLanguage(String language){

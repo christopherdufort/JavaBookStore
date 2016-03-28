@@ -23,7 +23,6 @@ import javax.inject.Named;
 @RequestScoped
 public class m_booksBackingBean {
 
-   
     private Book book;
 
     @Inject
@@ -34,14 +33,14 @@ public class m_booksBackingBean {
     }
 
     public Book getBook() {
-        if(book==null){
-            book=new Book();
+        if (book == null) {
+            book = new Book();
         }
         return book;
     }
-    
-    public void setBook(Book book){
-        this.book=book;
+
+    public void setBook(Book book) {
+        this.book = book;
     }
 
     public String createBook() {
@@ -53,9 +52,14 @@ public class m_booksBackingBean {
         return "m_books";
     }
 
-    public String editBook(Book b) {
-        book = bookJpa.findBookEntitiesById(b.getBookId());
+    public String editBook(Integer id) {
+        book = bookJpa.findBookEntitiesById(id);
         return "m_editBook";
+    }
+
+    public String bookDetails(Book b) {
+        book = bookJpa.findBookEntitiesById(b.getBookId());
+        return "m_viewBook";
     }
 
     public String updateBook() {
@@ -79,9 +83,9 @@ public class m_booksBackingBean {
 
         return "m_books";
     }
-    
-    public String cancel(){
-        return "m_books";   
+
+    public String cancel() {
+        return "m_books";
     }
 
     public List<Book> getAllBook() {

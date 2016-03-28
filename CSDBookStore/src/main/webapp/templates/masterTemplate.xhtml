@@ -24,11 +24,11 @@
 
         <!-- Default Theme -->
         <link rel="stylesheet" href="resources/css/owl.theme.css"/>
-
+        <f:view locale="#{localizationBean.currentLocale}"></f:view>
         <f:metadata>
             <f:event type="preRenderView" listener="#{internationalizationController.checkLocaleCookie}" />
         </f:metadata>
-        <f:view locale="#{localizationBean.currentLocale}"></f:view>
+       
 
 
         <ui:insert name="event_listener"></ui:insert>
