@@ -308,6 +308,11 @@ public class Book implements Serializable {
         return true;
     }
 
+    /**
+     * Modified to return just the isbn so that it could be used in bookConverter.
+     * @author Xin Ma
+     * @return 
+     */
     @Override
     public String toString() {
         return isbn;

@@ -32,7 +32,9 @@
                                                     </f:facet>
                                                     <h:commandLink value="#{msgs.edit}" action="#{m_newsfeed.editNews(news)}" class="btn btn-info btn-block"/>
                                                     <h:outputText value="&#160;" />
-                                                    <h:commandLink value="#{msgs.delete}" action="#{m_newsfeed.destroyNews(news)}" class="btn btn-danger btn-block"/>                                                       
+                                                    <h:commandLink value="#{msgs.delete}" action="#{m_newsfeed.destroyNews(news)}" class="btn btn-danger btn-block">   
+                                                        <f:ajax render="@form"/>
+                                                    </h:commandLink>
                                                 </h:column>
                                                 <h:column>
                                                     <f:facet name="header">#{msgs.news_id}</f:facet>

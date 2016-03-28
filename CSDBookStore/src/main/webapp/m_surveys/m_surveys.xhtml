@@ -25,43 +25,45 @@
                                 <!-- /.panel-heading -->
                                 <div class="panel-body">
                                     <div class="dataTable_wrapper table-responsive">
-                                       <h:form>
-                                           <h:dataTable class="table table-striped table-bordered table-hover" id="dataTables-example" value="#{m_surveys.allSurvey}" var="surveys">
-                                               <h:column>
-                                                   <f:facet name="header"><h:commandLink value="#{msgs.add}" action="#{m_surveys.preCreateSurvey()}" class="btn btn-success btn-block"/>
+                                        <h:form>
+                                            <h:dataTable class="table table-striped table-bordered table-hover" id="dataTables-example" value="#{m_surveys.allSurvey}" var="surveys">
+                                                <h:column>
+                                                    <f:facet name="header"><h:commandLink value="#{msgs.add}" action="#{m_surveys.preCreateSurvey()}" class="btn btn-success btn-block"/>
                                                     </f:facet>
-                                                   <h:commandLink value="#{msgs.edit}" action="#{m_surveys.editSurvey(surveys)}" class="btn btn-info btn-xs"/>
-                                                   <h:outputText value="&#160;" />
-                                                   <h:commandLink value="#{msgs.delete}" action="#{m_surveys.destroySurvey(surveys)}" class="btn btn-danger btn-xs"/>                                                       
+                                                    <h:commandLink value="#{msgs.edit}" action="#{m_surveys.editSurvey(surveys)}" class="btn btn-info btn-xs"/>
+                                                    <h:outputText value="&#160;" />
+                                                    <h:commandLink value="#{msgs.delete}" action="#{m_surveys.destroySurvey(surveys)}" class="btn btn-danger btn-xs">
+                                                        <f:ajax render="@form"/>
+                                                    </h:commandLink>
                                                 </h:column>
-                                               <h:column>
-                                                 <f:facet name="header">#{msgs.survey_id}</f:facet>
-                                                    #{surveys.surveyId}
+                                                <h:column>
+                                                    <f:facet name="header">#{msgs.survey_id}</f:facet>
+                                                        #{surveys.surveyId}
                                                 </h:column>
 
                                                 <h:column>
                                                     <f:facet name="header">#{msgs.question}</f:facet>
-                                                    #{surveys.question}
+                                                        #{surveys.question}
                                                 </h:column>
-                                               
+
                                                 <h:column>
                                                     <f:facet name="header">#{msgs.answerOne}</f:facet>
-                                                    #{surveys.answerOne}
+                                                        #{surveys.answerOne}
                                                 </h:column>
-                                               
-                                               <h:column>
-                                                   <f:facet name="header">#{msgs.answerTwo}</f:facet>
-                                                    #{surveys.answerTwo}
+
+                                                <h:column>
+                                                    <f:facet name="header">#{msgs.answerTwo}</f:facet>
+                                                        #{surveys.answerTwo}
                                                 </h:column>
-                                               
-                                               <h:column>
-                                                   <f:facet name="header">#{msgs.answerThree}</f:facet>
-                                                    #{surveys.answerThree}
+
+                                                <h:column>
+                                                    <f:facet name="header">#{msgs.answerThree}</f:facet>
+                                                        #{surveys.answerThree}
                                                 </h:column>
-                                               
-                                                 <h:column>
-                                                     <f:facet name="header">#{msgs.answerDefault}</f:facet>
-                                                    #{surveys.answerDefault}
+
+                                                <h:column>
+                                                    <f:facet name="header">#{msgs.answerDefault}</f:facet>
+                                                        #{surveys.answerDefault}
                                                 </h:column>    
                                             </h:dataTable>
                                         </h:form>

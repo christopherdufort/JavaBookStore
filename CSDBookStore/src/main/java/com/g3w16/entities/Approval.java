@@ -92,6 +92,11 @@ public class Approval implements Serializable {
         return true;
     }
 
+    /**
+     * Modified to return just the status so that it could be used in approvalConverter.
+     * @author Xin Ma
+     * @return 
+     */
     @Override
     public String toString() {
         return approvalStatus;

@@ -22,7 +22,7 @@ import javax.persistence.Table;
 
 /**
  * Entity of a registered user.
- * 
+ *
  * @author Giuseppe Campanelli
  */
 @Entity
@@ -86,7 +86,7 @@ public class RegisteredUser implements Serializable {
 
     /**
      * One parameter constructor.
-     * 
+     *
      * @param userId Id of the user
      */
     public RegisteredUser(Integer userId) {
@@ -95,7 +95,7 @@ public class RegisteredUser implements Serializable {
 
     /**
      * Two parameter constructor.
-     * 
+     *
      * @param userId Id of the user
      * @param emailAddress Email of the user
      * @param password Password of the user
@@ -108,7 +108,7 @@ public class RegisteredUser implements Serializable {
 
     /**
      * Gets the user id
-     * 
+     *
      * @return user id
      */
     public Integer getUserId() {
@@ -117,7 +117,7 @@ public class RegisteredUser implements Serializable {
 
     /**
      * Sets the user id.
-     * 
+     *
      * @param userId Id of user
      */
     public void setUserId(Integer userId) {
@@ -126,7 +126,7 @@ public class RegisteredUser implements Serializable {
 
     /**
      * Gets the email of the user.
-     * 
+     *
      * @return email of user
      */
     public String getEmailAddress() {
@@ -135,7 +135,7 @@ public class RegisteredUser implements Serializable {
 
     /**
      * Sets the email of a user.
-     * 
+     *
      * @param emailAddress Email of the user
      */
     public void setEmailAddress(String emailAddress) {
@@ -144,7 +144,7 @@ public class RegisteredUser implements Serializable {
 
     /**
      * Gets the password of the user.
-     * 
+     *
      * @return user password
      */
     public String getPassword() {
@@ -153,7 +153,7 @@ public class RegisteredUser implements Serializable {
 
     /**
      * Sets the password of the user.
-     * 
+     *
      * @param password Password of the user
      */
     public void setPassword(String password) {
@@ -162,7 +162,7 @@ public class RegisteredUser implements Serializable {
 
     /**
      * Gets the first name of the user.
-     * 
+     *
      * @return first name of user
      */
     public String getFirstName() {
@@ -171,7 +171,7 @@ public class RegisteredUser implements Serializable {
 
     /**
      * Sets the first name of the user.
-     * 
+     *
      * @param firstName First name
      */
     public void setFirstName(String firstName) {
@@ -180,7 +180,7 @@ public class RegisteredUser implements Serializable {
 
     /**
      * Gets the last name of the user.
-     * 
+     *
      * @return last name of user
      */
     public String getLastName() {
@@ -189,17 +189,16 @@ public class RegisteredUser implements Serializable {
 
     /**
      * Sets the last name of the user.
-     * 
+     *
      * @param lastName Last name
      */
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-    
     /**
      * Gets the company name of the user.
-     * 
+     *
      * @return company name of the user
      */
     public String getCompanyName() {
@@ -208,7 +207,7 @@ public class RegisteredUser implements Serializable {
 
     /**
      * Sets the company name of the user.
-     * 
+     *
      * @param companyName Company name
      */
     public void setCompanyName(String companyName) {
@@ -217,7 +216,7 @@ public class RegisteredUser implements Serializable {
 
     /**
      * Gets the first address of the user.
-     * 
+     *
      * @return address one of the user
      */
     public String getAddressOne() {
@@ -226,7 +225,7 @@ public class RegisteredUser implements Serializable {
 
     /**
      * Sets address one of the user.
-     * 
+     *
      * @param addressOne Address one
      */
     public void setAddressOne(String addressOne) {
@@ -235,7 +234,7 @@ public class RegisteredUser implements Serializable {
 
     /**
      * Gets the second address of the user.
-     * 
+     *
      * @return address two of the user
      */
     public String getAddressTwo() {
@@ -244,7 +243,7 @@ public class RegisteredUser implements Serializable {
 
     /**
      * Sets address two of the user.
-     * 
+     *
      * @param addressTwo Address two
      */
     public void setAddressTwo(String addressTwo) {
@@ -253,7 +252,7 @@ public class RegisteredUser implements Serializable {
 
     /**
      * Gets the city of the user.
-     * 
+     *
      * @return city of the user
      */
     public String getCity() {
@@ -262,7 +261,7 @@ public class RegisteredUser implements Serializable {
 
     /**
      * Sets the city of the user.
-     * 
+     *
      * @param city City
      */
     public void setCity(String city) {
@@ -271,7 +270,7 @@ public class RegisteredUser implements Serializable {
 
     /**
      * Gets the country of the user.
-     * 
+     *
      * @return country of the user
      */
     public String getCountry() {
@@ -280,7 +279,7 @@ public class RegisteredUser implements Serializable {
 
     /**
      * Sets the country of the user.
-     * 
+     *
      * @param country Country
      */
     public void setCountry(String country) {
@@ -289,7 +288,7 @@ public class RegisteredUser implements Serializable {
 
     /**
      * Gets the postal code of the user.
-     * 
+     *
      * @return postal code of the user
      */
     public String getPostalCode() {
@@ -298,7 +297,7 @@ public class RegisteredUser implements Serializable {
 
     /**
      * Sets the postal code of the user.
-     * 
+     *
      * @param postalCode Postal code
      */
     public void setPostalCode(String postalCode) {
@@ -307,7 +306,7 @@ public class RegisteredUser implements Serializable {
 
     /**
      * Gets the home phone of the user.
-     * 
+     *
      * @return home phone of the user
      */
     public String getHomePhone() {
@@ -316,7 +315,7 @@ public class RegisteredUser implements Serializable {
 
     /**
      * Sets the home phone of the user.
-     * 
+     *
      * @param homePhone Home phone
      */
     public void setHomePhone(String homePhone) {
@@ -325,7 +324,7 @@ public class RegisteredUser implements Serializable {
 
     /**
      * Gets the cell phone of the user.
-     * 
+     *
      * @return cell phone of the user
      */
     public String getCellPhone() {
@@ -334,7 +333,7 @@ public class RegisteredUser implements Serializable {
 
     /**
      * Sets the cell phone of the user.
-     * 
+     *
      * @param cellPhone Cell phone
      */
     public void setCellPhone(String cellPhone) {
@@ -343,7 +342,7 @@ public class RegisteredUser implements Serializable {
 
     /**
      * Gets the manager status of the user.
-     * 
+     *
      * @return manager status of the account
      */
     public Boolean getManager() {
@@ -352,7 +351,7 @@ public class RegisteredUser implements Serializable {
 
     /**
      * Sets the manager status of the user.
-     * 
+     *
      * @param manager Manaager status
      */
     public void setManager(Boolean manager) {
@@ -361,7 +360,7 @@ public class RegisteredUser implements Serializable {
 
     /**
      * Gets the active status of the user.
-     * 
+     *
      * @return active status of the user
      */
     public Boolean getActive() {
@@ -370,7 +369,7 @@ public class RegisteredUser implements Serializable {
 
     /**
      * Sets the active status of the user.
-     * 
+     *
      * @param active Active status
      */
     public void setActive(Boolean active) {
@@ -379,7 +378,7 @@ public class RegisteredUser implements Serializable {
 
     /**
      * Gets the list of all reviews associated to a user.
-     * 
+     *
      * @return list of reviews
      */
     public List<Review> getReviewList() {
@@ -388,7 +387,7 @@ public class RegisteredUser implements Serializable {
 
     /**
      * Sets the list of reviews associated to a user.
-     * 
+     *
      * @param reviewList List of reviews
      */
     public void setReviewList(List<Review> reviewList) {
@@ -397,7 +396,7 @@ public class RegisteredUser implements Serializable {
 
     /**
      * Gets the title id of the user.
-     * 
+     *
      * @return title id of the user
      */
     public Title getTitleId() {
@@ -406,7 +405,7 @@ public class RegisteredUser implements Serializable {
 
     /**
      * Sets the title id of the user.
-     * 
+     *
      * @param titleId Title id
      */
     public void setTitleId(Title titleId) {
@@ -415,7 +414,7 @@ public class RegisteredUser implements Serializable {
 
     /**
      * Gets the province id of the user.
-     * 
+     *
      * @return province id of the user
      */
     public Province getProvinceId() {
@@ -424,7 +423,7 @@ public class RegisteredUser implements Serializable {
 
     /**
      * Sets the province id of the user.
-     * 
+     *
      * @param provinceId Province id
      */
     public void setProvinceId(Province provinceId) {
@@ -451,6 +450,13 @@ public class RegisteredUser implements Serializable {
         return true;
     }
 
+    /**
+     * Modified to return just the email so that it could be used in
+     * userConverter.
+     *
+     * @author Xin Ma
+     * @return
+     */
     @Override
     public String toString() {
         return emailAddress;

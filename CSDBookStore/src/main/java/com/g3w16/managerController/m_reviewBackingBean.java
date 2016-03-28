@@ -10,10 +10,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.inject.Inject;
 
 /**
@@ -26,14 +24,13 @@ import javax.inject.Inject;
 public class m_reviewBackingBean implements Serializable {
 
     private Review review;
-    
+
     private Approval approval;
 
     private Book book;
 
     private RegisteredUser user;
 
-    
     @Inject
     ApprovalJpaController approvalJpa;
 
@@ -42,11 +39,10 @@ public class m_reviewBackingBean implements Serializable {
 
     @Inject
     RegisteredUserJpaController userJpa;
-    
+
     @Inject
     ReviewJpaController reviewJpa;
 
-   
     public Book getBook() {
         if (book == null) {
             return new Book();
@@ -68,18 +64,7 @@ public class m_reviewBackingBean implements Serializable {
     public void setUser(RegisteredUser user) {
         this.user = user;
     }
-
-    @ManagedProperty(value = "#{param.approvalId}")
-    private int params;
-
-    public int getParams() {
-        return params;
-    }
-
-    public void setParams(int params) {
-        this.params = params;
-    }
-
+    
     public Review getReview() {
         if (review == null) {
             review = new Review();
@@ -107,8 +92,8 @@ public class m_reviewBackingBean implements Serializable {
         return "m_viewReview";
     }
 
-    public String editReview() {      
-        try {          
+    public String editReview() {
+        try {
             reviewJpa.edit(review);
         } catch (Exception ex) {
             Logger.getLogger(m_reviewBackingBean.class.getName()).log(Level.SEVERE, null, ex);
@@ -116,17 +101,26 @@ public class m_reviewBackingBean implements Serializable {
         return "m_reviews";
     }
 
+    public void updateReview(Review r) {
+        try {
+            reviewJpa.edit(r);
+        } catch (Exception ex) {
+            Logger.getLogger(m_reviewBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
     public String cancel() {
         return "m_reviews";
     }
 
     public List<Review> getAllReview() {
-        if (params == 0) {
-            return reviewJpa.findReviewEntities();
-        } else {
-            Approval a = new Approval(params);
-            return reviewJpa.findReviewByApprovalId(a);
-        }
+        return reviewJpa.findReviewEntities();
+    }
+
+    public List<Review> getPendingReview() {
+        Approval a = new Approval(2);
+        return reviewJpa.findReviewByApprovalId(a);
     }
 
     public int getPendingCount() {

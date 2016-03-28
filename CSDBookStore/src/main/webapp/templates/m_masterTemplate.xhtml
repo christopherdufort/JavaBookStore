@@ -78,16 +78,12 @@
                         </a>
                         <ul class="dropdown-menu dropdown-alerts">
                             <li>
-<!--                                <a href="#{request.contextPath}/faces/m_reviews/m_reviews.xhtml">-->
-                                <h:link outcome="/faces/m_reviews/m_reviews">
-                                    <f:param name="approvalId" value="2" />
+                                <a href="#{request.contextPath}/faces/m_reviews/m_pendingReview.xhtml">
                                     <div>
                                         <i class="fa fa-comment fa-fw"></i> New Comments
-                                        <!--<span class="pull-right text-muted small">#{m_reviews.pendingCount}</span>-->
+                                        <span class="pull-right text-muted small">#{m_reviews.pendingCount}</span>
                                     </div>
-                                </h:link>
-
-                                <!--                                </a>-->
+                                </a>
                                 <a href="#">
                                     <div>
                                         <i class="fa fa-warning fa-fw"></i> Alert
@@ -105,7 +101,7 @@
                             <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-user">
-                            
+
                             <li><a href="login.xhtml"><i class="fa fa-sign-out fa-fw"></i> Back to user</a>
                             </li>
                         </ul>
