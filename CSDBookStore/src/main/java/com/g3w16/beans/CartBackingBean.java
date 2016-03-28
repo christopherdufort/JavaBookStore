@@ -37,10 +37,8 @@ public class CartBackingBean implements Serializable {
         FacesContext.getCurrentInstance().getExternalContext().redirect("cart.xhtml");
     }
     
-    public String removeFromCart(Book book) {
+    public void removeFromCart(Book book) {
         cart.remove(book);
-        
-        return "cart";
     }
     
     public List<Book> getCart() {
