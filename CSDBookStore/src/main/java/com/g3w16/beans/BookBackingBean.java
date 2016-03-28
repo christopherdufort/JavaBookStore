@@ -12,6 +12,7 @@ import com.g3w16.entities.Format;
 import com.g3w16.entities.Genre;
 import com.g3w16.entities.Review;
 import com.g3w16.entities.ReviewJpaController;
+import java.io.IOException;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -115,9 +116,9 @@ public class BookBackingBean implements Serializable {
         List<Book> allSimilarBooks = bookJpaController.findBookEntitiesByGenre(book.getGenreList().get(0));
         int similarBooksAmount = allSimilarBooks.size();
         
-        for (int i = 0; i < 6 && i < similarBooksAmount; i++) {
+        for (int i = 0; i < 6 && i < allSimilarBooks.size()-1; i++) {
             int random = (int)(Math.random()* similarBooksAmount);
-            if (allSimilarBooks.get(i).getBookId() != book.getBookId()) {
+            if (allSimilarBooks.get(random).getBookId() != book.getBookId()) {
                 booksFromGenre.add(allSimilarBooks.get(random));
             } else {
                 i--;
@@ -136,9 +137,9 @@ public class BookBackingBean implements Serializable {
         List<Book> allSimilarBooks = bookJpaController.findBookEntitiesByAuthor(book.getAuthorList().get(0));
         int similarBooksAmount = allSimilarBooks.size();
         
-        for (int i = 0; i < 6 && i < similarBooksAmount; i++) {
+        for (int i = 0; i < 6 && i < allSimilarBooks.size()-1; i++) {
             int random = (int)(Math.random()* similarBooksAmount);
-            if (allSimilarBooks.get(i).getBookId() != book.getBookId()) {
+            if (allSimilarBooks.get(random).getBookId() != book.getBookId()) {
                 booksFromAuthor.add(allSimilarBooks.get(random));
             } else {
                 i--;
@@ -152,10 +153,10 @@ public class BookBackingBean implements Serializable {
         return booksFromAuthor;
     }
     
-    public String displayBook(Book book) {
+    public void displayBook(Book book) throws IOException {
         setBook(book);
         
-        return "book";
+        FacesContext.getCurrentInstance().getExternalContext().redirect("book.xhtml");
     }
     
 }

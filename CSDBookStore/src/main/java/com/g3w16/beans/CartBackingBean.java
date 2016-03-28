@@ -7,11 +7,13 @@ package com.g3w16.beans;
 
 import com.g3w16.entities.Author;
 import com.g3w16.entities.Book;
+import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -28,11 +30,11 @@ public class CartBackingBean implements Serializable {
     
     private List<Book> cart = new ArrayList<Book>();
     
-    public String addToCart(Book book) {
+    public void addToCart(Book book) throws IOException {
         if (!cart.contains(book))
             cart.add(book);
         
-        return "cart";
+        FacesContext.getCurrentInstance().getExternalContext().redirect("cart.xhtml");
     }
     
     public String removeFromCart(Book book) {
@@ -63,11 +65,11 @@ public class CartBackingBean implements Serializable {
         return authors;
     }
     
-    public String checkOut() {
+    public void checkOut() throws IOException {
         checkoutBB.setOrder(cart);
         checkoutBB.setSubtotal(getTotal());
         
-        return "checkout";
+        FacesContext.getCurrentInstance().getExternalContext().redirect("checkout.xhtml");
     }
     
     //FacesContext.getCurrentInstance().getViewRoot().setLocale(new Locale("fr"));;

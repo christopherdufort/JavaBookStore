@@ -13,6 +13,11 @@
             <base-name>com.g3w16.bundles.messages</base-name>
             <var>msgs</var>
         </resource-bundle>
+        
+        <locale-config>
+            <default-locale>en</default-locale>
+            <supported-locale>fr</supported-locale>
+        </locale-config>
   
     </application>
     

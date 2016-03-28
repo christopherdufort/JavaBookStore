@@ -453,6 +453,6 @@ public class RegisteredUser implements Serializable {
 
     @Override
     public String toString() {
-        return "com.g3w16.entities.RegisteredUser[ userId=" + userId + " ]";
+        return emailAddress;
     }
 }

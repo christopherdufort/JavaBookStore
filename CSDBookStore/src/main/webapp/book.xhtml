@@ -105,13 +105,15 @@
                         </div>
                         <div class="tabs-panel" id="panel2">
                             <ui:repeat var="item" value="#{bookBB.book.reviewList}">
-                                <div class="media-object stack-for-small">
-                                    <div class="media-object-section">
-                                        <h5><h:outputText value="#{item.reviewTitle}"/></h5><h:outputText value="#{bookBB.formatDate(item.dateSubmitted)}"/>
-                                        <p:rating value="#{item.rating}" readonly="true"/><label>by <h:outputText value="#{item.userId.firstName} #{item.userId.lastName}"/></label>
-                                        <p><h:outputText value="#{item.reviewText}"/></p>
+                                <ui:fragment rendered="#{item.approvalId.approvalId == 1}">
+                                    <div class="media-object stack-for-small">
+                                        <div class="media-object-section">
+                                            <h5><h:outputText value="#{item.reviewTitle}"/></h5><h:outputText value="#{bookBB.formatDate(item.dateSubmitted)}"/>
+                                            <p:rating value="#{item.rating}" readonly="true"/><label>by <h:outputText value="#{item.userId.firstName} #{item.userId.lastName}"/></label>
+                                            <p><h:outputText value="#{item.reviewText}"/></p>
+                                        </div>
                                     </div>
-                                </div>
+                                </ui:fragment>
                             </ui:repeat>
                             <hr/>
                             <h5>My Review:</h5>

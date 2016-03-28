@@ -13,6 +13,12 @@
             <ui:define name="title">
                 Results
             </ui:define>
+            
+            <ui:define name="event_listener">
+                <f:metadata>
+                    <f:event listener="#{resultsBackingBean.init()}" type="preRenderView" /> 
+                </f:metadata>
+            </ui:define>
 
             <ui:define name="content">
                 <div class="off-canvas-wrapper">
@@ -73,7 +79,7 @@
                             </div>
                             <div class="callout primary">
                                 <div class="row column">
-                                    <h1>Results of your search for: #{resultsBackingBean.searchContent}</h1>
+                                    <h1>#{msgs.searchResults}: #{resultsBackingBean.searchContent}</h1>
                                     <p class="lead">Total results found: #{resultsBackingBean.count}</p>
                                 </div>
                             </div>

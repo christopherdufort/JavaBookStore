@@ -292,6 +292,12 @@ public class BookJpaController implements Serializable {
         }
         return q.getResultList();
     }
+    public Book findBookByISBN(String isbn){
+        System.out.println(">>>>>>>>>>>>>>>>>>book find by isbn");
+        Query q = em.createNamedQuery("Book.findByIsbn");
+        q.setParameter("isbn", isbn);
+        return (Book) q.getSingleResult();
+    }
     
     public List<Book> findBookEntitiesByISBN(String isbn){
         return findBookEntitiesByISBN(isbn, true, false, -1, -1);

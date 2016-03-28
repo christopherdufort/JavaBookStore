@@ -9,8 +9,11 @@ import com.g3w16.actionController.BookController;
 import com.g3w16.beans.SearchBackingBean;
 import com.g3w16.entities.Book;
 import com.g3w16.entities.Genre;
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -19,8 +22,8 @@ import javax.inject.Named;
  * @author Christopher
  */
 @Named
-@RequestScoped
-public class SearchActionBean {
+@SessionScoped
+public class SearchActionBean implements Serializable {
 
     @Inject
     BookController bookController;
@@ -30,7 +33,7 @@ public class SearchActionBean {
     
     private List<Book> searchResults;
     
-    public String performSearch(SearchBackingBean searchBackingBean) {
+    public void performSearch(SearchBackingBean searchBackingBean) throws IOException {
         switch (searchBackingBean.getSearchChoice()) {
             case "Title":
                 searchResults = bookController.searchByTitle(searchBackingBean.getSearchContent());
@@ -50,10 +53,10 @@ public class SearchActionBean {
                 break;
             default:     //need a default     
         }
-        return "results";
+        FacesContext.getCurrentInstance().getExternalContext().redirect("results.xhtml");
     }
     //NEED TO FIGURE OUT HOW TO PASS THE GENRE HERE
-    public String browseGenre(String genre){
+    public void browseGenre(String genre) throws IOException{
         switch (genre){
             case "Computers & Technology":
                 searchResults = bookController.browseByGenre(new Genre(1));
@@ -72,7 +75,7 @@ public class SearchActionBean {
                 break;  
             default:     //need a default  
         }
-        return "results";
+        FacesContext.getCurrentInstance().getExternalContext().redirect("results.xhtml");
     }
     
     public List<Book> getSearchResults(){

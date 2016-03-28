@@ -7,9 +7,9 @@ package com.g3w16.beans;
 
 import com.g3w16.entities.Book;
 import com.g3w16.entities.viewController.SearchActionBean;
+import java.io.Serializable;
 import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -18,8 +18,8 @@ import javax.inject.Named;
  * @author Christopher
  */
 @Named
-@RequestScoped
-public class ResultsBackingBean {
+@SessionScoped
+public class ResultsBackingBean implements Serializable {
     
     @Inject
     SearchBackingBean searchBackingBean;
@@ -51,7 +51,7 @@ public class ResultsBackingBean {
         this.count = count;
     }
     
-    @PostConstruct
+    //@PostConstruct
     public void init(){
         searchResults = searchActionBean.getSearchResults();
         searchContent = searchBackingBean.getSearchContent();

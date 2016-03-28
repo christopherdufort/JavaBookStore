@@ -10,6 +10,7 @@ import com.g3w16.actionController.exception.InvalidCredentialsException;
 import com.g3w16.beans.AuthBean;
 import com.g3w16.beans.AuthenticatedUser;
 import com.g3w16.entities.RegisteredUser;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
@@ -35,7 +36,7 @@ public class UserAuthView {
     @Inject
     AuthBean authBean;
 
-    public String authenticate() {
+    public void authenticate() throws IOException {
         
         Logger.getLogger(UserAuthView.class.getName()).log(Level.INFO, "Submitted email : {0}", authBean.getEmail());
         Logger.getLogger(UserAuthView.class.getName()).log(Level.INFO, "Submitted password : {0}", authBean.getPassword());
@@ -45,17 +46,16 @@ public class UserAuthView {
             registeredUser = userController.authenticate(authBean);
             // return home will redirect to the home page if authentication is successful
             //   else, we re-render the page with an h:message thing
-        }catch (InvalidCredentialsException ex) {
+            authenticatedUser.setRegisteredUser(registeredUser);
+            if (userController.isManager(registeredUser)){
+                Logger.getLogger(UserAuthView.class.getName()).log(Level.INFO, "Redirecting to manager index");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("m_index.xhtml");
+            }else{
+                Logger.getLogger(UserAuthView.class.getName()).log(Level.INFO, "Redirecting to home");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("home.xhtml");
+            }
+            }catch (InvalidCredentialsException ex) {
             FacesContext.getCurrentInstance().addMessage("auth_form", new FacesMessage(ex.toString()));
-            return null;
-        }
-        authenticatedUser.setRegisteredUser(registeredUser);
-        if (userController.isManager(registeredUser)){
-            Logger.getLogger(UserAuthView.class.getName()).log(Level.INFO, "Redirecting to manager index");
-            return "m_index";
-        }else{
-            Logger.getLogger(UserAuthView.class.getName()).log(Level.INFO, "Redirecting to home");
-            return "home"; // TODO: Change that, it's ugly to use hardcoded filename to redirect !!
         }
     }
 }

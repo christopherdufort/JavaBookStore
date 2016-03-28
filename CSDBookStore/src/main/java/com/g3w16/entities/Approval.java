@@ -94,7 +94,7 @@ public class Approval implements Serializable {
 
     @Override
     public String toString() {
-        return "com.g3w16.entities.Approval[ approvalId=" + approvalId + " ]";
+        return approvalStatus;
     }
     
 }
