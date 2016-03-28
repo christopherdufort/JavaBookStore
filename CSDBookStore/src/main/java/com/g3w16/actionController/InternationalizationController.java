@@ -44,7 +44,6 @@ public class InternationalizationController implements Serializable {
             if (localeCookie != null) {
                 String languageValue = ((Cookie) localeCookie).getValue();
                 System.out.println("The Cookie named " + ((Cookie) localeCookie).getName() + " has a value of " + languageValue);
-                //writeLocaleCookie(languageValue);
                 localizationBean.setCurrentLanguage(languageValue);
             }
         }

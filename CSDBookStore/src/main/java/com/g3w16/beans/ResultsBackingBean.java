@@ -138,5 +138,9 @@ public class ResultsBackingBean implements Serializable {
     public void setRatingLimit(String ratingLimit) {
         this.ratingLimit = ratingLimit;
     }
+    
+    public String getGenreSearchContent(){
+        return searchActionBean.getGenreSerchContent();
+    }
    
 }

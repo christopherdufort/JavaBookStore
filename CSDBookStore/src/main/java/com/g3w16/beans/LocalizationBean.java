@@ -34,12 +34,6 @@ public class LocalizationBean implements Serializable{
         Logger.getLogger(this.getClass().getName()).log(Level.INFO, "new LocalizationBean created");
     }
     
-//    @PostConstruct
-//    public void init() {
-//        //Change the value based on locale.
-//        currentLocale = FacesContext.getCurrentInstance().getExternalContext().getRequestLocale();
-//    }
-
     public Locale getCurrentLocale() {
         return currentLocale;
     }
@@ -49,7 +43,7 @@ public class LocalizationBean implements Serializable{
     }
     
     public String getCurrentLanguage() {
-        return "FR";
+        return currentLocale.getLanguage();
     }
 
     public void setCurrentLanguage(String language){

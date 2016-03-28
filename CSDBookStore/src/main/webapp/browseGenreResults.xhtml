@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:bf="http://bookstore/facelets">
+
+    <body>
+        <ui:composition template="./templates/masterTemplate.xhtml">
+
+            <ui:define name="title">
+                Browse Genre Results
+            </ui:define>
+
+            <ui:define name="event_listener">
+                <f:metadata>
+                    <f:event listener="#{resultsBackingBean.init()}" type="preRenderView" /> 
+                </f:metadata>
+            </ui:define>
+
+            <ui:define name="content">
+                <div class="callout primary">
+                    <div class="row column">
+                        <h1>#{resultsBackingBean.getGenreSearchContent()}</h1>
+                        <p class="lead">Description</p>
+                    </div>
+                </div>
+                <div class="row column text-center">
+                    <h2>Top Selling Books</h2>
+                    <hr/>
+                </div>
+                <div class="row small-up-2 medium-up-3 large-up-6">
+                    <ui:repeat var="item" value="#{homeView.bestRankedBook}">
+                        <bf:displayBook
+                            itemImg="resources/images/#{item.isbn}.jpg"
+                            itemTitle="#{item.title}"
+                            itemListPrice="#{item.listPrice}"
+                            itemSalePrice="#{item.salePrice}"/>
+                    </ui:repeat>
+                    <hr/>
+                </div>
+                <div class="row column text-center">
+                    <h2>All Books from this Genre</h2>
+                    <hr/>
+                </div>
+                <div class="row small-up-2 medium-up-3 large-up-5">
+                    <ui:repeat value="#{resultsBackingBean.searchResults}" var="book">
+                        <div class="column">
+                            <img class="thumbnail" src="resources/images/#{book.isbn}.jpg"></img>
+                            <h5><h:form><h:commandLink value="#{book.title}" action="#{bookBB.displayBook(book)}"/></h:form></h5>
+                            <ui:fragment rendered="#{book.listPrice == book.salePrice}">
+                                <p><h:outputText styleClass="red" value="$#{book.listPrice}"/></p>
+                            </ui:fragment>
+                            <ui:fragment rendered="#{book.listPrice != book.salePrice}">
+                                <p><strike><h:outputText value="$#{book.listPrice}"/></strike>&nbsp;<h:outputText styleClass="red" value="$#{book.salePrice}"/></p>
+                            </ui:fragment>
+                        </div>   
+                    </ui:repeat>
+                </div>
+                <hr/>
+            </ui:define>
+
+        </ui:composition>
+    </body>
+</html>

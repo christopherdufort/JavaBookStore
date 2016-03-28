@@ -56,7 +56,7 @@
                                 <h:selectOneMenu style="width:9em" value="#{searchBackingBean.searchChoice}">
                                     <f:selectItems value="#{searchBackingBean.availableChoices}"/>
                                 </h:selectOneMenu>
-                                <h:inputText class="main-search" id="lastName" pt:placeholder="Search text"
+                                <h:inputText class="main-search" id="mainSearch" pt:placeholder="Search Text"
                                              value="#{searchBackingBean.searchContent}">
                                 </h:inputText>
                                 <h:commandLink value="Search!" class="manual-button" action="#{searchActionBean.performSearch(searchBackingBean)}"></h:commandLink>

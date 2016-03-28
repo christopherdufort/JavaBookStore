@@ -37,6 +37,8 @@ public class NewsFeed implements Serializable {
     @Basic(optional = false)
     @Column(name = "news_feed_link")
     private String newsFeedLink;
+    @Column(name = "active")
+    private Boolean active;
 
     public NewsFeed() {
     }
@@ -66,6 +68,14 @@ public class NewsFeed implements Serializable {
         this.newsFeedLink = newsFeedLink;
     }
 
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

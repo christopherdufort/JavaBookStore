@@ -18,7 +18,8 @@ CREATE TABLE IF NOT EXISTS `approval` (
 DROP TABLE IF EXISTS `news_feed`;
 CREATE TABLE IF NOT EXISTS `news_feed` (
   `news_feed_id` int(6) NOT NULL,
-  `news_feed_link` varchar(200) NOT NULL
+  `news_feed_link` varchar(200) NOT NULL,
+  `active` tinyint(1) DEFAULT '0'
 ) ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS `province`;

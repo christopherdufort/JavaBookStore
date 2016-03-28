@@ -1022,3 +1022,6 @@ INSERT INTO review (isbn, date_submitted, user_id, rating, approval_id, review_t
 ('161109898X', '2012-01-29', '1', '2', '2', 'Not one of the best', 'You know the book is not that good when you rather sleep than read it. '),
 ('B004CFA9DM', '2012-01-30', '1', '3.8', '1', 'I wished the ending was different', 'I really wished it ended differently. It would have been nice to not expect the ending. To avoid having a good ending. '),
 ('B00M60RKW8', '2012-01-31', '1', '4.9', '1', 'Almost perfect ! Almost!', 'One of my favorite books. I dont care what everyone else thinks. It was really worth the time I’ve spent on it. ');
+
+INSERT INTO news_feed(news_feed_id, news_feed_link, active) VALUES
+(1, 'http://www.bookbrowse.com/rss/book_news.rss', true);

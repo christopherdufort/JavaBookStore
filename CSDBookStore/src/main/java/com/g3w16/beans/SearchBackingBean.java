@@ -5,9 +5,10 @@
  */
 package com.g3w16.beans;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 /**
@@ -15,8 +16,8 @@ import javax.inject.Named;
  * @author Christopher
  */
 @Named
-@RequestScoped
-public class SearchBackingBean {
+@SessionScoped
+public class SearchBackingBean implements Serializable {
 
     private String searchChoice;
     private List<String> availableChoices;
