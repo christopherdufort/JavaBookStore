@@ -14,9 +14,11 @@ import com.g3w16.entities.Review;
 import com.g3w16.entities.ReviewJpaController;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -30,6 +32,8 @@ public class BookBackingBean implements Serializable {
     
     private Book book;
     private Review review;
+    private List<Book> booksFromGenre;
+    private List<Book> booksFromAuthor;
     
     @Inject
     private BookJpaController bookJpaController;
@@ -44,6 +48,8 @@ public class BookBackingBean implements Serializable {
     
     public void setBook(Book book) {
         this.book = book;
+        setFromSameGenre();
+        setFromSameAuthor();
     }
     
     public Review getReview() {
@@ -104,8 +110,46 @@ public class BookBackingBean implements Serializable {
         return book.getGenreList().get(0).getGenreName();
     }
     
-    public List<Book> getSimilarProducts() {
-        return bookJpaController.findBookEntitiesByGenre(book.getGenreList().get(0), 6, 0); //add in all book images
+    public void setFromSameGenre() {
+        booksFromGenre = new ArrayList<>();
+        List<Book> allSimilarBooks = bookJpaController.findBookEntitiesByGenre(book.getGenreList().get(0));
+        int similarBooksAmount = allSimilarBooks.size();
+        
+        for (int i = 0; i < 6 && i < similarBooksAmount; i++) {
+            int random = (int)(Math.random()* similarBooksAmount);
+            if (allSimilarBooks.get(i).getBookId() != book.getBookId()) {
+                booksFromGenre.add(allSimilarBooks.get(random));
+            } else {
+                i--;
+            }
+            allSimilarBooks.remove(random);
+            similarBooksAmount--;
+        }
+    }
+    
+    public List<Book> getFromSameGenre() {
+        return booksFromGenre;
+    }
+    
+    public void setFromSameAuthor() {
+        booksFromAuthor = new ArrayList<>();
+        List<Book> allSimilarBooks = bookJpaController.findBookEntitiesByAuthor(book.getAuthorList().get(0));
+        int similarBooksAmount = allSimilarBooks.size();
+        
+        for (int i = 0; i < 6 && i < similarBooksAmount; i++) {
+            int random = (int)(Math.random()* similarBooksAmount);
+            if (allSimilarBooks.get(i).getBookId() != book.getBookId()) {
+                booksFromAuthor.add(allSimilarBooks.get(random));
+            } else {
+                i--;
+            }
+            allSimilarBooks.remove(random);
+            similarBooksAmount--;
+        }
+    }
+    
+    public List<Book> getFromSameAuthor() {
+        return booksFromAuthor;
     }
     
     public String displayBook(Book book) {

@@ -81,15 +81,18 @@
                                 <ui:repeat value="#{resultsBackingBean.searchResults}" var="book">
                                     <div class="media-object">
                                         <div class="media-object-section">
-                                            <img class="thumbnail" src="resources/images/#{book.isbn}_s.jpg"></img>
+                                            <img class="thumbnail smallBook" src="resources/images/#{book.isbn}.jpg"></img>
                                         </div>
                                         <div class="media-object-section">
-                                            <h4>#{msgs.title}: <h:outputText value="#{book.title}"/></h4>
-                                            <h4>#{msgs.isbn}: <h:outputText value="#{book.isbn}"/></h4>
-                                            <h6>#{msgs.author}: <h:outputText value="#{book.authorList.get(0)}"/></h6>
-                                            <h6>#{msgs.publishDate}: <h:outputText value="#{book.publishDate}"/></h6>
-                                            <h5>#{msgs.salePrice}: <h:outputText value="#{book.salePrice}"/></h5> 
-                                            <p>#{msgs.available}: <h:outputText value="#{book.available}"/></p>
+                                            <h5><h:form><h:commandLink value="#{book.title}" action="#{bookBB.displayBook(book)}"/></h:form></h5>
+                                            by <h:outputText value="#{book.authorList.get(0)}"/><br/>
+                                            published on <h:outputText value="#{bookBB.formatDate(book.publishDate)}"/><br/><br/>
+                                            <ui:fragment rendered="#{book.listPrice == book.salePrice}">
+                                                <p><h:outputText styleClass="red" value="$#{book.listPrice}"/></p>
+                                            </ui:fragment>
+                                            <ui:fragment rendered="#{book.listPrice != book.salePrice}">
+                                                <p><strike><h:outputText value="$#{book.listPrice}"/></strike>&nbsp;<h:outputText styleClass="red" value="$#{book.salePrice}"/></p>
+                                            </ui:fragment>
                                         </div>
                                     </div>
                                     <hr/>

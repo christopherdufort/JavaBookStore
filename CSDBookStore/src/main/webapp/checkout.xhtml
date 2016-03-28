@@ -12,7 +12,7 @@
             <ui:define name="title">
                 Check Out
             </ui:define>
-            
+
             <ui:define name="event_listener">
                 <f:metadata>
                     <f:event listener="#{authenticationController.mustBeClient}" type="preRenderView" />
@@ -31,7 +31,7 @@
                     </nav>
                 </div>
                 <div class="row">
-                    <div class="large-12 columns">
+                    <div class="large-7 columns">
                         <table width="100%">
                             <tr>
                                 <td><h4>Order Summary</h4></td>
@@ -68,10 +68,55 @@
                                 <td>$#{checkoutBB.calcTotal()}</td>
                             </tr>
                         </table>
+                        <a href="profile.xhtml">Edit Billing Info</a>
+                    </div>
+                    <div class="large-5 columns">
+                        <h:form id="auth_form">
+                            <div class="row column">
+                                <h4 class="text-center">Payment Info</h4>
+                                <h:message for="auth_form" style="color:red">
+                                </h:message>
+                                <label>Card Number
+                                    <h:inputText id="emailInput" value="" >
+                                    </h:inputText>
+                                    <h:message for="emailInput" style="color:red">
+                                    </h:message>
+                                </label>
+                                <label>Name on Card
+                                    <h:inputSecret id="passwordInput" value="" >
+                                    </h:inputSecret>
+                                </label>
+                                <div class="row">
+                                    <div class="large-6 columns">
+                                        <label>Expiry Month (MM)
+                                            <h:inputText id="emailInput2" value="" >
+                                            </h:inputText>
+                                            <h:message for="emailInput2" style="color:red">
+                                            </h:message>
+                                        </label>
+                                    </div>
+                                    <div class="large-6 columns">
+                                        <label>Expiry Year (YYYY)
+                                            <h:inputText id="emailInput3" value="" >
+                                            </h:inputText>
+                                            <h:message for="emailInput3" style="color:red">
+                                            </h:message>
+                                        </label>
+                                    </div>
+                                </div>
+                                <label>Security Code
+                                    <h:inputText id="emailInput4" value="" >
+                                    </h:inputText>
+                                    <h:message for="emailInput4" style="color:red">
+                                    </h:message>
+                                </label>
+                                <h:commandButton styleClass="button" value="Confirm Purchase"/>
+                            </div>
+                        </h:form>
                     </div>
                 </div>
             </ui:define>
-            
+
             <ui:define name="bottom">
                 bottom
             </ui:define>
