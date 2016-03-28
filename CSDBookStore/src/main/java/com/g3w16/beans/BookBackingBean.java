@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.g3w16.beans;
 
-import com.g3w16.entities.Approval;
 import com.g3w16.entities.ApprovalJpaController;
 import com.g3w16.entities.Author;
 import com.g3w16.entities.Book;
@@ -27,6 +21,8 @@ import javax.inject.Named;
 
 /**
  * backing bean for book.xhtml
+ * Manages a books, its reviews, and similar products.
+ * 
  * @author Giuseppe Campanelli
  */
 @Named("bookBB")
@@ -47,18 +43,33 @@ public class BookBackingBean implements Serializable {
     @Inject
     private AuthenticatedUser authenticatedUser;
     
+    /**
+     * Gets the current book.
+     * 
+     * @return current book
+     */
     public Book getBook() {
         if (book == null)
             book = new Book();
         return book;
     }
     
+    /**
+     * Sets the current book.
+     * 
+     * @param book book to set
+     */
     public void setBook(Book book) {
         this.book = book;
         setFromSameGenre();
         setFromSameAuthor();
     }
     
+    /**
+     * Gets the current review.
+     * 
+     * @return current review
+     */
     public Review getReview() {
         if (review == null)
             review = new Review();
@@ -66,10 +77,20 @@ public class BookBackingBean implements Serializable {
         return review;
     }
     
+    /**
+     * Sets the current review.
+     * 
+     * @param review review to set
+     */
     public void setReview(Review review) {
         this.review = review;
     }
     
+    /**
+     * Creates the review by adding it to the database
+     * 
+     * @throws Exception 
+     */
     public void createReview() throws Exception {
         review.setApprovalId(approvalJpaController.findApproval(2));
         review.setDateSubmitted(new Date());
@@ -79,14 +100,29 @@ public class BookBackingBean implements Serializable {
         review = null;
     }
     
+    /**
+     * Gets the overall star rating for a book
+     * 
+     * @return overall rating
+     */
     public int getStarsForOverallRating() {
         return book.getOverallRating().intValue(); //fix overall rating --> update it when a review is added to a book since it is a field in the db
     }
     
+    /**
+     * Gets the amount of reviews for a book
+     * 
+     * @return amount of reviews
+     */
     public int getReviewsAmount() {
         return book.getReviewList().size();
     }
     
+    /**
+     * Gets the authors of a book
+     * 
+     * @return comma separated string of authors
+     */
     public String getAuthors() {
         List<Author> authorsList = book.getAuthorList();
         String authors = authorsList.get(0).getAuthorName();
@@ -96,6 +132,11 @@ public class BookBackingBean implements Serializable {
         return authors;
     }
     
+    /**
+     * Gets the genres of a book
+     * 
+     * @return comma separated string of genres
+     */
     public String getGenres() {
         List<Genre> genresList = book.getGenreList();
         String genres = genresList.get(0).getGenreName();
@@ -105,6 +146,11 @@ public class BookBackingBean implements Serializable {
         return genres;
     }
     
+    /**
+     * Gets the formats of a book
+     * 
+     * @return comma separated string of formats
+     */
     public String getFormats() {
         List<Format> formatsList = book.getFormatList();
         String formats = formatsList.get(0).getExtension();
@@ -114,15 +160,30 @@ public class BookBackingBean implements Serializable {
         return formats;
     }
     
+    /**
+     * Formats a date to yyyy-MM-dd
+     * 
+     * @param date date for format
+     * 
+     * @return formatted date
+     */
     public String formatDate(Date date) {
         SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-MM-dd");
         return dt1.format(date);
     }
     
+    /**
+     * Get the genre name of the current book
+     * 
+     * @return genre name of current book
+     */
     public String getGenreName() {
         return book.getGenreList().get(0).getGenreName();
     }
     
+    /**
+     * Sets similar products of the same genre
+     */
     public void setFromSameGenre() {
         booksFromGenre = new ArrayList<>();
         List<Book> allSimilarBooks = bookJpaController.findBookEntitiesByGenre(book.getGenreList().get(0));
@@ -140,10 +201,18 @@ public class BookBackingBean implements Serializable {
         }
     }
     
+    /**
+     * Gets similar products from the same genre
+     * 
+     * @return products from same genre
+     */
     public List<Book> getFromSameGenre() {
         return booksFromGenre;
     }
     
+    /**
+     * Sets similar products of the from the same author
+     */
     public void setFromSameAuthor() {
         booksFromAuthor = new ArrayList<>();
         List<Book> allSimilarBooks = bookJpaController.findBookEntitiesByAuthor(book.getAuthorList().get(0));
@@ -161,6 +230,11 @@ public class BookBackingBean implements Serializable {
         }
     }
     
+    /**
+     * Gets products by the same author
+     * 
+     * @return products of same author
+     */
     public List<Book> getFromSameAuthor() {
         return booksFromAuthor;
     }
@@ -170,5 +244,4 @@ public class BookBackingBean implements Serializable {
         
         FacesContext.getCurrentInstance().getExternalContext().redirect("book.xhtml");
     }
-    
 }

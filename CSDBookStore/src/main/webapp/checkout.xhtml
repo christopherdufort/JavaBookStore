@@ -76,41 +76,45 @@
                                 <h4 class="text-center">Payment Info</h4>
                                 <h:message for="auth_form" style="color:red">
                                 </h:message>
-                                <label>Card Number
-                                    <h:inputText id="emailInput" value="" >
-                                    </h:inputText>
-                                    <h:message for="emailInput" style="color:red">
-                                    </h:message>
-                                </label>
-                                <label>Name on Card
-                                    <h:inputSecret id="passwordInput" value="" >
-                                    </h:inputSecret>
-                                </label>
+                                <label>Credit Card Number:</label><h:message id ="cardNumberError" for="cardNumber" style="color:red" />
+                                <h:inputText id="cardNumber" value="#{checkoutBB.cardNumber}" required="true" requiredMessage="#{msgs.required}"
+                                             onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;">
+                                    <f:validator validatorId="com.g3w16.CreditCardValidator" />
+                                    <f:ajax event="blur" render="cardNumberError" />
+                                </h:inputText>
+                                <label>Name on Card:</label><h:message id ="cardNameError" for="nameOnCard" style="color:red" />
+                                <h:inputText id="nameOnCard" value="#{checkoutBB.nameOnCard}" required="true" requiredMessage="#{msgs.required}">
+                                    <f:validateLength minimum="5" maximum="35"/>
+                                    <f:ajax event="blur" render="cardNameError" />
+                                </h:inputText>
                                 <div class="row">
                                     <div class="large-6 columns">
-                                        <label>Expiry Month (MM)
-                                            <h:inputText id="emailInput2" value="" >
-                                            </h:inputText>
-                                            <h:message for="emailInput2" style="color:red">
-                                            </h:message>
-                                        </label>
+                                        <label>Expiry Month:</label><h:message id ="expiryMonthError" for="expiryMonth" style="color:red" />
+                                        <h:inputText id="expiryMonth" value="#{checkoutBB.expiryMonth}" required="true" requiredMessage="#{msgs.required}"
+                                                     onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;">
+                                            <f:convertNumber />
+                                            <f:validateLongRange minimum="1" maximum="12"/>
+                                            <f:ajax event="blur" render="expiryMonthError" />
+                                        </h:inputText>
                                     </div>
                                     <div class="large-6 columns">
-                                        <label>Expiry Year (YYYY)
-                                            <h:inputText id="emailInput3" value="" >
-                                            </h:inputText>
-                                            <h:message for="emailInput3" style="color:red">
-                                            </h:message>
-                                        </label>
+                                        <label>Expiry Year:</label><h:message id ="expiryYearError" for="expiryYear" style="color:red" />
+                                        <h:inputText id="expiryYear" value="#{checkoutBB.expiryYear}" required="true" requiredMessage="#{msgs.required}"
+                                                     onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;">
+                                            <f:convertNumber pattern="####" />
+                                            <f:validateLongRange minimum="#{checkoutBB.expiryYear}" maximum="#{checkoutBB.expiryYear+10}"/>
+                                            <f:ajax event="blur" render="expiryYearError" />
+                                        </h:inputText>
                                     </div>
                                 </div>
-                                <label>Security Code
-                                    <h:inputText id="emailInput4" value="" >
-                                    </h:inputText>
-                                    <h:message for="emailInput4" style="color:red">
-                                    </h:message>
-                                </label>
-                                <h:commandButton styleClass="button" value="Confirm Purchase"/>
+                                <label>Security Code:</label><h:message id ="securityCodeError" for="securityCode" style="color:red" />
+                                <h:inputText id="securityCode" value="#{checkoutBB.securityCode}" required="true" requiredMessage="#{msgs.required}"
+                                             onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;">
+                                    <f:convertNumber />
+                                    <f:validateLength minimum="3" maximum="4"/>
+                                    <f:ajax event="blur" render="securityCodeError" />
+                                </h:inputText>
+                                <h:commandButton styleClass="button" value="Confirm Purchase" action="#{checkoutBB.confirmPurchase()}"/>
                             </div>
                         </h:form>
                     </div>

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.g3w16.beans;
 
 import com.g3w16.entities.Author;
@@ -19,6 +14,8 @@ import javax.inject.Named;
 
 /**
  * backing bean for cart.xhtml
+ * Maintains the items in the cart
+ * 
  * @author Giuseppe Campanelli
  */
 @Named("cartBB")
@@ -30,6 +27,13 @@ public class CartBackingBean implements Serializable {
     
     private List<Book> cart = new ArrayList<Book>();
     
+    /**
+     * Adds a book to the cart
+     * 
+     * @param book book to be added to the cart
+     * 
+     * @throws IOException 
+     */
     public void addToCart(Book book) throws IOException {
         if (!cart.contains(book))
             cart.add(book);
@@ -37,14 +41,36 @@ public class CartBackingBean implements Serializable {
         FacesContext.getCurrentInstance().getExternalContext().redirect("cart.xhtml");
     }
     
+    /**
+     * Removes a book from the cart
+     * 
+     * @param book book to be removed
+     */
     public void removeFromCart(Book book) {
         cart.remove(book);
     }
     
+    /**
+     * Gets the cart
+     * 
+     * @return cart
+     */
     public List<Book> getCart() {
         return cart;
     }
     
+    /**
+     * Empties the cart.
+     */
+    public void clearCart() {
+        cart = new ArrayList<Book>();
+    }
+    
+    /**
+     * Gets the subtotal of the cart
+     * 
+     * @return subtotal
+     */
     public BigDecimal getTotal() {
         BigDecimal total = new BigDecimal(0);
         
@@ -54,6 +80,13 @@ public class CartBackingBean implements Serializable {
         return total;
     }
     
+    /**
+     * Gets the authors of a book
+     * 
+     * @param book book to get authors of
+     * 
+     * @return comma seperated string of authors
+     */
     public String getAuthors(Book book) {
         List<Author> authorsList = book.getAuthorList();
         String authors = authorsList.get(0).getAuthorName();
@@ -63,12 +96,15 @@ public class CartBackingBean implements Serializable {
         return authors;
     }
     
+    /**
+     * Checks out a cart to be purchased
+     * 
+     * @throws IOException 
+     */
     public void checkOut() throws IOException {
         checkoutBB.setOrder(cart);
         checkoutBB.setSubtotal(getTotal());
         
         FacesContext.getCurrentInstance().getExternalContext().redirect("checkout.xhtml");
     }
-    
-    //FacesContext.getCurrentInstance().getViewRoot().setLocale(new Locale("fr"));;
 }
