@@ -37,6 +37,7 @@ public class InternationalizationController implements Serializable {
         if (cookieMap == null || cookieMap.isEmpty()) {
             Logger.getLogger(this.getClass().getName()).log(Level.INFO, "No Cookies found or cookies not supported");
             setCookie("LocaleCookie", "en", 604800);
+            localizationBean.setCurrentLanguage("en");
         } else {
             // Retrieve a specific cookie
             Object localeCookie = context.getExternalContext().getRequestCookieMap().get("LocaleCookie");
