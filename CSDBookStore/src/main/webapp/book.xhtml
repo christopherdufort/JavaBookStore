@@ -6,6 +6,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:c="http://java.sun.com/jsp/jstl/core"
       xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:bf="http://bookstore/facelets">
     <body>
         <ui:composition template="./templates/masterTemplate.xhtml">
@@ -109,20 +110,38 @@
                                     <div class="media-object stack-for-small">
                                         <div class="media-object-section">
                                             <h5><h:outputText value="#{item.reviewTitle}"/></h5><h:outputText value="#{bookBB.formatDate(item.dateSubmitted)}"/>
-                                            <p:rating value="#{item.rating}" readonly="true"/><label>by <h:outputText value="#{item.userId.firstName} #{item.userId.lastName}"/></label>
+                                            <p:rating value="#{item.rating}" readonly="true"/><label>&nbsp;by <h:outputText value="#{item.userId.firstName} #{item.userId.lastName}"/></label>
                                             <p><h:outputText value="#{item.reviewText}"/></p>
                                         </div>
                                     </div>
                                 </ui:fragment>
                             </ui:repeat>
+                            <c:if test="#{bookBB.book.reviewList.size() == 0}">
+                                There are no reviews yet for this book.
+                            </c:if>
                             <hr/>
-                            <h5>My Review:</h5>
-                            <h:form id="submitReview">
-                                <p:rating value="0"/>
-                                <br/>
-                                <h:inputTextarea/>
-                                <h:commandButton styleClass="button" value="Submit Review"/>
-                            </h:form>
+                            <c:if test="#{authenticationController.anonymous != true}">
+                                <h5>My Review:</h5>
+                                <h:form id="createReview">
+                                    <p:rating id="agee" cancel="false" value="#{bookBB.review.rating}">
+                                    </p:rating>
+                                    <br/>
+                                    <label>Review title:</label><h:message id ="reviewTitleError" for="reviewTitle" style="color:red" />
+                                    <h:inputText id="reviewTitle" value="#{bookBB.review.reviewTitle}" required="true" requiredMessage="#{msgs.required}">
+                                        <f:validateLength maximum="25"/>
+                                        <f:ajax event="blur" render="reviewTitleError" />
+                                    </h:inputText>
+                                    <label>Review text:</label><h:message id ="reviewTextError" for="reviewText" style="color:red" />
+                                    <h:inputTextarea id="reviewText" value="#{bookBB.review.reviewText}" required="true" requiredMessage="#{msgs.required}">
+                                        <f:validateLength minimum="10" maximum="750"/>
+                                        <f:ajax event="blur" render="reviewTextError" />
+                                    </h:inputTextarea>
+                                    <h:commandButton styleClass="button" value="Submit Review" action="#{bookBB.createReview()}"/>
+                                </h:form>
+                            </c:if>
+                            <c:if test="#{authenticationController.anonymous == true}">
+                                Please sign in to submit a review.
+                            </c:if>
                         </div>
                         <div class="tabs-panel" id="panel3">
                             <div class="row small-up-2 medium-up-3 large-up-6">

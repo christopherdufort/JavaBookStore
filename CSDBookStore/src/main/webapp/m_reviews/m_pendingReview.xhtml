@@ -26,62 +26,54 @@
                                 <!-- /.panel-heading -->
                                 <div class="panel-body">
                                     <div class="dataTable_wrapper table-responsive">
+                                        <div class="row">
+                                            <div class="col-xs-1 col-sm-1 col-md-1" style="text-align: center"><h:outputLabel value="#{msgs.approval_id}"></h:outputLabel></div>
+                                            <div class="col-xs-2 col-sm-2 col-md-2" style="text-align: center"><h:outputLabel value="#{msgs.review_title}"></h:outputLabel></div>
+                                            <div class="col-xs-6 col-sm-6 col-md-6" style="text-align: center"><h:outputLabel value="#{msgs.review_text}"></h:outputLabel></div>
+                                            <div class="col-xs-2 col-sm-2 col-md-2" style="text-align: center"><h:outputLabel value="#{msgs.date_submitted}"></h:outputLabel></div>
+                                            <div class="col-xs-1 col-sm-1 col-md-1" style="text-align: center"><h:outputLabel value="#{msgs.isbn}"></h:outputLabel></div>
+                                        </div>
                                         <h:form>
-                                            <h:dataTable class="table table-striped table-bordered table-hover" id="dataTables-example" value="#{m_reviews.pendingReview}" var="reviews">
-                                                <h:column> 
-                                                    <h:commandLink value="#{msgs.edit}" action="#{m_reviews.updateReview(reviews)}" class="btn btn-info btn-xs">  
-                                                        <!--<f:ajax render="@form"/>-->
+                                            <ui:repeat value="#{m_reviews.pendingReview}" var="reviews">
+                                                <hr />
+
+                                                <div class="row">
+                                                    <h:inputHidden value="#{reviews.reviewId}"></h:inputHidden>
+                                                    <h:inputHidden value="#{reviews.userId}" converter="com.g3w16.converter.UserConverter"></h:inputHidden>
+                                                    <h:inputHidden value="#{reviews.rating}"></h:inputHidden>
+                                                    <div class="clearfix col-xs-1 col-sm-1 col-md-1"> 
+                                                        <h:selectOneMenu id="approval" value="#{reviews.approvalId}">   
+                                                            <f:converter converterId="com.g3w16.converter.ApprovalConverter"/>
+                                                            <f:selectItems value="#{m_reviews.allApproval}" var="a" itemLabel="#{a.approvalStatus}" itemValue="#{a.approvalStatus}" rendered="#{currentRow.selected}"/>
+                                                            <f:ajax render="@form" listener="#{m_reviews.updateReview(reviews)}"/>
+                                                        </h:selectOneMenu>   
+                                                    </div> 
+                                                    <h:commandLink action="#{m_reviews.viewReview(reviews)}">
+                                                        <div class="clearfix col-xs-2 col-sm-2 col-md-2">
+                                                            <h:outputText value="#{reviews.reviewTitle}"></h:outputText>
+                                                        </div>
+
+                                                        <div class="clearfix col-xs-6 col-sm-6 col-md-6">
+                                                            <h:outputText value="#{reviews.reviewText}" ></h:outputText>
+                                                        </div>
+
+                                                        <div class="clearfix col-xs-2 col-sm-2 col-md-2">
+                                                            <h:outputText value="#{reviews.dateSubmitted}">
+                                                                <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss"/>
+                                                            </h:outputText>
+                                                        </div>
+
+                                                        <div class="clearfix col-xs-2 col-sm-2 col-md-1">
+                                                            <h:outputText value="#{reviews.isbn}" converter="com.g3w16.converter.BookConverter"></h:outputText>
+                                                        </div> 
                                                     </h:commandLink>
-                                                </h:column>
-                                                    
-                                                <h:column>
-                                                    <f:facet name="header">#{msgs.approval_id}</f:facet>
-                                                    <h:selectOneMenu id="approval" value="#{reviews.approvalId}">   
-                                                        <f:converter converterId="com.g3w16.converter.ApprovalConverter"/>
-                                                        <f:selectItems value="#{m_reviews.allApproval}" var="a" itemLabel="#{a.approvalStatus}" itemValue="#{a.approvalStatus}"/>
-                                                    </h:selectOneMenu>                                 
-                                                </h:column>
+                                                    <hr />
+                                                </div>
 
-                                                <h:column>
-                                                    <f:facet name="header">#{msgs.review_id}</f:facet>
-                                                    <h:outputText value="#{reviews.reviewId}"></h:outputText>                                                  
-                                                </h:column>
 
-                                                <h:column>
-                                                    <f:facet name="header">#{msgs.isbn}</f:facet>
-                                                    <h:outputText value="#{reviews.isbn}" converter="com.g3w16.converter.BookConverter"></h:outputText>
-                                                </h:column>
-
-                                                <h:column>
-                                                    <f:facet name="header">#{msgs.date_submitted}</f:facet>
-                                                    <h:outputText value="#{reviews.dateSubmitted}">
-                                                        <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss"/>
-                                                   </h:outputText>
-                                                </h:column>
-
-                                                <h:column>
-                                                    <f:facet name="header">#{msgs.user_id}</f:facet>
-                                                    <h:outputText value="#{reviews.userId}" converter="com.g3w16.converter.UserConverter"></h:outputText>
-                                                </h:column>
-
-                                                <h:column>
-                                                    <f:facet name="header">#{msgs.rating}</f:facet>
-                                                    <h:outputText value="#{reviews.rating}"></h:outputText>
-                                                    
-                                                </h:column>
-
-                                                <h:column>
-                                                    <f:facet name="header">#{msgs.review_title}</f:facet>
-                                                    <h:outputText value="#{reviews.reviewTitle}"></h:outputText>
-                                                    
-                                                </h:column>
-
-                                                <h:column>
-                                                    <f:facet name="header">#{msgs.review_text}</f:facet>
-                                                    <h:outputText value="#{reviews.reviewText}"></h:outputText>
-                                                </h:column>
-                                            </h:dataTable>
+                                            </ui:repeat>
                                         </h:form>
+
                                     </div>
                                     <!-- /.table-responsive -->
                                 </div>

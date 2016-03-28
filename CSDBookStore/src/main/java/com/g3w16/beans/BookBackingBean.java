@@ -5,6 +5,8 @@
  */
 package com.g3w16.beans;
 
+import com.g3w16.entities.Approval;
+import com.g3w16.entities.ApprovalJpaController;
 import com.g3w16.entities.Author;
 import com.g3w16.entities.Book;
 import com.g3w16.entities.BookJpaController;
@@ -40,6 +42,10 @@ public class BookBackingBean implements Serializable {
     private BookJpaController bookJpaController;
     @Inject
     private ReviewJpaController reviewJpaController;
+    @Inject
+    private ApprovalJpaController approvalJpaController;
+    @Inject
+    private AuthenticatedUser authenticatedUser;
     
     public Book getBook() {
         if (book == null)
@@ -56,6 +62,7 @@ public class BookBackingBean implements Serializable {
     public Review getReview() {
         if (review == null)
             review = new Review();
+            review.setRating(1);
         return review;
     }
     
@@ -63,8 +70,13 @@ public class BookBackingBean implements Serializable {
         this.review = review;
     }
     
-    public void createReview() {
-        
+    public void createReview() throws Exception {
+        review.setApprovalId(approvalJpaController.findApproval(2));
+        review.setDateSubmitted(new Date());
+        review.setIsbn(book);
+        review.setUserId(authenticatedUser.getRegisteredUser());
+        reviewJpaController.create(review);
+        review = null;
     }
     
     public int getStarsForOverallRating() {
@@ -116,7 +128,7 @@ public class BookBackingBean implements Serializable {
         List<Book> allSimilarBooks = bookJpaController.findBookEntitiesByGenre(book.getGenreList().get(0));
         int similarBooksAmount = allSimilarBooks.size();
         
-        for (int i = 0; i < 6 && i < allSimilarBooks.size()-1; i++) {
+        for (int i = 0; i < 6 && !allSimilarBooks.isEmpty(); i++) {
             int random = (int)(Math.random()* similarBooksAmount);
             if (allSimilarBooks.get(random).getBookId() != book.getBookId()) {
                 booksFromGenre.add(allSimilarBooks.get(random));
@@ -137,7 +149,7 @@ public class BookBackingBean implements Serializable {
         List<Book> allSimilarBooks = bookJpaController.findBookEntitiesByAuthor(book.getAuthorList().get(0));
         int similarBooksAmount = allSimilarBooks.size();
         
-        for (int i = 0; i < 6 && i < allSimilarBooks.size()-1; i++) {
+        for (int i = 0; i < 6 && !allSimilarBooks.isEmpty(); i++) {
             int random = (int)(Math.random()* similarBooksAmount);
             if (allSimilarBooks.get(random).getBookId() != book.getBookId()) {
                 booksFromAuthor.add(allSimilarBooks.get(random));
