@@ -25,6 +25,10 @@
         <!-- Default Theme -->
         <link rel="stylesheet" href="resources/css/owl.theme.css"/>
 
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{internationalizationController.checkLocaleCookie}" />
+        </f:metadata>
+        <f:view locale="#{localizationBean.currentLocale}"></f:view>
 
 
         <ui:insert name="event_listener"></ui:insert>
@@ -41,7 +45,7 @@
             <div class="top-bar" id="main-menu">
                 <div class="top-bar-left">
                     <ul class="dropdown menu" data-dropdown-menu="">
-                        <li><a class="menu-text main-title" href="home.xhtml"> bibliotech</a></li>
+                        <li><a class="menu-text main-title" href="/CSDBookStore/faces/home.xhtml"> bibliotech</a></li>
                     </ul>
                 </div>
                 <div class="top-bar-right">
@@ -91,7 +95,15 @@
                                 </ui:fragment>
                             </ul>
                         </li>
-                        <li><a href="">FR</a></li>
+                        <li>
+                            <h:form>
+                                <h:selectOneMenu value="#{localizationBean.currentLanguage}" onchange="submit()">
+                                    <f:selectItem itemValue="en" itemLabel="English" />
+                                    <f:selectItem itemValue="fr" itemLabel="Français" />
+                                </h:selectOneMenu>
+                            </h:form>
+                        </li>
+                        <!--<li><a href="">FR</a></li>-->
                     </ul>
                 </div>
             </div>
@@ -130,15 +142,15 @@
         <!-- Include js plugin -->
         <script src="resources/js/owl.carousel.js"></script>
         <script>
-            $(document).foundation();
-            $(document).ready(function () {
-                $("#owl-demo").owlCarousel({
-                    navigation: true, // Show next and prev buttons
-                    slideSpeed: 300,
-                    paginationSpeed: 400,
-                    singleItem: true
-                });
-            });
+                                    $(document).foundation();
+                                    $(document).ready(function () {
+                                        $("#owl-demo").owlCarousel({
+                                            navigation: true, // Show next and prev buttons
+                                            slideSpeed: 300,
+                                            paginationSpeed: 400,
+                                            singleItem: true
+                                        });
+                                    });
         </script>
 
         <!-- Troll script -->

@@ -79,7 +79,8 @@
                     <ul class="tabs" data-tabs="" id="example-tabs">
                         <li class="tabs-title is-active"><a href="#panel1" aria-selected="true">Product Details</a></li>
                         <li class="tabs-title"><a href="#panel2">Reviews</a></li>
-                        <li class="tabs-title"><a href="#panel3">Similar Products</a></li>
+                        <li class="tabs-title"><a href="#panel3">More books in this genre</a></li>
+                        <li class="tabs-title"><a href="#panel4">More books from this author</a></li>
                     </ul>
                     <div class="tabs-content" data-tabs-content="example-tabs">
                         <div class="tabs-panel is-active" id="panel1">
@@ -97,6 +98,8 @@
                                     <p><h:outputText value="#{bookBB.genres}"/></p> <!-- list of genres concatenated-->
                                     <b>Formats:</b>
                                     <p><h:outputText value="#{bookBB.formats}"/></p> <!-- list of formats concatenated-->
+                                    <b>Availability:</b>
+                                    <p><h:outputText value="#{bookBB.book.available}"/></p>
                                 </div>
                             </div>
                         </div>
@@ -121,7 +124,18 @@
                         </div>
                         <div class="tabs-panel" id="panel3">
                             <div class="row small-up-2 medium-up-3 large-up-6">
-                                <ui:repeat var="item" value="#{bookBB.similarProducts}">
+                                <ui:repeat var="item" value="#{bookBB.fromSameGenre}">
+                                    <bf:displayBook
+                                        itemImg="resources/images/#{item.isbn}.jpg"
+                                        itemTitle="#{item.title}"
+                                        itemListPrice="#{item.listPrice}"
+                                        itemSalePrice="#{item.salePrice}"/>
+                                </ui:repeat>
+                            </div>
+                        </div>
+                        <div class="tabs-panel" id="panel4">
+                            <div class="row small-up-2 medium-up-3 large-up-6">
+                                <ui:repeat var="item" value="#{bookBB.fromSameAuthor}">
                                     <bf:displayBook
                                         itemImg="resources/images/#{item.isbn}.jpg"
                                         itemTitle="#{item.title}"

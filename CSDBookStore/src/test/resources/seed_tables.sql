@@ -172,7 +172,7 @@ INSERT INTO `author` (`author_id`, `author_name`) VALUES
 (127, 'Andy Weir'),
 (128, 'David Lagercrantz'),
 (129, 'Karin Slaughter'),
-(130, 'vJames Patterson'),
+(130, 'James Patterson'),
 (131, 'Lisa Jackson'),
 (132, 'Sandra Brown'),
 (133, 'A. J. Banner'),
@@ -186,7 +186,8 @@ INSERT INTO `author` (`author_id`, `author_name`) VALUES
 (141, 'David Baldacci'),
 (142, 'Sophie Hannah'),
 (143, 'Andrew Peterson'),
-(144, 'Lee Child');
+(144, 'Lee Child'),
+(145, 'Lizzie Mary Cullen');
 
 INSERT INTO `book` (`book_id`, `isbn`, `title`, `publisher`, `publish_date`, `page_number`, `wholesale_price`, `list_price`, `sale_price`, `date_entered`, `available`, `overall_rating`, `synopsis`) VALUES
 (1, '978-1305635166', 'Microelectronic Circuits: Analysis and Design', 'Thomson-Engineering', '2016-01-11 00:00:00', 1360, '150.00', '317.95', '309.08', '2016-01-30 00:00:00', b'1', '0.0', '''Take a ''''breadth-first'''' approach to learning electronics with a strong emphasis on design and simulation in MICROELECTRONIC CIRCUITS: ANALYSIS AND DESIGN, 3E. This book introduces the general characteristics of circuits (ICs) to prepare you to effectively use circuit design and analysis techniques. The author then offers a more detailed study of devices and circuits and how they operate within ICs. Important circuits are analyzed in worked-out examples to introduce basic techniques and emphasize the effects of parameter variations. More than half of the problems and examples concentrate on design and use software tools extensively. You learn to apply theory to real-world design problems as you master computer simulations for testing and verifying your designs'''),
@@ -333,6 +334,7 @@ INSERT INTO `book_author` (`book_id`, `author_id`) VALUES
 (28, 34),
 (29, 35),
 (29, 36),
+(30, 145),
 (31, 37),
 (32, 38),
 (35, 38),
@@ -441,9 +443,11 @@ INSERT INTO `book_author` (`book_id`, `author_id`) VALUES
 (85, 127),
 (86, 128),
 (87, 129),
+(88, 130),
 (89, 131),
 (90, 132),
 (91, 133),
+(92, 134),
 (93, 135),
 (98, 135),
 (94, 136),
