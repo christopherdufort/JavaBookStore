@@ -44,7 +44,7 @@
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
 
-        
+
         <title>#{msgs.biblioAdminTitle}</title>
 
         <f:metadata>
@@ -78,56 +78,24 @@
                         </a>
                         <ul class="dropdown-menu dropdown-alerts">
                             <li>
+<!--                                <a href="#{request.contextPath}/faces/m_reviews/m_reviews.xhtml">-->
+                                <h:link outcome="/faces/m_reviews/m_reviews">
+                                    <f:param name="approvalId" value="2" />
+                                    <div>
+                                        <i class="fa fa-comment fa-fw"></i> New Comments
+                                        <!--<span class="pull-right text-muted small">#{m_reviews.pendingCount}</span>-->
+                                    </div>
+                                </h:link>
+
+                                <!--                                </a>-->
                                 <a href="#">
                                     <div>
-                                        <i class="fa fa-comment fa-fw"></i> New Comment
+                                        <i class="fa fa-warning fa-fw"></i> Alert
                                         <span class="pull-right text-muted small">4 minutes ago</span>
                                     </div>
                                 </a>
                             </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#">
-                                    <div>
-                                        <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-                                        <span class="pull-right text-muted small">12 minutes ago</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#">
-                                    <div>
-                                        <i class="fa fa-envelope fa-fw"></i> Message Sent
-                                        <span class="pull-right text-muted small">4 minutes ago</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#">
-                                    <div>
-                                        <i class="fa fa-tasks fa-fw"></i> New Task
-                                        <span class="pull-right text-muted small">4 minutes ago</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#">
-                                    <div>
-                                        <i class="fa fa-upload fa-fw"></i> Server Rebooted
-                                        <span class="pull-right text-muted small">4 minutes ago</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a class="text-center" href="#">
-                                    <strong>See All Alerts</strong>
-                                    <i class="fa fa-angle-right"></i>
-                                </a>
-                            </li>
+
                         </ul>
                         <!-- /.dropdown-alerts -->
                     </li>
@@ -172,10 +140,10 @@
                                 <a href="#{request.contextPath}/faces/m_books/m_books.xhtml"><i class="fa fa-table fa-fw"></i> Books</a>
                             </li>
                             <li>
-                                <a href="#{request.contextPath}/faces/faces/m_users/m_users.xhtml"><i class="fa fa-table fa-fw"></i> Users</a>
+                                <a href="#{request.contextPath}/faces/m_users/m_users.xhtml"><i class="fa fa-table fa-fw"></i> Users</a>
                             </li>
                             <li>
-                                <a href="#{request.contextPath}/faces/faces/m_reviews/m_reviews.xhtml"><i class="fa fa-table fa-fw"></i> Reviews</a>
+                                <a href="#{request.contextPath}/faces/m_reviews/m_reviews.xhtml"><i class="fa fa-table fa-fw"></i> Reviews</a>
                             </li>
                             <li>
                                 <a href="#{request.contextPath}/faces/m_invoices/m_invoices.xhtml"><i class="fa fa-table fa-fw"></i> Invoices</a>
@@ -209,7 +177,7 @@
         <!-- /#wrapper -->
 
     </h:body>
-     <!-- jQuery -->
+    <!-- jQuery -->
     <script src="../resources/bower_components/jquery/dist/jquery.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->

@@ -10,11 +10,11 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.enterprise.context.RequestScoped;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.inject.Inject;
-import javax.inject.Named;
 
 /**
  *
@@ -23,15 +23,17 @@ import javax.inject.Named;
  */
 @ManagedBean(name = "m_reviews")
 @SessionScoped
-public class m_reviewBackingBean  implements Serializable {
+public class m_reviewBackingBean implements Serializable {
 
     private Review review;
-
-    @Inject
-    ReviewJpaController reviewJpa;
-
+    
     private Approval approval;
 
+    private Book book;
+
+    private RegisteredUser user;
+
+    
     @Inject
     ApprovalJpaController approvalJpa;
 
@@ -40,36 +42,43 @@ public class m_reviewBackingBean  implements Serializable {
 
     @Inject
     RegisteredUserJpaController userJpa;
+    
+    @Inject
+    ReviewJpaController reviewJpa;
 
-//    private String isbn;
-//
-//    private String userId;
-//
-//    public String getIsbn() {
-//        return isbn;
-//    }
-//
-//    public void setIsbn(String isbn) {
-//        this.isbn = isbn;
-//    }
-//
-//    public String getUserId() {
-//        return userId;
-//    }
-//
-//    public void setUserId(String userId) {
-//        this.userId = userId;
-//    }
+   
+    public Book getBook() {
+        if (book == null) {
+            return new Book();
+        }
+        return book;
+    }
 
-   // private String selectedApproval;
+    public void setBook(Book book) {
+        this.book = book;
+    }
 
-//    public String getSelectedApproval() {
-//        return selectedApproval;
-//    }
-//
-//    public void setSelectedApproval(String selectedApproval) {
-//        this.selectedApproval = selectedApproval;
-//    }
+    public RegisteredUser getUser() {
+        if (user == null) {
+            return new RegisteredUser();
+        }
+        return user;
+    }
+
+    public void setUser(RegisteredUser user) {
+        this.user = user;
+    }
+
+    @ManagedProperty(value = "#{param.approvalId}")
+    private int params;
+
+    public int getParams() {
+        return params;
+    }
+
+    public void setParams(int params) {
+        this.params = params;
+    }
 
     public Review getReview() {
         if (review == null) {
@@ -93,23 +102,36 @@ public class m_reviewBackingBean  implements Serializable {
         this.approval = approval;
     }
 
-    public void editReview(Review r) {
-      System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>editReview:  approval id:" + r.getApprovalId());
-        try {
-//            review = reviewJpa.findReview(r.getReviewId());
-//            //review.setIsbn(bookJpa.findBookEntitiesById(review.getIsbn().getBookId()));
-//            //review.setUserId(userJpa.findUserById(review.getUserId().getUserId()));
-//            review.setApprovalId(approvalJpa.findByApprovalStatus(selectedApproval));
-//            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + review.getApprovalId());
+    public String viewReview(Review r) {
+        review = reviewJpa.findReview(r.getReviewId());
+        return "m_viewReview";
+    }
 
-            reviewJpa.edit(r);
+    public String editReview() {      
+        try {          
+            reviewJpa.edit(review);
         } catch (Exception ex) {
             Logger.getLogger(m_reviewBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return "m_reviews";
+    }
+
+    public String cancel() {
+        return "m_reviews";
     }
 
     public List<Review> getAllReview() {
-        return reviewJpa.findReviewEntities();
+        if (params == 0) {
+            return reviewJpa.findReviewEntities();
+        } else {
+            Approval a = new Approval(params);
+            return reviewJpa.findReviewByApprovalId(a);
+        }
+    }
+
+    public int getPendingCount() {
+        Approval a = new Approval(2);
+        return reviewJpa.findReviewByApprovalId(a).size();
     }
 
     public int getReviewCount() {
@@ -119,9 +141,4 @@ public class m_reviewBackingBean  implements Serializable {
     public List<Approval> getAllApproval() {
         return approvalJpa.findApprovalEntities();
     }
-//
-//    public Approval setSelApproval(String s) {
-//        return approvalJpa.findByApprovalStatus(s);
-//    }
-
 }

@@ -310,7 +310,7 @@ public class Book implements Serializable {
 
     @Override
     public String toString() {
-        return "com.g3w16.entities.Book[ bookId=" + bookId + " ]";
+        return isbn;
     }
 
     public List<InvoiceDetail> getInvoiceDetailList() {

@@ -82,7 +82,6 @@ public class ReviewJpaController implements Serializable {
     }
 
     public void edit(Review review) throws NonexistentEntityException, RollbackFailureException, Exception {
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>edit");
         try {
             utx.begin();
             Review persistentReview = em.find(Review.class, review.getReviewId());

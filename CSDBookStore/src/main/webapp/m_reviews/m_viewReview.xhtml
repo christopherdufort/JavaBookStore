@@ -1,0 +1,109 @@
+<!--@author Xin Ma-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+        <ui:composition template="./../templates/m_masterTemplate.xhtml">       
+            <ui:define name="m_content"> 
+                <div id="page-wrapper">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h1 class="page-header">Reviews</h1>
+                        </div>
+                        <!-- /.col-lg-12 -->
+                    </div>
+                    <!-- /.row -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Edit an Review
+                                </div>
+                                <!-- /.panel-heading -->
+                                <div class="panel-body">
+                                    <div class="dataTable_wrapper table-responsive">
+                                        <h:form>
+                                            <h:panelGrid columns="4" class="panel panel-body">
+                                                <h:outputLabel value="#{msgs.review_id}" for="review_id"></h:outputLabel>
+                                                <h:outputText id="user_id" value="#{m_reviews.review.reviewId}"></h:outputText>
+                                                <h:inputHidden value="#{m_reviews.review.reviewId}"/>
+                                                <h:message for="review_id" errorStyle="color:red; display:block"/>
+
+                                                <h:outputLabel value="#{msgs.isbn}" for="reviews_isbn"></h:outputLabel>
+                                                <h:outputText id="reviews_isbn" value="#{m_reviews.review.isbn}"></h:outputText>
+                                                <h:inputHidden value="#{m_reviews.review.isbn}"><f:converter converterId="com.g3w16.converter.BookConverter"/></h:inputHidden>
+                                                <h:message for="reviews_isbn" errorStyle="color:red; display:block"/>
+
+                                                <h:outputLabel value="#{msgs.date_submitted}" for="date_submitted"></h:outputLabel>
+                                                <h:outputText id="date_submitted" value="#{m_reviews.review.dateSubmitted}"></h:outputText>
+                                                <h:inputHidden value="#{m_reviews.review.dateSubmitted}">
+                                                    <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss"/>
+                                                </h:inputHidden>
+                                                <h:message for="date_submitted" errorStyle="color:red; display:block"/>
+
+                                                <h:outputLabel value="#{msgs.user_id}" for="reviews_user_id"></h:outputLabel>
+                                                <h:outputText id="reviews_user_id" value="#{m_reviews.review.userId}"></h:outputText>
+                                                <h:inputHidden value="#{m_reviews.review.userId}"><f:converter converterId="com.g3w16.converter.UserConverter"/></h:inputHidden>
+                                                <h:message for="reviews_user_id" errorStyle="color:red; display:block"/>
+
+                                                <h:outputLabel value="#{msgs.rating}" for="rating"></h:outputLabel>
+                                                <h:outputText id="rating" value="#{m_reviews.review.rating}"></h:outputText>
+                                                <h:inputHidden value="#{m_reviews.review.rating}"/>
+                                                <h:message for="rating" errorStyle="color:red; display:block"/>
+
+                                                <h:outputLabel value="#{msgs.review_title}" for="review_title"></h:outputLabel>
+                                                <h:outputText id="review_title" value="#{m_reviews.review.reviewTitle}"></h:outputText>
+                                                <h:inputHidden value="#{m_reviews.review.reviewTitle}"/>
+                                                <h:message for="review_title" errorStyle="color:red; display:block"/>
+
+                                                <h:outputLabel value="#{msgs.review_text}" for="review_text"></h:outputLabel>
+                                                <h:outputText id="review_text" value="#{m_reviews.review.reviewText}"></h:outputText>
+                                                <h:inputHidden value="#{m_reviews.review.reviewText}"/>
+                                                <h:message for="review_text" errorStyle="color:red; display:block"/>
+
+                                                <h:outputLabel value="#{msgs.approval_id}" for="approval_id"></h:outputLabel>
+                                                <h:outputText rendered="m_reviews.review.approvalId"></h:outputText>
+                                                <h:selectOneMenu id="approval_id" value="#{m_reviews.review.approvalId}" >
+                                                    <f:converter converterId="com.g3w16.converter.ApprovalConverter"/>
+                                                    <f:selectItems value="#{m_reviews.allApproval}" var="a" itemLabel="#{a.approvalStatus}" itemValue="#{a.approvalStatus}"/>
+                                                </h:selectOneMenu>
+                                                <h:message for="approval_id" errorStyle="color:red; display:block"/>
+                                            </h:panelGrid>
+                                            <br />
+                                            <h:commandButton value="#{msgs.update}"
+                                                             action="#{m_reviews.editReview()}" class="btn btn-success btn-xs" />
+                                            <h:outputText value="&#160;" />
+                                            <h:commandButton value="#{msgs.cancel}"
+                                                             action="#{m_reviews.cancel()}" class="btn btn-warning btn-xs" />                                          
+                                        </h:form>
+                                    </div>
+                                    <!-- /.table-responsive -->
+                                </div>
+                                <!-- /.panel-body -->
+                            </div>
+                            <!-- /.panel -->
+                        </div>
+                        <!-- /.col-lg-12 -->
+                    </div>
+
+                </div>
+                <!-- /#page-wrapper -->
+
+            </ui:define>
+        </ui:composition>
+        <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+        <script>
+            $(document).ready(function () {
+                $('#dataTables-example').DataTable({
+                    responsive: true
+                });
+            });
+        </script>
+
+    </body>
+
+</html>

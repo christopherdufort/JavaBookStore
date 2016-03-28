@@ -5,7 +5,8 @@
  */
 package com.g3w16.converter;
 
-import com.g3w16.entities.Approval;
+import com.g3w16.entities.BookJpaController;
+import javax.enterprise.inject.spi.CDI;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -15,25 +16,18 @@ import javax.faces.convert.FacesConverter;
  *
  * @author maxin
  */
-@FacesConverter("com.g3w16.converter.ApprovalConverter")
-public class ApprovalConverter implements Converter{
+@FacesConverter("com.g3w16.converter.BookConverter")
+public class BookConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-         switch (value) {
-            case "Approved":               
-                return new Approval(1);
-            case "Pending":               
-                return new Approval(2);
-            case "Denied":                
-                return new Approval(3);
-        }
-        return null;
+        BookJpaController bookJpa = CDI.current().select(BookJpaController.class).get();
+        return bookJpa.findBookByISBN(value);
     }
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-       return value.toString();
+        return value.toString();
     }
-    
+
 }
