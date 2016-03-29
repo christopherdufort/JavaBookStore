@@ -79,7 +79,7 @@ public class m_newsfeedBackingBean implements Serializable {
         } catch (Exception ex) {
             Logger.getLogger(m_newsfeedBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //allNews=newsJpa.findAllNewsFeeds();     
+        allNews=newsJpa.findAllNewsFeeds();     
         return "m_news";
     }
 
@@ -94,10 +94,11 @@ public class m_newsfeedBackingBean implements Serializable {
         } catch (Exception ex) {
             Logger.getLogger(m_newsfeedBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
+        allNews=newsJpa.findAllNewsFeeds(); 
         return "m_news";
     }
 
-    public void destroyNews(NewsFeed newsfeed) {
+    public String destroyNews(NewsFeed newsfeed) {
 
         try {
             newsJpa.destroy(newsfeed.getNewsFeedId());
@@ -106,8 +107,8 @@ public class m_newsfeedBackingBean implements Serializable {
         } catch (Exception ex) {
             Logger.getLogger(m_newsfeedBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //allNews=newsJpa.findAllNewsFeeds();     
-
+        allNews=newsJpa.findAllNewsFeeds();     
+        return "m_news";
     }
 
     public String cancel() {
