@@ -18,6 +18,8 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * backing bean for book.xhtml
@@ -261,7 +263,13 @@ public class BookBackingBean implements Serializable {
     
     public void displayBook(Book book) throws IOException {
         setBook(book);
-        
+        int forever = 7; // TODO: replace this with something else
+        Cookie cookie = new Cookie(
+                "lastGenreId",
+                book.getGenreList().get(0).getGenreId().toString()
+        );
+        cookie.setMaxAge(forever);
+        ((HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse()).addCookie(cookie);
         FacesContext.getCurrentInstance().getExternalContext().redirect("book.xhtml");
     }
 }
