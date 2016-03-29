@@ -33,7 +33,11 @@
                                             </h:panelGrid>
                                             <br />
                                             <h:commandButton value="#{msgs.add}"
-                                                             action="#{m_ads.createAd()}" class="btn btn-danger btn-xs" />
+                                                             action="#{m_ads.createAd()}" class="btn btn-success btn-xs" />
+                                            
+                                            <h:outputText value="&#160;" />
+                                            <h:commandButton value="#{msgs.cancel}"
+                                                             action="#{m_ads.cancel()}" class="btn btn-danger btn-xs" />
                                         </h:form>
                                     </div>
                                     <!-- /.table-responsive -->

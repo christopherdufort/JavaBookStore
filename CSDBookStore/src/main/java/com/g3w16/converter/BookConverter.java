@@ -21,9 +21,7 @@ public class BookConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        System.out.println(">>>>>>>>>>>>>>>book  "+ value );
         BookJpaController bookJpa = CDI.current().select(BookJpaController.class).get();
-        System.out.println(">>>>>>>>>>>>>>>book out  "+ bookJpa.findBookByISBN(value) );
         return bookJpa.findBookByISBN(value);
     }
 

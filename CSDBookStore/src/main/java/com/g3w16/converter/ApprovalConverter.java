@@ -20,16 +20,12 @@ public class ApprovalConverter implements Converter{
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        System.out.println(">>>>>>>>>approval"+value);
          switch (value) {
             case "Approved":               
-                System.out.println(">>>>>>>>>1"+value);
                 return new Approval(1);
             case "Pending":               
-                System.out.println(">>>>>>>>>2"+value);
                 return new Approval(2);
             case "Denied":                
-                System.out.println(">>>>>>>>>3"+value);
                 return new Approval(3);
         }
         return null;

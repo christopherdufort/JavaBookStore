@@ -48,7 +48,10 @@
                                             </h:panelGrid>
                                             <br />
                                             <h:commandButton value="#{msgs.add}"
-                                                             action="#{m_surveys.createSurvey}" class="btn btn-danger btn-xs" />
+                                                             action="#{m_surveys.createSurvey}" class="btn btn-success btn-xs" />
+                                             <h:outputText value="&#160;" />
+                                            <h:commandButton value="#{msgs.cancel}"
+                                                             action="#{m_surveys.cancel()}" class="btn btn-danger btn-xs" />
                                         </h:form>
                                     </div>
                                     <!-- /.table-responsive -->

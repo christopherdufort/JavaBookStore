@@ -28,10 +28,9 @@
                                     <div class="dataTable_wrapper table-responsive">
                                         <div class="row">
                                             <div class="col-xs-1 col-sm-1 col-md-1" style="text-align: center"><h:outputLabel value="#{msgs.approval_id}"></h:outputLabel></div>
-                                            <div class="col-xs-2 col-sm-2 col-md-2" style="text-align: center"><h:outputLabel value="#{msgs.review_title}"></h:outputLabel></div>
+                                            <div class="col-xs-3 col-sm-3 col-md-3" style="text-align: center"><h:outputLabel value="#{msgs.review_title}"></h:outputLabel></div>
                                             <div class="col-xs-6 col-sm-6 col-md-6" style="text-align: center"><h:outputLabel value="#{msgs.review_text}"></h:outputLabel></div>
                                             <div class="col-xs-2 col-sm-2 col-md-2" style="text-align: center"><h:outputLabel value="#{msgs.date_submitted}"></h:outputLabel></div>
-                                            <div class="col-xs-1 col-sm-1 col-md-1" style="text-align: center"><h:outputLabel value="#{msgs.isbn}"></h:outputLabel></div>
                                         </div>
                                         <h:form>
                                             <ui:repeat value="#{m_reviews.pendingReview}" var="reviews">
@@ -41,6 +40,7 @@
                                                     <h:inputHidden value="#{reviews.reviewId}"></h:inputHidden>
                                                     <h:inputHidden value="#{reviews.userId}" converter="com.g3w16.converter.UserConverter"></h:inputHidden>
                                                     <h:inputHidden value="#{reviews.rating}"></h:inputHidden>
+                                                    <h:inputHidden value="#{reviews.isbn}" converter="com.g3w16.converter.BookConverter"></h:inputHidden>
                                                     <div class="clearfix col-xs-1 col-sm-1 col-md-1"> 
                                                         <h:selectOneMenu id="approval" value="#{reviews.approvalId}">   
                                                             <f:converter converterId="com.g3w16.converter.ApprovalConverter"/>
@@ -49,7 +49,7 @@
                                                         </h:selectOneMenu>   
                                                     </div> 
                                                     <h:commandLink action="#{m_reviews.viewReview(reviews)}">
-                                                        <div class="clearfix col-xs-2 col-sm-2 col-md-2">
+                                                        <div class="clearfix col-xs-3 col-sm-3 col-md-3">
                                                             <h:outputText value="#{reviews.reviewTitle}"></h:outputText>
                                                         </div>
 
@@ -62,10 +62,6 @@
                                                                 <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss"/>
                                                             </h:outputText>
                                                         </div>
-
-                                                        <div class="clearfix col-xs-2 col-sm-2 col-md-1">
-                                                            <h:outputText value="#{reviews.isbn}" converter="com.g3w16.converter.BookConverter"></h:outputText>
-                                                        </div> 
                                                     </h:commandLink>
                                                     <hr />
                                                 </div>

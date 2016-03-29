@@ -64,7 +64,7 @@ public class m_reviewBackingBean implements Serializable {
     public void setUser(RegisteredUser user) {
         this.user = user;
     }
-    
+
     public Review getReview() {
         if (review == null) {
             review = new Review();

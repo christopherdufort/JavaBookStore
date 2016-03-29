@@ -31,9 +31,19 @@
                                                 <h:outputText id="newsFeedId" value="#{m_newsfeed.newsFeed.newsFeedId}"></h:outputText>
                                                 <h:inputHidden value="#{m_newsfeed.newsFeed.newsFeedId}"/>
                                                 
+                                                
                                                 <h:outputLabel value="#{msgs.news_link}" for="newsFeedLink"></h:outputLabel>
                                                 <h:outputText rendered="m_newsfeed.selectedNews.newsFeedLink"></h:outputText>
                                                 <h:inputText id="newsFeedLink" value="#{m_newsfeed.newsFeed.newsFeedLink}" />
+                                                <h:message for="newsFeedLink" errorStyle="color:red; display:block"/>
+                                                
+                                                <h:outputLabel value="#{msgs.active}" for="news_active"></h:outputLabel>
+                                                <h:outputText rendered="m_newsfeed.newsfeed.active"></h:outputText>
+                                                <h:selectOneRadio id="news_active" layout="lineDirection" value="#{m_newsfeed.newsFeed.active}">
+                                                    <f:selectItem itemValue="True" itemLabel="True" />
+                                                    <f:selectItem itemValue="False" itemLabel="False" />
+                                                </h:selectOneRadio>
+                                                
                                             </h:panelGrid>
                                             <br />
                                             <h:commandButton value="#{msgs.update}"

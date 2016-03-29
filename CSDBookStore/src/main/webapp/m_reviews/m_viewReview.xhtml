@@ -26,6 +26,12 @@
                                 <!-- /.panel-heading -->
                                 <div class="panel-body">
                                     <div class="dataTable_wrapper table-responsive">
+
+                                        <div>
+                                            <h:graphicImage styleClass="thumbnail smallBook" value="./../resources/images/#{m_reviews.review.isbn.isbn}.jpg"/>
+                                            <hr />
+                                            <h3>#{m_reviews.review.isbn.title}</h3>
+                                        </div>
                                         <h:form>
                                             <h:panelGrid columns="4" class="panel panel-body">
                                                 <h:outputLabel value="#{msgs.review_id}" for="review_id"></h:outputLabel>
