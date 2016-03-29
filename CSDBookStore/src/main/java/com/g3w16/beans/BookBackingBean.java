@@ -264,6 +264,7 @@ public class BookBackingBean implements Serializable {
     
     public String displayBook(Book book) throws IOException {
         setBook(book);
+        // -- the following code place a cookie on client side so we can recover the last genre later
         int forever = 7; // TODO: replace this with something else
         Cookie cookie = new Cookie(
                 "lastGenreId",

@@ -72,7 +72,8 @@ public class AuthenticationController implements SystemEventListener, Serializab
     }
     
     public void logout(ComponentSystemEvent event) throws IOException{
-        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        //FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        authenticatedUser.setRegisteredUser(null);
         FacesContext.getCurrentInstance().getExternalContext().redirect("home.xhtml");
     }
     
