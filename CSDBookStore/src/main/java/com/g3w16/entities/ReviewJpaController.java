@@ -8,8 +8,8 @@ package com.g3w16.entities;
 import com.g3w16.entities.exceptions.NonexistentEntityException;
 import com.g3w16.entities.exceptions.RollbackFailureException;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
-
 import java.util.List;
 import javax.annotation.ManagedBean;
 import javax.annotation.Resource;
@@ -64,6 +64,13 @@ public class ReviewJpaController implements Serializable {
             }
             if (isbn != null) {
                 isbn.getReviewList().add(review);
+                List<Review> reviews = isbn.getReviewList();
+                int size = reviews.size();
+                int overallRating = 0;
+                for (int i = 0; i < size; i++) {
+                    overallRating += reviews.get(i).getRating().intValue();
+                }
+                isbn.setOverallRating(new BigDecimal(overallRating / size));
                 isbn = em.merge(isbn);
             }
             if (userId != null) {
@@ -182,7 +189,7 @@ public class ReviewJpaController implements Serializable {
             throw ex;
         }
     }
-    
+
     public List<Review> findReviewEntities() {
         return findReviewEntities(true, -1, -1);
     }
@@ -237,6 +244,7 @@ public class ReviewJpaController implements Serializable {
         q.setParameter("rating", rating);
         return q.getResultList();
     }
+
     public int getReviewCount() {
         Query q = em.createQuery("select count(o) from Review as o");
         return ((Long) q.getSingleResult()).intValue();

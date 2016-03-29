@@ -123,7 +123,7 @@
                             <c:if test="#{authenticationController.anonymous != true}">
                                 <h5>My Review:</h5>
                                 <h:form id="createReview">
-                                    <p:rating id="agee" cancel="false" value="#{bookBB.review.rating}">
+                                    <p:rating cancel="false" value="#{bookBB.rating}">
                                     </p:rating>
                                     <br/>
                                     <label>Review title:</label><h:message id ="reviewTitleError" for="reviewTitle" style="color:red" />

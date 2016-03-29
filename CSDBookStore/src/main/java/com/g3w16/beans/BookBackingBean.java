@@ -31,6 +31,7 @@ public class BookBackingBean implements Serializable {
     
     private Book book;
     private Review review;
+    private int rating = 1;
     private List<Book> booksFromGenre;
     private List<Book> booksFromAuthor;
     
@@ -73,7 +74,6 @@ public class BookBackingBean implements Serializable {
     public Review getReview() {
         if (review == null)
             review = new Review();
-            review.setRating(1);
         return review;
     }
     
@@ -87,6 +87,24 @@ public class BookBackingBean implements Serializable {
     }
     
     /**
+     * Gets the rating
+     * 
+     * @return rating
+     */
+    public int getRating() {
+        return rating;
+    }
+    
+    /**
+     * Sets the rating
+     * 
+     * @param rating rating to set
+     */
+    public void setRating (int rating) {
+        this.rating = rating;
+    }
+    
+    /**
      * Creates the review by adding it to the database
      * 
      * @throws Exception 
@@ -95,9 +113,11 @@ public class BookBackingBean implements Serializable {
         review.setApprovalId(approvalJpaController.findApproval(2));
         review.setDateSubmitted(new Date());
         review.setIsbn(book);
+        review.setRating(rating);
         review.setUserId(authenticatedUser.getRegisteredUser());
         reviewJpaController.create(review);
         review = null;
+        rating = 1;
     }
     
     /**
@@ -106,7 +126,7 @@ public class BookBackingBean implements Serializable {
      * @return overall rating
      */
     public int getStarsForOverallRating() {
-        return book.getOverallRating().intValue(); //fix overall rating --> update it when a review is added to a book since it is a field in the db
+        return book.getOverallRating().intValue();
     }
     
     /**
