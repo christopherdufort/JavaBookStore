@@ -5,7 +5,8 @@
  */
 package com.g3w16.converter;
 
-import com.g3w16.entities.Province;
+import com.g3w16.entities.ProvinceJpaController;
+import javax.enterprise.inject.spi.CDI;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -20,35 +21,8 @@ public class ProvinceConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        switch (value) {
-            case "Quebec":
-                return new Province(1);
-            case "Ontario":
-                return new Province(2);
-            case "New Brunswick":
-                return new Province(3);
-            case "Nova Scotia":
-                return new Province(4);
-            case "Prince Edward Island":
-                return new Province(5);
-            case "Newfoundland and Labrador":
-                return new Province(6);
-            case "Manitoba":
-                return new Province(7);
-            case "Saskatchewan":
-                return new Province(8);
-            case "Alberta":
-                return new Province(9);
-            case "British Columbia":
-                return new Province(10);
-            case "Yukon":
-                return new Province(11);
-            case "Northwest Territories":
-                return new Province(12);
-            case "Nunavut":
-                return new Province(13);
-        }
-        return null;
+        ProvinceJpaController provinceJpa = CDI.current().select(ProvinceJpaController.class).get();
+        return provinceJpa.findProvinceByName(value);
     }
 
     @Override

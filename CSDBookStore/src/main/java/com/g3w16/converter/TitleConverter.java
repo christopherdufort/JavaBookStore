@@ -5,13 +5,12 @@
  */
 package com.g3w16.converter;
 
-
-import com.g3w16.entities.Title;
+import com.g3w16.entities.TitleJpaController;
+import javax.enterprise.inject.spi.CDI;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-
 
 /**
  *
@@ -21,26 +20,15 @@ import javax.faces.convert.FacesConverter;
 public class TitleConverter implements Converter {
 
     @Override
-    public Object getAsObject(FacesContext context, UIComponent component, String value) {  
-        switch (value) {
-            case "Mr.":
-                return new Title(1);
-            case "Ms.":
-                return new Title(2);
-            case "Mrs.":
-                return new Title(3);
-            case "Miss.":
-                return new Title(4);
-            case "Dr.":
-                return new Title(5);
-        }
-        return null;
+    public Object getAsObject(FacesContext context, UIComponent component, String value) {
+        TitleJpaController titleJpa = CDI.current().select(TitleJpaController.class).get();
+        return titleJpa.findTitleByName(value);
     }
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         return value.toString();
-       
+
     }
 
 }
