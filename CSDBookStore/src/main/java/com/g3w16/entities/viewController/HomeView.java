@@ -43,9 +43,9 @@ public class HomeView {
         return bookController.getNewestBook(limit);
     }
     
-    public List<Book> getBestRankedBook(){
+    public List<Book> getDiscountedBook(){
         int limit = 6;
-        return bookController.getBestRankedBook(limit);
+        return bookController.getDiscountedBook(limit);
     }
     
     public List<Book> getSuggestedBook(){

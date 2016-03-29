@@ -19,7 +19,7 @@
                     <nav aria-label="You are here:" role="navigation">
                         <h:form>
                         <ul class="breadcrumbs">
-                            <li><a href="home.xhtml">Home</a></li>
+                            <li><a href="home.xhtml">#{msgs.home}</a></li>
                             <li><a href="#"><h:commandLink value="#{bookBB.genreName}" action="#{searchActionBean.browseGenre(bookBB.genreName)}"/></a></li>
                             <li>
                                 <h:outputText value="#{bookBB.book.title}"/>
@@ -46,7 +46,7 @@
                             <c:if test="#{bookBB.book.listPrice != bookBB.book.salePrice}">
                                 <div class="row">
                                     <div class="small-3 columns">
-                                        <label for="middle-label" class="middle">List Price:</label>
+                                        <label for="middle-label" class="middle">#{msgs.listPriceLabel}:</label>
                                     </div>
                                     <div class="small-9 columns">
                                         <label for="middle-label" class="middle"><strike><h:outputText value="$#{bookBB.book.listPrice}"/></strike></label>
@@ -54,7 +54,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="small-3 columns">
-                                        <label for="middle-label" class="middle">Sale Price:</label>
+                                        <label for="middle-label" class="middle">#{msgs.salePriceLabel}:</label>
                                     </div>
                                     <div class="small-9 columns">
                                         <label for="middle-label" class="middle"><h:outputText styleClass="red" value="$#{bookBB.book.salePrice}"/></label>
@@ -64,42 +64,42 @@
                             <c:if test="#{bookBB.book.listPrice == bookBB.book.salePrice}">
                                 <div class="row">
                                     <div class="small-3 columns">
-                                        <label for="middle-label" class="middle">Price:</label>
+                                        <label for="middle-label" class="middle">#{msgs.price}:</label>
                                     </div>
                                     <div class="small-9 columns">
                                         <label for="middle-label" class="middle"><h:outputText value="$#{bookBB.book.listPrice}"/></label>
                                     </div>
                                 </div>
                             </c:if>
-                            <h:commandLink styleClass="button large expanded" action="#{cartBB.addToCart(bookBB.book)}">Add To Cart <i class="fi-shopping-cart"/></h:commandLink> <!-- not a commandButton like the submit review-->
+                            <h:commandLink styleClass="button large expanded" action="#{cartBB.addToCart(bookBB.book)}">#{msgs.addToCart} <i class="fi-shopping-cart"/></h:commandLink> <!-- not a commandButton like the submit review-->
                         </h:form>
                     </div>
                 </div>
                 <div class="column row">
                     <hr/>
                     <ul class="tabs" data-tabs="" id="example-tabs">
-                        <li class="tabs-title is-active"><a href="#panel1" aria-selected="true">Product Details</a></li>
-                        <li class="tabs-title"><a href="#panel2">Reviews</a></li>
-                        <li class="tabs-title"><a href="#panel3">More books in this genre</a></li>
-                        <li class="tabs-title"><a href="#panel4">More books from this author</a></li>
+                        <li class="tabs-title is-active"><a href="#panel1" aria-selected="true">#{msgs.productDetails}</a></li>
+                        <li class="tabs-title"><a href="#panel2">#{msgs.reviews}</a></li>
+                        <li class="tabs-title"><a href="#panel3">#{msgs.otherBooksGenre}</a></li>
+                        <li class="tabs-title"><a href="#panel4">#{msgs.otherBooksAuthor}</a></li>
                     </ul>
                     <div class="tabs-content" data-tabs-content="example-tabs">
                         <div class="tabs-panel is-active" id="panel1">
                             <div class="media-object stack-for-small">
                                 <div class="media-object-section">
-                                    <b>ISBN:</b>
+                                    <b>#{msgs.isbnLabel}:</b>
                                     <p><h:outputText value="#{bookBB.book.isbn}"/></p>
-                                    <b>Publisher:</b>
+                                    <b>#{msgs.publisherLabel}:</b>
                                     <p><h:outputText value="#{bookBB.book.publisher}"/></p>
-                                    <b>Publish Date:</b>
+                                    <b>#{msgs.publishDateLabel}:</b>
                                     <p><h:outputText value="#{bookBB.formatDate(bookBB.book.publishDate)}"/></p>
-                                    <b>Pages:</b>
+                                    <b>#{msgs.pages}:</b>
                                     <p><h:outputText value="#{bookBB.book.pageNumber}"/></p>
-                                    <b>Genre:</b>
+                                    <b>#{msgs.genres}:</b>
                                     <p><h:outputText value="#{bookBB.genres}"/></p> <!-- list of genres concatenated-->
-                                    <b>Formats:</b>
+                                    <b>#{msgs.formats}:</b>
                                     <p><h:outputText value="#{bookBB.formats}"/></p> <!-- list of formats concatenated-->
-                                    <b>Availability:</b>
+                                    <b>#{msgs.availability}:</b>
                                     <p><h:outputText value="#{bookBB.book.available}"/></p>
                                 </div>
                             </div>
@@ -117,30 +117,30 @@
                                 </ui:fragment>
                             </ui:repeat>
                             <c:if test="#{bookBB.book.reviewList.size() == 0}">
-                                There are no reviews yet for this book.
+                                #{msgs.noReviews}
                             </c:if>
                             <hr/>
                             <c:if test="#{authenticationController.anonymous != true}">
-                                <h5>My Review:</h5>
+                                <h5>#{msgs.myReview}:</h5>
                                 <h:form id="createReview">
                                     <p:rating cancel="false" value="#{bookBB.rating}">
                                     </p:rating>
                                     <br/>
-                                    <label>Review title:</label><h:message id ="reviewTitleError" for="reviewTitle" style="color:red" />
+                                    <label>#{msgs.reviewTitle}:</label><h:message id ="reviewTitleError" for="reviewTitle" style="color:red" />
                                     <h:inputText id="reviewTitle" value="#{bookBB.review.reviewTitle}" required="true" requiredMessage="#{msgs.required}">
                                         <f:validateLength maximum="25"/>
                                         <f:ajax event="blur" render="reviewTitleError" />
                                     </h:inputText>
-                                    <label>Review text:</label><h:message id ="reviewTextError" for="reviewText" style="color:red" />
+                                    <label>#{msgs.reviewText}:</label><h:message id ="reviewTextError" for="reviewText" style="color:red" />
                                     <h:inputTextarea id="reviewText" value="#{bookBB.review.reviewText}" required="true" requiredMessage="#{msgs.required}">
                                         <f:validateLength minimum="10" maximum="750"/>
                                         <f:ajax event="blur" render="reviewTextError" />
                                     </h:inputTextarea>
-                                    <h:commandButton styleClass="button" value="Submit Review" action="#{bookBB.createReview()}"/>
+                                    <h:commandButton styleClass="button" value="#{msgs.submitReview}" action="#{bookBB.createReview()}"/>
                                 </h:form>
                             </c:if>
                             <c:if test="#{authenticationController.anonymous == true}">
-                                Please sign in to submit a review.
+                                #{msgs.signInForReview}
                             </c:if>
                         </div>
                         <div class="tabs-panel" id="panel3">
