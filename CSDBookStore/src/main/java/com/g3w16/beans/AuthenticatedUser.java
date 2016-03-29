@@ -18,7 +18,10 @@ import javax.inject.Named;
 @Named
 @SessionScoped
 public class AuthenticatedUser implements Serializable{
+    
     RegisteredUser registeredUser;
+    // last_genre is now a cookie, but I keep this here for now
+    // TODO: remove it
     Genre last_genre;
 
     public RegisteredUser getRegisteredUser() {
