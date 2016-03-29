@@ -7,6 +7,7 @@ import com.g3w16.entities.InvoiceDetailJpaController;
 import com.g3w16.entities.InvoiceJpaController;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -211,7 +212,7 @@ public class CheckoutBackingBean implements Serializable {
     /**
      * Completes the purchase(order) of books.
      */
-    public void confirmPurchase() throws Exception {
+    public String confirmPurchase() throws Exception {
         Invoice invoice = new Invoice();
         invoice.setSaleDate(new Date());
         invoice.setUserNumber(user.getRegisteredUser().getUserId());
@@ -241,10 +242,14 @@ public class CheckoutBackingBean implements Serializable {
             invoiceDetail.setBookId(order.get(i));
             invoiceDetail.setBookPrice(order.get(i).getSalePrice());
             invoiceDetail.setGst((((order.get(i).getSalePrice()).multiply(gst)).divide(new BigDecimal(100))).setScale(2, BigDecimal.ROUND_UP));
-            if (provincialType.equals("hst"))
+            if (provincialType.equals("hst")) {
                 invoiceDetail.setHst((((order.get(i).getSalePrice()).multiply(provincialTax)).divide(new BigDecimal(100))).setScale(2, BigDecimal.ROUND_UP));
-            else
+                invoiceDetail.setPst(new BigDecimal(BigInteger.ZERO));
+            }
+            else {
                 invoiceDetail.setPst((((order.get(i).getSalePrice()).multiply(provincialTax)).divide(new BigDecimal(100))).setScale(2, BigDecimal.ROUND_UP));
+                invoiceDetail.setHst(new BigDecimal(BigInteger.ZERO));
+            }
             invoiceDetail.setQuantity(1);
             invoiceDetailJpaController.create(invoiceDetail);
         }
@@ -256,6 +261,6 @@ public class CheckoutBackingBean implements Serializable {
         securityCode = "";
         
         cartBB.clearCart();
-        FacesContext.getCurrentInstance().getExternalContext().redirect("home.xhtml");
+        return "home";
     }
 }

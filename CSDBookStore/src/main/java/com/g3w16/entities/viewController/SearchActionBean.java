@@ -6,12 +6,14 @@
 package com.g3w16.entities.viewController;
 
 import com.g3w16.actionController.BookController;
+import com.g3w16.beans.BookBackingBean;
 import com.g3w16.beans.SearchBackingBean;
 import com.g3w16.entities.Book;
 import com.g3w16.entities.Genre;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -22,7 +24,7 @@ import javax.inject.Named;
  * @author Christopher
  */
 @Named
-@SessionScoped
+@RequestScoped
 public class SearchActionBean implements Serializable {
 
     @Inject
@@ -30,6 +32,9 @@ public class SearchActionBean implements Serializable {
 
     @Inject
     SearchBackingBean searchBackingBean;
+    
+    @Inject
+    BookBackingBean bookBackingBean;
     
     private List<Book> searchResults;
     private String genreSearchContent;
@@ -54,6 +59,11 @@ public class SearchActionBean implements Serializable {
                 break;
             default:     //need a default     
         }
+        
+        if (searchResults.size()==1){
+            return bookBackingBean.displayBook(searchResults.get(0));
+        }
+        
         return "results";
     }
     //NEED TO FIGURE OUT HOW TO PASS THE GENRE HERE
@@ -77,7 +87,8 @@ public class SearchActionBean implements Serializable {
                 break;  
             default:     //need a default  
         }
-        return "browseGenreResults.xhtml";
+        
+        return "browseGenreResults";
     }
     
     public List<Book> getSearchResults(){

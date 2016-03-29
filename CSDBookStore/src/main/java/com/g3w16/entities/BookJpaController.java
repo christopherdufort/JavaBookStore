@@ -552,9 +552,10 @@ public class BookJpaController implements Serializable {
         return q.getResultList();
     }
     
-    public List<Book> findBestRankedBook(int limit) {
-        Query q = em.createNamedQuery("Book.findOrderedByRank");
-        q.setMaxResults(limit);
+    public List<Book> findDiscountedBook() {
+        Query q = em.createNamedQuery("Book.findDiscountedBook");
+        //q.setMaxResults(limit);
+        // TODO: remove this if it's really not used
         return q.getResultList();
     }
 
