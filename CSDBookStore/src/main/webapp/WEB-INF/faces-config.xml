@@ -19,7 +19,7 @@
             <supported-locale>fr</supported-locale>
         </locale-config>
         
-        <message-bundle>com.g3w16.bundles.ApplicationMessages</message-bundle>
+        <message-bundle>com.g3w16.bundles.messages</message-bundle>
   
     </application>
     
