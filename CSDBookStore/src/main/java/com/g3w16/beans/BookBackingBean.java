@@ -261,8 +261,9 @@ public class BookBackingBean implements Serializable {
         return booksFromAuthor;
     }
     
-    public void displayBook(Book book) throws IOException {
+    public String displayBook(Book book) throws IOException {
         setBook(book);
+        // -- the following code place a cookie on client side so we can recover the last genre later
         int forever = 7; // TODO: replace this with something else
         Cookie cookie = new Cookie(
                 "lastGenreId",
@@ -270,6 +271,8 @@ public class BookBackingBean implements Serializable {
         );
         cookie.setMaxAge(forever);
         ((HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse()).addCookie(cookie);
-        FacesContext.getCurrentInstance().getExternalContext().redirect("book.xhtml");
+        // -- end of the cookie part
+        //FacesContext.getCurrentInstance().getExternalContext().redirect("book.xhtml");
+        return "book.xhtml";
     }
 }
