@@ -34,7 +34,7 @@ public class SearchActionBean implements Serializable {
     private List<Book> searchResults;
     private String genreSearchContent;
     
-    public void performSearch(SearchBackingBean searchBackingBean) throws IOException {
+    public String performSearch(SearchBackingBean searchBackingBean) throws IOException {
         switch (searchBackingBean.getSearchChoice()) {
             case "Title":
                 searchResults = bookController.searchByTitle(searchBackingBean.getSearchContent());
@@ -54,10 +54,10 @@ public class SearchActionBean implements Serializable {
                 break;
             default:     //need a default     
         }
-        FacesContext.getCurrentInstance().getExternalContext().redirect("results.xhtml");
+        return "results";
     }
     //NEED TO FIGURE OUT HOW TO PASS THE GENRE HERE
-    public void browseGenre(String genre) throws IOException{
+    public String browseGenre(String genre) throws IOException{
         genreSearchContent = genre;
         switch (genre){
             case "Computers & Technology":
@@ -77,7 +77,7 @@ public class SearchActionBean implements Serializable {
                 break;  
             default:     //need a default  
         }
-        FacesContext.getCurrentInstance().getExternalContext().redirect("browseGenreResults.xhtml");
+        return "browseGenreResults.xhtml";
     }
     
     public List<Book> getSearchResults(){

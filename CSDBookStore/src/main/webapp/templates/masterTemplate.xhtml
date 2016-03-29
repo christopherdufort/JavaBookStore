@@ -8,16 +8,12 @@
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <!--        <h:outputStylesheet name="./css/default.css"/>
-                <h:outputStylesheet name="./css/cssLayout.css"/>-->
         <!-- The title of each page is defined on each facelet template client-->
         <title><ui:insert name="title">Facelets Template</ui:insert></title>
         <!-- Global CSS -->
         <link rel="stylesheet" href="http://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css"/>
         <link rel="stylesheet" href="resources/css/customized.css"/>
-        <!--        <h:outputStylesheet name="resources/css/customized.css"/>-->
         <link rel="stylesheet" href="resources/foundation-icons/foundation-icons.css"/>
-        <!--        <h:outputStylesheet name="resources/foundation-icons/foundation-icons.css"/>-->
         <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Comfortaa"/>
         <!-- Important Owl stylesheet -->
         <link rel="stylesheet" href="resources/css/owl.carousel.css"/>
@@ -86,6 +82,9 @@
                                     </li>
                                     <li>
                                         <h:outputLink styleClass="button" value="/CSDBookStore/faces/logout.xhtml">Logout</h:outputLink>
+                                    </li>
+                                    <li> <!-- Make this check if you have made a purchase before displaying -->
+                                        <h:outputLink styleClass="button" value="/CSDBookStore/faces/orders.xhtml">My Orders</h:outputLink>
                                     </li>
                                 </ui:fragment>
                                 <ui:fragment rendered="#{authenticationController.isManager()}">
