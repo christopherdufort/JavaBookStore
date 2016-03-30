@@ -29,7 +29,7 @@ import javax.transaction.UserTransaction;
  */
 @Named
 @SessionScoped
-public class InvoiceDetailJpaController implements InvoiceDetailJpaControllerInterface {
+public class InvoiceDetailJpaController implements Serializable {
 
     @Resource
     private UserTransaction utx;
@@ -45,7 +45,6 @@ public class InvoiceDetailJpaController implements InvoiceDetailJpaControllerInt
      * @throws RollbackFailureException
      * @throws Exception
      */
-    @Override
     public void create(InvoiceDetail invoiceDetail) throws RollbackFailureException, Exception {
         try {
             utx.begin();
@@ -85,7 +84,6 @@ public class InvoiceDetailJpaController implements InvoiceDetailJpaControllerInt
      *
      * @return
      */
-    @Override
     public List<InvoiceDetail> findInvoiceDetailEntities() {
         return findInvoiceDetailEntities(true, -1, -1);
     }
@@ -98,7 +96,6 @@ public class InvoiceDetailJpaController implements InvoiceDetailJpaControllerInt
      * @param firstResult
      * @return
      */
-    @Override
     public List<InvoiceDetail> findInvoiceDetailEntities(int maxResults, int firstResult) {
         return findInvoiceDetailEntities(false, maxResults, firstResult);
     }
@@ -133,7 +130,6 @@ public class InvoiceDetailJpaController implements InvoiceDetailJpaControllerInt
      * @param id
      * @return
      */
-    @Override
     public InvoiceDetail findInvoiceDetail(Integer id) {
 
         return em.find(InvoiceDetail.class, id);
@@ -146,10 +142,23 @@ public class InvoiceDetailJpaController implements InvoiceDetailJpaControllerInt
      * @param invoiceId
      * @return
      */
-    @Override
     public List<InvoiceDetail> findInvoiceDetailByInvoice(Invoice invoiceId) {
         Query q = em.createNamedQuery("InvoiceDetail.findByInvoiceId", InvoiceDetail.class);
         q.setParameter("invoiceId", invoiceId);
+        return q.getResultList();
+
+    }
+
+    /**
+     * This will return a list of invoice details related to a specific invoice.
+     *
+     * @param book
+     *
+     * @return
+     */
+    public List<InvoiceDetail> findInvoiceDetailByBook(Book book) {
+        Query q = em.createNamedQuery("InvoiceDetail.findByBookId", InvoiceDetail.class);
+        q.setParameter("bookId", book);
         return q.getResultList();
 
     }
@@ -159,7 +168,6 @@ public class InvoiceDetailJpaController implements InvoiceDetailJpaControllerInt
      *
      * @return
      */
-    @Override
     public int getInvoiceDetailCount() {
 
         CriteriaQuery cq = em.getCriteriaBuilder().createQuery();

@@ -16,31 +16,42 @@ import javax.inject.Named;
 
 /**
  *
- * @author Xin Ma
+ *
  * @author Rita Lazaar
  */
 @Named("m_reports")
 @RequestScoped
 public class m_reportsBackingBean {
 
-    
     private InvoiceDetail invoiceDetail;
-    
+
+    private Book book;
+
     @Inject
     m_invoicesBackingBean m_invoicesBackingBean;
-    
+
     @Inject
     InvoiceDetailJpaController invoiceDetailJpa;
+    @Inject
+    InvoiceJpaController invoiceJpa;
+    @Inject
+    BookJpaController bookJpa;
 
-    public InvoiceDetail getInvoiceDetail(){
-        if(invoiceDetail==null)
-            invoiceDetail=new InvoiceDetail();
+    public InvoiceDetail getInvoiceDetail() {
+        if (invoiceDetail == null) {
+            invoiceDetail = new InvoiceDetail();
+        }
         return invoiceDetail;
     }
-    
-    public void setInvoiceDetail(InvoiceDetail invoiceDetail){
-        this.invoiceDetail=invoiceDetail;
+
+    public void setInvoiceDetail(InvoiceDetail invoiceDetail) {
+        this.invoiceDetail = invoiceDetail;
     }
+
+    public List<Invoice> getInvoicesWithDate(Date date1, Date date2) {
+        return invoiceJpa.findInvoiceByDate(date1, date2);
+    }
+
     /**
      * This method calculates the total sales that exist for one invoice.
      * Including taxes.
@@ -51,16 +62,18 @@ public class m_reportsBackingBean {
      *
      * @author Rita Lazaar
      * @version 0.0.1 - testing
+     * @param id
      * @return
      */
-    public BigDecimal getTotalSalesForOneInvoice(Invoice invoice) {
-        Invoice id = new Invoice(1);
+    public BigDecimal getTotalSalesForOneInvoice(int id) {
+
+        Invoice invoice = new Invoice(1);
         //this is a test value
         // originally it should come from the invoice that we send it
         BigDecimal detailTotal = BigDecimal.valueOf(0);
         double total = 0;
 
-        List<InvoiceDetail> byInvoiceId = invoiceDetailJpa.findInvoiceDetailByInvoice(id);
+        List<InvoiceDetail> byInvoiceId = invoiceDetailJpa.findInvoiceDetailByInvoice(invoice);
 
         for (int i = 0; i < byInvoiceId.size(); i++) {
 
@@ -104,6 +117,7 @@ public class m_reportsBackingBean {
      * @return
      */
     public BigDecimal getAllSalesByClient(Date date1, Date date2, Integer user) {
+
         BigDecimal total = BigDecimal.ZERO;
         double t = 0;
 
@@ -117,4 +131,34 @@ public class m_reportsBackingBean {
         total = BigDecimal.valueOf(t).setScale(2, RoundingMode.CEILING);
         return total;
     }
+
+    public List<Book> getAllBooks() {
+
+        return bookJpa.findBookEntities();
+    }
+
+    public List<InvoiceDetail> getAllBooksInvoiceDetailPerBook(Book book) {
+
+        return invoiceDetailJpa.findInvoiceDetailByBook(book);
+
+    }
+/**
+ * This gets the total sales for a specific book
+ * @param book
+ * @return 
+ */
+    public BigDecimal getTotalPerBook(Book book) {
+        
+        BigDecimal total = BigDecimal.ZERO;
+        double t = 0;
+        List<InvoiceDetail> allBooks = getAllBooksInvoiceDetailPerBook(book);
+
+        for (int i = 0; i < allBooks.size(); i++) {
+            t += allBooks.get(i).getBookPrice().doubleValue();
+        }
+
+        total = BigDecimal.valueOf(t).setScale(2, RoundingMode.CEILING);
+        return total;
+    }
+
 }

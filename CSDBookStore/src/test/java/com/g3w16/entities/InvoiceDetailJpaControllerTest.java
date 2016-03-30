@@ -192,16 +192,29 @@ public class InvoiceDetailJpaControllerTest {
         assertThat(result.size()).isEqualTo(2);
     }
     
-    @Test 
-    public void testFindInvoiceFails1() {
+//    @Test 
+//    public void testFindInvoiceFails1() {
+//    
+//        
+//        System.out.println("failing find invoice process");
+//        
+//        List <InvoiceDetail> result = invoiceDetailJpaController.findInvoiceDetailEntities();
+//        // all invoice details are present but since they are being deleted
+//        // this cannot be found in the database 
+//        
+//    }
     
-        
-        System.out.println("failing find invoice process");
-        
-        List <InvoiceDetail> result = invoiceDetailJpaController.findInvoiceDetailEntities();
-        // all invoice details are present but since they are being deleted
-        // this cannot be found in the database 
-        
+     
+   
+   
+
+
+    @BeforeClass
+    public static void setUpClass() throws Exception {
+    }
+
+    @AfterClass
+    public static void tearDownClass() throws Exception {
     }
     
     
@@ -225,6 +238,10 @@ public class InvoiceDetailJpaControllerTest {
             throw new RuntimeException("Failed seeding database", e);
         }
         System.out.println("Seeding works");
+    }
+
+    @After
+    public void tearDown() throws Exception {
     }
 
     /**
@@ -268,4 +285,5 @@ public class InvoiceDetailJpaControllerTest {
                 || line.startsWith("/*");
     }
 
+   
 }

@@ -28,7 +28,7 @@ import javax.transaction.UserTransaction;
  */
 @Named
 @RequestScoped
-public class InvoiceJpaController implements InvoiceJpaControllerInterface {
+public class InvoiceJpaController  implements Serializable{
 
     @Resource
     private UserTransaction utx;
@@ -43,7 +43,7 @@ public class InvoiceJpaController implements InvoiceJpaControllerInterface {
      * @throws RollbackFailureException
      * @throws Exception
      */
-    @Override
+   
     public void create(Invoice invoice) throws RollbackFailureException, Exception {
         if (invoice.getInvoiceDetailList() == null) {
             invoice.setInvoiceDetailList(new ArrayList<InvoiceDetail>());
@@ -82,7 +82,7 @@ public class InvoiceJpaController implements InvoiceJpaControllerInterface {
      *
      * @return
      */
-    @Override
+   
     public List<Invoice> findInvoiceEntities() {
         return findInvoiceEntities(true, -1, -1);
     }
@@ -95,7 +95,7 @@ public class InvoiceJpaController implements InvoiceJpaControllerInterface {
      * @param firstResult
      * @return
      */
-    @Override
+    
     public List<Invoice> findInvoiceEntities(int maxResults, int firstResult) {
         return findInvoiceEntities(false, maxResults, firstResult);
     }
@@ -125,7 +125,7 @@ public class InvoiceJpaController implements InvoiceJpaControllerInterface {
      * @param id
      * @return
      */
-    @Override
+    
     public Invoice findInvoice(Integer id) {
         return em.find(Invoice.class, id);
     }
@@ -136,7 +136,7 @@ public class InvoiceJpaController implements InvoiceJpaControllerInterface {
      * @param userNumber
      * @return
      */
-    @Override
+    
     public List<Invoice> findInvoiceByUserNumber(Integer userNumber) {
         Query q = em.createNamedQuery("Invoice.findByUserNumber", Invoice.class);
         q.setParameter("userNumber", userNumber);
@@ -149,7 +149,7 @@ public class InvoiceJpaController implements InvoiceJpaControllerInterface {
      * @param userNumber
      * @return
      */
-    @Override
+    
     public List<Invoice> findInvoiceByDate(Date date1, Date date2) {
         Query q = em.createNamedQuery("Invoice.findAllInvoicesByDate", Invoice.class);
         q.setParameter(1, date1);
@@ -164,7 +164,7 @@ public class InvoiceJpaController implements InvoiceJpaControllerInterface {
      * @param userNumber
      * @return
      */
-    @Override
+    
     public List<Invoice> findInvoiceByDateAndUser(Date date1, Date date2, Integer userNumber) {
         Query q = em.createNamedQuery("Invoice.findAllInvoicesByDateAndUser", Invoice.class);
         q.setParameter(1, date1);
@@ -179,7 +179,7 @@ public class InvoiceJpaController implements InvoiceJpaControllerInterface {
      *
      * @return
      */
-    @Override
+    
     public int getInvoiceCount() {
         Query q = em.createQuery("select count(o) from Invoice as o");
         return ((Long) q.getSingleResult()).intValue();
