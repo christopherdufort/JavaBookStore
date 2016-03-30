@@ -33,7 +33,8 @@
                                                          rowsPerPageTemplate="5,10,15"
                                                          emptyMessage="No news found with given criteria">
                                                 <p:column>
-                                                    <f:facet name="header"><p:commandLink value="#{msgs.add}" action="#{m_ads.preCreateAd()}" ajax="false" class="btn btn-success btn-block"/>
+                                                    <f:facet name="header">
+                                                        <h:commandLink value="#{msgs.add}" action="#{m_ads.preCreateAd()}" class="btn btn-success btn-block"/>
                                                     </f:facet>
                                                     <h:commandLink value="#{msgs.edit}" action="#{m_ads.editAd(ad)}" class="btn btn-info btn-block"/>
                                                     <h:outputText value="&#160;" />

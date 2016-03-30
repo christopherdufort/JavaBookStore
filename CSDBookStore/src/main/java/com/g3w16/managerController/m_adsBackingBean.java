@@ -8,22 +8,20 @@ package com.g3w16.managerController;
 import com.g3w16.entities.*;
 import com.g3w16.entities.exceptions.RollbackFailureException;
 import java.io.Serializable;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
-import javax.inject.Named;
 
 /**
  *
  * @author Xin Ma
  * @author Rita Lazaar
  */
-@Named("m_ads")
+@ManagedBean(name="m_ads")
 @SessionScoped
 public class m_adsBackingBean implements Serializable {
 

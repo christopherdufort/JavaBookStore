@@ -25,10 +25,6 @@ import javax.inject.Inject;
 @ManagedBean(name="m_newsfeed")
 @SessionScoped
 public class m_newsfeedBackingBean implements Serializable {
-
-    private String searchNews;
-
-    private List<NewsFeed> searched;
     
     private List<NewsFeed> allNews;
 
@@ -55,22 +51,6 @@ public class m_newsfeedBackingBean implements Serializable {
 
     public void setNews(NewsFeed newsFeed) {
         this.newsFeed = newsFeed;
-    }
-
-    public String getSearchNews() {
-        return searchNews;
-    }
-
-    public void setSearchNews(String searchNews) {
-        this.searchNews = searchNews;
-    }
-
-    public List<NewsFeed> getSearched() {
-        return searched;
-    }
-
-    public void setSearched(List<NewsFeed> searched) {
-        this.searched = searched;
     }
 
     public String createNews() {
