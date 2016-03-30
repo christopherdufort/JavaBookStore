@@ -16,16 +16,15 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
 
-
 /**
  *
  * @author Xin Ma
  * @author Rita Lazaar
  */
-@ManagedBean(name="m_newsfeed")
+@ManagedBean(name = "m_newsfeed")
 @SessionScoped
 public class m_newsfeedBackingBean implements Serializable {
-    
+
     private List<NewsFeed> allNews;
 
     private NewsFeed newsFeed;
@@ -35,7 +34,7 @@ public class m_newsfeedBackingBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        allNews=newsJpa.findAllNewsFeeds();       
+        allNews = newsJpa.findAllNewsFeeds();
     }
 
     public String preCreateNews() {
@@ -59,7 +58,7 @@ public class m_newsfeedBackingBean implements Serializable {
         } catch (Exception ex) {
             Logger.getLogger(m_newsfeedBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        allNews=newsJpa.findAllNewsFeeds();     
+        allNews = newsJpa.findAllNewsFeeds();
         return "m_news";
     }
 
@@ -74,8 +73,18 @@ public class m_newsfeedBackingBean implements Serializable {
         } catch (Exception ex) {
             Logger.getLogger(m_newsfeedBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        allNews=newsJpa.findAllNewsFeeds(); 
+        allNews = newsJpa.findAllNewsFeeds();
         return "m_news";
+    }
+
+    public void active(NewsFeed n) {
+        newsFeed = newsJpa.findNewsFeedById(n.getNewsFeedId());
+        newsFeed.setActive(n.getActive());
+        try {
+            newsJpa.edit(newsFeed);
+        } catch (Exception ex) {
+            Logger.getLogger(m_newsfeedBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public String destroyNews(NewsFeed newsfeed) {
@@ -87,7 +96,7 @@ public class m_newsfeedBackingBean implements Serializable {
         } catch (Exception ex) {
             Logger.getLogger(m_newsfeedBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        allNews=newsJpa.findAllNewsFeeds();     
+        allNews = newsJpa.findAllNewsFeeds();
         return "m_news";
     }
 

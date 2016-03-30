@@ -20,40 +20,36 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    Total <h:outputText value="#{m_ads.adCount}"/> Ads
-                                </div>
-                                <!-- /.panel-heading -->
-                                <div class="panel-body">
-                                    <div class="dataTable_wrapper table-responsive">
-                                        <h:form>
-                                            <p:dataTable var="ad" value="#{m_ads.allAds}" widgetVar="adTable" rows="10"
-                                                         paginator="true"
-                                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                                         rowsPerPageTemplate="5,10,15"
-                                                         emptyMessage="No news found with given criteria">
-                                                <p:column>
-                                                    <f:facet name="header">
-                                                        <h:commandLink value="#{msgs.add}" action="#{m_ads.preCreateAd()}" class="btn btn-success btn-block"/>
-                                                    </f:facet>
-                                                    <h:commandLink value="#{msgs.edit}" action="#{m_ads.editAd(ad)}" class="btn btn-info btn-block"/>
-                                                    <h:outputText value="&#160;" />
-                                                    <h:commandLink value="#{msgs.delete}" action="#{m_ads.destroyAd(ad)}" class="btn btn-danger btn-block"> 
-                                                        <f:ajax render="@form"/>
-                                                    </h:commandLink>                                               
-                                                </p:column>
-                                                <p:column filterBy="#{ad.adId}" sortBy="#{ad.adId}" headerText="#{msgs.ad_id}" filterMatchMode="contains">
-                                                    #{ad.adId}
-                                                </p:column>
+                                <h:form>
+                                    <p:dataTable var="ad" value="#{m_ads.allAds}" widgetVar="adTable" rows="10"
+                                                 paginator="true"
+                                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                 rowsPerPageTemplate="5,10,15"
+                                                 emptyMessage="No news found with given criteria">
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:commandLink value="#{msgs.add}" action="#{m_ads.preCreateAd()}" class="btn btn-success btn-block"/>
+                                            </f:facet>
+                                            <h:commandLink value="#{msgs.edit}" action="#{m_ads.editAd(ad)}" class="btn btn-info btn-sx"/>
+                                            <h:outputText value="&#160;" />
+                                            <h:commandLink value="#{msgs.delete}" action="#{m_ads.destroyAd(ad)}" class="btn btn-danger btn-sx"> 
+                                                <f:ajax render="@form"/>
+                                            </h:commandLink>                                               
+                                        </p:column>
+                                         <p:column  headerText="#{msgs.active}">
+                                            <p:selectBooleanCheckbox value="#{ad.active}">
+                                                <p:ajax update="@form" listener="#{m_ad.active(ad)}"/>
+                                            </p:selectBooleanCheckbox>
+                                        </p:column>
+                                        <p:column filterBy="#{ad.adId}" sortBy="#{ad.adId}" headerText="#{msgs.ad_id}" filterMatchMode="contains">
+                                            #{ad.adId}
+                                        </p:column>
 
-                                                <p:column filterBy="#{ad.adFilename}" sortBy="#{ad.adFilename}" headerText="#{msgs.ad_filename}"  filterMatchMode="contains">
-                                                    #{ad.adFilename}
-                                                </p:column>
-                                            </p:dataTable>
-                                        </h:form>
-                                    </div>
-                                    <!-- /.table-responsive -->
-                                </div>
+                                        <p:column filterBy="#{ad.adFilename}" sortBy="#{ad.adFilename}" headerText="#{msgs.ad_filename}"  filterMatchMode="contains">
+                                            #{ad.adFilename}
+                                        </p:column>
+                                    </p:dataTable>
+                                </h:form>
                                 <!-- /.panel-body -->
                             </div>
                             <!-- /.panel -->
