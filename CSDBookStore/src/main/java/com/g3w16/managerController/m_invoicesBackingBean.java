@@ -8,6 +8,7 @@ package com.g3w16.managerController;
 import com.g3w16.entities.*;
 import java.util.Date;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -41,6 +42,11 @@ public class m_invoicesBackingBean {
 
     public String getText() {
         return searchInvoice;
+    }
+    
+    @PostConstruct
+    public void init() {
+        all=invoiceJpa.findInvoiceEntities();       
     }
 
     public void setText(String searchInvoice) {
@@ -90,12 +96,12 @@ public class m_invoicesBackingBean {
      */
     public List<Invoice> getAllInvoices() {
 
-        all = invoiceJpa.findInvoiceEntities();
-        //  all= invoiceJpa.findInvoiceEntities();
-//         for(int i =0; i<invoiceJpa.findInvoiceEntities().size();i++){
-//         
-//             all.add(invoice)
-//         }
+//        all = invoiceJpa.findInvoiceEntities();
+//        //  all= invoiceJpa.findInvoiceEntities();
+////         for(int i =0; i<invoiceJpa.findInvoiceEntities().size();i++){
+////         
+////             all.add(invoice)
+////         }
         return all;
     }
 

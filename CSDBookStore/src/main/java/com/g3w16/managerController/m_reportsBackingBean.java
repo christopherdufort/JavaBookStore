@@ -8,11 +8,16 @@ package com.g3w16.managerController;
 import com.g3w16.entities.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.primefaces.context.RequestContext;
+import org.primefaces.event.SelectEvent;
 
 /**
  *
@@ -26,16 +31,45 @@ public class m_reportsBackingBean {
     private InvoiceDetail invoiceDetail;
 
     private Book book;
+    private Date date1;
+    private Date date2;
 
     @Inject
     m_invoicesBackingBean m_invoicesBackingBean;
 
     @Inject
     InvoiceDetailJpaController invoiceDetailJpa;
+
     @Inject
     InvoiceJpaController invoiceJpa;
+
     @Inject
     BookJpaController bookJpa;
+    
+    public void onDateSelect(SelectEvent event) {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
+    }
+     
+    public void click() {
+        RequestContext requestContext = RequestContext.getCurrentInstance();
+         
+        requestContext.update("form:display");
+        requestContext.execute("PF('dlg').show()");
+    }
+
+    public Date getDate1() {
+        return date1;
+    }
+
+    public void setDate1(Date date1) {
+        this.date1 = date1;
+    }
+
+    public Date getDate2() {
+        return date2;
+    }
 
     public InvoiceDetail getInvoiceDetail() {
         if (invoiceDetail == null) {
@@ -67,7 +101,7 @@ public class m_reportsBackingBean {
      */
     public BigDecimal getTotalSalesForOneInvoice(int id) {
 
-        Invoice invoice = new Invoice(1);
+        Invoice invoice = new Invoice(id);
         //this is a test value
         // originally it should come from the invoice that we send it
         BigDecimal detailTotal = BigDecimal.valueOf(0);
@@ -137,28 +171,112 @@ public class m_reportsBackingBean {
         return bookJpa.findBookEntities();
     }
 
+    /**
+     * This gets all the invoice details for a specific book.
+     *
+     * @param book
+     * @return
+     */
     public List<InvoiceDetail> getAllBooksInvoiceDetailPerBook(Book book) {
 
         return invoiceDetailJpa.findInvoiceDetailByBook(book);
 
     }
-/**
- * This gets the total sales for a specific book
- * @param book
- * @return 
- */
+
+    /**
+     * This gets the total sales for a specific book from beginning.
+     *
+     * @param book
+     * @return
+     */
     public BigDecimal getTotalPerBook(Book book) {
-        
+
         BigDecimal total = BigDecimal.ZERO;
         double t = 0;
+
+        // calling the method to get all details for this specific book
         List<InvoiceDetail> allBooks = getAllBooksInvoiceDetailPerBook(book);
 
         for (int i = 0; i < allBooks.size(); i++) {
             t += allBooks.get(i).getBookPrice().doubleValue();
         }
-
+        //calculating total
         total = BigDecimal.valueOf(t).setScale(2, RoundingMode.CEILING);
         return total;
     }
 
+    /**
+     * This gets the total per publisher given and between the dates that were
+     * given.
+     *
+     * @param publisher
+     * @param date1
+     * @param date2
+     * @return
+     */
+    public BigDecimal getTotalPerPublisher(String publisher, Date date1, Date date2) {
+
+        List<InvoiceDetail> pubInvDetail = null;
+        BigDecimal total = BigDecimal.ZERO;
+        double t = 0;
+
+        List<Invoice> invoices = getInvoicesWithDate(date1, date2);
+        List<InvoiceDetail> invoiceD;
+        //running through all the invoices of this date
+        for (int i = 0; i < invoices.size(); i++) {
+            //for each invoice detail related to this invoice
+            // we are checking whether the book it points to has the publisher
+            // we are looking for 
+            List<InvoiceDetail> id = invoices.get(i).getInvoiceDetailList();
+            for (int j = 0; j < id.size(); j++) {
+                Book b = id.get(j).getBookId();
+                // ** check because publisher is only a string
+                if (b.getPublisher().equalsIgnoreCase(publisher)) {
+//                    pubInvDetail.add(id.get(j));
+                    // for the moment it is only list price.
+                    t += b.getListPrice().doubleValue();
+                }
+
+            }
+        }
+        total = BigDecimal.valueOf(t).setScale(2, RoundingMode.CEILING);
+        return total;
+
+    }
+
+    /**
+     * This gets the total sales for a specific author and between certain
+     * dates.
+     *
+     * @param author
+     * @param date1
+     * @param date2
+     * @return
+     */
+    public BigDecimal getTotalPerAuthor(Author author, Date date1, Date date2) {
+        BigDecimal total = BigDecimal.ZERO;
+        double t = 0;
+
+        List<Invoice> invoices = getInvoicesWithDate(date1, date2);
+        List<InvoiceDetail> invoiceD;
+        //running through all the invoices of this date
+        for (int i = 0; i < invoices.size(); i++) {
+            //for each invoice detail related to this invoice
+            // we are checking whether the book it points to has the publisher
+            // we are looking for 
+            List<InvoiceDetail> id = invoices.get(i).getInvoiceDetailList();
+            for (int j = 0; j < id.size(); j++) {
+                Book b = id.get(j).getBookId();
+                // checks if this book has this author
+                if (b.getAuthorList().contains(author)) {
+//                    pubInvDetail.add(id.get(j));
+                    // for the moment it is only list price.
+                    t += b.getListPrice().doubleValue();
+                }
+
+            }
+        }
+        total = BigDecimal.valueOf(t).setScale(2, RoundingMode.CEILING);
+        return total;
+    }
 }
