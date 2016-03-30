@@ -102,7 +102,7 @@ public class InvoiceJpaControllerTest {
         invoice.setSaleDate(null);
         invoice.setTotalGrossValueOfSale(BigDecimal.ZERO);
         invoice.setTotalNetValueOfSale(BigDecimal.ONE);
-        invoice.setUserNumber(1);
+        invoice.setUserId(1);
 
         invoiceJpaController.create(invoice);
 
@@ -179,7 +179,7 @@ public class InvoiceJpaControllerTest {
 
     /**
      * Test of findInvoiceEntities method, of class InvoiceJpaController finding
-     * by date and user number. Finding all invoices.
+     * by date and user id. Finding all invoices.
      */
     @Test
     public void testFindAllInvoiceEntitiesWithDateandUser() throws Exception {

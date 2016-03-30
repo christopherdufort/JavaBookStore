@@ -25,6 +25,7 @@ import javax.transaction.UserTransaction;
 /**
  *
  * @author Rita Lazaar
+ * 
  */
 @Named
 @RequestScoped
@@ -133,20 +134,20 @@ public class InvoiceJpaController implements InvoiceJpaControllerInterface {
     /**
      * This will return a list of invoices belonging to the user given to it.
      *
-     * @param userNumber
+     * @param userId
      * @return
      */
     @Override
-    public List<Invoice> findInvoiceByUserNumber(Integer userNumber) {
-        Query q = em.createNamedQuery("Invoice.findByUserNumber", Invoice.class);
-        q.setParameter("userNumber", userNumber);
+    public List<Invoice> findInvoiceByUserId(Integer userId) {
+        Query q = em.createNamedQuery("Invoice.findByUserId", Invoice.class);
+        q.setParameter("userId", userId);
         return q.getResultList();
     }
 
     /**
      * This will return a list of invoices belonging to the user given to it.
      *
-     * @param userNumber
+     * @param userId
      * @return
      */
     @Override
@@ -161,15 +162,15 @@ public class InvoiceJpaController implements InvoiceJpaControllerInterface {
     /**
      * This will return a list of invoices belonging to the user given to it.
      *
-     * @param userNumber
+     * @param userId
      * @return
      */
     @Override
-    public List<Invoice> findInvoiceByDateAndUser(Date date1, Date date2, Integer userNumber) {
+    public List<Invoice> findInvoiceByDateAndUser(Date date1, Date date2, Integer userId) {
         Query q = em.createNamedQuery("Invoice.findAllInvoicesByDateAndUser", Invoice.class);
         q.setParameter(1, date1);
         q.setParameter(2, date2);
-        q.setParameter(3, userNumber);
+        q.setParameter(3, userId);
 
         return q.getResultList();
     }

@@ -20,7 +20,7 @@ import javax.transaction.UserTransaction;
 
 /**
  *
- * @author Christopher Dufort  
+ * @author Christopher Dufort
  * @version 0.2.4 - Last modified 2/15/2016
  */
 @Named
@@ -35,18 +35,20 @@ public class AdJpaController implements Serializable {
 
     /**
      * Default Constructor
-     * @author Christopher Dufort  
+     *
+     * @author Christopher Dufort
      * @version 0.2.4 - Last modified 2/15/2016
      */
     public AdJpaController() {
         super();
     }
+
     /**
-     * @author Christopher Dufort  
+     * @author Christopher Dufort
      * @version 0.2.4 - Last modified 2/15/2016
      * @param ad
      * @throws RollbackFailureException
-     * @throws Exception 
+     * @throws Exception
      */
     public void create(Ad ad) throws RollbackFailureException, Exception {
         try {
@@ -62,14 +64,14 @@ public class AdJpaController implements Serializable {
             throw ex;
         }
     }
-    
+
     /**
-     * @author Christopher Dufort  
+     * @author Christopher Dufort
      * @version 0.2.4 - Last modified 2/15/2016
      * @param ad
      * @throws NonexistentEntityException
      * @throws RollbackFailureException
-     * @throws Exception 
+     * @throws Exception
      */
     public void edit(Ad ad) throws NonexistentEntityException, RollbackFailureException, Exception {
         try {
@@ -92,14 +94,14 @@ public class AdJpaController implements Serializable {
             throw ex;
         }
     }
-    
+
     /**
-     * @author Christopher Dufort  
+     * @author Christopher Dufort
      * @version 0.2.4 - Last modified 2/15/2016
      * @param id
      * @throws NonexistentEntityException
      * @throws RollbackFailureException
-     * @throws Exception 
+     * @throws Exception
      */
     public void destroy(Integer id) throws NonexistentEntityException, RollbackFailureException, Exception {
         try {
@@ -122,36 +124,37 @@ public class AdJpaController implements Serializable {
             throw ex;
         }
     }
+
     /**
-     * @author Christopher Dufort  
-     * @version 0.2.4 - Last modified 2/15/2016
-     * Return all the records in the table
-     * @return 
+     * @author Christopher Dufort
+     * @version 0.2.4 - Last modified 2/15/2016 Return all the records in the
+     * table
+     * @return
      */
     public List<Ad> findAllAds() {
         return findAdEntities(true, -1, -1);
     }
 
     /**
-     * @author Christopher Dufort  
+     * @author Christopher Dufort
      * @version 0.2.4 - Last modified 2/15/2016
      * @param maxResults
      * @param firstResult
-     * @return 
+     * @return
      */
     public List<Ad> findAdEntities(int maxResults, int firstResult) {
         return findAdEntities(false, maxResults, firstResult);
     }
-    
+
     /**
      * Either find all or find a group of records
-     * 
-     * @author Christopher Dufort  
+     *
+     * @author Christopher Dufort
      * @version 0.2.4 - Last modified 2/15/2016
      * @param all True means find all, false means find subset
      * @param maxResults Number of records to find
      * @param firstResult Record number to start returning records
-     * @return 
+     * @return
      */
     private List<Ad> findAdEntities(boolean all, int maxResults, int firstResult) {
         Query q = em.createQuery("select object(o) from Ad as o order by o.adId ASC");
@@ -162,44 +165,52 @@ public class AdJpaController implements Serializable {
         return q.getResultList();
 
     }
-    
+
     /**
-     * @author Christopher Dufort  
+     * @author Christopher Dufort
      * @version 0.2.4 - Last modified 2/15/2016
      * @param adId
-     * @return 
+     * @return
      */
     public Ad findAdById(Integer adId) {
         //em.find will find in a class by primary key
         return em.find(Ad.class, adId);
     }
-    
+
     /**
-     * @author Christopher Dufort  
+     * @author Christopher Dufort
      * @version 0.2.4 - Last modified 2/15/2016
      * @param adFilename
-     * @return 
+     * @return
      */
-    public Ad findAdByFilename(String adFilename){
+    public Ad findAdByFilename(String adFilename) {
         //Example of named query(predefined in the entity class)
-        Query query = em.createNamedQuery("Ad.findByAdFilename"); 
+        Query query = em.createNamedQuery("Ad.findByAdFilename");
         //binding for names parameters
-        query.setParameter("adFilename",adFilename);
-        
+        query.setParameter("adFilename", adFilename);
+
         //execute query returning single result
-        Ad result = (Ad)query.getSingleResult(); 
+        Ad result = (Ad) query.getSingleResult();
         return result;
     }
-    
+
     /**
-     * @author Christopher Dufort  
+     * @author Christopher Dufort
      * @version 0.2.4 - Last modified 2/15/2016
-     * @return 
+     * @return
      */
     public int getAdCount() {
         //Example of JPQL query
         Query q = em.createQuery("select count(o) from Ad as o");
         return ((Long) q.getSingleResult()).intValue();
+    }
+
+    public Ad findNewsFeedByActive() {
+        Query query = em.createQuery("SELECT a FROM Ad a WHERE a.active = true");
+
+        //execute query returning single result
+        Ad result = (Ad) query.getSingleResult();
+        return result;
     }
 
 }

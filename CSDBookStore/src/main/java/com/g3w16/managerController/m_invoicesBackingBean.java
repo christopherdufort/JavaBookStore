@@ -133,7 +133,7 @@ public class m_invoicesBackingBean {
 
     public void handleSearchInvoice() {
 
-        all = invoiceJpa.findInvoiceByUserNumber(Integer.parseInt(searchInvoice));
+        all = invoiceJpa.findInvoiceByUserId(Integer.parseInt(searchInvoice));
 
     }
 

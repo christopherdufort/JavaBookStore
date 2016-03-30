@@ -40,8 +40,9 @@ public class ProfileActionBean implements Serializable{
             userController.editProfile();
         } catch (Exception ex) {
             FacesContext.getCurrentInstance().addMessage("profileForm", new FacesMessage(ex.toString()));
-            return null; //Go No where
+            Logger.getLogger(this.getClass().getName()).log(Level.INFO, "Exception Occured in ProfileActionBean");
+            return null; //Stay on page
         }
-        return "home"; // TODO: Remove that drity hardcoded string at one point !
+        return "home"; 
     }
 }

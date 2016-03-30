@@ -898,18 +898,18 @@ INSERT INTO `book_genre` (`book_id`, `genre_id`) VALUES
 
 
 
-INSERT INTO `invoice` (`invoice_id`, `sale_date`, `user_number`, `total_net_value_of_sale`, `total_gross_value_of_sale`) VALUES
-(1, '2016-02-01 00:00:00', 1231, '16.31', '18.45'),
-(2, '2016-02-02 00:00:00', 1231, '20.56', '24.12'),
-(3, '2016-02-03 00:00:00', 1231, '48.87', '62.12'),
-(4, '2016-02-04 00:00:00', 1234, '20.56', '24.12'),
-(5, '2016-02-05 00:00:00', 1234, '8.74', '9.81'),
-(6, '2016-02-06 00:00:00', 1334, '9.99', '13.28');
+INSERT INTO `invoice` (`invoice_id`, `sale_date`, `user_id`, `total_net_value_of_sale`, `total_gross_value_of_sale`) VALUES
+(1, '2016-02-01 00:00:00', 1, '16.31', '18.45'),
+(2, '2016-02-02 00:00:00', 2, '20.56', '24.12'),
+(3, '2016-02-03 00:00:00', 3, '48.87', '62.12'),
+(4, '2016-02-04 00:00:00', 4, '20.56', '24.12'),
+(5, '2016-02-05 00:00:00', 5, '8.74', '9.81'),
+(6, '2016-02-06 00:00:00', 6, '9.99', '13.28');
 
 INSERT INTO `invoice_detail` (`invoice_detail_id`, `invoice_id`, `book_id`, `pst`, `gst`, `hst`, `book_price`, `quantity`) VALUES
 (1, 1, 76, '1.63', '0.82', '0.00', '16.31', 1),
-(2, 1, 77, '2.05', '1.03', '0.00', '20.56', 1),
-(3, 3, 78, '4.87', '2.44', '0.00', '16.29', 3),
+(2, 2, 77, '2.05', '1.03', '0.00', '20.56', 1),
+(3, 3, 78, '4.87', '2.44', '0.00', '16.29', 1),
 (4, 4, 77, '2.05', '1.03', '0.00', '20.56', 1),
 (5, 5, 80, '0.87', '0.44', '0.00', '8.74', 1);
 
@@ -929,13 +929,13 @@ INSERT INTO `province` (`province_id`, `province`, `pst`, `gst`, `hst`) VALUES
 (12, 'Northwest Territories', NULL, '5.00', NULL),
 (13, 'Nunavut', NULL, '5.00', NULL);
 
-INSERT INTO `survey` (`survey_id`, `question`, `answer_one`, `answer_two`, `answer_three`, `answer_default`) VALUES
-(1, 'What is your favorite type of book?', 'Electronic copy', 'Hard Cover', 'Paperback', 'Something else'),
-(2, 'Have you ever written a book?', 'Yes atleast one', 'No never', 'Im writing one', 'It''s a secret'),
-(3, 'What is the most you have ever paid for a book?', 'Atleast 100', 'Atleast 50', 'Atleast 5', 'I never pay for books'),
-(4, 'Are you reading a book now?', 'Yes', 'No', 'Does a blog count', 'Define the term book'),
-(5, 'Do you keep a reading journal/list?', 'Yes its full', 'Yes but its empty', 'No', 'I want to'),
-(6, 'Is there anything in your shopping cart now?', 'Yes im buying stuff', 'No I will buy stuff soon', 'I already bought a book', 'This is a trick to get me to buy books');
+INSERT INTO `survey` (`survey_id`, `question`, `answer_one`, `answer_two`, `answer_three`, `answer_default`, `active`) VALUES
+(1, 'What is your favorite type of book?', 'Electronic copy', 'Hard Cover', 'Paperback', 'Something else', true),
+(2, 'Have you ever written a book?', 'Yes atleast one', 'No never', 'Im writing one', 'It''s a secret', false),
+(3, 'What is the most you have ever paid for a book?', 'Atleast 100', 'Atleast 50', 'Atleast 5', 'I never pay for books', false),
+(4, 'Are you reading a book now?', 'Yes', 'No', 'Does a blog count', 'Define the term book', false),
+(5, 'Do you keep a reading journal/list?', 'Yes its full', 'Yes but its empty', 'No', 'I want to', false),
+(6, 'Is there anything in your shopping cart now?', 'Yes im buying stuff', 'No I will buy stuff soon', 'I already bought a book', 'This is a trick to get me to buy books', false);
 
 
 INSERT INTO `title` (`title_id`, `title`) VALUES
@@ -1023,5 +1023,5 @@ INSERT INTO review (isbn, date_submitted, user_id, rating, approval_id, review_t
 ('B004CFA9DM', '2012-01-30', '1', '3.8', '1', 'I wished the ending was different', 'I really wished it ended differently. It would have been nice to not expect the ending. To avoid having a good ending. '),
 ('B00M60RKW8', '2012-01-31', '1', '4.9', '1', 'Almost perfect ! Almost!', 'One of my favorite books. I dont care what everyone else thinks. It was really worth the time I’ve spent on it. ');
 
-INSERT INTO news_feed(news_feed_id, news_feed_link, active) VALUES
+INSERT INTO `news_feed` (`news_feed_id`, `news_feed_link`, `active`) VALUES
 (1, 'http://www.bookbrowse.com/rss/book_news.rss', true);

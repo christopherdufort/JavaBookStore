@@ -25,9 +25,9 @@ public interface InvoiceJpaControllerInterface extends Serializable {
  // new method
     List<Invoice> findInvoiceByDate(Date date1, Date date2);
 //new method
-    List<Invoice> findInvoiceByDateAndUser(Date date1, Date date2, Integer userNumber);
+    List<Invoice> findInvoiceByDateAndUser(Date date1, Date date2, Integer userId);
 
-    List<Invoice> findInvoiceByUserNumber(Integer userNumber);
+    List<Invoice> findInvoiceByUserId(Integer userId);
 
     List<Invoice> findInvoiceEntities();
 

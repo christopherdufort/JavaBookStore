@@ -16,7 +16,7 @@
 
             <ui:define name="event_listener">
                 <f:metadata>
-
+                    <f:event listener="#{orderController.getAllOrdersForCurrentUser}" type="preRenderView" /> 
                 </f:metadata>
             </ui:define>
 
@@ -29,53 +29,77 @@
                 </div>
                 <div class="row" id="content">
                     <div class="medium-8 columns">
-<!--                        <ui:repeat value="{ordersBackingBean.orderList}" var="order">-->
+                        <ui:repeat value="#{orderController.getAllOrdersForCurrentUser()}" var="order">
                             <div class="blog-post">
-                                <h3>Awesome blog post title <small>12/12/12</small></h3>
-                                <img class="thumbnail" src="http://placehold.it/850x350"></img>
+                                <h3>Order Placed  <small>#{order.saleDate}</small></h3>
                                 <div class="callout">
+                                    <img class="thumbnail" src="resources/images/#{order.detailsForThisOrder.get(0).book.isbn}_s.jpg"></img>
                                     <ul class="menu simple">
-                                        <li><a href="#">Book Name: Mike Mikers</a></li><br/>
-                                        <li><a href="#">isbn :123456</a></li><br/>
-                                        <li><a href="#">Author: Mike Mikers</a></li><br/>
-                                        <li><a href="#">Comments: 3</a></li><br/>
+                                        <li>Book Name:<a href="#"> #{order.detailsForThisOrder.get(0).book.title}</a></li><br/>
+                                        <li>isbn:<a href="#"> #{order.detailsForThisOrder.get(0).book.isbn}</a></li><br/>
+                                        <li>Author:<a href="#"> #{order.detailsForThisOrder.get(0).book.authorList.get(0)}</a></li><br/>
+                                        <li>Purchaser:<a href="#"> #{order.clientName}</a></li><br/>
                                     </ul>
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td>Net Total</td>
+                                                <td>#{order.netTotal}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>PST</td>
+                                                <td>#{order.totalPst}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>GST</td>
+                                                <td>#{order.totalGst}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>HST</td>
+                                                <td>#{order.totalHst}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Gross Total</td>
+                                                <td>#{order.grossTotal}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-<!--                        </ui:repeat>-->
+                        </ui:repeat>
                         <div class="blog-post">
                             <h3>Order Placed <small>3/6/2015</small></h3>
                             <img class="thumbnail" src="http://placehold.it/850x350"></img>
-                                <p>Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque faucibus vestibulum. Nulla at nulla justo, eget luctus.</p>
-                                <div class="callout">
-                                    <ul class="menu simple">
-                                        <li><a href="#">Author: Mike Mikers</a></li>
-                                        <li><a href="#">Comments: 3</a></li>
-                                    </ul>
-                                </div>
+                            <p>Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque faucibus vestibulum. Nulla at nulla justo, eget luctus.</p>
+                            <div class="callout">
+                                <ul class="menu simple">
+                                    <li><a href="#">Author: Mike Mikers</a></li>
+                                    <li><a href="#">Comments: 3</a></li>
+                                </ul>
+                            </div>
                         </div>
 
                         <div class="blog-post">
                             <h3>Awesome blog post title <small>3/6/2015</small></h3>
                             <img class="thumbnail" src="http://placehold.it/850x350"></img>
-                                <p>Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque faucibus vestibulum. Nulla at nulla justo, eget luctus.</p>
-                                <div class="callout">
-                                    <ul class="menu simple">
-                                        <li><a href="#">Author: Mike Mikers</a></li>
-                                        <li><a href="#">Comments: 3</a></li>
-                                    </ul>
-                                </div>
+                            <p>Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque faucibus vestibulum. Nulla at nulla justo, eget luctus.</p>
+                            <div class="callout">
+                                <ul class="menu simple">
+                                    <li><a href="#">Author: Mike Mikers</a></li>
+                                    <li><a href="#">Comments: 3</a></li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="blog-post">
                             <h3>Awesome blog post title <small>3/6/2015</small></h3>
                             <img class="thumbnail" src="http://placehold.it/850x350"></img>
-                                <p>Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque faucibus vestibulum. Nulla at nulla justo, eget luctus.</p>
-                                <div class="callout">
-                                    <ul class="menu simple">
-                                        <li><a href="#">Author: Mike Mikers</a></li>
-                                        <li><a href="#">Comments: 3</a></li>
-                                    </ul>
-                                </div>
+                            <p>Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque faucibus vestibulum. Nulla at nulla justo, eget luctus.</p>
+                            <div class="callout">
+                                <ul class="menu simple">
+                                    <li><a href="#">Author: Mike Mikers</a></li>
+                                    <li><a href="#">Comments: 3</a></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                     <div class="medium-3 columns" data-sticky-container="">

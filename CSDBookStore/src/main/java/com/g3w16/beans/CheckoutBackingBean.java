@@ -215,7 +215,7 @@ public class CheckoutBackingBean implements Serializable {
     public String confirmPurchase() throws Exception {
         Invoice invoice = new Invoice();
         invoice.setSaleDate(new Date());
-        invoice.setUserNumber(user.getRegisteredUser().getUserId());
+        invoice.setUserId(user.getRegisteredUser().getUserId());
         invoice.setTotalNetValueOfSale(subtotal);
         invoice.setTotalGrossValueOfSale(total);
         //add invoice to db, keep using id for each individual invoice detail
