@@ -34,11 +34,11 @@ public class CartBackingBean implements Serializable {
      * 
      * @throws IOException 
      */
-    public void addToCart(Book book) throws IOException {
+    public String addToCart(Book book) throws IOException {
         if (!cart.contains(book))
             cart.add(book);
         
-        FacesContext.getCurrentInstance().getExternalContext().redirect("cart.xhtml");
+        return "cart";
     }
     
     /**
@@ -101,10 +101,10 @@ public class CartBackingBean implements Serializable {
      * 
      * @throws IOException 
      */
-    public void checkOut() throws IOException {
+    public String checkOut() throws IOException {
         checkoutBB.setOrder(cart);
         checkoutBB.setSubtotal(getTotal());
         
-        FacesContext.getCurrentInstance().getExternalContext().redirect("checkout.xhtml");
+        return "checkout";
     }
 }

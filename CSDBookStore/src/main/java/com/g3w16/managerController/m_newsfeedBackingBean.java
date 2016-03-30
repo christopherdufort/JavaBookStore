@@ -7,40 +7,50 @@ package com.g3w16.managerController;
 
 import com.g3w16.entities.*;
 import com.g3w16.entities.exceptions.RollbackFailureException;
+import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.enterprise.context.RequestScoped;
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
-import javax.inject.Named;
+
 
 /**
  *
  * @author Xin Ma
  * @author Rita Lazaar
  */
-@Named("m_newsfeed")
-@RequestScoped
-public class m_newsfeedBackingBean {
+@ManagedBean(name="m_newsfeed")
+@SessionScoped
+public class m_newsfeedBackingBean implements Serializable {
+    
+    private List<NewsFeed> allNews;
 
-   
     private NewsFeed newsFeed;
 
     @Inject
     NewsFeedJpaController newsJpa;
+
+    @PostConstruct
+    public void init() {
+        allNews=newsJpa.findAllNewsFeeds();       
+    }
 
     public String preCreateNews() {
         return "m_createNews";
     }
 
     public NewsFeed getNewsFeed() {
-        if(newsFeed==null)
-            newsFeed=new NewsFeed();
+        if (newsFeed == null) {
+            newsFeed = new NewsFeed();
+        }
         return newsFeed;
     }
-    
-    public void setNews(NewsFeed newsFeed){
-        this.newsFeed=newsFeed;
+
+    public void setNews(NewsFeed newsFeed) {
+        this.newsFeed = newsFeed;
     }
 
     public String createNews() {
@@ -49,6 +59,7 @@ public class m_newsfeedBackingBean {
         } catch (Exception ex) {
             Logger.getLogger(m_newsfeedBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
+        allNews=newsJpa.findAllNewsFeeds();     
         return "m_news";
     }
 
@@ -63,6 +74,7 @@ public class m_newsfeedBackingBean {
         } catch (Exception ex) {
             Logger.getLogger(m_newsfeedBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
+        allNews=newsJpa.findAllNewsFeeds(); 
         return "m_news";
     }
 
@@ -75,16 +87,16 @@ public class m_newsfeedBackingBean {
         } catch (Exception ex) {
             Logger.getLogger(m_newsfeedBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        allNews=newsJpa.findAllNewsFeeds();     
         return "m_news";
     }
 
-    public String cancel() { 
+    public String cancel() {
         return "m_news";
     }
-    
+
     public List<NewsFeed> getAllNews() {
-        return newsJpa.findAllNewsFeeds();
+        return allNews;
     }
 
     public int getNewsFeedCount() {

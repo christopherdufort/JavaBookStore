@@ -14,10 +14,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * backing bean for book.xhtml
@@ -259,9 +262,16 @@ public class BookBackingBean implements Serializable {
         return booksFromAuthor;
     }
     
-    public void displayBook(Book book) throws IOException {
+    public String displayBook(Book book) throws IOException {
         setBook(book);
-        
-        FacesContext.getCurrentInstance().getExternalContext().redirect("book.xhtml");
+        // -- the following code place a cookie on client side so we can recover the last genre later
+        int forever = 7; // TODO: replace this with something else
+        Cookie cookie = new Cookie(
+                "lastGenreId",
+                book.getGenreList().get(0).getGenreId().toString()
+        );
+        cookie.setMaxAge(forever);
+        ((HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse()).addCookie(cookie);
+        return "book";
     }
 }
