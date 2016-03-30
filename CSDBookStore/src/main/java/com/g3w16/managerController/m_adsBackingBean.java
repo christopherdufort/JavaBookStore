@@ -21,21 +21,22 @@ import javax.inject.Inject;
  * @author Xin Ma
  * @author Rita Lazaar
  */
-@ManagedBean(name="m_ads")
+@ManagedBean(name = "m_ads")
 @SessionScoped
 public class m_adsBackingBean implements Serializable {
 
     private Ad ad;
-    
+
     private List<Ad> allAd;
-    
+
     @Inject
     AdJpaController adJpa;
 
     @PostConstruct
-    public void init(){
+    public void init() {
         allAd = adJpa.findAllAds();
     }
+
     public String preCreateAd() {
         return "m_createAd";
     }
@@ -52,8 +53,6 @@ public class m_adsBackingBean implements Serializable {
     }
 
     public String createAd() {
-        System.out.println(">>>>>>>ad"+ad.getActive());
-        System.out.println(">>>>>>>ad"+ad.getAdFilename());
         try {
             adJpa.create(ad);
         } catch (Exception ex) {
@@ -78,8 +77,8 @@ public class m_adsBackingBean implements Serializable {
         return "m_ads";
     }
 
-    public void active(Ad a){
-        ad=adJpa.findAdById(a.getAdId());
+    public void active(Ad a) {
+        ad = adJpa.findAdById(a.getAdId());
         ad.setActive(a.getActive());
         try {
             adJpa.edit(ad);
@@ -87,6 +86,7 @@ public class m_adsBackingBean implements Serializable {
             Logger.getLogger(m_adsBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     public String destroyAd(Ad a) {
         try {
             adJpa.destroy(a.getAdId());
@@ -110,5 +110,5 @@ public class m_adsBackingBean implements Serializable {
     public int getAdCount() {
         return adJpa.getAdCount();
     }
- 
+
 }

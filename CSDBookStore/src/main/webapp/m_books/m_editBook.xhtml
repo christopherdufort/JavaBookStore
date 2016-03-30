@@ -44,10 +44,10 @@
 
 <!--                                                <h:outputLabel value="#{msgs.author}" for="author"></h:outputLabel>
                                                 <h:outputText rendered="m_books.author"></h:outputText>
-                                                <h:selectOneMenu id="author" value="#{m_books.author}" >
+                                                <selectManyListbox id="author" value="#{m_books.author}" >
                                                     <f:converter converterId="com.g3w16.converter.AuthorConverter"/>
                                                     <f:selectItems value="#{m_books.allAuthors}" var="a" itemLabel="#{a.authorName}" itemValue="#{a.authorId}"/>
-                                                </h:selectOneMenu>
+                                                </selectManyListbox>
                                                 <h:message for="author" errorStyle="color:red; display:block"/>-->
 
                                                 <h:outputLabel value="#{msgs.publisher}" for="publisher"></h:outputLabel>
@@ -62,13 +62,13 @@
                                                 </h:inputText>
                                                 <h:message for="publish_date" errorStyle="color:red; display:block"/>
 
-<!--                                                <h:outputLabel value="#{msgs.format}" for="format"></h:outputLabel>
+                                                <h:outputLabel value="#{msgs.format}" for="format"></h:outputLabel>
                                                 <h:outputText rendered="m_books.format"></h:outputText>
-                                                <h:selectOneMenu id="format" value="#{m_books.format}" >
+                                                <h:selectOneMenu id="format" value="#{m_books.book.formatList}" >
                                                     <f:converter converterId="com.g3w16.converter.FormatConverter"/>
                                                     <f:selectItems value="#{m_books.allFormat}" var="a" itemLabel="#{a.extension}" itemValue="#{a.formatId}"/>
                                                 </h:selectOneMenu>
-                                                <h:message for="format" errorStyle="color:red; display:block"/>
+                                                <h:message for="format" errorStyle="color:red; display:block"/><!--
 
                                                 <h:outputLabel value="#{msgs.genre}" for="genre"></h:outputLabel>
                                                 <h:outputText rendered="m_books.genre"></h:outputText>
