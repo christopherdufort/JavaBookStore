@@ -52,6 +52,8 @@ public class m_adsBackingBean implements Serializable {
     }
 
     public String createAd() {
+        System.out.println(">>>>>>>ad"+ad.getActive());
+        System.out.println(">>>>>>>ad"+ad.getAdFilename());
         try {
             adJpa.create(ad);
         } catch (Exception ex) {

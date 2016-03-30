@@ -39,7 +39,7 @@
                                         </p:column>
                                         <p:column  headerText="#{msgs.active}">
                                             <p:selectBooleanCheckbox value="#{news.active}">
-                                                <p:ajax update="@form" listener="#{m_news.active(news)}"/>
+                                                <p:ajax update="@form" listener="#{m_newsfeed.active(news)}"/>
                                             </p:selectBooleanCheckbox>
                                         </p:column>
                                         <p:column filterBy="#{news.newsFeedId}" sortBy="#{news.newsFeedId}" headerText="#{msgs.news_id}"  filterMatchMode="contains">

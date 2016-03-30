@@ -52,6 +52,7 @@ public class m_surveysBackingBean implements Serializable {
     }
 
     public String createSurvey() {
+        
         try {
             surveyJpa.create(survey);
         } catch (Exception ex) {
