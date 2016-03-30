@@ -30,8 +30,7 @@
                                                 <h:outputLabel value="#{msgs.book_id}" for="book_id"></h:outputLabel>
                                                 <h:inputText id="book_id" value="#{m_books.book.bookId}" />
                                                 <h:outputText rendered="m_books.selectedBook.bookId"></h:outputText>
-
-
+                                               
                                                 <h:outputLabel value="#{msgs.isbn}" for="isbn"></h:outputLabel>
                                                 <h:outputText rendered="m_books.selectedBook.isbn"></h:outputText>
                                                 <h:inputText id="isbn" value="#{m_books.book.isbn}" />
@@ -39,6 +38,13 @@
                                                 <h:outputLabel value="#{msgs.title}" for="title"></h:outputLabel>
                                                 <h:outputText rendered="m_books.selectedBook.title"></h:outputText>
                                                 <h:inputText id="title" value="#{m_books.book.title}" />
+                                                
+                                                <h:outputLabel value="#{msgs.author}" for="author"></h:outputLabel>
+                                                <h:outputText rendered="m_books.selectedBook.author"></h:outputText>
+                                                <h:selectOneMenu id="province" value="#{m_books.author}" >
+                                                    <f:converter converterId="com.g3w16.converter.AuthorConverter"/>
+                                                    <f:selectItems value="#{m_books.allAuthors}" var="a" itemLabel="#{a.authorName}" itemValue="#{a.authorId}"/>
+                                                </h:selectOneMenu>
 
                                                 <h:outputLabel value="#{msgs.publisher}" for="publisher"></h:outputLabel>
                                                 <h:outputText rendered="m_books.selectedBook.publisher"></h:outputText>
@@ -46,7 +52,24 @@
 
                                                 <h:outputLabel value="#{msgs.publish_date}" for="publish_date"></h:outputLabel>
                                                 <h:outputText rendered="mm_books.selectedBook.publishDate"></h:outputText>
-                                                <h:inputText id="publish_date" value="#{m_books.book.publishDate}" />
+                                                <h:inputText id="publish_date" value="#{m_books.book.publishDate}" >
+                                                    <f:convertDateTime pattern="yyyy-MM-dd"/>
+                                                </h:inputText>
+                                                
+                                                <h:outputLabel value="#{msgs.format}" for="format"></h:outputLabel>
+                                                <h:outputText rendered="m_books.selectedBook.format"></h:outputText>
+                                                <h:selectOneMenu id="format" value="#{m_books.format}" >
+                                                    <f:converter converterId="com.g3w16.converter.FormatConverter"/>
+                                                    <f:selectItems value="#{m_books.allFormat}" var="a" itemLabel="#{a.extension}" itemValue="#{a.formatId}"/>
+                                                </h:selectOneMenu>
+                                                
+                                                
+                                                <h:outputLabel value="#{msgs.genre}" for="format"></h:outputLabel>
+                                                <h:outputText rendered="m_books.selectedBook.genre"></h:outputText>
+                                                <h:selectOneMenu id="genre" value="#{m_books.genre}" >
+                                                    <f:converter converterId="com.g3w16.converter.FormatConverter"/>
+                                                    <f:selectItems value="#{m_books.allGenre}" var="a" itemLabel="#{a.genreName}" itemValue="#{a.genreId}"/>
+                                                </h:selectOneMenu>
 
                                                 <h:outputLabel value="#{msgs.page_number}" for="page_number"></h:outputLabel>
                                                 <h:outputText rendered="m_books.selectedBook.pageNumber"></h:outputText>
@@ -66,7 +89,9 @@
 
                                                 <h:outputLabel value="#{msgs.date_entered}" for="date_entered"></h:outputLabel>
                                                 <h:outputText rendered="m_books.selectedBook.dateEntered"></h:outputText>
-                                                <h:inputText id="date_entered" value="#{m_books.book.dateEntered}" />
+                                                <h:inputText id="date_entered" value="#{m_books.book.dateEntered}" >
+                                                <f:convertDateTime pattern="yyyy-MM-dd"/>
+                                                </h:inputText>
 
                                                 <h:outputLabel value="#{msgs.available}" for="available"></h:outputLabel>
                                                 <h:outputText rendered="m_books.selectedBook.available"></h:outputText>
@@ -83,10 +108,10 @@
                                             </h:panelGrid>
                                             <br />
                                             <h:commandButton value="#{msgs.update}"
-                                                             action="#{m_books.updateBook}" class="btn btn-success btn-xs" />
+                                                             action="#{m_books.updateBook(m_books.book)}" class="btn btn-success btn-xs" />
                                             <h:outputText value="&#160;" />
                                             <h:commandButton value="#{msgs.cancel}"
-                                                             action="#{m_books.cancel()}" class="btn btn-danger btn-xs" />
+                                                             action="#{m_books.cancel}" class="btn btn-danger btn-xs" />
                                         </h:form>
                                     </div>
                                     <!-- /.table-responsive -->
