@@ -34,7 +34,8 @@ import javax.validation.constraints.NotNull;
     @NamedQuery(name = "InvoiceDetail.findByHst", query = "SELECT i FROM InvoiceDetail i WHERE i.hst = :hst"),
     @NamedQuery(name = "InvoiceDetail.findByBookPrice", query = "SELECT i FROM InvoiceDetail i WHERE i.bookPrice = :bookPrice"),
     @NamedQuery(name = "InvoiceDetail.findByQuantity", query = "SELECT i FROM InvoiceDetail i WHERE i.quantity = :quantity"),
-    @NamedQuery(name = "InvoiceDetail.findByInvoiceId", query = "SELECT i FROM InvoiceDetail i WHERE i.invoiceId = :invoiceId")})
+    @NamedQuery(name = "InvoiceDetail.findByInvoiceId", query = "SELECT i FROM InvoiceDetail i WHERE i.invoiceId = :invoiceId"),
+    @NamedQuery(name = "InvoiceDetail.findByBookId", query = "SELECT i FROM InvoiceDetail i WHERE i.bookId = :bookId"),})
 
 public class InvoiceDetail implements Serializable {
 

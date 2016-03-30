@@ -25,10 +25,6 @@ import javax.inject.Inject;
 @ManagedBean(name="m_newsfeed")
 @SessionScoped
 public class m_newsfeedBackingBean implements Serializable {
-
-    private String searchNews;
-
-    private List<NewsFeed> searched;
     
     private List<NewsFeed> allNews;
 
@@ -57,29 +53,13 @@ public class m_newsfeedBackingBean implements Serializable {
         this.newsFeed = newsFeed;
     }
 
-    public String getSearchNews() {
-        return searchNews;
-    }
-
-    public void setSearchNews(String searchNews) {
-        this.searchNews = searchNews;
-    }
-
-    public List<NewsFeed> getSearched() {
-        return searched;
-    }
-
-    public void setSearched(List<NewsFeed> searched) {
-        this.searched = searched;
-    }
-
     public String createNews() {
         try {
             newsJpa.create(newsFeed);
         } catch (Exception ex) {
             Logger.getLogger(m_newsfeedBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //allNews=newsJpa.findAllNewsFeeds();     
+        allNews=newsJpa.findAllNewsFeeds();     
         return "m_news";
     }
 
@@ -94,10 +74,11 @@ public class m_newsfeedBackingBean implements Serializable {
         } catch (Exception ex) {
             Logger.getLogger(m_newsfeedBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
+        allNews=newsJpa.findAllNewsFeeds(); 
         return "m_news";
     }
 
-    public void destroyNews(NewsFeed newsfeed) {
+    public String destroyNews(NewsFeed newsfeed) {
 
         try {
             newsJpa.destroy(newsfeed.getNewsFeedId());
@@ -106,8 +87,8 @@ public class m_newsfeedBackingBean implements Serializable {
         } catch (Exception ex) {
             Logger.getLogger(m_newsfeedBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //allNews=newsJpa.findAllNewsFeeds();     
-
+        allNews=newsJpa.findAllNewsFeeds();     
+        return "m_news";
     }
 
     public String cancel() {

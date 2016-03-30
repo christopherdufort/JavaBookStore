@@ -70,8 +70,7 @@ public class m_surveysBackingBean {
     public String destroySurvey(Survey s) {
 
         try {
-           // surveyJpa.destroy(s.getSurveyId());
-            surveyJpa.destroySurvey(survey);
+           surveyJpa.destroy(s.getSurveyId());          
         } catch (RollbackFailureException ex) {
             Logger.getLogger(m_surveysBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {

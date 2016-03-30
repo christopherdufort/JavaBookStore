@@ -22,11 +22,11 @@ public interface InvoiceJpaControllerInterface extends Serializable {
     void create(Invoice invoice) throws RollbackFailureException, Exception;
 
     Invoice findInvoice(Integer id);
- // new method
+    // new method
     List<Invoice> findInvoiceByDate(Date date1, Date date2);
-//new method
+    //new method
     List<Invoice> findInvoiceByDateAndUser(Date date1, Date date2, Integer userId);
-
+    
     List<Invoice> findInvoiceByUserId(Integer userId);
 
     List<Invoice> findInvoiceEntities();

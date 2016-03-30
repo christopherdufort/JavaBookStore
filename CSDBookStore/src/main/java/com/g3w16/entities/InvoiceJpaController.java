@@ -5,12 +5,9 @@
  */
 package com.g3w16.entities;
 
-import com.g3w16.entities.exceptions.IllegalOrphanException;
-import com.g3w16.entities.exceptions.NonexistentEntityException;
 import com.g3w16.entities.exceptions.RollbackFailureException;
 import java.io.Serializable;
 import javax.persistence.Query;
-import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,18 +15,18 @@ import javax.annotation.Resource;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 
 /**
  *
  * @author Rita Lazaar
- * 
+ * @author Christopher Dufort
+ *
  */
 @Named
 @RequestScoped
-public class InvoiceJpaController implements InvoiceJpaControllerInterface {
+public class InvoiceJpaController implements Serializable,InvoiceJpaControllerInterface{
 
     @Resource
     private UserTransaction utx;
@@ -44,7 +41,6 @@ public class InvoiceJpaController implements InvoiceJpaControllerInterface {
      * @throws RollbackFailureException
      * @throws Exception
      */
-    @Override
     public void create(Invoice invoice) throws RollbackFailureException, Exception {
         if (invoice.getInvoiceDetailList() == null) {
             invoice.setInvoiceDetailList(new ArrayList<InvoiceDetail>());
@@ -83,7 +79,6 @@ public class InvoiceJpaController implements InvoiceJpaControllerInterface {
      *
      * @return
      */
-    @Override
     public List<Invoice> findInvoiceEntities() {
         return findInvoiceEntities(true, -1, -1);
     }
@@ -96,7 +91,6 @@ public class InvoiceJpaController implements InvoiceJpaControllerInterface {
      * @param firstResult
      * @return
      */
-    @Override
     public List<Invoice> findInvoiceEntities(int maxResults, int firstResult) {
         return findInvoiceEntities(false, maxResults, firstResult);
     }
@@ -126,7 +120,6 @@ public class InvoiceJpaController implements InvoiceJpaControllerInterface {
      * @param id
      * @return
      */
-    @Override
     public Invoice findInvoice(Integer id) {
         return em.find(Invoice.class, id);
     }
@@ -150,7 +143,6 @@ public class InvoiceJpaController implements InvoiceJpaControllerInterface {
      * @param userId
      * @return
      */
-    @Override
     public List<Invoice> findInvoiceByDate(Date date1, Date date2) {
         Query q = em.createNamedQuery("Invoice.findAllInvoicesByDate", Invoice.class);
         q.setParameter(1, date1);
@@ -165,8 +157,10 @@ public class InvoiceJpaController implements InvoiceJpaControllerInterface {
      * @param userId
      * @return
      */
+
     @Override
     public List<Invoice> findInvoiceByDateAndUser(Date date1, Date date2, Integer userId) {
+
         Query q = em.createNamedQuery("Invoice.findAllInvoicesByDateAndUser", Invoice.class);
         q.setParameter(1, date1);
         q.setParameter(2, date2);
@@ -180,7 +174,6 @@ public class InvoiceJpaController implements InvoiceJpaControllerInterface {
      *
      * @return
      */
-    @Override
     public int getInvoiceCount() {
         Query q = em.createQuery("select count(o) from Invoice as o");
         return ((Long) q.getSingleResult()).intValue();
