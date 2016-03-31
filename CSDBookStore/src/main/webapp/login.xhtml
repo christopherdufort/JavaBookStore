@@ -23,13 +23,13 @@
                         <h:form id="auth_form">
                             <div class="row column log-in-form">
                                 <h4 class="text-center">Log in with your email account</h4>
-                                <h:message for="auth_form" style="color:red">
+                                <h:message class="error" for="auth_form" style="color:red">
                                 </h:message>
                                 <label>Email
                                     <h:inputText id="emailInput" value="#{authBean.email}" >
                                         <f:validator validatorId="com.g3w16.validator.EmailValidator"/>
                                     </h:inputText>
-                                    <h:message for="emailInput" style="color:red">
+                                    <h:message class="error" for="emailInput" style="color:red">
                                     </h:message>
                                 </label>
                                 <label>Password
@@ -38,7 +38,7 @@
                                 </label>
                                 <!--<input id="show-password" type="checkbox"><label for="show-password">Show password</label></input>-->
                                 <p><h:commandLink value="Log in" class="button expanded" action="#{userAuthView.authenticate()}" ></h:commandLink></p>
-                                <p class="text-center"><a href="resetPassword.xhtml">Forgot your password?</a></p>   
+                                <p class="text-center"><a href="resetPassword.xhtml">Forgot your password?</a></p>
                             </div>
                         </h:form>
                     </div>
