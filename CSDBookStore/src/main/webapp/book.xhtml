@@ -34,12 +34,8 @@
                     </div>
                     <div class="medium-6 large-5 columns">
                         <h3 class="noMargin"><h:outputText value="#{bookBB.book.title}"/></h3>
-                        <table class="plainTable">
-                            <tr>
-                                <td class="noPadding"><label><p:rating value="#{bookBB.starsForOverallRating}" readonly="true"/></label></td>
-                                <td class="noPadding"><label>&nbsp;<h:outputText value="[#{bookBB.reviewsAmount}]"/></label></td>
-                            </tr>
-                        </table>
+                        <label><p:rating value="#{bookBB.starsForOverallRating}" readonly="true"/></label>
+                        <label>&nbsp;<h:outputText value="[#{bookBB.reviewsAmount}]"/></label>
                         <h5><h:outputText value="#{bookBB.authors}"/></h5> <!--authors concatenated-->
                         <p><h:outputText value="#{bookBB.book.synopsis}"/></p>	
                         <h:form id="buyBookNow">
