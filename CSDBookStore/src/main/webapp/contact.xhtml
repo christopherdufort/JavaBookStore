@@ -1,5 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- Author: Christopher Duffort
+     Author: Giuseppe Campanelli -->
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
@@ -12,25 +14,41 @@
             </ui:define>
 
             <ui:define name="content">
-                <div class="row log-in-form" style="background:#f2f2f2">
-                    <div class="medium-6 columns">
-                        <h2><i class="fi-mail large"></i> Contact Us</h2>
-                        <p>#{msgs.contactUsMessage}</p>
+                <h:form>
+                    <div class="row log-in-form" style="background:#f2f2f2">
+                        <div class="medium-6 columns">
+                            <h2><i class="fi-mail large"></i> #{msgs.contactUs}</h2>
+                            <p>#{msgs.contactUsMessage}</p>
+                        </div>
+                        <div class="medium-6 columns">
+                            <label>#{msgs.name}
+                                <h:inputText id="nameInput" value="" required="true" requiredMessage="#{msgs.required}">
+                                    <f:validateLength minimum="5" maximum="35"/>
+                                    <f:ajax event="blur" render="nameInputError"/>
+                                </h:inputText>
+                                <h:message id="nameInputError" class="error" for="nameInput">
+                                </h:message>
+                            </label>
+                            <label>#{msgs.email}
+                                <h:inputText id="emailInput" value="" required="true" requiredMessage="#{msgs.required}">
+                                    <f:validator validatorId="com.g3w16.validator.EmailValidator"/>
+                                    <f:ajax event="blur" render="emailInputError"/>
+                                </h:inputText>
+                                <h:message id="emailInputError" class="error" for="emailInput">
+                                </h:message>
+                            </label>
+                            <label>Message
+                                <h:inputTextarea id="messageInput" value="" required="true" requiredMessage="#{msgs.required}">
+                                    <f:validateLength minimum="10" maximum="750"/>
+                                    <f:ajax event="blur" render="messageInputError"/>
+                                </h:inputTextarea>
+                                <h:message id="messageInputError" class="error" for="messageInput">
+                                </h:message>
+                            </label>
+                            <h:commandButton styleClass="button" value="#{msgs.submit}"/>
+                        </div>
                     </div>
-                    <div class="medium-6 columns">
-                        <label>#{msgs.name}
-                            <input type="text" placeholder="#{msgs.name}"></input>
-                        </label>
-                        <label>#{msgs.email}
-                            <input type="text" placeholder="#{msgs.email}"></input>
-                        </label>
-                        <label>
-                            Message
-                            <textarea placeholder="Message"></textarea>
-                        </label>
-                        <input type="submit" class="button expanded" value="#{msgs.submit}"></input>
-                    </div>
-                </div>
+                </h:form>
 
             </ui:define>
 
