@@ -109,11 +109,8 @@ public class Author implements Serializable {
         if (!(object instanceof Author)) {
             return false;
         }
-        Author other = (Author) object;
-        if ((this.authorId == null && other.authorId != null) || (this.authorId != null && !this.authorId.equals(other.authorId))) {
-            return false;
-        }
-        return true;
+        
+        return ((Author)object).authorId==this.authorId;
     }
     
     /**

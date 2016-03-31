@@ -17,23 +17,25 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
 
-
 /**
  *
  * @author Xin Ma
  * @author Rita Lazaar
  */
-@ManagedBean(name="m_books")
+@ManagedBean(name = "m_books")
 @SessionScoped
-public class m_booksBackingBean implements Serializable{
+public class m_booksBackingBean implements Serializable {
 
     private Book book;
     private Author author;
     private List<Author> authorList;
     private List<Format> formatList;
+    private List<Genre> genreList;
+
     private Format format;
     private Genre genre;
     private List<Book> all;
+
     @Inject
     BookJpaController bookJpa;
 
@@ -51,10 +53,10 @@ public class m_booksBackingBean implements Serializable{
 
     @Inject
     InvoiceDetailJpaController invoiceJpa;
-    
+
     @PostConstruct
-    public void init(){
-        all=bookJpa.findBookEntities();
+    public void init() {
+        all = bookJpa.findBookEntities();      
     }
 
     public String preCreateBook() {
@@ -123,24 +125,18 @@ public class m_booksBackingBean implements Serializable{
         } catch (Exception ex) {
             Logger.getLogger(m_booksBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        all=bookJpa.findBookEntities();
+        all = bookJpa.findBookEntities();
         return "m_books";
     }
 
-    public String editBook(Book b) throws IOException {
-//        if (book == null) {
-            book = bookJpa.findBookEntitiesById(b.getBookId());
-//        }
-//        
-//        book = b;
-//        FacesContext.getCurrentInstance().getExternalContext().redirect("m_editBook.xhtml");
+    public String editBook(int id) throws IOException {
+        
+        book = bookJpa.findBookEntitiesById(id);
         return "m_editBook";
     }
 
     public String bookDetails(Book b) {
         book = bookJpa.findBookEntitiesById(b.getBookId());
-//        
-      
         return "m_viewBook";
     }
 
@@ -149,13 +145,14 @@ public class m_booksBackingBean implements Serializable{
             System.out.println(">>>>>>update");
             book.setFormatList(getAllFormatForBook());
             book.setAuthorList(getAllAuthorsForBook());
+            book.setGenreList(getAllGenreForBook());
             book.setReviewList(getAllReviews());
             bookJpa.edit(book);
 
         } catch (Exception ex) {
             Logger.getLogger(m_booksBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        all=bookJpa.findBookEntities();
+        all = bookJpa.findBookEntities();
         return "m_books";
     }
 
@@ -168,7 +165,7 @@ public class m_booksBackingBean implements Serializable{
         } catch (Exception ex) {
             Logger.getLogger(m_booksBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        all=bookJpa.findBookEntities();
+        all = bookJpa.findBookEntities();
         return "m_books";
     }
 
@@ -185,6 +182,8 @@ public class m_booksBackingBean implements Serializable{
     }
 
     public List<Author> getAllAuthorsForBook() {
+        System.out.println(">>>>>>>>>>>>>>>book"+book.getBookId());
+        //book = bookJpa.findBookEntitiesById(id);
         return authorJpa.findAuthorEntitiesByBook(book);
     }
 
@@ -193,6 +192,7 @@ public class m_booksBackingBean implements Serializable{
     }
 
     public List<Format> getAllFormatForBook() {
+       // book = bookJpa.findBookEntitiesById(id);
         return formatJpa.findFormatEntitiesByBook(book);
     }
 
@@ -201,6 +201,7 @@ public class m_booksBackingBean implements Serializable{
     }
 
     public List<Genre> getAllGenreForBook() {
+        //book = bookJpa.findBookEntitiesById(id);
         return genreJpa.findGenreEntitiesByBook(book);
     }
 

@@ -101,11 +101,8 @@ public class Genre implements Serializable {
         if (!(object instanceof Genre)) {
             return false;
         }
-        Genre other = (Genre) object;
-        if ((this.genreId == null && other.genreId != null) || (this.genreId != null && !this.genreId.equals(other.genreId))) {
-            return false;
-        }
-        return true;
+        
+        return ((Genre)object).genreId==this.genreId;
     }
     
     /**
