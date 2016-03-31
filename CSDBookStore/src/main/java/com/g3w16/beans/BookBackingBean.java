@@ -272,6 +272,6 @@ public class BookBackingBean implements Serializable {
         );
         cookie.setMaxAge(forever);
         ((HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse()).addCookie(cookie);
-        return "book";
+        return "book?faces-redirect=true";
     }
 }
