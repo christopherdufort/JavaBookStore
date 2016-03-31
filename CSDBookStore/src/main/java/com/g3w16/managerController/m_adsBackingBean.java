@@ -87,7 +87,7 @@ public class m_adsBackingBean implements Serializable {
         }
     }
 
-    public String destroyAd(Ad a) {
+    public void destroyAd(Ad a) {
         try {
             adJpa.destroy(a.getAdId());
         } catch (RollbackFailureException ex) {
@@ -96,7 +96,6 @@ public class m_adsBackingBean implements Serializable {
             Logger.getLogger(m_adsBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         allAd = adJpa.findAllAds();
-        return "m_ads";
     }
 
     public String cancel() {

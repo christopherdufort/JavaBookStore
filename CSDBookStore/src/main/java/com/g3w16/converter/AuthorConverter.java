@@ -5,7 +5,10 @@
  */
 package com.g3w16.converter;
 
+import com.g3w16.entities.Author;
 import com.g3w16.entities.AuthorJpaController;
+import java.util.Arrays;
+import java.util.List;
 import javax.enterprise.inject.spi.CDI;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -23,7 +26,7 @@ public class AuthorConverter implements Converter {
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
         System.out.println(">>>>>>>>author"+value);
         AuthorJpaController authorJpa = CDI.current().select(AuthorJpaController.class).get();
-        return authorJpa.findAuthor(Integer.parseInt(value));
+        return authorJpa.findTitleByName(value);
     }
 
     @Override

@@ -16,6 +16,7 @@ import javax.annotation.Resource;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 
@@ -279,6 +280,15 @@ public class AuthorJpaController implements Serializable {
         return em.find(Author.class, id);
     }
 
+    public Author findTitleByName(String name) {
+        try {
+            Query q = em.createNamedQuery("Author.findByAuthorName", Author.class);
+            q.setParameter("authorName", name);
+            return (Author) q.getSingleResult();
+        } catch (NoResultException e) {
+            return new Author();
+        }
+    }
     public int getAuthorCount() {
         Query q = em.createQuery("select count(o) from Author as o");
         return ((Long) q.getSingleResult()).intValue();

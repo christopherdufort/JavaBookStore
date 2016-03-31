@@ -190,13 +190,6 @@ public class TitleJpaController implements Serializable {
         return em.find(Title.class, id);
     }
 
-    /**
-     * Gets a title by its name.
-     *
-     * @param title Name of the title
-     *
-     * @return title with specific name
-     */
     public Title findTitleByName(String title) {
         try {
             Query q = em.createNamedQuery("Title.findByTitle", Title.class);

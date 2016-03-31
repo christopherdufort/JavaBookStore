@@ -62,7 +62,7 @@ public class m_titlesBackingBean implements Serializable {
         return "m_titles";
     }
 
-    public String destroyTitle(Title t) {
+    public void destroyTitle(Title t) {
         try {
             titleJpa.destroy(t.getTitleId());
         } catch (RollbackFailureException ex) {
@@ -71,7 +71,6 @@ public class m_titlesBackingBean implements Serializable {
             Logger.getLogger(m_titlesBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         allTitle = titleJpa.findAll();
-        return "m_titles";
     }
 
     public String cancel() {

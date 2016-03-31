@@ -62,7 +62,7 @@ public class m_authorsBackingBean implements Serializable {
         return "m_authors";
     }
 
-    public String destroyAuthor(Author a) {
+    public void destroyAuthor(Author a) {
         try {
             authorJpa.destroy(a.getAuthorId());
         } catch (RollbackFailureException ex) {
@@ -71,7 +71,6 @@ public class m_authorsBackingBean implements Serializable {
             Logger.getLogger(m_authorsBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         allAuthor = authorJpa.findAuthorEntities();
-        return "m_authors";
     }
 
     public String cancel() {
