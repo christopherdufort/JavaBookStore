@@ -37,11 +37,11 @@
                                                 <p:column width="100"> 
                                                     <h:commandLink value="#{msgs.edit}" action="#{m_reviews.viewReview(reviews)}" class="btn btn-info btn-sx"/>                                                                               
                                                 </p:column>
-                                                <p:column filterBy=" #{reviews.approvalId.approvalStatus}" sortBy=" #{reviews.approvalId.approvalStatus}" headerText="#{msgs.approval_id}" filterMatchMode="contains" width="150">
+                                                <p:column filterBy="#{reviews.approvalId.approvalStatus}" sortBy="#{reviews.approvalId.approvalStatus}" headerText="#{msgs.approval_id}" filterMatchMode="contains" width="150">
                                                     #{reviews.approvalId.approvalStatus}
                                                 </p:column>
 
-                                                <p:column filterBy=" #{reviews.reviewId}" sortBy=" #{reviews.reviewId}" headerText="#{msgs.review_id}" filterMatchMode="contains" width="150">
+                                                <p:column filterBy="#{reviews.reviewId}" sortBy="#{reviews.reviewId}" headerText="#{msgs.review_id}" filterMatchMode="contains" width="150">
                                                     #{reviews.reviewId}
                                                 </p:column>
 
@@ -49,7 +49,7 @@
                                                     #{reviews.isbn.isbn}
                                                 </p:column>
 
-                                                <p:column filterBy="#{reviews.dateSubmitted}" sortBy="#{reviews.dateSubmitted}" headerText="#{msgs.date_submitted}" filterMatchMode="contains" width="150">
+                                                <p:column filterBy="#{reviews.dateSubmitted}" sortBy="#{reviews.dateSubmitted}" headerText="#{msgs.date_submitted}" filterMatchMode="contains" width="240">
                                                     #{reviews.dateSubmitted}
                                                 </p:column>
 

@@ -8,22 +8,24 @@ package com.g3w16.managerController;
 import com.g3w16.entities.*;
 import com.g3w16.entities.exceptions.RollbackFailureException;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.enterprise.context.RequestScoped;
-import javax.faces.context.FacesContext;
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
-import javax.inject.Named;
+
 
 /**
  *
  * @author Xin Ma
  * @author Rita Lazaar
  */
-@Named("m_books")
-@RequestScoped
-public class m_booksBackingBean {
+@ManagedBean(name="m_books")
+@SessionScoped
+public class m_booksBackingBean implements Serializable{
 
     private Book book;
     private Author author;
@@ -31,7 +33,7 @@ public class m_booksBackingBean {
     private List<Format> formatList;
     private Format format;
     private Genre genre;
-
+    private List<Book> all;
     @Inject
     BookJpaController bookJpa;
 
@@ -49,6 +51,11 @@ public class m_booksBackingBean {
 
     @Inject
     InvoiceDetailJpaController invoiceJpa;
+    
+    @PostConstruct
+    public void init(){
+        all=bookJpa.findBookEntities();
+    }
 
     public String preCreateBook() {
 
@@ -116,6 +123,7 @@ public class m_booksBackingBean {
         } catch (Exception ex) {
             Logger.getLogger(m_booksBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
+        all=bookJpa.findBookEntities();
         return "m_books";
     }
 
@@ -138,7 +146,7 @@ public class m_booksBackingBean {
 
     public String updateBook(Book b) {
         try {
-
+            System.out.println(">>>>>>update");
             book.setFormatList(getAllFormatForBook());
             book.setAuthorList(getAllAuthorsForBook());
             book.setReviewList(getAllReviews());
@@ -147,6 +155,7 @@ public class m_booksBackingBean {
         } catch (Exception ex) {
             Logger.getLogger(m_booksBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
+        all=bookJpa.findBookEntities();
         return "m_books";
     }
 
@@ -159,7 +168,7 @@ public class m_booksBackingBean {
         } catch (Exception ex) {
             Logger.getLogger(m_booksBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        all=bookJpa.findBookEntities();
         return "m_books";
     }
 
@@ -168,7 +177,7 @@ public class m_booksBackingBean {
     }
 
     public List<Book> getAllBook() {
-        return bookJpa.findBookEntities();
+        return all;
     }
 
     public List<Author> getAllAuthors() {

@@ -8,7 +8,7 @@
         <ui:composition template="./templates/masterTemplate.xhtml">
 
             <ui:define name="title">
-                About
+                #{msgs.About}
             </ui:define>
 
             <ui:define name="content">
@@ -17,7 +17,7 @@
                         <div class="row ">
                             <h2 class="text-center">
                                 <i class="fi-magnifying-glass large"></i>
-                                Who are we ?
+                                #{msgs.whoAreWe}?
                             </h2>
                         </div>
 
@@ -72,7 +72,9 @@
                                 </ul>
                             </div>
                         </div>
-
+                        <div id="whoWeAreAnswer">
+                            <p>#{msgs.whoAreWeAnswer}</p>
+                        </div>
                     </div>
                 </div>
 

@@ -5,7 +5,7 @@
  */
 package com.g3w16.converter;
 
-import com.g3w16.entities.FormatJpaController;
+import com.g3w16.entities.GenreJpaController;
 import javax.enterprise.inject.spi.CDI;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -16,16 +16,14 @@ import javax.faces.convert.FacesConverter;
  *
  * @author Rita Lazaar
  */
-@FacesConverter("com.g3w16.converter.FormatConverter")
-public class FormatConverter implements Converter {
+@FacesConverter("com.g3w16.converter.GenreConverter")
+public class GenreConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        System.out.println(">>>>>>>>>>>>format"+  value);
-        FormatJpaController formatJpa = CDI.current().select(FormatJpaController.class).get();
-        int id=Integer.parseInt(value);
-        System.out.println(">>>>>>>>>>>>format"+  formatJpa.findFormat(id));
-        return formatJpa.findFormat(id);
+        System.out.println(">>>>>>> genre"+ value);
+       GenreJpaController genreJpa = CDI.current().select(GenreJpaController.class).get();
+        return genreJpa.findGenre(Integer.parseInt(value));
     }
 
     @Override
