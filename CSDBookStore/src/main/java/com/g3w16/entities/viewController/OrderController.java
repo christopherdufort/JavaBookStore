@@ -81,6 +81,7 @@ public class OrderController {
             
             LocalDate saleDate = userInvoices.get(i).getSaleDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             newOrderBean.setSaleDate(saleDate);
+            newOrderBean.setOrderNumber(userInvoices.get(i).getInvoiceId());
             
             totalGross = totalNet.add(totalPst).add(totalPst).add(totalGst).add(totalHst);
             

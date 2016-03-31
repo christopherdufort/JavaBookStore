@@ -301,11 +301,8 @@ public class Book implements Serializable {
         if (!(object instanceof Book)) {
             return false;
         }
-        Book other = (Book) object;
-        if ((this.bookId == null && other.bookId != null) || (this.bookId != null && !this.bookId.equals(other.bookId))) {
-            return false;
-        }
-        return true;
+        
+        return ((Book)object).bookId==this.bookId;
     }
 
     /**

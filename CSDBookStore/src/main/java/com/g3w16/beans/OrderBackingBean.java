@@ -24,6 +24,7 @@ public class OrderBackingBean {
     @Inject
     private BookBackingBean ordersBookBackingBean;
     
+    private int orderNumber;
     private LocalDate saleDate;
     private String clientName;
     private BigDecimal totalPst;
@@ -39,6 +40,14 @@ public class OrderBackingBean {
     @PostConstruct
     public void init(){
         
+    }
+
+    public int getOrderNumber() {
+        return orderNumber;
+    }
+
+    public void setOrderNumber(int orderNumber) {
+        this.orderNumber = orderNumber;
     }
 
     public LocalDate getSaleDate() {

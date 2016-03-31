@@ -101,11 +101,8 @@ public class Format implements Serializable {
         if (!(object instanceof Format)) {
             return false;
         }
-        Format other = (Format) object;
-        if ((this.formatId == null && other.formatId != null) || (this.formatId != null && !this.formatId.equals(other.formatId))) {
-            return false;
-        }
-        return true;
+       
+        return ((Format)object).formatId==this.formatId;
     }
     /**
      * Edit by Xin Ma 
