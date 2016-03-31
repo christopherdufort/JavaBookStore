@@ -32,10 +32,10 @@ import javax.persistence.TemporalType;
 @NamedQueries({
     @NamedQuery(name = "Invoice.findAll", query = "SELECT i FROM Invoice i"),
     @NamedQuery(name = "Invoice.findAllInvoicesByDate", query = "SELECT i FROM Invoice i WHERE i.saleDate >= ?1 and i.saleDate <= ?2"),
-    @NamedQuery(name = "Invoice.findAllInvoicesByDateAndUser", query = "SELECT i FROM Invoice i WHERE i.saleDate >= ?1 and i.saleDate <= ?2 and i.userNumber = ?3"),
+    @NamedQuery(name = "Invoice.findAllInvoicesByDateAndUser", query = "SELECT i FROM Invoice i WHERE i.saleDate >= ?1 and i.saleDate <= ?2 and i.userId = ?3"),
     @NamedQuery(name = "Invoice.findByInvoiceId", query = "SELECT i FROM Invoice i WHERE i.invoiceId = :invoiceId"),
     @NamedQuery(name = "Invoice.findBySaleDate", query = "SELECT i FROM Invoice i WHERE i.saleDate = :saleDate"),
-    @NamedQuery(name = "Invoice.findByUserNumber", query = "SELECT i FROM Invoice i WHERE i.userNumber = :userNumber"),
+    @NamedQuery(name = "Invoice.findByUserId", query = "SELECT i FROM Invoice i WHERE i.userId = :userId"),
     @NamedQuery(name = "Invoice.findByTotalNetValueOfSale", query = "SELECT i FROM Invoice i WHERE i.totalNetValueOfSale = :totalNetValueOfSale"),
     @NamedQuery(name = "Invoice.findByTotalGrossValueOfSale", query = "SELECT i FROM Invoice i WHERE i.totalGrossValueOfSale = :totalGrossValueOfSale")})
 
@@ -51,8 +51,8 @@ public class Invoice implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date saleDate;
     @Basic(optional = false)
-    @Column(name = "user_number")
-    private int userNumber;
+    @Column(name = "user_id")
+    private int userId;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "total_net_value_of_sale")
     private BigDecimal totalNetValueOfSale;
@@ -68,9 +68,9 @@ public class Invoice implements Serializable {
         this.invoiceId = invoiceId;
     }
 
-    public Invoice(Integer invoiceId, int userNumber) {
+    public Invoice(Integer invoiceId, int userId) {
         this.invoiceId = invoiceId;
-        this.userNumber = userNumber;
+        this.userId = userId;
     }
 
     public Integer getInvoiceId() {
@@ -89,12 +89,12 @@ public class Invoice implements Serializable {
         this.saleDate = saleDate;
     }
 
-    public int getUserNumber() {
-        return userNumber;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUserNumber(int userNumber) {
-        this.userNumber = userNumber;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public BigDecimal getTotalNetValueOfSale() {

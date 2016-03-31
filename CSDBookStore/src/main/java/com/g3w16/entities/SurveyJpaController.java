@@ -33,11 +33,11 @@ public class SurveyJpaController implements Serializable {
 
     @PersistenceContext
     private EntityManager em;
-    
+
     /**
      * Default Constructor
      */
-    public SurveyJpaController(){
+    public SurveyJpaController() {
         super();
     }
 
@@ -53,7 +53,7 @@ public class SurveyJpaController implements Serializable {
                 throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
             }
             throw ex;
-        } 
+        }
     }
 
     public void edit(Survey survey) throws NonexistentEntityException, RollbackFailureException, Exception {
@@ -75,9 +75,10 @@ public class SurveyJpaController implements Serializable {
                 }
             }
             throw ex;
-        } 
+        }
     }
-    public void destroySurvey(Survey survey)throws NonexistentEntityException, RollbackFailureException, Exception {
+
+    public void destroySurvey(Survey survey) throws NonexistentEntityException, RollbackFailureException, Exception {
         this.destroy(survey.getSurveyId());
     }
 
@@ -102,14 +103,14 @@ public class SurveyJpaController implements Serializable {
             throw ex;
         }
     }
-    
+
     /**
-     * This method is responsible for finding all surveys in the database.
-     * It makes use of the private method.
-     * 
+     * This method is responsible for finding all surveys in the database. It
+     * makes use of the private method.
+     *
      * @author Christopher Dufort
      * @version 0.2.5-SNAPSHOT -Last Modified 2/16/2016
-     * @return 
+     * @return
      */
     public List<Survey> findAllSurveys() {
         return findSurveyEntities(true, -1, -1);
@@ -136,82 +137,99 @@ public class SurveyJpaController implements Serializable {
         Query q = em.createQuery("select count(o) from Survey as o");
         return ((Long) q.getSingleResult()).intValue();
     }
+
     /**
      * PROBABLY WILL NOT BE USED
+     *
      * @param question
-     * @return 
+     * @return
      */
-    public Survey findSurveyByQuestion(String question){
+    public Survey findSurveyByQuestion(String question) {
         //Example of named query(predefined in the entity class)
         Query query = em.createNamedQuery("Survey.findByQuestion");
- 
+
         //binding for names parameters
-        query.setParameter("question",question);
-        
+        query.setParameter("question", question);
+
         //execute query returning single result
-        Survey result = (Survey)query.getSingleResult(); 
+        Survey result = (Survey) query.getSingleResult();
         return result;
     }
+
     /**
      * PROBABLY WILL NOT BE USED
+     *
      * @param answerOne
-     * @return 
+     * @return
      */
-    public List<Survey> findSurveyByAnswerOne(String answerOne){
+    public List<Survey> findSurveyByAnswerOne(String answerOne) {
         //Example of named query(predefined in the entity class)
         Query query = em.createNamedQuery("Survey.findByAnswerOne");
- 
+
         //binding for names parameters
-        query.setParameter("answerOne",answerOne);
-        
+        query.setParameter("answerOne", answerOne);
+
         //execute query returning single result
-        List<Survey> result = (List<Survey>)query.getResultList(); 
-        return result;   
+        List<Survey> result = (List<Survey>) query.getResultList();
+        return result;
     }
+
     /**
      * PROBABLY WILL NOT BE USED
+     *
      * @param answerTwo
-     * @return 
+     * @return
      */
-    public List<Survey> findSurveyByAnswerTwo(String answerTwo){
+    public List<Survey> findSurveyByAnswerTwo(String answerTwo) {
         //Example of named query(predefined in the entity class)
         Query query = em.createNamedQuery("Survey.findByAnswerTwo");
- 
+
         //binding for names parameters
-        query.setParameter("answerTwo",answerTwo);
-        
+        query.setParameter("answerTwo", answerTwo);
+
         //execute query returning single result
-        List<Survey> result = (List<Survey>)query.getResultList(); 
-        return result;          
+        List<Survey> result = (List<Survey>) query.getResultList();
+        return result;
     }
+
     /**
      * PROBABLY WILL NOT BE USED
      */
-    public List<Survey> findSurveyByAnswerThree(String answerThree){
+    public List<Survey> findSurveyByAnswerThree(String answerThree) {
         //Example of named query(predefined in the entity class)
         Query query = em.createNamedQuery("Survey.findByAnswerThree");
- 
+
         //binding for names parameters
-        query.setParameter("answerThree",answerThree);
-        
+        query.setParameter("answerThree", answerThree);
+
         //execute query returning single result
-        List<Survey> result = (List<Survey>)query.getResultList(); 
-        return result;          
+        List<Survey> result = (List<Survey>) query.getResultList();
+        return result;
     }
+
     /**
      * PROBABLY WILL NOT BE USED
+     *
      * @param answerDefault
-     * @return 
+     * @return
      */
-    public List<Survey> findSurveyByAnswerDefault(String answerDefault){
-         //Example of named query(predefined in the entity class)
+    public List<Survey> findSurveyByAnswerDefault(String answerDefault) {
+        //Example of named query(predefined in the entity class)
         Query query = em.createNamedQuery("Survey.findByAnswerDefault");
- 
+
         //binding for names parameters
-        query.setParameter("answerDefault",answerDefault);
-        
+        query.setParameter("answerDefault", answerDefault);
+
         //execute query returning single result
-        List<Survey> result = (List<Survey>)query.getResultList(); 
-        return result;         
+        List<Survey> result = (List<Survey>) query.getResultList();
+        return result;
+    }
+
+    public Survey findNewsFeedByActive() {
+        Query query = em.createQuery("SELECT s FROM Survey s WHERE s.active = true");
+
+        //execute query returning single result
+        Survey result = (Survey) query.getSingleResult();
+        return result;
     }
 }

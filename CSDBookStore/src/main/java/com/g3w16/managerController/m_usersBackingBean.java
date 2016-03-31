@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
@@ -29,6 +30,8 @@ public class m_usersBackingBean implements Serializable {
     RegisteredUserJpaController userJpa;
 
     private Title title;
+    
+    private List<RegisteredUser> all;
 
     @Inject
     TitleJpaController titleJpa;
@@ -41,6 +44,10 @@ public class m_usersBackingBean implements Serializable {
     @Inject
     ProvinceJpaController provinceJpa;
 
+    @PostConstruct
+    public void init(){
+        all=userJpa.findAll();
+    }
     public RegisteredUser getUser() {
         if (user == null) {
             user = new RegisteredUser();
@@ -92,12 +99,12 @@ public class m_usersBackingBean implements Serializable {
             Logger.getLogger(m_usersBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
          Logger.getLogger(m_usersBackingBean.class.getName()).log(Level.INFO, null, "Does it go here?");
-        
+        all=userJpa.findAll();
         return "m_users";
     }
 
     public List<RegisteredUser> getAllUsers() {
-        return userJpa.findAll();
+        return all;
 
     }
 

@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
@@ -31,6 +32,8 @@ public class m_reviewBackingBean implements Serializable {
 
     private RegisteredUser user;
 
+    private List<Review> allReview;
+    
     @Inject
     ApprovalJpaController approvalJpa;
 
@@ -43,6 +46,11 @@ public class m_reviewBackingBean implements Serializable {
     @Inject
     ReviewJpaController reviewJpa;
 
+    @PostConstruct
+    public void init(){
+        allReview=reviewJpa.findReviewEntities();
+    }
+    
     public Book getBook() {
         if (book == null) {
             return new Book();
@@ -98,6 +106,7 @@ public class m_reviewBackingBean implements Serializable {
         } catch (Exception ex) {
             Logger.getLogger(m_reviewBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
+        allReview=reviewJpa.findReviewEntities();
         return "m_reviews";
     }
 
@@ -115,7 +124,7 @@ public class m_reviewBackingBean implements Serializable {
     }
 
     public List<Review> getAllReview() {
-        return reviewJpa.findReviewEntities();
+        return allReview;
     }
 
     public List<Review> getPendingReview() {

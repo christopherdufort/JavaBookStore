@@ -107,10 +107,13 @@ public class Format implements Serializable {
         }
         return true;
     }
-
+    /**
+     * Edit by Xin Ma 
+     * @return 
+     */
     @Override
     public String toString() {
-        return "com.g3w16.entities.Format[ formatId=" + formatId + " ]";
+        return extension;
     }
     
 }

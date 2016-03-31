@@ -5,12 +5,9 @@
  */
 package com.g3w16.entities;
 
-import com.g3w16.entities.exceptions.IllegalOrphanException;
-import com.g3w16.entities.exceptions.NonexistentEntityException;
 import com.g3w16.entities.exceptions.RollbackFailureException;
 import java.io.Serializable;
 import javax.persistence.Query;
-import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,17 +15,18 @@ import javax.annotation.Resource;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 
 /**
  *
  * @author Rita Lazaar
+ * @author Christopher Dufort
+ *
  */
 @Named
 @RequestScoped
-public class InvoiceJpaController  implements Serializable{
+public class InvoiceJpaController implements Serializable{
 
     @Resource
     private UserTransaction utx;
@@ -43,7 +41,6 @@ public class InvoiceJpaController  implements Serializable{
      * @throws RollbackFailureException
      * @throws Exception
      */
-   
     public void create(Invoice invoice) throws RollbackFailureException, Exception {
         if (invoice.getInvoiceDetailList() == null) {
             invoice.setInvoiceDetailList(new ArrayList<InvoiceDetail>());
@@ -82,7 +79,6 @@ public class InvoiceJpaController  implements Serializable{
      *
      * @return
      */
-   
     public List<Invoice> findInvoiceEntities() {
         return findInvoiceEntities(true, -1, -1);
     }
@@ -95,7 +91,6 @@ public class InvoiceJpaController  implements Serializable{
      * @param firstResult
      * @return
      */
-    
     public List<Invoice> findInvoiceEntities(int maxResults, int firstResult) {
         return findInvoiceEntities(false, maxResults, firstResult);
     }
@@ -125,7 +120,6 @@ public class InvoiceJpaController  implements Serializable{
      * @param id
      * @return
      */
-    
     public Invoice findInvoice(Integer id) {
         return em.find(Invoice.class, id);
     }
@@ -133,23 +127,22 @@ public class InvoiceJpaController  implements Serializable{
     /**
      * This will return a list of invoices belonging to the user given to it.
      *
-     * @param userNumber
+     * @param userId
      * @return
      */
     
-    public List<Invoice> findInvoiceByUserNumber(Integer userNumber) {
-        Query q = em.createNamedQuery("Invoice.findByUserNumber", Invoice.class);
-        q.setParameter("userNumber", userNumber);
+    public List<Invoice> findInvoiceByUserId(Integer userId) {
+        Query q = em.createNamedQuery("Invoice.findByUserId", Invoice.class);
+        q.setParameter("userId", userId);
         return q.getResultList();
     }
 
     /**
      * This will return a list of invoices belonging to the user given to it.
      *
-     * @param userNumber
+     * @param userId
      * @return
      */
-    
     public List<Invoice> findInvoiceByDate(Date date1, Date date2) {
         Query q = em.createNamedQuery("Invoice.findAllInvoicesByDate", Invoice.class);
         q.setParameter(1, date1);
@@ -161,15 +154,16 @@ public class InvoiceJpaController  implements Serializable{
     /**
      * This will return a list of invoices belonging to the user given to it.
      *
-     * @param userNumber
+     * @param userId
      * @return
      */
-    
-    public List<Invoice> findInvoiceByDateAndUser(Date date1, Date date2, Integer userNumber) {
+
+    public List<Invoice> findInvoiceByDateAndUser(Date date1, Date date2, Integer userId) {
+
         Query q = em.createNamedQuery("Invoice.findAllInvoicesByDateAndUser", Invoice.class);
         q.setParameter(1, date1);
         q.setParameter(2, date2);
-        q.setParameter(3, userNumber);
+        q.setParameter(3, userId);
 
         return q.getResultList();
     }
@@ -179,7 +173,6 @@ public class InvoiceJpaController  implements Serializable{
      *
      * @return
      */
-    
     public int getInvoiceCount() {
         Query q = em.createQuery("select count(o) from Invoice as o");
         return ((Long) q.getSingleResult()).intValue();

@@ -5,7 +5,8 @@ USE g3w16;
 DROP TABLE IF EXISTS `ad`;
 CREATE TABLE IF NOT EXISTS `ad` (
   `ad_id` int(6) NOT NULL,
-  `ad_filename` varchar(100) NOT NULL
+  `ad_filename` varchar(100) NOT NULL,
+  `active` tinyint(1) DEFAULT '0'
 ) ENGINE=InnoDB;
 
 -- Table structure for table `approval`
@@ -129,7 +130,7 @@ DROP TABLE IF EXISTS `invoice`;
 CREATE TABLE IF NOT EXISTS `invoice` (
   `invoice_id` int(11) NOT NULL,
   `sale_date` timestamp DEFAULT CURRENT_TIMESTAMP,
-  `user_number` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `total_net_value_of_sale` decimal(12,2) DEFAULT NULL,
   `total_gross_value_of_sale` decimal(12,2) DEFAULT NULL
 ) ENGINE=InnoDB;
@@ -153,7 +154,8 @@ CREATE TABLE IF NOT EXISTS `survey` (
   `answer_one` varchar(50) NOT NULL,
   `answer_two` varchar(50) NOT NULL,
   `answer_three` varchar(50) NOT NULL,
-  `answer_default` varchar(50) NOT NULL
+  `answer_default` varchar(50) NOT NULL,
+  `active` tinyint(1) DEFAULT '0'
 ) ENGINE=InnoDB;
 
 
@@ -196,7 +198,7 @@ ALTER TABLE `genre`
   
 ALTER TABLE `invoice`
   ADD PRIMARY KEY (`invoice_id`),
-  ADD KEY `user_number_index` (`user_number`);
+  ADD KEY `user_id_index` (`user_id`);
   
 ALTER TABLE `invoice_detail`
   ADD PRIMARY KEY (`invoice_detail_id`),

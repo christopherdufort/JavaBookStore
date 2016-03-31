@@ -54,6 +54,8 @@ public class Survey implements Serializable {
     @Basic(optional = false)
     @Column(name = "answer_default")
     private String answerDefault;
+    @Column(name = "active")
+    private Boolean active;
 
     public Survey() {
     }
@@ -119,6 +121,14 @@ public class Survey implements Serializable {
         this.answerDefault = answerDefault;
     }
 
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

@@ -52,6 +52,8 @@ public class m_adsBackingBean implements Serializable {
     }
 
     public String createAd() {
+        System.out.println(">>>>>>>ad"+ad.getActive());
+        System.out.println(">>>>>>>ad"+ad.getAdFilename());
         try {
             adJpa.create(ad);
         } catch (Exception ex) {
@@ -76,6 +78,15 @@ public class m_adsBackingBean implements Serializable {
         return "m_ads";
     }
 
+    public void active(Ad a){
+        ad=adJpa.findAdById(a.getAdId());
+        ad.setActive(a.getActive());
+        try {
+            adJpa.edit(ad);
+        } catch (Exception ex) {
+            Logger.getLogger(m_adsBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     public String destroyAd(Ad a) {
         try {
             adJpa.destroy(a.getAdId());

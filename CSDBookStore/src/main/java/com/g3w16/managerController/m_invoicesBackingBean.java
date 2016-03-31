@@ -6,24 +6,25 @@
 package com.g3w16.managerController;
 
 import com.g3w16.entities.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
-import javax.inject.Named;
+
 
 /**
  *
  * @author Xin Ma
  * @author Rita Lazaar
  */
-@Named("m_invoices")
-@RequestScoped
-public class m_invoicesBackingBean {
+@ManagedBean(name="m_invoices")
+@SessionScoped
+public class m_invoicesBackingBean implements Serializable{
 
-//    @Inject
-//    Invoice invoice;
     private String searchInvoice;
 
     private Invoice invoice;
@@ -31,8 +32,7 @@ public class m_invoicesBackingBean {
 
     private List<Invoice> all;
     private List<Invoice> searched;
-//    private Date date1;
-//    private Date date2;
+
 
     @Inject
     InvoiceJpaController invoiceJpa;
@@ -40,14 +40,15 @@ public class m_invoicesBackingBean {
     @Inject
     InvoiceDetailJpaController invoiceDetailJpa;
 
+    @PostConstruct
+    public void init(){
+        all=invoiceJpa.findInvoiceEntities();
+    }
+    
     public String getText() {
         return searchInvoice;
     }
-    
-    @PostConstruct
-    public void init() {
-        all=invoiceJpa.findInvoiceEntities();       
-    }
+   
 
     public void setText(String searchInvoice) {
         this.searchInvoice = searchInvoice;
@@ -96,12 +97,14 @@ public class m_invoicesBackingBean {
      */
     public List<Invoice> getAllInvoices() {
 
+
 //        all = invoiceJpa.findInvoiceEntities();
 //        //  all= invoiceJpa.findInvoiceEntities();
 ////         for(int i =0; i<invoiceJpa.findInvoiceEntities().size();i++){
 ////         
 ////             all.add(invoice)
 ////         }
+
         return all;
     }
 
@@ -139,7 +142,7 @@ public class m_invoicesBackingBean {
 
     public void handleSearchInvoice() {
 
-        all = invoiceJpa.findInvoiceByUserNumber(Integer.parseInt(searchInvoice));
+        all = invoiceJpa.findInvoiceByUserId(Integer.parseInt(searchInvoice));
 
     }
 
