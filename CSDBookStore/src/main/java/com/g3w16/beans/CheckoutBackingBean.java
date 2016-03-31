@@ -261,6 +261,6 @@ public class CheckoutBackingBean implements Serializable {
         securityCode = "";
         
         cartBB.clearCart();
-        return "home";
+        return "invoice";
     }
 }
