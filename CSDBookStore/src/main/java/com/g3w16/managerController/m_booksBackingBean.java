@@ -129,9 +129,9 @@ public class m_booksBackingBean implements Serializable {
         return "m_books";
     }
 
-    public String editBook(int id) throws IOException {
+    public String editBook(Book b) throws IOException {
         
-        book = bookJpa.findBookEntitiesById(id);
+        book = bookJpa.findBookEntitiesById(b.getBookId());
         return "m_editBook";
     }
 
@@ -182,7 +182,7 @@ public class m_booksBackingBean implements Serializable {
     }
 
     public List<Author> getAllAuthorsForBook() {
-        System.out.println(">>>>>>>>>>>>>>>book"+book.getBookId());
+        //System.out.println(">>>>>>>>>>>>>>>book"+book.getBookId());
         //book = bookJpa.findBookEntitiesById(id);
         return authorJpa.findAuthorEntitiesByBook(book);
     }
@@ -212,4 +212,5 @@ public class m_booksBackingBean implements Serializable {
     public int getBookCount() {
         return bookJpa.getBookCount();
     }
+    
 }
