@@ -207,7 +207,7 @@ public class AdJpaController implements Serializable {
     }
 
     public Ad findAdByActiveType(boolean type) {
-        Query query = em.createQuery("SELECT a FROM Ad a WHERE a.adType = :type");
+        Query query = em.createQuery("SELECT a FROM Ad a WHERE a.active = true AND a.adType = :type");
         query.setParameter("type", type);
         try {
             return (Ad) query.getSingleResult();
