@@ -26,47 +26,107 @@
                                 <div class="panel-body">
                                     <div class="dataTable_wrapper table-responsive">
                                         <h:form>
-                                            <h:panelGrid columns="2">
+                                            <h:panelGrid columns="3">
                                                 <h:outputLabel value="#{msgs.isbn}" for="isbn"></h:outputLabel>
-                                                <h:inputText id="isbn" value="#{m_books.book.isbn}" />
+                                                <p:inputText id="isbn" value="#{m_books.book.isbn}" />
+                                                <h:message for="isbn" errorStyle="color:red; display:block"/>
 
                                                 <h:outputLabel value="#{msgs.title}" for="title"></h:outputLabel>
-                                                <h:inputText id="title" value="#{m_books.book.title}" />
+                                                <p:inputText id="title" value="#{m_books.book.title}" />
+                                                <h:message for="title" errorStyle="color:red; display:block"/>
 
+                                                <h:outputLabel for="author" value="#{msgs.author}" />
+                                                <p:selectCheckboxMenu id="author" value="#{m_books.book.authorList}" label="#{msgs.author}" scrollHeight="150"
+                                                                      filter="true" filterMatchMode="startsWith" panelStyle="width:250px" converter="com.g3w16.converter.AuthorConverter">
+                                                    <f:selectItems value="#{m_books.allAuthors}" />
+                                                </p:selectCheckboxMenu>
+                                                <p:commandLink value="Submit" update="authorDisplay" />
+                                            </h:panelGrid>
+
+                                            <p:outputPanel id="authorDisplay" style="width:250px;padding-left:5px;margin-top:10px">
+                                                <p:dataList value="#{m_books.book.authorList}" var="author">
+                                                    #{author}
+                                                </p:dataList>
+                                            </p:outputPanel>
+                                            <br />
+                                            <h:panelGrid columns="3">
                                                 <h:outputLabel value="#{msgs.publisher}" for="publisher"></h:outputLabel>
-                                                <h:inputText id="publisher" value="#{m_books.book.publisher}" />
+                                                <p:inputText id="publisher" value="#{m_books.book.publisher}" />
+                                                <h:message for="publisher" errorStyle="color:red; display:block"/>
 
                                                 <h:outputLabel value="#{msgs.publish_date}" for="publish_date"></h:outputLabel>
-                                                <h:inputText id="publish_date" value="#{m_books.book.publishDate}" />
+                                                <p:calendar id="publish_date" value="#{m_books.book.publishDate}" />
+                                                <h:message for="publish_date" errorStyle="color:red; display:block"/>
 
+                                                <h:outputLabel for="format" value="#{msgs.formats}" />
+                                                <p:selectCheckboxMenu id="format" value="#{m_books.book.formatList}" label="#{msgs.format}" scrollHeight="150"
+                                                                      filter="true" filterMatchMode="startsWith" panelStyle="width:250px" converter="com.g3w16.converter.FormatConverter">
+                                                    <f:selectItems value="#{m_books.allFormat}" />
+                                                </p:selectCheckboxMenu>
+                                                <p:commandLink value="Submit" update="formatDisplay" />
+                                            </h:panelGrid>
+                                            <p:outputPanel id="formatDisplay" style="width:250px;padding-left:5px;margin-top:10px">
+                                                <p:dataList value="#{m_books.book.formatList}" var="format">
+                                                    #{format}
+                                                </p:dataList>
+                                            </p:outputPanel>
+                                            <br />
+                                            <h:panelGrid columns="3">
                                                 <h:outputLabel value="#{msgs.page_number}" for="page_number"></h:outputLabel>
-                                                <h:inputText id="page_number" value="#{m_books.book.pageNumber}" />
+                                                <p:inputText id="page_number" value="#{m_books.book.pageNumber}" />
+                                                <h:message for="page_number" errorStyle="color:red; display:block"/>
 
+                                                <h:outputLabel for="genre" value="#{msgs.genre}" />
+                                                <p:selectCheckboxMenu id="genre" value="#{m_books.book.genreList}" label="#{msgs.genre}" scrollHeight="150"
+                                                                      filter="true" filterMatchMode="startsWith" panelStyle="width:250px" converter="com.g3w16.converter.GenreConverter">
+                                                    <f:selectItems value="#{m_books.allGenre}"/>
+                                                </p:selectCheckboxMenu>
+                                                <p:commandLink value="Submit" update="genreDisplay" />
+                                            </h:panelGrid>
+                                            <p:outputPanel id="genreDisplay" style="width:250px;padding-left:5px;margin-top:10px">
+                                                <p:dataList value="#{m_books.book.genreList}" var="genre">
+                                                    #{genre}
+                                                </p:dataList>
+                                            </p:outputPanel>
+                                            <br />
+                                            <h:panelGrid columns="3">
                                                 <h:outputLabel value="#{msgs.wholesale_price}" for="wholesale_price"></h:outputLabel>
-                                                <h:inputText id="whole_price" value="#{m_books.book.wholesalePrice}" />
+                                                <p:inputText id="whole_price" value="#{m_books.book.wholesalePrice}" />
+                                                <h:message for="wholesale_price" errorStyle="color:red; display:block"/>
 
                                                 <h:outputLabel value="#{msgs.list_price}" for="list_price"></h:outputLabel>
-                                                <h:inputText id="list_price" value="#{m_books.book.listPrice}" />
+                                                <p:inputText id="list_price" value="#{m_books.book.listPrice}" />
+                                                <h:message for="list_price" errorStyle="color:red; display:block"/>
 
                                                 <h:outputLabel value="#{msgs.sale_price}" for="sale_price"></h:outputLabel>
-                                                <h:inputText id="sale_price" value="#{m_books.book.salePrice}" />
+                                                <p:inputText id="sale_price" value="#{m_books.book.salePrice}" />
+                                                <h:message for="sale_price" errorStyle="color:red; display:block"/>
 
                                                 <h:outputLabel value="#{msgs.date_entered}" for="date_entered"></h:outputLabel>
-                                                <h:inputText id="date_entered" value="#{m_books.book.dateEntered}" />
+                                                <p:calendar id="date_entered" value="#{m_books.book.dateEntered}"/>
+                                                <h:message for="date_entered" errorStyle="color:red; display:block"/>
 
                                                 <h:outputLabel value="#{msgs.available}" for="available"></h:outputLabel>
-                                                <h:inputText id="available" value="#{m_books.book.available}" />
+                                                <p:selectOneRadio id="available" layout="lineDirection" value="#{m_books.book.available}">
+                                                    <f:selectItem itemValue="True" itemLabel="True" />
+                                                    <f:selectItem itemValue="False" itemLabel="False" />
+                                                </p:selectOneRadio>
+                                                <h:message for="available" errorStyle="color:red; display:block"/>
 
                                                 <h:outputLabel value="#{msgs.overall_rating}" for="overall_rating"></h:outputLabel>
-                                                <h:inputText id="overall_rating" value="#{m_books.book.overallRating}" />
+                                                <p:inputText id="overall_rating" value="#{m_books.book.overallRating}" />
+                                                <h:message for="overall_rating" errorStyle="color:red; display:block"/>
 
                                                 <h:outputLabel value="#{msgs.synopsis}" for="synopsis"></h:outputLabel>
-                                                <h:inputTextarea id="synopsis" value="#{m_books.book.synopsis}"/>
-
+                                                <p:inputTextarea id="synopsis" value="#{m_books.book.synopsis}"/>
+                                                <h:message for="synopsis" errorStyle="color:red; display:block"/>
                                             </h:panelGrid>
                                             <br />
-                                            <h:commandButton value="#{msgs.add}"
-                                                             action="#{m_books.createBook}" class="btn btn-danger btn-xs" />
+                                            <p:commandButton value="#{msgs.add}"
+                                                             action="#{m_books.createBook}" class="btn btn-success btn-xs" />
+                                            <h:outputText value="&#160;" />
+                                            <p:commandButton value="#{msgs.cancel}"
+                                                             action="#{m_books.cancel}" class="btn btn-danger btn-xs" />
                                         </h:form>
                                     </div>
                                     <!-- /.table-responsive -->

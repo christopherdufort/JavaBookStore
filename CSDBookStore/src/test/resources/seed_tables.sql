@@ -36,6 +36,11 @@ ALTER TABLE title AUTO_INCREMENT = 1;
 DELETE FROM approval WHERE approval_id>=1;
 ALTER TABLE approval AUTO_INCREMENT = 1;
 
+INSERT INTO `ad` (`ad_id`, `ad_filename`, `active`, `ad_type`) VALUES
+(1, 'mcdonalds.com', 1, 0),
+(2, 'facebook.com', 1, 1);
+
+
 INSERT INTO `approval` (`approval_id`, `approval_status`) VALUES
 (1, 'Approved'),
 (2, 'Pending'),

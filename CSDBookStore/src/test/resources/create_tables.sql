@@ -6,7 +6,8 @@ DROP TABLE IF EXISTS `ad`;
 CREATE TABLE IF NOT EXISTS `ad` (
   `ad_id` int(6) NOT NULL,
   `ad_filename` varchar(100) NOT NULL,
-  `active` tinyint(1) DEFAULT '0'
+  `active` tinyint(1) DEFAULT '0',
+  `ad_type` tinyint(1) DEFAULT '0'
 ) ENGINE=InnoDB;
 
 -- Table structure for table `approval`
