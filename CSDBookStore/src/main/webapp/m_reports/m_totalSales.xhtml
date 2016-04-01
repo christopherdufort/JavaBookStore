@@ -6,7 +6,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <body>
+    <h:body>
         <ui:composition template="./../templates/m_masterTemplate.xhtml">       
             <ui:define name="m_content"> 
                 <div id="page-wrapper">
@@ -45,6 +45,22 @@
                                         <h:form id="table"> 
 
 
+                                            <h:outputLabel value="#{msgs.fromDate}" for="fromDate"></h:outputLabel>
+                                              
+                                                    <p:calendar id="fromDate" value="#{m_reports.date1}" />
+<!--                                                    <p:inputText id="fromDate" value="#{m_reports.date1}" >
+                                                        <f:convertDateTime pattern="yyyy-MM-dd"/>
+                                                    </p:inputText>-->
+                                                    <h:message for="fromDate" errorStyle="color:red; display:block"/>
+
+                                                    <h:outputLabel value="#{msgs.toDate}" for="toDate"></h:outputLabel>
+                                                     <p:calendar id="toDate" value="#{m_reports.date2}" />
+<!--                                                    <p:inputText id="toDate" value="#{m_reports.date2}" >
+                                                        <f:convertDateTime pattern="yyyy-MM-dd"/>
+                                                    </p:inputText>-->
+                                                    <h:message for="toDate" errorStyle="color:red; display:block"/>
+                                                    <p:commandButton update="dtable" process="@form" value="Search" >
+                                                    </p:commandButton>
 <!--                                            <h:outputLabel value="#{msgs.fromDate}" for="fromDate"></h:outputLabel>
                                             <p:inputText id="fromDate" value="#{m_reports.date1}" >
                                                 <f:convertDateTime pattern="yyyy-MM-dd"/>
@@ -80,26 +96,29 @@
                                                 
                                                                                                     <p:outputLabel value="#{m_reports.date2}"><f:convertDateTime pattern="yyyy-MM-dd"/></p:outputLabel>
                                                                                                 </f:facet>-->
-                                                <f:facet name="header">
+<!--                                                <f:facet name="header">
 
                                                     <h:outputLabel value="#{msgs.fromDate}" for="fromDate"></h:outputLabel>
+                                              
+                                                    <p:calendar id="fromDate" value="#{m_reports.date1}" />
                                                     <p:inputText id="fromDate" value="#{m_reports.date1}" >
                                                         <f:convertDateTime pattern="yyyy-MM-dd"/>
                                                     </p:inputText>
                                                     <h:message for="fromDate" errorStyle="color:red; display:block"/>
 
                                                     <h:outputLabel value="#{msgs.toDate}" for="toDate"></h:outputLabel>
+                                                     <p:calendar id="toDate" value="#{m_reports.date2}" />
                                                     <p:inputText id="toDate" value="#{m_reports.date2}" >
                                                         <f:convertDateTime pattern="yyyy-MM-dd"/>
                                                     </p:inputText>
                                                     <h:message for="toDate" errorStyle="color:red; display:block"/>
-                                                    <p:commandButton update="@form"  actionListener="m_reports.buttonAction" value="Search" >
+                                                    <p:commandButton update="@form" process="@parent" value="Search" >
                                                     </p:commandButton>
 
-<!--                                                    <p:outputLabel value="#{m_reports.date1}"><f:convertDateTime pattern="yyyy-MM-dd"/></p:outputLabel>
+                                                    <p:outputLabel value="#{m_reports.date1}"><f:convertDateTime pattern="yyyy-MM-dd"/></p:outputLabel>
 
-                                                    <p:outputLabel value="#{m_reports.date2}"><f:convertDateTime pattern="yyyy-MM-dd"/></p:outputLabel>-->
-                                                </f:facet>
+                                                    <p:outputLabel value="#{m_reports.date2}"><f:convertDateTime pattern="yyyy-MM-dd"/></p:outputLabel>
+                                                </f:facet>-->
                                                 <p:column filterBy="#{books.bookId}" sortBy="#{books.bookId}" headerText="#{msgs.book_id}" filterMatchMode="contains">
 
                                                     #{books.bookId}
@@ -185,6 +204,6 @@
             });
         </script>
 
-    </body>
+    </h:body>
 
 </html>
