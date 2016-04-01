@@ -46,38 +46,23 @@
 
 
                                             <h:outputLabel value="#{msgs.fromDate}" for="fromDate"></h:outputLabel>
-                                              
-                                                    <p:calendar id="fromDate" value="#{m_reports.date1}" />
-<!--                                                    <p:inputText id="fromDate" value="#{m_reports.date1}" >
-                                                        <f:convertDateTime pattern="yyyy-MM-dd"/>
-                                                    </p:inputText>-->
-                                                    <h:message for="fromDate" errorStyle="color:red; display:block"/>
 
-                                                    <h:outputLabel value="#{msgs.toDate}" for="toDate"></h:outputLabel>
-                                                     <p:calendar id="toDate" value="#{m_reports.date2}" />
-<!--                                                    <p:inputText id="toDate" value="#{m_reports.date2}" >
-                                                        <f:convertDateTime pattern="yyyy-MM-dd"/>
-                                                    </p:inputText>-->
-                                                    <h:message for="toDate" errorStyle="color:red; display:block"/>
-                                                    <p:commandButton  value="Search" >
-                                               
-                                                    </p:commandButton>
-<!--                                            <h:outputLabel value="#{msgs.fromDate}" for="fromDate"></h:outputLabel>
-                                            <p:inputText id="fromDate" value="#{m_reports.date1}" >
+                                            <p:calendar id="fromDate" value="#{m_reports.date1}" />
+<!--                                                    <p:inputText id="fromDate" value="#{m_reports.date1}" >
                                                 <f:convertDateTime pattern="yyyy-MM-dd"/>
-                                            </p:inputText>
+                                            </p:inputText>-->
                                             <h:message for="fromDate" errorStyle="color:red; display:block"/>
 
                                             <h:outputLabel value="#{msgs.toDate}" for="toDate"></h:outputLabel>
-                                            <p:inputText id="toDate" value="#{m_reports.date2}" >
-                                                <f:convertDateTime pattern="yyyy-MM-dd"/>
-                                            </p:inputText>
+                                            <p:calendar id="toDate" value="#{m_reports.date2}" />
+<!--                                                    <p:inputText id="toDate" value="#{m_reports.date2}" >
+                                               <f:convertDateTime pattern="yyyy-MM-dd"/>
+                                           </p:inputText>-->
                                             <h:message for="toDate" errorStyle="color:red; display:block"/>
-                                            <p:commandButton value="Search" >
-                                                <f:ajax execute="@form"></f:ajax>
-                                            </p:commandButton>-->
+                                            <p:commandButton  process="@parent" update="dtable" value="Search" >
 
-                                            <!--                                            </h:form>
+                                            </p:commandButton>
+                                          
                                                                                     
                                                                                     <h:form id="table"> -->
                                             <p:dataTable id="dtable" class="table table-striped table-bordered table-hover" value="#{m_reports.getAllBooksWithDate()}" 
@@ -97,29 +82,29 @@
                                                 
                                                                                                     <p:outputLabel value="#{m_reports.date2}"><f:convertDateTime pattern="yyyy-MM-dd"/></p:outputLabel>
                                                                                                 </f:facet>-->
-<!--                                                <f:facet name="header">
-
-                                                    <h:outputLabel value="#{msgs.fromDate}" for="fromDate"></h:outputLabel>
-                                              
-                                                    <p:calendar id="fromDate" value="#{m_reports.date1}" />
-                                                    <p:inputText id="fromDate" value="#{m_reports.date1}" >
-                                                        <f:convertDateTime pattern="yyyy-MM-dd"/>
-                                                    </p:inputText>
-                                                    <h:message for="fromDate" errorStyle="color:red; display:block"/>
-
-                                                    <h:outputLabel value="#{msgs.toDate}" for="toDate"></h:outputLabel>
-                                                     <p:calendar id="toDate" value="#{m_reports.date2}" />
-                                                    <p:inputText id="toDate" value="#{m_reports.date2}" >
-                                                        <f:convertDateTime pattern="yyyy-MM-dd"/>
-                                                    </p:inputText>
-                                                    <h:message for="toDate" errorStyle="color:red; display:block"/>
-                                                    <p:commandButton update="@form" process="@parent" value="Search" >
-                                                    </p:commandButton>
-
-                                                    <p:outputLabel value="#{m_reports.date1}"><f:convertDateTime pattern="yyyy-MM-dd"/></p:outputLabel>
-
-                                                    <p:outputLabel value="#{m_reports.date2}"><f:convertDateTime pattern="yyyy-MM-dd"/></p:outputLabel>
-                                                </f:facet>-->
+                                                <!--                                                <f:facet name="header">
+                                                
+                                                                                                    <h:outputLabel value="#{msgs.fromDate}" for="fromDate"></h:outputLabel>
+                                                                                              
+                                                                                                    <p:calendar id="fromDate" value="#{m_reports.date1}" />
+                                                                                                    <p:inputText id="fromDate" value="#{m_reports.date1}" >
+                                                                                                        <f:convertDateTime pattern="yyyy-MM-dd"/>
+                                                                                                    </p:inputText>
+                                                                                                    <h:message for="fromDate" errorStyle="color:red; display:block"/>
+                                                
+                                                                                                    <h:outputLabel value="#{msgs.toDate}" for="toDate"></h:outputLabel>
+                                                                                                     <p:calendar id="toDate" value="#{m_reports.date2}" />
+                                                                                                    <p:inputText id="toDate" value="#{m_reports.date2}" >
+                                                                                                        <f:convertDateTime pattern="yyyy-MM-dd"/>
+                                                                                                    </p:inputText>
+                                                                                                    <h:message for="toDate" errorStyle="color:red; display:block"/>
+                                                                                                    <p:commandButton update="@form" process="@parent" value="Search" >
+                                                                                                    </p:commandButton>
+                                                
+                                                                                                    <p:outputLabel value="#{m_reports.date1}"><f:convertDateTime pattern="yyyy-MM-dd"/></p:outputLabel>
+                                                
+                                                                                                    <p:outputLabel value="#{m_reports.date2}"><f:convertDateTime pattern="yyyy-MM-dd"/></p:outputLabel>
+                                                                                                </f:facet>-->
                                                 <p:column filterBy="#{books.bookId}" sortBy="#{books.bookId}" headerText="#{msgs.book_id}" filterMatchMode="contains">
 
                                                     #{books.bookId}

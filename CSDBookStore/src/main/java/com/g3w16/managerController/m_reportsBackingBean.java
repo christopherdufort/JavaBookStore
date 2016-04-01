@@ -59,6 +59,8 @@ public class m_reportsBackingBean {
     public void init() {
         allBooks = bookJpa.findBookEntities();
         allUsers = userJpa.findAll();
+        date1= new Date();
+        date2= new Date();
     }
 
     public Date getDate1() {
