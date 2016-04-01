@@ -26,13 +26,6 @@
                                 <div class="panel-body">
                                     <div class="dataTable_wrapper table-responsive">
                                         <h:form >
-<!--                                            <h:outputLabel value="#{msgs.author}" for="author"></h:outputLabel>
-                                            <h:outputText rendered="m_books.author"></h:outputText>
-                                            <h:selectOneMenu id="author" value="#{m_books.author}"  >
-                                                <f:converter converterId="com.g3w16.converter.AuthorConverter"/>
-                                                <f:selectItems value="#{m_books.allAuthors}" var="a" itemLabel="#{a.authorName}" itemValue="#{a.authorId}"/>
-                                            </h:selectOneMenu>
-                                            <h:message for="author" errorStyle="color:red; display:block"/>-->
                                             <h:panelGrid columns="3" >
                                                 <h:outputLabel value="#{msgs.book_id}" for="book_id"></h:outputLabel>
                                                 <p:inputText id="book_id" value="#{m_books.book.bookId}" />
@@ -69,54 +62,39 @@
                                                 <p:inputText id="publish_date" value="#{m_books.book.publishDate}" >
                                                     <f:convertDateTime pattern="yyyy-MM-dd"/>
                                                 </p:inputText>
-
-
-<!--                                                <h:outputLabel value="#{msgs.format}" for="format"></h:outputLabel>
-                                                <h:outputText rendered="m_books.format"></h:outputText>
-                                                <h:selectOneMenu id="format" value="#{m_books.format}" >
-                                                    <f:converter converterId="com.g3w16.converter.FormatConverter"/>
-                                                    <f:selectItems value="#{m_books.allFormat}" var="f" itemLabel="#{f.extension}" itemValue="#{f.formatId}"/>
-                                                </h:selectOneMenu>
-                                                <h:message for="format" errorStyle="color:red; display:block"/>
-
-                                                <h:outputLabel value="#{msgs.genre}" for="genre"></h:outputLabel>
-                                                <h:outputText rendered="m_books.genre"></h:outputText>
-                                                <h:selectOneMenu id="genre" value="#{m_books.genre}" >
-                                                    <f:converter converterId="com.g3w16.converter.GenreConverter"/>
-                                                    <f:selectItems value="#{m_books.allGenre}" var="g" itemLabel="#{g.genreName}" itemValue="#{g.genreId}"/>
-                                                </h:selectOneMenu>
-                                                <h:message for="genre" errorStyle="color:red; display:block"/>-->
-
-<!--                                                <h:outputLabel for="format" value="#{msgs.formats}" />
-                                                <p:selectCheckboxMenu id="author" value="#{m_books.book.formatList}" label="#{msgs.format}" scrollHeight="100"
+                                                <h:message for="publish_date" errorStyle="color:red; display:block"/>
+                                                
+                                                <h:outputLabel for="format" value="#{msgs.formats}" />
+                                                <p:selectCheckboxMenu id="format" value="#{m_books.book.formatList}" label="#{msgs.format}" scrollHeight="100"
                                                                       filter="true" filterMatchMode="startsWith" panelStyle="width:250px" converter="com.g3w16.converter.FormatConverter">
                                                     <f:selectItems value="#{m_books.allFormat}" />
                                                 </p:selectCheckboxMenu>
-                                                <p:commandLink value="Submit" update="formatDisplay" />-->
+                                                <p:commandLink value="Submit" update="formatDisplay" />
                                             </h:panelGrid>
-<!--                                            <p:outputPanel id="formatDisplay" style="width:250px;padding-left:5px;margin-top:10px">
+                                            <p:outputPanel id="formatDisplay" style="width:250px;padding-left:5px;margin-top:10px">
                                                 <p:dataList value="#{m_books.book.formatList}" var="format">
                                                     #{format}
                                                 </p:dataList>
-                                            </p:outputPanel>-->
+                                            </p:outputPanel>
                                             <br />
                                             <h:panelGrid columns="3">
                                                 <h:outputLabel value="#{msgs.page_number}" for="page_number"></h:outputLabel>
                                                 <p:inputText id="page_number" value="#{m_books.book.pageNumber}" />
                                                 <h:message for="page_number" errorStyle="color:red; display:block"/>
 
-<!--                                                <h:outputLabel for="genre" value="#{msgs.genre}" />
-                                                <p:selectCheckboxMenu id="author" value="#{m_books.book.genreList}" label="#{msgs.genre}" scrollHeight="100"
+                                                <h:outputLabel for="genre" value="#{msgs.genre}" />
+                                                <p:selectCheckboxMenu id="genre" value="#{m_books.book.genreList}" label="#{msgs.genre}" scrollHeight="100"
                                                                       filter="true" filterMatchMode="startsWith" panelStyle="width:250px" converter="com.g3w16.converter.GenreConverter">
                                                     <f:selectItems value="#{m_books.allGenre}"/>
                                                 </p:selectCheckboxMenu>
-                                                <p:commandLink value="Submit" update="genreDisplay" />-->
+                                                <p:commandLink value="Submit" update="genreDisplay" />
                                             </h:panelGrid>
-<!--                                            <p:outputPanel id="genreDisplay" style="width:250px;padding-left:5px;margin-top:10px">
+                                            <p:outputPanel id="genreDisplay" style="width:250px;padding-left:5px;margin-top:10px">
                                                 <p:dataList value="#{m_books.book.genreList}" var="genre">
                                                     #{genre}
                                                 </p:dataList>
-                                            </p:outputPanel>-->
+                                            </p:outputPanel>
+                                            <br />
                                             <h:panelGrid columns="3">
                                                 <h:outputLabel value="#{msgs.wholesale_price}" for="wholesale_price"></h:outputLabel>
                                                 <p:inputText id="whole_price" value="#{m_books.book.wholesalePrice}" />
@@ -155,7 +133,7 @@
                                             <br />
 
                                             <p:commandButton value="#{msgs.update}"
-                                                             action="#{m_books.updateBook(m_books.book)}" class="btn btn-success btn-xs" />
+                                                             action="#{m_books.updateBook}" class="btn btn-success btn-xs" />
                                             <h:outputText value="&#160;" />
                                             <p:commandButton value="#{msgs.cancel}"
                                                              action="#{m_books.cancel}" class="btn btn-danger btn-xs" />
