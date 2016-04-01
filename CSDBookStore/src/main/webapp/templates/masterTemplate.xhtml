@@ -8,19 +8,19 @@
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <!--        <h:outputStylesheet name="./css/default.css"/>
-                <h:outputStylesheet name="./css/cssLayout.css"/>-->
         <!-- The title of each page is defined on each facelet template client-->
         <title><ui:insert name="title">Facelets Template</ui:insert></title>
         <!-- Global CSS -->
         <link rel="stylesheet" href="http://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css"/>
         <link rel="stylesheet" href="resources/css/customized.css"/>
-        <!--        <h:outputStylesheet name="resources/css/customized.css"/>-->
         <link rel="stylesheet" href="resources/foundation-icons/foundation-icons.css"/>
-        <!--        <h:outputStylesheet name="resources/foundation-icons/foundation-icons.css"/>-->
         <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Comfortaa"/>
         <!-- Important Owl stylesheet -->
         <link rel="stylesheet" href="resources/css/owl.carousel.css"/>
+        
+        <!-- Invoice style sheets -->
+        <link rel='stylesheet' type='text/css' href='resources/css/invoiceStyle.css' />
+	<link rel='stylesheet' type='text/css' href='resources/css/invoicePrint.css' media="print" />
 
         <!-- Default Theme -->
         <link rel="stylesheet" href="resources/css/owl.theme.css"/>
@@ -56,10 +56,10 @@
                                 <h:selectOneMenu style="width:9em" value="#{searchBackingBean.searchChoice}">
                                     <f:selectItems value="#{searchBackingBean.availableChoices}"/>
                                 </h:selectOneMenu>
-                                <h:inputText class="main-search" id="mainSearch" pt:placeholder="Search Text"
+                                <h:inputText class="main-search" id="mainSearch" pt:placeholder="#{msgs.searchText}"
                                              value="#{searchBackingBean.searchContent}">
                                 </h:inputText>
-                                <h:commandLink value="Search!" class="manual-button" action="#{searchActionBean.performSearch(searchBackingBean)}"></h:commandLink>
+                                <h:commandLink value="#{msgs.search}!" class="manual-button" action="#{searchActionBean.performSearch(searchBackingBean)}"></h:commandLink>
                             </h:form>
                         </li>
                         <!-- Authentication login/register-->
@@ -68,29 +68,32 @@
                             <ul class="dropdown">
                                 <ui:fragment rendered="#{authenticationController.isAnonymous()}">
                                     <li>
-                                        <h:outputLink styleClass="button" value="/CSDBookStore/faces/login.xhtml">Login</h:outputLink>
+                                        <h:outputLink styleClass="button" value="/CSDBookStore/faces/login.xhtml">#{msgs.login}</h:outputLink>
                                     </li>
                                     <li>
-                                        <h:outputLink styleClass="button" value="/CSDBookStore/faces/signup.xhtml">Sign up</h:outputLink>
+                                        <h:outputLink styleClass="button" value="/CSDBookStore/faces/signup.xhtml">#{msgs.signUp}</h:outputLink>
                                     </li>
                                     <li>
-                                        <h:outputLink styleClass="button fi-shopping-cart" value="/CSDBookStore/faces/cart.xhtml">My Cart</h:outputLink>
+                                        <h:outputLink styleClass="button fi-shopping-cart" value="/CSDBookStore/faces/cart.xhtml">#{msgs.myCart}</h:outputLink>
                                     </li>
                                 </ui:fragment>
                                 <ui:fragment rendered="#{authenticationController.isClient()}">
                                     <li>
-                                        <h:outputLink styleClass="button" value="http://localhost:8080/CSDBookStore/faces/profile.xhtml">My Profile</h:outputLink>
+                                        <h:outputLink styleClass="button" value="http://localhost:8080/CSDBookStore/faces/profile.xhtml">#{msgs.myProfile}</h:outputLink>
                                     </li>
                                     <li>
-                                        <h:outputLink styleClass="button fi-shopping-cart" value="/CSDBookStore/faces/cart.xhtml">My Cart</h:outputLink>
+                                        <h:outputLink styleClass="button fi-shopping-cart" value="/CSDBookStore/faces/cart.xhtml">#{msgs.myCart}</h:outputLink>
                                     </li>
                                     <li>
-                                        <h:outputLink styleClass="button" value="/CSDBookStore/faces/logout.xhtml">Logout</h:outputLink>
+                                        <h:outputLink styleClass="button" value="/CSDBookStore/faces/logout.xhtml">#{msgs.logout}</h:outputLink>
+                                    </li>
+                                    <li> <!-- Make this check if you have made a purchase before displaying -->
+                                        <h:outputLink styleClass="button" value="/CSDBookStore/faces/orders.xhtml">#{msgs.myOrders}</h:outputLink>
                                     </li>
                                 </ui:fragment>
                                 <ui:fragment rendered="#{authenticationController.isManager()}">
                                     <li>
-                                        <h:outputLink styleClass="button" value="/CSDBookStore/faces/m_index.xhtml">Admin Panel</h:outputLink>
+                                        <h:outputLink styleClass="button" value="/CSDBookStore/faces/m_index.xhtml">#{msgs.adminPanel}</h:outputLink>
                                     </li>
                                 </ui:fragment>
                             </ul>
@@ -124,7 +127,7 @@
             <div class="row">
                 <div class="medium-6 columns">
                     <ul class="menu">
-                        <li><a href="/CSDBookStore/faces/about.xhtml">About</a></li>
+                        <li><a href="/CSDBookStore/faces/about.xhtml">#{msgs.about}</a></li>
                         <li><a href="/CSDBookStore/faces/contact.xhtml">Contact</a></li>
                         <li><a href="/CSDBookStore/faces/faq.xhtml">FAQ</a></li>
                     </ul>

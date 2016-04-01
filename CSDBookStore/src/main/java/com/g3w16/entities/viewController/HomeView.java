@@ -29,40 +29,50 @@ import javax.servlet.http.HttpServletRequest;
 @Named
 @RequestScoped
 public class HomeView {
+
     @Inject
     AuthenticatedUser authenticatedUser;
-    
+
     @Inject
     BookController bookController;
-    
+
     @Inject
     GenreController genreController;
-    
-    public List<Book> getNewestBook(){
+
+    public List<Book> getNewestBook() {
         int limit = 4;
         return bookController.getNewestBook(limit);
     }
-    
-    public List<Book> getDiscountedBook(){
+
+    public List<Book> getDiscountedBook() {
         int limit = 6;
         return bookController.getDiscountedBook(limit);
     }
-    
-    public List<Book> getSuggestedBook(){
+
+    /**
+     * check co whether is null otherwise run on a new computer (no cookies)
+     * always nullpointerException
+     *
+     * edit by Xin Ma
+     */
+    public List<Book> getSuggestedBook() {
         int limit = 3;
         List<Book> toBeReturnBooks;
-        Cookie[] raw_cookies = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getCookies();
-        if (raw_cookies != null){
-            List<Cookie> cookies = Arrays.asList(raw_cookies);
-            for (Cookie c : cookies){
-                if (c.getName().equals("lastGenreId")){
-                    Logger.getLogger(this.getClass().getName()).log(Level.INFO, "Using ''lastGenreId'' cookie ( {0} )", c.getValue());
-                    return bookController.getSuggestedBook(genreController.getById(Integer.parseInt(c.getValue())), limit);
+
+        Cookie[] co = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getCookies();
+        if (co != null) {
+            List<Cookie> cookies = Arrays.asList(co);
+            if (cookies != null) {
+                for (Cookie c : cookies) {
+                    if (c.getName().equals("lastGenreId")) {
+                        Logger.getLogger(this.getClass().getName()).log(Level.INFO, "Using ''lastGenreId'' cookie ( {0} )", c.getValue());
+                        return bookController.getSuggestedBook(genreController.getById(Integer.parseInt(c.getValue())), limit);
+                    }
                 }
             }
         }
         Logger.getLogger(this.getClass().getName()).log(Level.INFO, "No 'lastGenreId' cookie found");
         return bookController.getRandomBook(limit);
-        
+
     }
 }

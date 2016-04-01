@@ -7,11 +7,11 @@ import com.g3w16.entities.InvoiceDetailJpaController;
 import com.g3w16.entities.InvoiceJpaController;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -42,6 +42,8 @@ public class CheckoutBackingBean implements Serializable {
     
     @Inject
     private CartBackingBean cartBB;
+    @Inject
+    private InvoiceBackingBean invoiceBB;
     
     @Inject
     private InvoiceJpaController invoiceJpaController;
@@ -210,11 +212,13 @@ public class CheckoutBackingBean implements Serializable {
     
     /**
      * Completes the purchase(order) of books.
+     * 
+     * @return page to redirect to
      */
-    public void confirmPurchase() throws Exception {
+    public String confirmPurchase() throws Exception {
         Invoice invoice = new Invoice();
         invoice.setSaleDate(new Date());
-        invoice.setUserNumber(user.getRegisteredUser().getUserId());
+        invoice.setUserId(user.getRegisteredUser().getUserId());
         invoice.setTotalNetValueOfSale(subtotal);
         invoice.setTotalGrossValueOfSale(total);
         //add invoice to db, keep using id for each individual invoice detail
@@ -235,19 +239,27 @@ public class CheckoutBackingBean implements Serializable {
         
         int orderSize = order.size();
         InvoiceDetail invoiceDetail;
+        List<InvoiceDetail> invoiceDetails = new ArrayList<>();
         for (int i = 0; i < orderSize; i++) {
             invoiceDetail = new InvoiceDetail();
             invoiceDetail.setInvoiceId(invoice);
             invoiceDetail.setBookId(order.get(i));
             invoiceDetail.setBookPrice(order.get(i).getSalePrice());
             invoiceDetail.setGst((((order.get(i).getSalePrice()).multiply(gst)).divide(new BigDecimal(100))).setScale(2, BigDecimal.ROUND_UP));
-            if (provincialType.equals("hst"))
+            if (provincialType.equals("hst")) {
                 invoiceDetail.setHst((((order.get(i).getSalePrice()).multiply(provincialTax)).divide(new BigDecimal(100))).setScale(2, BigDecimal.ROUND_UP));
-            else
+                invoiceDetail.setPst(new BigDecimal(BigInteger.ZERO));
+            }
+            else {
                 invoiceDetail.setPst((((order.get(i).getSalePrice()).multiply(provincialTax)).divide(new BigDecimal(100))).setScale(2, BigDecimal.ROUND_UP));
+                invoiceDetail.setHst(new BigDecimal(BigInteger.ZERO));
+            }
             invoiceDetail.setQuantity(1);
             invoiceDetailJpaController.create(invoiceDetail);
+            invoiceDetails.add(invoiceDetail);
         }
+        
+        setInvoiceVariables(invoice, invoiceDetails);
         
         cardNumber = "";
         nameOnCard = "";
@@ -256,6 +268,13 @@ public class CheckoutBackingBean implements Serializable {
         securityCode = "";
         
         cartBB.clearCart();
-        FacesContext.getCurrentInstance().getExternalContext().redirect("home.xhtml");
+        
+        return "invoice?faces-redirect=true";
+    }
+    
+    private void setInvoiceVariables(Invoice invoice, List<InvoiceDetail> invoiceDetails) {
+        invoiceBB.setInvoice(invoice);
+        invoiceBB.setInvoiceDetails(invoiceDetails);
+        invoiceBB.setEndingFourCardNumberDigits(cardNumber.substring(cardNumber.length()-4));
     }
 }

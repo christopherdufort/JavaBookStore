@@ -37,6 +37,8 @@ public class Ad implements Serializable {
     @Basic(optional = false)
     @Column(name = "ad_filename")
     private String adFilename;
+    @Column(name = "active")
+    private Boolean active;
 
     public Ad() {
     }
@@ -64,6 +66,14 @@ public class Ad implements Serializable {
 
     public void setAdFilename(String adFilename) {
         this.adFilename = adFilename;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     @Override

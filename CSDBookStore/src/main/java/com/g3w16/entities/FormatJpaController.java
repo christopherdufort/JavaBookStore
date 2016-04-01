@@ -16,6 +16,7 @@ import javax.annotation.Resource;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 
@@ -137,7 +138,7 @@ public class FormatJpaController implements Serializable {
     public List<Format> findFormatEntities() {
         return findFormatEntities(true, false, -1, -1);
     }
-    
+
     public List<Format> findFormatEntitiesAsClient() {
         return findFormatEntities(true, true, -1, -1);
     }
@@ -145,16 +146,16 @@ public class FormatJpaController implements Serializable {
     public List<Format> findFormatEntities(int maxResults, int firstResult) {
         return findFormatEntities(false, false, maxResults, firstResult);
     }
-    
+
     public List<Format> findFormatEntitiesAsClient(int maxResults, int firstResult) {
         return findFormatEntities(false, false, maxResults, firstResult);
     }
 
-    private List<Format> findFormatEntities(boolean all, boolean asClient,  int maxResults, int firstResult) {
+    private List<Format> findFormatEntities(boolean all, boolean asClient, int maxResults, int firstResult) {
         Query q;
-        if(asClient){
+        if (asClient) {
             q = em.createNamedQuery("Format.findAllAvailable");
-        }else{
+        } else {
             q = em.createNamedQuery("Format.findAll");
         }
         if (!all) {
@@ -163,133 +164,143 @@ public class FormatJpaController implements Serializable {
         }
         return q.getResultList();
     }
-    
-    public List<Format> findFormatEntitiesLike(String extension){
+
+    public List<Format> findFormatEntitiesLike(String extension) {
         return findFormatEntitiesLike(extension, true, false, -1, -1);
     }
-    
-    public List<Format> findFormatEntitiesLikeAsClient(String extension){
+
+    public List<Format> findFormatEntitiesLikeAsClient(String extension) {
         return findFormatEntitiesLike(extension, true, true, -1, -1);
     }
-    
-    public List<Format> findformatEntitiesLike(String extension, int maxResults, int firstresult){
+
+    public List<Format> findformatEntitiesLike(String extension, int maxResults, int firstresult) {
         return findFormatEntitiesLike(extension, false, false, maxResults, firstresult);
     }
-    
-    public List<Format> findformatEntitiesLikeAsClient(String extension, int maxResults, int firstresult){
+
+    public List<Format> findformatEntitiesLikeAsClient(String extension, int maxResults, int firstresult) {
         return findFormatEntitiesLike(extension, false, true, maxResults, firstresult);
     }
-    
-    private List<Format> findFormatEntitiesLike(String extension, boolean all, boolean asClient, int maxResults, int firstResult){
+
+    private List<Format> findFormatEntitiesLike(String extension, boolean all, boolean asClient, int maxResults, int firstResult) {
         Query q;
-        if(asClient){
+        if (asClient) {
             q = em.createNamedQuery("Format.findByExtensionAvailable");
-        }else{
+        } else {
             q = em.createNamedQuery("Format.findByExtension");
         }
-        if (!all){
+        if (!all) {
             q.setMaxResults(maxResults);
             q.setFirstResult(firstResult);
         }
-        q.setParameter("extension", "%"+extension+"%");
+        q.setParameter("extension", "%" + extension + "%");
         return q.getResultList();
     }
 
-    public List<Format> findFormatEntitiesByBook(Book book){
+    public List<Format> findFormatEntitiesByBook(Book book) {
         return findFormatEntitiesByBook(book, true, false, -1, -1);
     }
-    
-    public List<Format> findFormatEntitiesByBookAsClient(Book book){
+
+    public List<Format> findFormatEntitiesByBookAsClient(Book book) {
         return findFormatEntitiesByBook(book, true, true, -1, -1);
     }
-    
-    public List<Format> findFormatEntitiesByBook(Book book, int maxResults, int firstResult){
+
+    public List<Format> findFormatEntitiesByBook(Book book, int maxResults, int firstResult) {
         return findFormatEntitiesByBook(book, false, false, maxResults, firstResult);
     }
-    
-    public List<Format> findFormatEntitiesByBookAsClient(Book book, int maxResults, int firstResult){
+
+    public List<Format> findFormatEntitiesByBookAsClient(Book book, int maxResults, int firstResult) {
         return findFormatEntitiesByBook(book, false, true, maxResults, firstResult);
     }
-    
-    private List<Format> findFormatEntitiesByBook(Book book, boolean all, boolean asClient, int maxResults, int firstResult){
+
+    private List<Format> findFormatEntitiesByBook(Book book, boolean all, boolean asClient, int maxResults, int firstResult) {
         Query q;
-        if(asClient){
+        if (asClient) {
             q = em.createNamedQuery("Format.findByBookIdAvailable");
-        }else{
+        } else {
             q = em.createNamedQuery("Format.findByBookId");
         }
-        if(!all){
+        if (!all) {
             q.setMaxResults(maxResults);
             q.setFirstResult(firstResult);
         }
         q.setParameter("bookId", book.getBookId());
         return q.getResultList();
     }
-    
-    public List<Format> findFormatEntitiesByGenre(Genre genre){
+
+    public List<Format> findFormatEntitiesByGenre(Genre genre) {
         return findFormatEntitiesByGenre(genre, true, false, -1, -1);
     }
-    
-    public List<Format> findFormatEntitiesByGenreAsClient(Genre genre){
+
+    public List<Format> findFormatEntitiesByGenreAsClient(Genre genre) {
         return findFormatEntitiesByGenre(genre, true, true, -1, -1);
     }
-    
-    public List<Format> findformatEntitiesByGenre(Genre genre, int maxResults, int firstResult){
+
+    public List<Format> findformatEntitiesByGenre(Genre genre, int maxResults, int firstResult) {
         return findFormatEntitiesByGenre(genre, false, false, maxResults, firstResult);
     }
-    
-    public List<Format> findformatEntitiesByGenreAsClient(Genre genre, int maxResults, int firstResult){
+
+    public List<Format> findformatEntitiesByGenreAsClient(Genre genre, int maxResults, int firstResult) {
         return findFormatEntitiesByGenre(genre, false, true, maxResults, firstResult);
     }
-    
-    private List<Format> findFormatEntitiesByGenre(Genre genre, boolean all, boolean asClient, int maxResults, int firstResult){
+
+    private List<Format> findFormatEntitiesByGenre(Genre genre, boolean all, boolean asClient, int maxResults, int firstResult) {
         Query q;
-        if(asClient){
+        if (asClient) {
             q = em.createNamedQuery("Format.findByGenreIdAvailable");
-        }else{
+        } else {
             q = em.createNamedQuery("Format.findByGenreId");
         }
-        if(!all){
+        if (!all) {
             q.setMaxResults(maxResults);
             q.setFirstResult(firstResult);
         }
         q.setParameter("genreId", genre.getGenreId());
         return q.getResultList();
     }
-    
-    public List<Format> findFormatEntitiesByAuthor(Author author){
+
+    public List<Format> findFormatEntitiesByAuthor(Author author) {
         return findFormatEntitiesByAuthor(author, true, false, -1, -1);
     }
-    
-    public List<Format> findFormatEntitiesByAuthorAsClient(Author author){
+
+    public List<Format> findFormatEntitiesByAuthorAsClient(Author author) {
         return findFormatEntitiesByAuthor(author, true, true, -1, -1);
     }
-    
-    public List<Format> findFormatEntitiesByAuthor(Author author, int maxResults, int firstResult){
+
+    public List<Format> findFormatEntitiesByAuthor(Author author, int maxResults, int firstResult) {
         return findFormatEntitiesByAuthor(author, false, false, maxResults, firstResult);
     }
-    
-    public List<Format> findFormatEntitiesByAuthorAsClient(Author author, int maxResults, int firstResult){
+
+    public List<Format> findFormatEntitiesByAuthorAsClient(Author author, int maxResults, int firstResult) {
         return findFormatEntitiesByAuthor(author, false, true, maxResults, firstResult);
     }
-    
-    private List<Format> findFormatEntitiesByAuthor(Author author, boolean all, boolean asClient, int maxResults, int firstResult){
+
+    private List<Format> findFormatEntitiesByAuthor(Author author, boolean all, boolean asClient, int maxResults, int firstResult) {
         Query q;
-        if(asClient){
+        if (asClient) {
             q = em.createNamedQuery("Format.findByAuthorIdAvailable");
-        }else{
+        } else {
             q = em.createNamedQuery("Format.findByAuthorId");
         }
-        if(!all){
+        if (!all) {
             q.setMaxResults(maxResults);
             q.setFirstResult(firstResult);
         }
         q.setParameter("authorId", author.getAuthorId());
         return q.getResultList();
     }
-    
+
     public Format findFormat(Integer id) {
         return em.find(Format.class, id);
+    }
+
+    public Format findByExtension(String extension) {
+        try {
+            Query q = em.createNamedQuery("Format.findByExtension", Format.class);
+            q.setParameter("extension", extension);
+            return (Format) q.getSingleResult();
+        } catch (NoResultException e) {
+            return new Format();
+        }
     }
 
     public int getFormatCount() {

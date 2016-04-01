@@ -1,0 +1,80 @@
+<!--@author Xin Ma-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+        <ui:composition template="./../templates/m_masterTemplate.xhtml">       
+            <ui:define name="m_content"> 
+                <div id="page-wrapper">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h1 class="page-header">Total Sales</h1>
+                        </div>
+                        <!-- /.col-lg-12 -->
+                    </div>
+                    <!-- /.row -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Total Sales <h:outputText value="#{m_reports.allTotalSales}"/>
+                                </div>
+                                <!-- /.panel-heading -->
+                                <div class="panel-body">
+                                    <div class="dataTable_wrapper table-responsive">
+                                        <div class="row">
+                                            <div class="col-xs-1 col-sm-1 col-md-1" style="text-align: center"><h:outputLabel value="#{msgs.isbn}"></h:outputLabel></div>
+                                            <div class="col-xs-3 col-sm-3 col-md-3" style="text-align: center"><h:outputLabel value="#{msgs.title}"></h:outputLabel></div>
+                                            <div class="col-xs-6 col-sm-6 col-md-6" style="text-align: center"><h:outputLabel value="#{msgs.price}"></h:outputLabel></div>
+                                            <div class="col-xs-2 col-sm-2 col-md-2" style="text-align: center"><h:outputLabel value="#{msgs.total}"></h:outputLabel></div>
+                                        </div>
+                                        <h:form>
+                                            <ui:repeat value="#{m_reports.allBooks}" var="book">
+                                                <hr />
+
+                                                <div class="row">
+
+<!--                                                    <h:outputText value="#{book.title}" ></h:outputText>
+                                                    <h:outputText value="#{book.listPrice}"></h:outputText>
+                                                    <h:outputText value="#{m_reports.getTotalPerBook(book)}"></h:outputText>
+
+                                                    <hr />-->
+                                                </div>
+                                                <div class="clearfix col-xs-3 col-sm-3 col-md-3"><h:outputText value="#{book.isbn}"></h:outputText></div>
+                                                <div class="clearfix col-xs-3 col-sm-3 col-md-3"><h:outputText value="#{book.title}"></h:outputText></div>
+                                                <div class="clearfix col-xs-3 col-sm-3 col-md-3"><h:outputText value="#{book.listPrice}"></h:outputText></div>
+                                                <div class="clearfix col-xs-3 col-sm-3 col-md-3"><h:outputText value="#{m_reports.getTotalPerBook(book)}"></h:outputText></div>
+                                            </ui:repeat>
+                                        </h:form>
+
+                                    </div>
+                                    <!-- /.table-responsive -->
+                                </div>
+                                <!-- /.panel-body -->
+                            </div>
+                            <!-- /.panel -->
+                        </div>
+                        <!-- /.col-lg-12 -->
+                    </div>
+
+                </div>
+                <!-- /#page-wrapper -->
+
+            </ui:define>
+        </ui:composition>
+        <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+        <script>
+            $(document).ready(function () {
+                $('#dataTables-example').DataTable({
+                    responsive: true
+                });
+            });
+        </script>
+
+    </body>
+
+</html>

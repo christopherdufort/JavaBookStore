@@ -147,8 +147,11 @@ public class NewsFeedJpaController implements Serializable {
         return ((Long) q.getSingleResult()).intValue();
     }
     
-    public List<NewsFeed> findNewsFeedByActive(){
-        Query q = em.createQuery("SELECT n FROM NewsFeed n WHERE n.active = true");
-        return q.getResultList();
+    public NewsFeed findNewsFeedByActive(){
+        Query query = em.createQuery("SELECT n FROM NewsFeed n WHERE n.active = true");
+        
+        //execute query returning single result
+        NewsFeed result = (NewsFeed)query.getSingleResult(); 
+        return result;
     }
 }

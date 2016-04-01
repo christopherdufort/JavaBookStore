@@ -64,7 +64,7 @@ public class SearchActionBean implements Serializable {
             return bookBackingBean.displayBook(searchResults.get(0));
         }
         
-        return "results.xhtml";
+        return "results";
     }
     //NEED TO FIGURE OUT HOW TO PASS THE GENRE HERE
     public String browseGenre(String genre) throws IOException{
@@ -88,7 +88,7 @@ public class SearchActionBean implements Serializable {
             default:     //need a default  
         }
         
-        return "browseGenreResults.xhtml";
+        return "browseGenreResults";
     }
     
     public List<Book> getSearchResults(){

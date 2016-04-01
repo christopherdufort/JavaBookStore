@@ -16,6 +16,7 @@ import javax.annotation.Resource;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 
@@ -290,6 +291,16 @@ public class GenreJpaController implements Serializable {
     
     public Genre findGenre(Integer id) {
         return em.find(Genre.class, id);
+    }
+    
+    public Genre findByGenreName(String name){
+         try {
+            Query q = em.createNamedQuery("Genre.findByGenreName", Genre.class);
+            q.setParameter("genreName", name);
+            return (Genre) q.getSingleResult();
+        } catch (NoResultException e) {
+            return new Genre();
+        }
     }
 
     public int getGenreCount() {

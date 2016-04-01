@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -271,8 +272,6 @@ public class BookBackingBean implements Serializable {
         );
         cookie.setMaxAge(forever);
         ((HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse()).addCookie(cookie);
-        // -- end of the cookie part
-        //FacesContext.getCurrentInstance().getExternalContext().redirect("book.xhtml");
-        return "book.xhtml";
+        return "book?faces-redirect=true";
     }
 }

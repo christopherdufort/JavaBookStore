@@ -16,6 +16,7 @@ import javax.annotation.Resource;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 
@@ -197,9 +198,14 @@ public class ProvinceJpaController implements Serializable {
      * @return province with that name
      */
     public Province findProvinceByName(String name) {
+        try{
         Query q = em.createNamedQuery("Province.findByProvince", Province.class);
         q.setParameter("province", name);
         return (Province) q.getSingleResult();
+        }
+        catch (NoResultException e) {
+            return new Province();
+        }
     }
 
     /**

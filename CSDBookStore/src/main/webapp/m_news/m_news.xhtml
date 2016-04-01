@@ -19,42 +19,39 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    Total <h:outputText value="#{m_newsfeed.newsFeedCount}"/> News
-                                </div>
-                                <!-- /.panel-heading -->
-                                <div class="panel-body">
-                                    <div class="dataTable_wrapper table-responsive">
-                                        <h:form>
-                                            <h:dataTable class="table table-striped table-bordered table-hover" id="dataTables-example" value="#{m_newsfeed.allNews}" var="news">
-                                                <h:column>
-                                                    <f:facet name="header"><h:commandLink value="#{msgs.add}" action="#{m_newsfeed.preCreateNews()}" class="btn btn-success btn-block"/>
-                                                    </f:facet>
-                                                    <h:commandLink value="#{msgs.edit}" action="#{m_newsfeed.editNews(news)}" class="btn btn-info btn-block"/>
-                                                    <h:outputText value="&#160;" />
-                                                    <h:commandLink value="#{msgs.delete}" action="#{m_newsfeed.destroyNews(news)}" class="btn btn-danger btn-block">   
-                                                        <f:ajax render="@form"/>
-                                                    </h:commandLink>
-                                                </h:column>
-                                                <h:column>
-                                                    <f:facet name="header">#{msgs.news_id}</f:facet>
-                                                    #{news.newsFeedId}
-                                                </h:column>
+                                <h:form>
+                                    <p:dataTable var="news" value="#{m_newsfeed.allNews}" widgetVar="newsTable" rows="10"
+                                                 paginator="true"
+                                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                 rowsPerPageTemplate="5,10,15"
+                                                 emptyMessage="No news found with given criteria">
 
-                                                <h:column>
-                                                    <f:facet name="header">#{msgs.news_link}</f:facet>
-                                                    #{news.newsFeedLink}
-                                                </h:column>
-                                                
-                                                <h:column>
-                                                    <f:facet name="header">#{msgs.active}</f:facet>
-                                                    #{news.active}
-                                                </h:column>
-                                            </h:dataTable>
-                                        </h:form>
-                                    </div>
-                                    <!-- /.table-responsive -->
-                                </div>
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:commandLink value="#{msgs.add}" action="#{m_newsfeed.preCreateNews()}" class="btn btn-success btn-block"/>
+                                            </f:facet>
+
+                                            <h:commandLink value="#{msgs.edit}" action="#{m_newsfeed.editNews(news)}" class="btn btn-info btn-sx"/>
+                                            <h:outputText value="&#160;" />
+                                            <h:commandLink value="#{msgs.delete}" action="#{m_newsfeed.destroyNews(news)}" class="btn btn-danger btn-sx">   
+                                                <f:ajax render="@form" />
+                                            </h:commandLink>
+                                        </p:column>
+                                        <p:column  headerText="#{msgs.active}">
+                                            <p:selectBooleanCheckbox value="#{news.active}">
+                                                <p:ajax update="@form" listener="#{m_newsfeed.active(news)}"/>
+                                            </p:selectBooleanCheckbox>
+                                        </p:column>
+                                        <p:column filterBy="#{news.newsFeedId}" sortBy="#{news.newsFeedId}" headerText="#{msgs.news_id}"  filterMatchMode="contains">
+                                            <h:outputText value="#{news.newsFeedId}" />
+                                        </p:column>
+
+                                        <p:column filterBy="#{news.newsFeedLink}" sortBy="#{news.newsFeedLink}" headerText="#{msgs.news_link}"  filterMatchMode="contains">
+                                            <h:outputText value="#{news.newsFeedLink}" />
+                                        </p:column>
+
+                                    </p:dataTable>
+                                </h:form>
                                 <!-- /.panel-body -->
                             </div>
                             <!-- /.panel -->

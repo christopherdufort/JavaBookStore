@@ -898,18 +898,18 @@ INSERT INTO `book_genre` (`book_id`, `genre_id`) VALUES
 
 
 
-INSERT INTO `invoice` (`invoice_id`, `sale_date`, `user_number`, `total_net_value_of_sale`, `total_gross_value_of_sale`) VALUES
-(1, '2016-02-01 00:00:00', 1231, '16.31', '18.45'),
-(2, '2016-02-02 00:00:00', 1231, '20.56', '24.12'),
-(3, '2016-02-03 00:00:00', 1231, '48.87', '62.12'),
-(4, '2016-02-04 00:00:00', 1234, '20.56', '24.12'),
-(5, '2016-02-05 00:00:00', 1234, '8.74', '9.81'),
-(6, '2016-02-06 00:00:00', 1334, '9.99', '13.28');
+INSERT INTO `invoice` (`invoice_id`, `sale_date`, `user_id`, `total_net_value_of_sale`, `total_gross_value_of_sale`) VALUES
+(1, '2016-02-01 00:00:00', 1, '16.31', '18.45'),
+(2, '2016-02-02 00:00:00', 2, '20.56', '24.12'),
+(3, '2016-02-03 00:00:00', 3, '48.87', '62.12'),
+(4, '2016-02-04 00:00:00', 4, '20.56', '24.12'),
+(5, '2016-02-05 00:00:00', 5, '8.74', '9.81'),
+(6, '2016-02-06 00:00:00', 6, '9.99', '13.28');
 
 INSERT INTO `invoice_detail` (`invoice_detail_id`, `invoice_id`, `book_id`, `pst`, `gst`, `hst`, `book_price`, `quantity`) VALUES
 (1, 1, 76, '1.63', '0.82', '0.00', '16.31', 1),
-(2, 1, 77, '2.05', '1.03', '0.00', '20.56', 1),
-(3, 3, 78, '4.87', '2.44', '0.00', '16.29', 3),
+(2, 2, 77, '2.05', '1.03', '0.00', '20.56', 1),
+(3, 3, 78, '4.87', '2.44', '0.00', '16.29', 1),
 (4, 4, 77, '2.05', '1.03', '0.00', '20.56', 1),
 (5, 5, 80, '0.87', '0.44', '0.00', '8.74', 1);
 
@@ -929,13 +929,13 @@ INSERT INTO `province` (`province_id`, `province`, `pst`, `gst`, `hst`) VALUES
 (12, 'Northwest Territories', NULL, '5.00', NULL),
 (13, 'Nunavut', NULL, '5.00', NULL);
 
-INSERT INTO `survey` (`survey_id`, `question`, `answer_one`, `answer_two`, `answer_three`, `answer_default`) VALUES
-(1, 'What is your favorite type of book?', 'Electronic copy', 'Hard Cover', 'Paperback', 'Something else'),
-(2, 'Have you ever written a book?', 'Yes atleast one', 'No never', 'Im writing one', 'It''s a secret'),
-(3, 'What is the most you have ever paid for a book?', 'Atleast 100', 'Atleast 50', 'Atleast 5', 'I never pay for books'),
-(4, 'Are you reading a book now?', 'Yes', 'No', 'Does a blog count', 'Define the term book'),
-(5, 'Do you keep a reading journal/list?', 'Yes its full', 'Yes but its empty', 'No', 'I want to'),
-(6, 'Is there anything in your shopping cart now?', 'Yes im buying stuff', 'No I will buy stuff soon', 'I already bought a book', 'This is a trick to get me to buy books');
+INSERT INTO `survey` (`survey_id`, `question`, `answer_one`, `answer_two`, `answer_three`, `answer_default`, `active`) VALUES
+(1, 'What is your favorite type of book?', 'Electronic copy', 'Hard Cover', 'Paperback', 'Something else', true),
+(2, 'Have you ever written a book?', 'Yes atleast one', 'No never', 'Im writing one', 'It''s a secret', false),
+(3, 'What is the most you have ever paid for a book?', 'Atleast 100', 'Atleast 50', 'Atleast 5', 'I never pay for books', false),
+(4, 'Are you reading a book now?', 'Yes', 'No', 'Does a blog count', 'Define the term book', false),
+(5, 'Do you keep a reading journal/list?', 'Yes its full', 'Yes but its empty', 'No', 'I want to', false),
+(6, 'Is there anything in your shopping cart now?', 'Yes im buying stuff', 'No I will buy stuff soon', 'I already bought a book', 'This is a trick to get me to buy books', false);
 
 
 INSERT INTO `title` (`title_id`, `title`) VALUES
@@ -975,7 +975,8 @@ INSERT INTO `registered_user` (`user_id`, `title_id`, `last_name`, `first_name`,
 (27, 1, 'McLaughlin', 'John', 'BestBuy', '24454 Where St.', '—', 'Montreal', 1, 'Canada', 'K3N3X6', '514-534-5365', '514-534-5332', 'something@gmail.com', '123456abc', false, true),
 (28, 1, 'Tremblay', 'Matthew', '—', '43 Amazing St.', '—', 'Montreal', 1, 'Canada', 'M4N6L3', '514-978-4565', '514-978-4545', 'email1@gmail.com', '123abc456', false, true),
 (29, 3, 'Cartwright', 'Sylvia', '—', '98 County St.', '432 Bob St.', 'Quebec', 1, 'Canada', 'M3M5FK', '418-543-6787', '418-543-6487', 'rew@gmail.com', 'something1', false, true),
-(30, 3, 'Shackleton', 'Ashley', 'Dawson College', '234 NewAddress St.', '—', 'Quebec', 1, 'Canada', 'H1S1R9', '418-434-6542', '418-434-6122', 'ash_ley@gmail.com', 'dawsoncollege', false, true);
+(30, 3, 'Shackleton', 'Ashley', 'Dawson College', '234 NewAddress St.', '—', 'Quebec', 1, 'Canada', 'H1S1R9', '418-434-6542', '418-434-6122', 'ash_ley@gmail.com', 'dawsoncollege', false, true),
+(31, 1, 'Account', 'Purchase', 'Dawson College', '1234 main street.', '—', 'Montreal', 1, 'Canada', 'H2S1R7', '514-123-4569', '514-123-4567', 'bibliotech.receive@gmail.com', 'sofa3brick', false, true);
 
 INSERT INTO review (isbn, date_submitted, user_id, rating, approval_id, review_title, review_text) VALUES
 ('978-0134308135', '2015-12-24', '1', '4', '1', '... PC Kindle to use for a class and was easy enough to follow along', 'Purchased this book for my PC Kindle to use for a class and was easy enough to follow along. However I will admit I had to reread some sections as it seemed I would miss a key phrase that would throw off the whole section if not done. Lesson learned, use on regular Kindle instead of trying to bounce back and forth. The only thing that would have made it better was a downloadable cheat sheet of the keyboard codes. So often I would have to try to remember that holding two keys would do an action versus using the mouse to find the tool to click on it. That being said, if you have never used Photoshop CC or need a serious refresher this book should be of help. Hoping that they come out with other additions to keep the skills I have learned fresh as a way of practicing while working to finish my degree.'),
@@ -1023,5 +1024,5 @@ INSERT INTO review (isbn, date_submitted, user_id, rating, approval_id, review_t
 ('B004CFA9DM', '2012-01-30', '1', '3.8', '1', 'I wished the ending was different', 'I really wished it ended differently. It would have been nice to not expect the ending. To avoid having a good ending. '),
 ('B00M60RKW8', '2012-01-31', '1', '4.9', '1', 'Almost perfect ! Almost!', 'One of my favorite books. I dont care what everyone else thinks. It was really worth the time I’ve spent on it. ');
 
-INSERT INTO news_feed(news_feed_id, news_feed_link, active) VALUES
+INSERT INTO `news_feed` (`news_feed_id`, `news_feed_link`, `active`) VALUES
 (1, 'http://www.bookbrowse.com/rss/book_news.rss', true);
