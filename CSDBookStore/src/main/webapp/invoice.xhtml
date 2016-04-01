@@ -1,34 +1,36 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- Author: Christopher Duffort
+     Author: Giuseppe Campanelli -->
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
         <ui:composition template="./templates/masterTemplate.xhtml">
 
             <ui:define name="title">
-                Invoice
+                #{msgs.invoice}
             </ui:define>
 
             <ui:define name="event_listener">
+                <f:event listener="#{authenticationController.mustBeClient}" type="preRenderView" />
             </ui:define>
 
             <ui:define name="content">
                 <div id="page-wrap">
-
-                    <div id="header">INVOICE</div>
+                    <div id="header">#{msgs.invoice}</div>
 
                     <div id="identity">
-
                         <div id="address">
-                            <b>Billing Address:</b><br/>
-                            Chris Coyier <br/>
-                            123 Appleseed Street <br/>
-                            Appleville, WI 53719 <br/>
+                            <b>#{msgs.billingAddress}:</b><br/>
+                            #{authenticatedUser.registeredUser.firstName} #{authenticatedUser.registeredUser.lastName}<br/>
+                            #{authenticatedUser.registeredUser.addressOne}<br/>
+                            #{authenticatedUser.registeredUser.city}, #{authenticatedUser.registeredUser.postalCode}<br/>
                             <br/>
-                            Phone: (555) 555-5555 <br/>
-                            Cell:  (555) 555-5555 <br/>
+                            #{msgs.phone}: #{authenticatedUser.registeredUser.homePhone}<br/>
+                            #{msgs.cell}:  #{authenticatedUser.registeredUser.cellPhone}<br/>
                         </div>
 
                         <div>
@@ -38,104 +40,91 @@
                             </div>
                             <img id="image" src="resources/images/logo.PNG" align="right" alt="logo" />
                         </div>
-
                     </div>
 
                     <div style="clear:both"></div>
 
                     <div id="customer">
-
                         <div id="customer-title">
                             BiblioTech.com<br/>
-                            The CSD Book Store
+                            #{msgs.csdStore}
                         </div>
 
                         <table class="plainTable" id="meta">
                             <tr>
-                                <td class="meta-head">Invoice #</td>
-                                <td><div>000123</div></td>
+                                <td class="meta-head">#{msgs.invoice} #</td>
+                                <td>#{invoiceBB.invoice.invoiceId}</td>
                             </tr>
                             <tr>
-
                                 <td class="meta-head">Date</td>
-                                <td><div>December 15, 2009</div></td>
+                                <td>#{invoiceBB.formatDate(invoiceBB.invoice.saleDate)}</td>
                             </tr>
                             <tr>
-                                <td class="meta-head">Amount Due</td>
-                                <td><div class="due">$875.00</div></td>
+                                <td class="meta-head">Total</td>
+                                <td>$#{invoiceBB.invoice.totalGrossValueOfSale}</td>
                             </tr>
-
                         </table>
 
                     </div>
 
                     <table id="items">
-
                         <tr>
-                            <th>Item</th>
-                            <th>Description</th>
-                            <th>Unit Cost</th>
-                            <th>Quantity</th>
-                            <th>Price</th>
+                            <th colspan="2">#{msgs.item}</th>
+                            <th>#{msgs.price}</th>
+                            <th>#{msgs.quantity}</th>
+                            <th>#{msgs.price}</th>
                         </tr>
 
-                        <tr class="item-row">
-                            <td class="item-name"><div><div>Book title</div><a class="delete" href="javascript:;" title="Remove row">X</a></div></td>
-                            <td class="description"><div>Monthly web updates for http://widgetcorp.com (Nov. 1 - Nov. 30, 2009)</div></td>
-                            <td><div class="cost">$309.08</div></td>
-                            <td><div class="qty">1</div></td>
-                            <td><span class="price">$309.08</span></td>
-                        </tr>
-
-                        <tr class="item-row">
-                            <td class="item-name"><div><div>SSL Renewals</div><a class="delete" href="javascript:;" title="Remove row">X</a></div></td>
-
-                            <td class="description"><div>Yearly renewals of SSL certificates on main domain and several subdomains</div></td>
-                            <td><div class="cost">$75.00</div></td>
-                            <td><div class="qty">1</div></td>
-                            <td><span class="price">$225.00</span></td>
-                        </tr>
-
+                        <ui:repeat var="item" value="#{invoiceBB.invoiceDetails}">
+                            <tr class="item-row">
+                                <td colspan="2" class="item-name">#{item.bookId.title}</td>
+                                <td><div class="cost">$#{item.bookPrice}</div></td>
+                                <td><div class="qty">#{item.quantity}</div></td>
+                                <td><span class="price">$#{item.bookPrice}</span></td>
+                            </tr>
+                        </ui:repeat>
+                        
                         <tr id="hiderow">
-                            <td colspan="5">Payment information</td>
+                            <td colspan="5">#{msgs.paymentInfo}</td>
                         </tr>
 
                         <tr>	  
                             <td colspan="2" class="blank"> </td>
-                            <td colspan="2" class="total-line">Subtotal before tax:</td>
-                            <td class="total-value"><div id="subtotal">$#{checkoutBB.subtotal}</div></td>
+                            <td colspan="2" class="total-line">#{msgs.subtotal}:</td>
+                            <td class="total-value"><div id="subtotal">$#{invoiceBB.invoice.totalNetValueOfSale}</div></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="blank"> </td>
+                            <td colspan="2" class="total-line">GST:</td>
+                            <td class="total-value"><div id="total">$#{invoiceBB.gst}</div></td>
                         </tr>
                         <tr>
 
                             <td colspan="2" class="blank"> </td>
                             <td colspan="2" class="total-line">QST/PST:</td>
-                            <td class="total-value"><div id="total">$75.00</div></td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" class="blank"> </td>
-                            <td colspan="2" class="total-line">GST:</td>
-                            <td class="total-value"><div id="total">$0.00</div></td>
+                            <td class="total-value"><div id="total">$#{invoiceBB.pst}</div></td>
                         </tr>
                         <tr>
                             <td colspan="2" class="blank"> </td>
                             <td colspan="2" class="total-line">HST:</td>
-                            <td class="total-value"><div id="total">$35.00</div></td>
+                            <td class="total-value"><div id="total">$#{invoiceBB.hst}</div></td>
                         </tr>
                         <tr>
-                            <td colspan="2" class="blank"><b>Payment Method:</b><br/>Credit Card | Ending in : 0012</td>
-                            <td colspan="2" class="total-line balance">Grand Total:</td>
-                            <td class="total-value balance"><div class="due">$$#{checkoutBB.calcTotal()}</div></td>
+                            <td colspan="2" class="blank"><b>#{msgs.paymentMethod}:</b><br/>#{msgs.endingDigits}: #{invoiceBB.endingFourCardNumberDigits}</td>
+                            <td colspan="2" class="total-line balance">#{msgs.total}:</td>
+                            <td class="total-value balance"><div class="due">$#{invoiceBB.invoice.totalGrossValueOfSale}</div></td>
                         </tr>
-
                     </table>
+                    
                     <script>
                         //works if JS is enabled
                         document.write("<a href='#' onclick='javascript:window.print();'>Print this page for your records.</a>");
                     </script>
-                    <a href="#" onclick="javascript:window.print();">Print this page for your records.</a>
+                    
+                    <a href="#" onclick="javascript:window.print();">#{msgs.printPage}</a>
                     <div id="terms">
-                        <h5>Terms</h5>
-                        <div>Conditions of Use | Privacy Notice | © 2016, BiblioTech.com, Inc. and its affiliates. All rights reserved.<br/>This is not a real trademark.</div>
+                        <h5>#{msgs.terms}</h5>
+                        <div>#{msgs.conditions}<br/>#{msgs.trademark}</div>
                     </div>
                 </div>
             </ui:define>

@@ -1,5 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- Author: Jonas Faure
+     Author: Giuseppe Campanelli -->
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
@@ -8,7 +10,7 @@
         <ui:composition template="./templates/masterTemplate.xhtml">
 
             <ui:define name="title">
-                Login
+                #{msgs.login}
             </ui:define>
             
             <ui:define name="event_listener">
@@ -22,23 +24,27 @@
                     <div class="medium-6 medium-centered large-4 large-centered columns">
                         <h:form id="auth_form">
                             <div class="row column log-in-form">
-                                <h4 class="text-center">Log in with your email account</h4>
-                                <h:message class="error" for="auth_form" style="color:red">
+                                <h4 class="text-center">#{msgs.loginWithEmail}</h4>
+                                <h:message class="error" for="auth_form">
                                 </h:message>
-                                <label>Email
-                                    <h:inputText id="emailInput" value="#{authBean.email}" >
+                                <label>#{msgs.email}
+                                    <h:inputText id="emailInput" value="#{authBean.email}" required="true" requiredMessage="#{msgs.required}">
                                         <f:validator validatorId="com.g3w16.validator.EmailValidator"/>
+                                        <f:ajax event="blur" render="emailInputError"/>
                                     </h:inputText>
-                                    <h:message class="error" for="emailInput" style="color:red">
+                                    <h:message id="emailInputError" class="error" for="emailInput">
                                     </h:message>
                                 </label>
-                                <label>Password
-                                    <h:inputSecret id="passwordInput" value="#{authBean.password}" >
+                                <label>#{msgs.password}
+                                    <h:inputSecret id="passwordInput" value="#{authBean.password}" required="true" requiredMessage="#{msgs.required}">
+                                        <f:ajax event="blur" render="passwordInputError"/>
                                     </h:inputSecret>
+                                    <h:message id="passwordInputError" class="error" for="passwordInput">
+                                    </h:message>
                                 </label>
                                 <!--<input id="show-password" type="checkbox"><label for="show-password">Show password</label></input>-->
-                                <p><h:commandLink value="Log in" class="button expanded" action="#{userAuthView.authenticate()}" ></h:commandLink></p>
-                                <p class="text-center"><a href="resetPassword.xhtml">Forgot your password?</a></p>
+                                <p><h:commandLink value="#{msgs.login}" class="button expanded" action="#{userAuthView.authenticate()}" ></h:commandLink></p>
+                                <p class="text-center"><a href="resetPassword.xhtml">#{msgs.forgotPassword}</a></p>
                             </div>
                         </h:form>
                     </div>

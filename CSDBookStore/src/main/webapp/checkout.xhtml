@@ -34,7 +34,7 @@
                     <div class="large-7 columns">
                         <table width="100%">
                             <tr>
-                                <td><h4>#{msgs.orderSummary}</h4></td>
+                                <th><h4>#{msgs.orderSummary}</h4></th>
                             </tr>
                             <ui:repeat var="item" value="#{checkoutBB.order}">
                                 <tr>
@@ -76,44 +76,49 @@
                                 <h4 class="text-center">#{msgs.paymentInfo}</h4>
                                 <h:message for="auth_form" style="color:red">
                                 </h:message>
-                                <label>#{msgs.creditCardNumber}:</label><h:message id ="cardNumberError" for="cardNumber" style="color:red" />
+                                <label>#{msgs.creditCardNumber}:</label>
                                 <h:inputText id="cardNumber" value="#{checkoutBB.cardNumber}" required="true" autocomplete="off" requiredMessage="#{msgs.required}"
                                              onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;">
                                     <f:validator validatorId="com.g3w16.CreditCardValidator" />
                                     <f:ajax event="blur" render="cardNumberError" />
                                 </h:inputText>
-                                <label>#{msgs.nameOnCard}:</label><h:message id ="cardNameError" for="nameOnCard" style="color:red" />
+                                <h:message id ="cardNumberError" for="cardNumber" class="error" />
+                                <label>#{msgs.nameOnCard}:</label>
                                 <h:inputText id="nameOnCard" value="#{checkoutBB.nameOnCard}" required="true" autocomplete="off" requiredMessage="#{msgs.required}">
                                     <f:validateLength minimum="5" maximum="35"/>
                                     <f:ajax event="blur" render="cardNameError" />
                                 </h:inputText>
+                                <h:message id ="cardNameError" for="nameOnCard" class="error" />
                                 <div class="row">
                                     <div class="large-6 columns">
-                                        <label>#{msgs.expiryMonth}:</label><h:message id ="expiryMonthError" for="expiryMonth" style="color:red" />
+                                        <label>#{msgs.expiryMonth}:</label>
                                         <h:inputText id="expiryMonth" value="#{checkoutBB.expiryMonth}" required="true" autocomplete="off" requiredMessage="#{msgs.required}"
                                                      onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;" validatorMessage="#{msgs.expiryMonthValidMsg}">
                                             <f:convertNumber />
                                             <f:validateLongRange minimum="1" maximum="12"/>
                                             <f:ajax event="blur" render="expiryMonthError" />
                                         </h:inputText>
+                                        <h:message id ="expiryMonthError" for="expiryMonth" class="error" />
                                     </div>
                                     <div class="large-6 columns">
-                                        <label>#{msgs.expiryYear}:</label><h:message id ="expiryYearError" for="expiryYear" style="color:red" />
+                                        <label>#{msgs.expiryYear}:</label>
                                         <h:inputText id="expiryYear" value="#{checkoutBB.expiryYear}" required="true" autocomplete="off" requiredMessage="#{msgs.required}"
                                                      onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;" validatorMessage="#{msgs.expiryYearValidMsg}">
                                             <f:convertNumber pattern="####" />
                                             <f:validateLongRange minimum="#{checkoutBB.expiryYear}" maximum="#{checkoutBB.expiryYear+10}"/>
                                             <f:ajax event="blur" render="expiryYearError" />
                                         </h:inputText>
+                                        <h:message id ="expiryYearError" class="error" for="expiryYear" />
                                     </div>
                                 </div>
-                                <label>#{msgs.securityCode}:</label><h:message id ="securityCodeError" for="securityCode" style="color:red" />
+                                <label>#{msgs.securityCode}:</label>
                                 <h:inputText id="securityCode" value="#{checkoutBB.securityCode}" required="true" autocomplete="off" requiredMessage="#{msgs.required}"
                                              onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;">
                                     <f:convertNumber />
                                     <f:validateLength minimum="3" maximum="4"/>
                                     <f:ajax event="blur" render="securityCodeError" />
                                 </h:inputText>
+                                <h:message id ="securityCodeError" for="securityCode" class="error" />
                                 <h:commandButton styleClass="button" value="#{msgs.confirmPurchase}" action="#{checkoutBB.confirmPurchase()}"/>
                             </div>
                         </h:form>

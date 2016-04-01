@@ -87,7 +87,7 @@ public class m_surveysBackingBean implements Serializable {
         }
     }
 
-    public String destroySurvey(Survey s) {
+    public void destroySurvey(Survey s) {
 
         try {
             surveyJpa.destroy(s.getSurveyId());
@@ -97,7 +97,6 @@ public class m_surveysBackingBean implements Serializable {
             Logger.getLogger(m_surveysBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         allSurvey = surveyJpa.findAllSurveys();
-        return "m_surveys";
     }
 
     public String cancel() {

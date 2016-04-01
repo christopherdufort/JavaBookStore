@@ -86,9 +86,6 @@ public class m_invoicesBackingBean implements Serializable{
         this.searched = searched;
     }
 
-//    public void setAllInvoices(List<Invoice> all) {
-//        this.all = all;
-//    }
 
     /**
      * Returning all invoices

@@ -34,12 +34,8 @@
                     </div>
                     <div class="medium-6 large-5 columns">
                         <h3 class="noMargin"><h:outputText value="#{bookBB.book.title}"/></h3>
-                        <table class="plainTable">
-                            <tr>
-                                <td class="noPadding"><label><p:rating value="#{bookBB.starsForOverallRating}" readonly="true"/></label></td>
-                                <td class="noPadding"><label>&nbsp;<h:outputText value="[#{bookBB.reviewsAmount}]"/></label></td>
-                            </tr>
-                        </table>
+                        <label><p:rating value="#{bookBB.starsForOverallRating}" readonly="true"/></label>
+                        <label>&nbsp;<h:outputText value="[#{bookBB.reviewsAmount}]"/></label>
                         <h5><h:outputText value="#{bookBB.authors}"/></h5> <!--authors concatenated-->
                         <p><h:outputText value="#{bookBB.book.synopsis}"/></p>	
                         <h:form id="buyBookNow">
@@ -126,16 +122,18 @@
                                     <p:rating cancel="false" value="#{bookBB.rating}">
                                     </p:rating>
                                     <br/>
-                                    <label>#{msgs.reviewTitle}:</label><h:message id ="reviewTitleError" for="reviewTitle" style="color:red" />
+                                    <label>#{msgs.reviewTitle}:</label>
                                     <h:inputText id="reviewTitle" value="#{bookBB.review.reviewTitle}" required="true" requiredMessage="#{msgs.required}">
                                         <f:validateLength maximum="25"/>
                                         <f:ajax event="blur" render="reviewTitleError" />
                                     </h:inputText>
-                                    <label>#{msgs.reviewText}:</label><h:message id ="reviewTextError" for="reviewText" style="color:red" />
+                                    <h:message id ="reviewTitleError" for="reviewTitle" class="error" />
+                                    <label>#{msgs.reviewText}:</label>
                                     <h:inputTextarea id="reviewText" value="#{bookBB.review.reviewText}" required="true" requiredMessage="#{msgs.required}">
                                         <f:validateLength minimum="10" maximum="750"/>
                                         <f:ajax event="blur" render="reviewTextError" />
                                     </h:inputTextarea>
+                                    <h:message id ="reviewTextError" for="reviewText" class="error" />
                                     <h:commandButton styleClass="button" value="#{msgs.submitReview}" action="#{bookBB.createReview()}"/>
                                 </h:form>
                             </c:if>

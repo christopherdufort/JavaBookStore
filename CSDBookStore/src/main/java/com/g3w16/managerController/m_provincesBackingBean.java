@@ -62,7 +62,7 @@ public class m_provincesBackingBean implements Serializable {
     }
 
    
-    public String destroyProvince(Province p) {
+    public void destroyProvince(Province p) {
         try {
             provinceJpa.destroy(p.getProvinceId());
         } catch (RollbackFailureException ex) {
@@ -71,7 +71,6 @@ public class m_provincesBackingBean implements Serializable {
             Logger.getLogger(m_provincesBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         allprovince = provinceJpa.findAll();
-        return "m_provinces";
     }
 
     public String cancel() {
