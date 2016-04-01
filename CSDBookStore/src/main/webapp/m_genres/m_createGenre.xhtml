@@ -29,7 +29,7 @@
                                         <h:form>
                                             <h:panelGrid columns="3">
                                                 <h:outputLabel value="#{msgs.genre}" for="ad_filename"></h:outputLabel>
-                                                <h:inputText id="ad_filename" value="#{m_genres.genre.genreName}" />
+                                                <h:inputText id="ad_filename" value="#{m_genres.genre.genreName}" required="true" requiredMessage="#{msgs.required}"/>
                                                 <h:message for="ad_filename" errorStyle="color:red; display:block"/>
 
                                             </h:panelGrid>
@@ -39,7 +39,7 @@
 
                                             <h:outputText value="&#160;" />
                                             <h:commandButton value="#{msgs.cancel}"
-                                                             action="#{m_genres.cancel()}" class="btn btn-danger btn-xs" />
+                                                             action="#{m_genres.cancel()}" class="btn btn-danger btn-xs" immediate="true"/>
                                         </h:form>
                                     </div>
                                     <!-- /.table-responsive -->
