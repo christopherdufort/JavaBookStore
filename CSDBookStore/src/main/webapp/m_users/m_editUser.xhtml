@@ -26,12 +26,8 @@
                                 <div class="panel-body">
                                     <div class="dataTable_wrapper table-responsive">
                                         <h:form>
+                                            <h:inputHidden id="user_id" value="#{m_users.user.userId}"/>
                                             <h:panelGrid columns="3" class="panel panel-body">
-                                                <h:outputLabel value="#{msgs.user_id}" for="user_id"></h:outputLabel>
-                                                <h:outputText rendered="m_users.user.userId"></h:outputText>
-                                                <h:inputText id="user_id" value="#{m_users.user.userId}" required="true" requiredMessage="#{msgs.required}"/>
-                                                <h:message for="user_id" errorStyle="color:red; display:block"/>
-
                                                 <h:outputLabel value="#{msgs.email_address}" for="email_address"></h:outputLabel>
                                                 <h:outputText rendered="m_users.user.emailAddress"></h:outputText>
                                                 <h:inputText id="email_address" value="#{m_users.user.emailAddress}" required="true" requiredMessage="#{msgs.required}"/>
@@ -72,7 +68,7 @@
 
                                                 <h:outputLabel value="#{msgs.address_two}" for="address_two"></h:outputLabel>
                                                 <h:outputText rendered="m_users.user.addressTwo"></h:outputText>
-                                                <h:inputText id="address_two" value="#{m_users.user.addressTwo}" required="true" requiredMessage="#{msgs.required}"/>
+                                                <h:inputText id="address_two" value="#{m_users.user.addressTwo}"/>
                                                 <h:message for="address_two" errorStyle="color:red; display:block"/>
 
                                                 <h:outputLabel value="#{msgs.city}" for="city"></h:outputLabel>
