@@ -31,7 +31,7 @@ public class m_surveysBackingBean implements Serializable {
     @Inject
     SurveyJpaController surveyJpa;
 
-     @PostConstruct
+    @PostConstruct
     public void init() {
         allSurvey = surveyJpa.findAllSurveys();
     }
@@ -52,7 +52,7 @@ public class m_surveysBackingBean implements Serializable {
     }
 
     public String createSurvey() {
-        
+
         try {
             surveyJpa.create(survey);
         } catch (Exception ex) {
@@ -73,13 +73,13 @@ public class m_surveysBackingBean implements Serializable {
         } catch (Exception ex) {
             Logger.getLogger(m_surveysBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        allSurvey=surveyJpa.findAllSurveys();
+        allSurvey = surveyJpa.findAllSurveys();
         return "m_surveys";
     }
-    
-    public void active(Survey s){
-        survey=surveyJpa.findSurveyById(s.getSurveyId());
-        survey.setActive(s.getActive());   
+
+    public void active(Survey s) {
+        survey = surveyJpa.findSurveyById(s.getSurveyId());
+        survey.setActive(s.getActive());
         try {
             surveyJpa.edit(survey);
         } catch (Exception ex) {

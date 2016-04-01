@@ -59,12 +59,12 @@
                                                <f:convertDateTime pattern="yyyy-MM-dd"/>
                                            </p:inputText>-->
                                             <h:message for="toDate" errorStyle="color:red; display:block"/>
-                                            <p:commandButton  process="@parent" update="dtable" value="Search" >
-
-                                            </p:commandButton>
+                                            <h:commandButton  value="Search" >
+                                                <f:ajax render="table"/>
+                                            </h:commandButton>
                                           
                                                                                     
-                                                                                    <h:form id="table"> -->
+<!--                                                                                    <h:form id="table"> -->-->
                                             <p:dataTable id="dtable" class="table table-striped table-bordered table-hover" value="#{m_reports.getAllBooksWithDate()}" 
                                                          var="books" widgetVar="reportsTable" 
 

@@ -9,6 +9,7 @@ import com.g3w16.entities.*;
 import com.g3w16.entities.exceptions.RollbackFailureException;
 import java.io.IOException;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -55,11 +56,6 @@ public class m_booksBackingBean implements Serializable {
     @PostConstruct
     public void init() {
         all = bookJpa.findBookEntities();
-    }
-    private Date currentDate = new Date();
-
-    public Date getCurrentDate() {
-        return currentDate;
     }
 
     public String preCreateBook() {
@@ -111,7 +107,10 @@ public class m_booksBackingBean implements Serializable {
     }
 
     public String createBook() {
-        try {
+        Date d = new Date(System.currentTimeMillis());
+        try {           
+            book.setOverallRating(BigDecimal.ZERO);
+            book.setDateEntered(d);
             List<Review> reviewList = new ArrayList<>();
             book.setReviewList(reviewList);
             bookJpa.create(book);
