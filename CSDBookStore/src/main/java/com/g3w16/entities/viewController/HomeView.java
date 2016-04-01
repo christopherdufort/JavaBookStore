@@ -8,6 +8,7 @@ package com.g3w16.entities.viewController;
 import com.g3w16.actionController.BookController;
 import com.g3w16.actionController.GenreController;
 import com.g3w16.beans.AuthenticatedUser;
+import com.g3w16.entities.AdJpaController;
 import com.g3w16.entities.Book;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,9 +36,10 @@ public class HomeView {
 
     @Inject
     BookController bookController;
-
     @Inject
     GenreController genreController;
+    @Inject
+    AdJpaController adJpaController;
 
     public List<Book> getNewestBook() {
         int limit = 4;
@@ -56,7 +58,7 @@ public class HomeView {
      * edit by Xin Ma
      */
     public List<Book> getSuggestedBook() {
-        int limit = 3;
+        int limit = 15;
         List<Book> toBeReturnBooks;
 
         Cookie[] co = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getCookies();
@@ -73,6 +75,13 @@ public class HomeView {
         }
         Logger.getLogger(this.getClass().getName()).log(Level.INFO, "No 'lastGenreId' cookie found");
         return bookController.getRandomBook(limit);
-
+    }
+    
+    public String getSideAd() {
+        return adJpaController.findAdByActiveType(false).getAdFilename();
+    }
+    
+    public String getMainAd() {
+        return adJpaController.findAdByActiveType(true).getAdFilename();
     }
 }

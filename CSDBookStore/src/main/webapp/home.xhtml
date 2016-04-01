@@ -75,8 +75,12 @@
                                 </ul>
                             </div>
                             <div class="panel">
-                                <div class="callout primary">
-                                    <h3>This space is reserved for advertisements</h3>
+                                <div class="primary">
+                                    <h:form>
+                                        <a href="#{homeView.sideAd}">
+                                            <h:graphicImage value="resources/images/#{homeView.sideAd}.png"/>
+                                        </a>
+                                    </h:form>
                                 </div>
                             </div>
                         </div>
@@ -100,8 +104,10 @@
                             </div>
                             <hr/>
                             <div class="row column">
-                                <div class="callout primary">
-                                    <h3>This space is reserved for advertisements</h3>
+                                <div class=" large-centered primary">
+                                    <a href="#{homeView.mainAd}">
+                                        <h:graphicImage value="resources/images/#{homeView.mainAd}.png"/>
+                                    </a>
                                 </div>
                             </div>
                             <hr/>
@@ -119,37 +125,18 @@
                                 </ui:repeat>
                             </div>
                             <hr/>
-                            <div class="row">
-                                <div class="medium-4 columns">
-                                    <h4>Section 1</h4>
-                                    <ui:repeat var="item" value="#{homeView.suggestedBook}">
-                                        <bf:displayBookSmall
-                                            itemImg="resources/images/#{item.isbn}.jpg"
-                                            itemTitle="#{item.title}"
-                                            itemListPrice="#{item.listPrice}"
-                                            itemSalePrice="#{item.salePrice}"/>
-                                    </ui:repeat>
-                                </div>
-                                <div class="medium-4 columns">
-                                    <h4>Section 2</h4>
-                                    <ui:repeat var="item" value="#{homeView.suggestedBook}">
-                                        <bf:displayBookSmall
-                                            itemImg="resources/images/#{item.isbn}.jpg"
-                                            itemTitle="#{item.title}"
-                                            itemListPrice="#{item.listPrice}"
-                                            itemSalePrice="#{item.salePrice}"/>
-                                    </ui:repeat>
-                                </div>
-                                <div class="medium-4 columns">
-                                    <h4>Section 3</h4>
-                                    <ui:repeat var="item" value="#{homeView.suggestedBook}">
-                                        <bf:displayBookSmall
-                                            itemImg="resources/images/#{item.isbn}.jpg"
-                                            itemTitle="#{item.title}"
-                                            itemListPrice="#{item.listPrice}"
-                                            itemSalePrice="#{item.salePrice}"/>
-                                    </ui:repeat>
-                                </div>
+                            <div class="row column text-center">
+                                <h2>Suggested Books</h2>
+                                <hr/>
+                            </div>
+                            <div class="row small-up-2 medium-up-3 large-up-5">
+                                <ui:repeat var="item" value="#{homeView.suggestedBook}">
+                                    <bf:displayBook
+                                        itemImg="resources/images/#{item.isbn}.jpg"
+                                        itemTitle="#{item.title}"
+                                        itemListPrice="#{item.listPrice}"
+                                        itemSalePrice="#{item.salePrice}"/>
+                                </ui:repeat>
                             </div>
                         </div>
                         <!-- END OF MAIN CONTENT -->

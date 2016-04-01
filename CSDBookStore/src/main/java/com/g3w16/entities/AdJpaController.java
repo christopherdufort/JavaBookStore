@@ -205,8 +205,9 @@ public class AdJpaController implements Serializable {
         return ((Long) q.getSingleResult()).intValue();
     }
 
-    public Ad findNewsFeedByActive() {
-        Query query = em.createQuery("SELECT a FROM Ad a WHERE a.active = true");
+    public Ad findAdByActiveType(boolean type) {
+        Query query = em.createQuery("SELECT a FROM Ad a WHERE a.adType = :type");
+        query.setParameter("type", type);
 
         //execute query returning single result
         Ad result = (Ad) query.getSingleResult();

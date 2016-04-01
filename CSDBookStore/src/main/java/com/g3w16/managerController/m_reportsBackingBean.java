@@ -11,9 +11,12 @@ import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.context.RequestContext;
@@ -24,7 +27,7 @@ import org.primefaces.event.SelectEvent;
  *
  * @author Rita Lazaar
  */
-@Named("m_reports")
+@ManagedBean(name = "m_reports")
 @RequestScoped
 public class m_reportsBackingBean {
 
@@ -33,6 +36,9 @@ public class m_reportsBackingBean {
     private Book book;
     private Date date1;
     private Date date2;
+
+    private List<Book> allBooks;
+    private List<RegisteredUser> allUsers;
 
     @Inject
     m_invoicesBackingBean m_invoicesBackingBean;
@@ -46,17 +52,15 @@ public class m_reportsBackingBean {
     @Inject
     BookJpaController bookJpa;
 
-    public void onDateSelect(SelectEvent event) {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
-    }
+    @Inject
+    RegisteredUserJpaController userJpa;
 
-    public void click() {
-        RequestContext requestContext = RequestContext.getCurrentInstance();
-
-        requestContext.update("form:display");
-        requestContext.execute("PF('dlg').show()");
+    @PostConstruct
+    public void init() {
+        allBooks = bookJpa.findBookEntities();
+        allUsers = userJpa.findAll();
+        date1= new Date();
+        date2= new Date();
     }
 
     public Date getDate1() {
@@ -71,6 +75,10 @@ public class m_reportsBackingBean {
         return date2;
     }
 
+    public void setDate2(Date date2) {
+        this.date2 = date2;
+    }
+
     public InvoiceDetail getInvoiceDetail() {
         if (invoiceDetail == null) {
             invoiceDetail = new InvoiceDetail();
@@ -82,10 +90,16 @@ public class m_reportsBackingBean {
         this.invoiceDetail = invoiceDetail;
     }
 
+    public List<Book> getAllBooks() {
+
+        return allBooks;
+    }
+
     public List<Invoice> getInvoicesWithDate(Date date1, Date date2) {
         return invoiceJpa.findInvoiceByDate(date1, date2);
     }
 
+    // ------------ REPORTS METHODS ----------------
     /**
      * This method calculates the total sales that exist for one invoice.
      * Including taxes.
@@ -119,7 +133,6 @@ public class m_reportsBackingBean {
         return detailTotal;
     }
 
-    // ------------ REPORTS METHODS ----------------
     /**
      * This method returns the total gross value of all sales in the databases.
      *
@@ -130,7 +143,7 @@ public class m_reportsBackingBean {
         BigDecimal total = BigDecimal.valueOf(0);
         double t = 0;
 
-        List<Invoice> allInvoices = m_invoicesBackingBean.getAllInvoices();
+        List<Invoice> allInvoices = invoiceJpa.findInvoiceEntities();
 
         for (int i = 0; i < allInvoices.size(); i++) {
 
@@ -160,15 +173,73 @@ public class m_reportsBackingBean {
         for (int i = 0; i < allInvoices.size(); i++) {
 
             Invoice in = allInvoices.get(i);
+
             t += in.getTotalGrossValueOfSale().doubleValue();
         }
         total = BigDecimal.valueOf(t).setScale(2, RoundingMode.CEILING);
         return total;
     }
 
-    public List<Book> getAllBooks() {
+    public List<Book> getAllBooksWithDate() {
 
-        return bookJpa.findBookEntities();
+        if (date1 == null || date2 == null) {
+            return getAllBooks();
+        }
+        allBooks = null;
+        List<Invoice> in = getInvoicesWithDate(date1, date2);
+
+        for (int i = 0; i < in.size(); i++) {
+            List<InvoiceDetail> inDetail = in.get(i).getInvoiceDetailList();
+
+            for (int j = 0; j < inDetail.size(); j++) {
+//                books.add(inDetail.get(j).getBookId());
+                if (!allBooks.contains(inDetail.get(j).getBookId())) {
+                    allBooks.add(inDetail.get(j).getBookId());
+                }
+            }
+        }
+
+        return allBooks;
+    }
+
+    public List<Book> getAllBooksWithoutSale() {
+
+        List<Book> noSales = bookJpa.findBookEntities();
+
+        List<Invoice> in = invoiceJpa.findInvoiceEntities();
+        for (int i = 0; i < in.size(); i++) {
+            List<InvoiceDetail> inDetail = in.get(i).getInvoiceDetailList();
+
+            for (int j = 0; j < inDetail.size(); j++) {
+                Book b = inDetail.get(j).getBookId();
+                //all books with sales are removed from this list
+
+                noSales.remove(b);
+
+//                books.add(inDetail.get(j).getBookId());
+            }
+        }
+        return noSales;
+    }
+
+    public List<Book> getAllBooksWithSalesOnly() {
+
+        List<Book> booksWithSales = null;
+        List<Invoice> in = invoiceJpa.findInvoiceEntities();
+        for (int i = 0; i < in.size(); i++) {
+            List<InvoiceDetail> inDetail = in.get(i).getInvoiceDetailList();
+
+            for (int j = 0; j < inDetail.size(); j++) {
+                Book b = inDetail.get(j).getBookId();
+                //all books with sales are removed from this list
+                if (!booksWithSales.contains(b)) {
+                    booksWithSales.add(b);
+                }
+
+//                books.add(inDetail.get(j).getBookId());
+            }
+        }
+        return booksWithSales;
     }
 
     /**
@@ -198,6 +269,7 @@ public class m_reportsBackingBean {
         List<InvoiceDetail> allBooks = getAllBooksInvoiceDetailPerBook(book);
 
         for (int i = 0; i < allBooks.size(); i++) {
+
             t += allBooks.get(i).getBookPrice().doubleValue();
         }
         //calculating total
@@ -219,7 +291,8 @@ public class m_reportsBackingBean {
         List<InvoiceDetail> pubInvDetail = null;
         BigDecimal total = BigDecimal.ZERO;
         double t = 0;
-
+        //clear all elements from list
+        allBooks.clear();
         List<Invoice> invoices = getInvoicesWithDate(date1, date2);
         List<InvoiceDetail> invoiceD;
         //running through all the invoices of this date
@@ -234,6 +307,7 @@ public class m_reportsBackingBean {
                 if (b.getPublisher().equalsIgnoreCase(publisher)) {
 //                    pubInvDetail.add(id.get(j));
                     // for the moment it is only list price.
+                    allBooks.add(b);
                     t += b.getListPrice().doubleValue();
                 }
 
@@ -257,6 +331,7 @@ public class m_reportsBackingBean {
         BigDecimal total = BigDecimal.ZERO;
         double t = 0;
 
+        allBooks.clear();
         List<Invoice> invoices = getInvoicesWithDate(date1, date2);
         List<InvoiceDetail> invoiceD;
         //running through all the invoices of this date
@@ -271,6 +346,7 @@ public class m_reportsBackingBean {
                 if (b.getAuthorList().contains(author)) {
 //                    pubInvDetail.add(id.get(j));
                     // for the moment it is only list price.
+                    allBooks.add(b);
                     t += b.getListPrice().doubleValue();
                 }
 

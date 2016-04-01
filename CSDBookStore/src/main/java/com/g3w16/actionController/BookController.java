@@ -6,20 +6,21 @@
 package com.g3w16.actionController;
 
 import com.g3w16.beans.SearchBackingBean;
+import com.g3w16.entities.Author;
+import com.g3w16.entities.AuthorJpaController;
 import com.g3w16.entities.Book;
 import com.g3w16.entities.BookJpaController;
 import com.g3w16.entities.Genre;
-import com.g3w16.entities.Review;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  *
- * @author Christopher
+ * @author Christopher Dufort
  */
 @Named
 @RequestScoped
@@ -27,6 +28,9 @@ public class BookController {
 
     @Inject
     BookJpaController bookJpaController;
+    
+    @Inject
+    AuthorJpaController authorJpaController;
 
     @Inject
     SearchBackingBean searchBackingBean;
@@ -40,11 +44,17 @@ public class BookController {
     }
 
     public List<Book> searchByAuthor(String author) {
-        throw new NotImplementedException();
+        List<Book> results = new ArrayList<Book>();
+        List<Author> authorObjects = authorJpaController.findAuthorEntitiesLikeAsClient(author); 
+        
+        for (int i = 0; i < authorObjects.size(); i++) {
+            results.addAll(bookJpaController.findBookEntitiesByAuthorAsClient(authorObjects.get(i)));
+        }
+        return results;
     }
 
     public List<Book> searchByPublisher(String publisher) {
-        throw new NotImplementedException();
+        return bookJpaController.findBookEntitiesByPublisherLike(publisher);
     }
     
     public List<Book> browseByGenre(Genre genre){

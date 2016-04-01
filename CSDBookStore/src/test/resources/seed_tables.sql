@@ -36,6 +36,11 @@ ALTER TABLE title AUTO_INCREMENT = 1;
 DELETE FROM approval WHERE approval_id>=1;
 ALTER TABLE approval AUTO_INCREMENT = 1;
 
+INSERT INTO `ad` (`ad_id`, `ad_filename`, `active`, `ad_type`) VALUES
+(1, 'mcdonalds.com', 1, 0),
+(2, 'facebook.com', 1, 1);
+
+
 INSERT INTO `approval` (`approval_id`, `approval_status`) VALUES
 (1, 'Approved'),
 (2, 'Pending'),
@@ -1025,4 +1030,7 @@ INSERT INTO review (isbn, date_submitted, user_id, rating, approval_id, review_t
 ('B00M60RKW8', '2012-01-31', '1', '4.9', '1', 'Almost perfect ! Almost!', 'One of my favorite books. I dont care what everyone else thinks. It was really worth the time I’ve spent on it. ');
 
 INSERT INTO `news_feed` (`news_feed_id`, `news_feed_link`, `active`) VALUES
-(1, 'http://www.bookbrowse.com/rss/book_news.rss', true);
+(1, 'http://www.bookbrowse.com/rss/book_news.rss', true),
+(2, 'http://www.bookbrowse.com/rss/bookbrowse_free_newsletter.rss', false),
+(3, 'http://www.bookbrowse.com/rss/newest_reader_reviews.rss', false);
+(4, 'http://www.bookbrowse.com/rss/member_ezines.rss', false);

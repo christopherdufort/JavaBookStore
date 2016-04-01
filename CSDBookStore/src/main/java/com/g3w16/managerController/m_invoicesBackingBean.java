@@ -93,6 +93,7 @@ public class m_invoicesBackingBean implements Serializable{
      * @return
      */
     public List<Invoice> getAllInvoices() {
+
         return all;
     }
 
