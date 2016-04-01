@@ -40,7 +40,7 @@
                                                 <h:message for="title" errorStyle="color:red; display:block"/>
 
                                                 <h:outputLabel for="author" value="#{msgs.author}" />
-                                                <p:selectCheckboxMenu id="author" value="#{m_books.book.authorList}" label="#{msgs.author}" scrollHeight="100"
+                                                <p:selectCheckboxMenu id="author" value="#{m_books.book.authorList}" label="#{msgs.author}" scrollHeight="150"
                                                                       filter="true" filterMatchMode="startsWith" panelStyle="width:250px" converter="com.g3w16.converter.AuthorConverter">
                                                     <f:selectItems value="#{m_books.allAuthors}" />
                                                 </p:selectCheckboxMenu>
@@ -59,13 +59,11 @@
                                                 <h:message for="publisher" errorStyle="color:red; display:block"/>
 
                                                 <h:outputLabel value="#{msgs.publish_date}" for="publish_date"></h:outputLabel>
-                                                <p:inputText id="publish_date" value="#{m_books.book.publishDate}" >
-                                                    <f:convertDateTime pattern="yyyy-MM-dd"/>
-                                                </p:inputText>
+                                                <p:calendar id="publish_date" value="#{m_books.book.publishDate}" />
                                                 <h:message for="publish_date" errorStyle="color:red; display:block"/>
-                                                
+
                                                 <h:outputLabel for="format" value="#{msgs.formats}" />
-                                                <p:selectCheckboxMenu id="format" value="#{m_books.book.formatList}" label="#{msgs.format}" scrollHeight="100"
+                                                <p:selectCheckboxMenu id="format" value="#{m_books.book.formatList}" label="#{msgs.format}" scrollHeight="150"
                                                                       filter="true" filterMatchMode="startsWith" panelStyle="width:250px" converter="com.g3w16.converter.FormatConverter">
                                                     <f:selectItems value="#{m_books.allFormat}" />
                                                 </p:selectCheckboxMenu>
@@ -83,7 +81,7 @@
                                                 <h:message for="page_number" errorStyle="color:red; display:block"/>
 
                                                 <h:outputLabel for="genre" value="#{msgs.genre}" />
-                                                <p:selectCheckboxMenu id="genre" value="#{m_books.book.genreList}" label="#{msgs.genre}" scrollHeight="100"
+                                                <p:selectCheckboxMenu id="genre" value="#{m_books.book.genreList}" label="#{msgs.genre}" scrollHeight="150"
                                                                       filter="true" filterMatchMode="startsWith" panelStyle="width:250px" converter="com.g3w16.converter.GenreConverter">
                                                     <f:selectItems value="#{m_books.allGenre}"/>
                                                 </p:selectCheckboxMenu>
@@ -109,9 +107,7 @@
                                                 <h:message for="sale_price" errorStyle="color:red; display:block"/>
 
                                                 <h:outputLabel value="#{msgs.date_entered}" for="date_entered"></h:outputLabel>
-                                                <p:inputText id="date_entered" value="#{m_books.book.dateEntered}" >
-                                                    <f:convertDateTime pattern="yyyy-MM-dd"/>
-                                                </p:inputText>
+                                                <p:calendar id="date_entered" value="#{m_books.book.dateEntered}" />
                                                 <h:message for="date_entered" errorStyle="color:red; display:block"/>
 
                                                 <h:outputLabel value="#{msgs.available}" for="available"></h:outputLabel>

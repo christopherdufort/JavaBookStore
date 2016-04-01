@@ -5,10 +5,7 @@
  */
 package com.g3w16.converter;
 
-import com.g3w16.entities.Author;
 import com.g3w16.entities.AuthorJpaController;
-import java.util.Arrays;
-import java.util.List;
 import javax.enterprise.inject.spi.CDI;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;

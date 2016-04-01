@@ -9,6 +9,8 @@ import com.g3w16.entities.*;
 import com.g3w16.entities.exceptions.RollbackFailureException;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -53,6 +55,11 @@ public class m_booksBackingBean implements Serializable {
     @PostConstruct
     public void init() {
         all = bookJpa.findBookEntities();
+    }
+    private Date currentDate = new Date();
+
+    public Date getCurrentDate() {
+        return currentDate;
     }
 
     public String preCreateBook() {
@@ -105,6 +112,8 @@ public class m_booksBackingBean implements Serializable {
 
     public String createBook() {
         try {
+            List<Review> reviewList = new ArrayList<>();
+            book.setReviewList(reviewList);
             bookJpa.create(book);
         } catch (Exception ex) {
             Logger.getLogger(m_booksBackingBean.class.getName()).log(Level.SEVERE, null, ex);
