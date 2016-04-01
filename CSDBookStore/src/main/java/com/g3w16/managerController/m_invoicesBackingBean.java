@@ -86,9 +86,6 @@ public class m_invoicesBackingBean implements Serializable{
         this.searched = searched;
     }
 
-//    public void setAllInvoices(List<Invoice> all) {
-//        this.all = all;
-//    }
 
     /**
      * Returning all invoices
@@ -96,14 +93,6 @@ public class m_invoicesBackingBean implements Serializable{
      * @return
      */
     public List<Invoice> getAllInvoices() {
-
-
-//        all = invoiceJpa.findInvoiceEntities();
-//        //  all= invoiceJpa.findInvoiceEntities();
-////         for(int i =0; i<invoiceJpa.findInvoiceEntities().size();i++){
-////         
-////             all.add(invoice)
-////         }
 
         return all;
     }

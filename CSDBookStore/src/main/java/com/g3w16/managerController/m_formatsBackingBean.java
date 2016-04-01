@@ -63,7 +63,7 @@ public class m_formatsBackingBean implements Serializable {
         return "m_formats";
     }
 
-    public String destroyFormat(Format f) {
+    public void destroyFormat(Format f) {
         try {
             formatJpa.destroy(f.getFormatId());
         } catch (RollbackFailureException ex) {
@@ -72,7 +72,6 @@ public class m_formatsBackingBean implements Serializable {
             Logger.getLogger(m_formatsBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         allFormat = formatJpa.findFormatEntities();
-        return "m_formats";
     }
 
     public String cancel() {

@@ -21,40 +21,150 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    Total Sales <h:outputText value="#{m_reports.allTotalSales}"/>
+                                    Total Sales <strong> <h:outputText value="#{m_reports.allTotalSales}"/></strong>
                                 </div>
-                                <!-- /.panel-heading -->
+
                                 <div class="panel-body">
+
+                                    <!--                                    <h:form id ="dates">
+                                    
+                                                                            <h:outputLabel value="#{msgs.fromDate}" for="fromDate"></h:outputLabel>
+                                                                            <h:inputText id="fromDate" value="#{m_reports.date1}" >
+                                                                                <f:convertDateTime pattern="yyyy-MM-dd"/>
+                                                                            </h:inputText>
+                                                                            <h:message for="fromDate" errorStyle="color:red; display:block"/>
+                                    
+                                                                            <h:outputLabel value="#{msgs.toDate}" for="toDate"></h:outputLabel>
+                                                                            <h:inputText id="toDate" value="#{m_reports.date2}" >
+                                                                                <f:convertDateTime pattern="yyyy-MM-dd"/>
+                                                                            </h:inputText>
+                                                                            <h:message for="toDate" errorStyle="color:red; display:block"/>
+                                    
+                                                                        </h:form>-->
                                     <div class="dataTable_wrapper table-responsive">
-                                        <div class="row">
-                                            <div class="col-xs-1 col-sm-1 col-md-1" style="text-align: center"><h:outputLabel value="#{msgs.isbn}"></h:outputLabel></div>
-                                            <div class="col-xs-3 col-sm-3 col-md-3" style="text-align: center"><h:outputLabel value="#{msgs.title}"></h:outputLabel></div>
-                                            <div class="col-xs-6 col-sm-6 col-md-6" style="text-align: center"><h:outputLabel value="#{msgs.price}"></h:outputLabel></div>
-                                            <div class="col-xs-2 col-sm-2 col-md-2" style="text-align: center"><h:outputLabel value="#{msgs.total}"></h:outputLabel></div>
-                                        </div>
-                                        <h:form>
-                                            <ui:repeat value="#{m_reports.allBooks}" var="book">
-                                                <hr />
+                                        <h:form id="table"> 
 
-                                                <div class="row">
 
-<!--                                                    <h:outputText value="#{book.title}" ></h:outputText>
-                                                    <h:outputText value="#{book.listPrice}"></h:outputText>
-                                                    <h:outputText value="#{m_reports.getTotalPerBook(book)}"></h:outputText>
+<!--                                            <h:outputLabel value="#{msgs.fromDate}" for="fromDate"></h:outputLabel>
+                                            <p:inputText id="fromDate" value="#{m_reports.date1}" >
+                                                <f:convertDateTime pattern="yyyy-MM-dd"/>
+                                            </p:inputText>
+                                            <h:message for="fromDate" errorStyle="color:red; display:block"/>
 
-                                                    <hr />-->
-                                                </div>
-                                                <div class="clearfix col-xs-3 col-sm-3 col-md-3"><h:outputText value="#{book.isbn}"></h:outputText></div>
-                                                <div class="clearfix col-xs-3 col-sm-3 col-md-3"><h:outputText value="#{book.title}"></h:outputText></div>
-                                                <div class="clearfix col-xs-3 col-sm-3 col-md-3"><h:outputText value="#{book.listPrice}"></h:outputText></div>
-                                                <div class="clearfix col-xs-3 col-sm-3 col-md-3"><h:outputText value="#{m_reports.getTotalPerBook(book)}"></h:outputText></div>
-                                            </ui:repeat>
-                                        </h:form>
+                                            <h:outputLabel value="#{msgs.toDate}" for="toDate"></h:outputLabel>
+                                            <p:inputText id="toDate" value="#{m_reports.date2}" >
+                                                <f:convertDateTime pattern="yyyy-MM-dd"/>
+                                            </p:inputText>
+                                            <h:message for="toDate" errorStyle="color:red; display:block"/>
+                                            <p:commandButton value="Search" >
+                                                <f:ajax execute="@form"></f:ajax>
+                                            </p:commandButton>-->
+
+                                            <!--                                            </h:form>
+                                                                                    
+                                                                                    <h:form id="table"> -->
+                                            <p:dataTable id="dtable" class="table table-striped table-bordered table-hover" value="#{m_reports.getAllBooksWithDate()}" 
+                                                         var="books" widgetVar="reportsTable" 
+
+                                                         rows="10"
+                                                         paginator="true"
+                                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                         rowsPerPageTemplate="5,10,15" 
+                                                         emptyMessage="No books found with given criteria"
+                                                         resizableColumns="true" liveResize="true" >
+
+                                                <!--                                                <f:facet name="header">
+                                                
+                                                
+                                                                                                    <p:outputLabel value="#{m_reports.date1}"><f:convertDateTime pattern="yyyy-MM-dd"/></p:outputLabel>
+                                                
+                                                                                                    <p:outputLabel value="#{m_reports.date2}"><f:convertDateTime pattern="yyyy-MM-dd"/></p:outputLabel>
+                                                                                                </f:facet>-->
+                                                <f:facet name="header">
+
+                                                    <h:outputLabel value="#{msgs.fromDate}" for="fromDate"></h:outputLabel>
+                                                    <p:inputText id="fromDate" value="#{m_reports.date1}" >
+                                                        <f:convertDateTime pattern="yyyy-MM-dd"/>
+                                                    </p:inputText>
+                                                    <h:message for="fromDate" errorStyle="color:red; display:block"/>
+
+                                                    <h:outputLabel value="#{msgs.toDate}" for="toDate"></h:outputLabel>
+                                                    <p:inputText id="toDate" value="#{m_reports.date2}" >
+                                                        <f:convertDateTime pattern="yyyy-MM-dd"/>
+                                                    </p:inputText>
+                                                    <h:message for="toDate" errorStyle="color:red; display:block"/>
+                                                    <p:commandButton update="@form"  actionListener="m_reports.buttonAction" value="Search" >
+                                                    </p:commandButton>
+
+<!--                                                    <p:outputLabel value="#{m_reports.date1}"><f:convertDateTime pattern="yyyy-MM-dd"/></p:outputLabel>
+
+                                                    <p:outputLabel value="#{m_reports.date2}"><f:convertDateTime pattern="yyyy-MM-dd"/></p:outputLabel>-->
+                                                </f:facet>
+                                                <p:column filterBy="#{books.bookId}" sortBy="#{books.bookId}" headerText="#{msgs.book_id}" filterMatchMode="contains">
+
+                                                    #{books.bookId}
+                                                </p:column>
+
+                                                <p:column filterBy="#{books.isbn}" sortBy="#{books.isbn}" headerText="#{msgs.isbn}" filterMatchMode="contains">
+
+                                                    #{books.isbn}
+                                                </p:column>
+
+                                                <p:column filterBy="#{books.title}" sortBy="#{books.title}" headerText="#{msgs.title}" filterMatchMode="contains" width="500">
+
+                                                    #{books.title}
+                                                </p:column>
+
+                                                <p:column filterBy="#{books.listPrice}" sortBy="#{books.listPrice}" headerText="#{msgs.list_price}" filterMatchMode="contains">
+
+                                                    #{books.listPrice}
+                                                </p:column>
+
+
+                                                <p:column  filterBy= "#{m_reports.getTotalPerBook(books)}" sortBy="#{m_reports.getTotalPerBook(books)}" headerText="#{msgs.total}" filterMatchMode="contains">
+
+                                                    #{m_reports.getTotalPerBook(books)}
+                                                </p:column>
+
+
+                                            </p:dataTable>
+                                        </h:form>   
 
                                     </div>
-                                    <!-- /.table-responsive -->
+                                    <!-- /.table-responsive -->  
                                 </div>
-                                <!-- /.panel-body -->
+                                <!--                                 /.panel-heading 
+                                                                <div class="panel-body">
+                                                                    <div class="dataTable_wrapper table-responsive">
+                                                                        <div class="row">
+                                                                            <div class="col-xs-1 col-sm-1 col-md-1" style="text-align: center"><h:outputLabel value="#{msgs.isbn}"></h:outputLabel></div>
+                                                                            <div class="col-xs-3 col-sm-3 col-md-3" style="text-align: center"><h:outputLabel value="#{msgs.title}"></h:outputLabel></div>
+                                                                            <div class="col-xs-6 col-sm-6 col-md-6" style="text-align: center"><h:outputLabel value="#{msgs.price}"></h:outputLabel></div>
+                                                                            <div class="col-xs-2 col-sm-2 col-md-2" style="text-align: center"><h:outputLabel value="#{msgs.total}"></h:outputLabel></div>
+                                                                        </div>
+                                                                        <h:form>
+                                                                            <ui:repeat value="#{m_reports.allBooks}" var="book">
+                                                                                <hr />
+                                
+                                                                                <div class="row">
+                                
+                                                                                    <h:outputText value="#{book.title}" ></h:outputText>
+                                                                                    <h:outputText value="#{book.listPrice}"></h:outputText>
+                                                                                    <h:outputText value="#{m_reports.getTotalPerBook(book)}"></h:outputText>
+                                
+                                                                                    <hr />
+                                                                                </div>
+                                                                                <div class="clearfix col-xs-3 col-sm-3 col-md-3"><h:outputText value="#{book.isbn}"></h:outputText></div>
+                                                                                <div class="clearfix col-xs-3 col-sm-3 col-md-3"><h:outputText value="#{book.title}"></h:outputText></div>
+                                                                                <div class="clearfix col-xs-3 col-sm-3 col-md-3"><h:outputText value="#{book.listPrice}"></h:outputText></div>
+                                                                                <div class="clearfix col-xs-3 col-sm-3 col-md-3"><h:outputText value="#{m_reports.getTotalPerBook(book)}"></h:outputText></div>
+                                                                            </ui:repeat>
+                                                                        </h:form>
+                                
+                                                                    </div>
+                                                                     /.table-responsive 
+                                                                </div>
+                                                                 /.panel-body -->
                             </div>
                             <!-- /.panel -->
                         </div>

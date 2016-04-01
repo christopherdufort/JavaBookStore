@@ -21,9 +21,8 @@ public class GenreConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        System.out.println(">>>>>>> genre"+ value);
-       GenreJpaController genreJpa = CDI.current().select(GenreJpaController.class).get();
-        return genreJpa.findGenre(Integer.parseInt(value));
+        GenreJpaController genreJpa = CDI.current().select(GenreJpaController.class).get();
+        return genreJpa.findByGenreName(value);
     }
 
     @Override

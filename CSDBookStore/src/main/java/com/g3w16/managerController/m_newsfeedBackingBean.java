@@ -87,7 +87,7 @@ public class m_newsfeedBackingBean implements Serializable {
         }
     }
 
-    public String destroyNews(NewsFeed newsfeed) {
+    public void destroyNews(NewsFeed newsfeed) {
 
         try {
             newsJpa.destroy(newsfeed.getNewsFeedId());
@@ -97,7 +97,6 @@ public class m_newsfeedBackingBean implements Serializable {
             Logger.getLogger(m_newsfeedBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         allNews = newsJpa.findAllNewsFeeds();
-        return "m_news";
     }
 
     public String cancel() {

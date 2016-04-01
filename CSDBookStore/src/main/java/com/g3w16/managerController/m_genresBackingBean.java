@@ -62,7 +62,7 @@ public class m_genresBackingBean implements Serializable {
         return "m_genres";
     }
 
-    public String destroyGenre(Genre g) {
+    public void destroyGenre(Genre g) {
         try {
             genreJpa.destroy(g.getGenreId());
         } catch (RollbackFailureException ex) {
@@ -71,7 +71,6 @@ public class m_genresBackingBean implements Serializable {
             Logger.getLogger(m_genresBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         allGenre = genreJpa.findGenreEntities();
-        return "m_genres";
     }
 
     public String cancel() {

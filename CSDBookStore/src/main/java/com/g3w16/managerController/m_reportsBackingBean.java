@@ -11,9 +11,12 @@ import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.context.RequestContext;
@@ -24,7 +27,7 @@ import org.primefaces.event.SelectEvent;
  *
  * @author Rita Lazaar
  */
-@Named("m_reports")
+@ManagedBean(name = "m_reports")
 @RequestScoped
 public class m_reportsBackingBean {
 
@@ -33,6 +36,9 @@ public class m_reportsBackingBean {
     private Book book;
     private Date date1;
     private Date date2;
+
+    private List<Book> allBooks;
+    private List<RegisteredUser> allUsers;
 
     @Inject
     m_invoicesBackingBean m_invoicesBackingBean;
@@ -46,17 +52,19 @@ public class m_reportsBackingBean {
     @Inject
     BookJpaController bookJpa;
 
-    public void onDateSelect(SelectEvent event) {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
+    @Inject
+    RegisteredUserJpaController userJpa;
+
+    @PostConstruct
+    public void init() {
+        allBooks = bookJpa.findBookEntities();
+        allUsers = userJpa.findAll();
     }
 
-    public void click() {
-        RequestContext requestContext = RequestContext.getCurrentInstance();
-
-        requestContext.update("form:display");
-        requestContext.execute("PF('dlg').show()");
+    public void buttonAction(ActionEvent actionEvent) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "What we do in life", "Echoes in eternity.");
+         
+        RequestContext.getCurrentInstance().showMessageInDialog(message);
     }
 
     public Date getDate1() {
@@ -69,6 +77,10 @@ public class m_reportsBackingBean {
 
     public Date getDate2() {
         return date2;
+    }
+
+    public void setDate2(Date date2) {
+        this.date2 = date2;
     }
 
     public InvoiceDetail getInvoiceDetail() {
@@ -130,7 +142,7 @@ public class m_reportsBackingBean {
         BigDecimal total = BigDecimal.valueOf(0);
         double t = 0;
 
-        List<Invoice> allInvoices = m_invoicesBackingBean.getAllInvoices();
+        List<Invoice> allInvoices = invoiceJpa.findInvoiceEntities();
 
         for (int i = 0; i < allInvoices.size(); i++) {
 
@@ -168,7 +180,26 @@ public class m_reportsBackingBean {
 
     public List<Book> getAllBooks() {
 
-        return bookJpa.findBookEntities();
+        return allBooks;
+    }
+
+    public List<Book> getAllBooksWithDate() {
+
+        if (date1 == null || date2 == null) {
+            return getAllBooks();
+        }
+        List<Book> books = null;
+        List<Invoice> in = getInvoicesWithDate(date1, date2);
+
+        for (int i = 0; i < in.size(); i++) {
+            List<InvoiceDetail> inDetail = in.get(i).getInvoiceDetailList();
+
+            for (int j = 0; j < inDetail.size(); j++) {
+                books.add(inDetail.get(j).getBookId());
+            }
+        }
+
+        return books;
     }
 
     /**
