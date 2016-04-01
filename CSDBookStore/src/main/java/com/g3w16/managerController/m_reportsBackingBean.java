@@ -59,8 +59,14 @@ public class m_reportsBackingBean {
     public void init() {
         allBooks = bookJpa.findBookEntities();
         allUsers = userJpa.findAll();
-        date1= new Date();
-        date2= new Date();
+
+    }
+
+    public m_reportsBackingBean() {
+        
+//        date1 = new Date();
+//        date2 = new Date();
+
     }
 
     public Date getDate1() {
@@ -180,7 +186,7 @@ public class m_reportsBackingBean {
         return total;
     }
 
-    public List<Book> getAllBooksWithDate() {
+    public List<Book> getAllBooksWithDate(Date date1, Date date2) {
 
         if (date1 == null || date2 == null) {
             return getAllBooks();
