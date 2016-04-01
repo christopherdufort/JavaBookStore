@@ -97,14 +97,6 @@ public class m_invoicesBackingBean implements Serializable{
      */
     public List<Invoice> getAllInvoices() {
 
-
-//        all = invoiceJpa.findInvoiceEntities();
-//        //  all= invoiceJpa.findInvoiceEntities();
-////         for(int i =0; i<invoiceJpa.findInvoiceEntities().size();i++){
-////         
-////             all.add(invoice)
-////         }
-
         return all;
     }
 
