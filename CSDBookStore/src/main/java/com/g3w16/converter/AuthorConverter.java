@@ -24,7 +24,6 @@ public class AuthorConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        System.out.println(">>>>>>>>author"+value);
         AuthorJpaController authorJpa = CDI.current().select(AuthorJpaController.class).get();
         return authorJpa.findTitleByName(value);
     }

@@ -40,11 +40,12 @@
                                                 <h:inputHidden value="#{m_books.book.isbn}"/>
 
                                                 <h:outputLabel value="#{msgs.author}" for="author"></h:outputLabel>
-                                                <ui:repeat value="#{m_books.allAuthorsForBook}" var="authors">
-                                                    <h:outputText value="#{authors.authorName}" />
+                                                <ui:repeat value="#{m_books.allAuthorsForBook}" var="author" varStatus="loop">
+                                                    <h:outputText value="#{author.authorName}" />
+                                                    <h:inputHidden value="#{m_books.authorList[loop.index]}" converter="com.g3w16.converter.AuthorConverter"/>
                                                     <h:outputText value="&#160;" />
                                                 </ui:repeat>
-                                                <h:inputHidden value="#{m_books.book.authorList}"/>
+                                                
 
                                                 <h:outputLabel value="#{msgs.publisher}" for="publisher"></h:outputLabel>
                                                 <h:outputText id="publisher" value="#{m_books.book.publisher}" />
@@ -56,19 +57,21 @@
                                                     <f:convertDateTime pattern="yyyy-MM-dd"/>
                                                 </h:inputHidden>
 
-                                                <h:outputLabel value="#{msgs.genre}" for="genre"></h:outputLabel>
-                                                <ui:repeat value="#{m_books.allGenreForBook}" var="genre">
+<!--                                                <h:outputLabel value="#{msgs.genre}" for="genre"></h:outputLabel>
+                                                <ui:repeat value="#{m_books.allGenreForBook}" var="genre" varStatus="loop">
                                                     <h:outputText value="#{genre.genreName}" />
+                                                    <h:inputHidden value="#{m_books.book.genreList[loop.index]}" converter="com.g3w16.converter.GenreConverter"/>
                                                     <h:outputText value="&#160;" />
-                                                </ui:repeat>
-                                                <h:inputHidden value="#{m_books.book.genreList}"/>
+                                                </ui:repeat>-->
+                                                
 
-                                                <h:outputLabel value="#{msgs.format}" for="format"></h:outputLabel>
-                                                <ui:repeat value="#{m_books.allFormatForBook}" var="format">
+<!--                                                <h:outputLabel value="#{msgs.format}" for="format"></h:outputLabel>
+                                                <ui:repeat value="#{m_books.allFormatForBook}" var="format" varStatus="loop">
                                                     <h:outputText value="#{format.extension}" />
+                                                    <h:inputHidden value="#{m_books.book.formatList[loop.index]}" converter="com.g3w16.converter.FormatConverter"/>
                                                     <h:outputText value="&#160;" />
-                                                </ui:repeat>
-                                                <h:inputHidden value="#{m_books.book.formatList}"/>
+                                                </ui:repeat>-->
+                                                
 
                                                 <h:outputLabel value="#{msgs.page_number}" for="page_number"></h:outputLabel>
                                                 <h:outputText id="page_number" value="#{m_books.book.pageNumber}" />

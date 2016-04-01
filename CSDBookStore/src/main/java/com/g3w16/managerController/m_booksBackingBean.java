@@ -27,6 +27,7 @@ import javax.inject.Inject;
 @SessionScoped
 public class m_booksBackingBean implements Serializable {
 
+    @Inject
     private Book book;
     private Author author;
     private List<Author> authorList;
@@ -56,7 +57,7 @@ public class m_booksBackingBean implements Serializable {
     }
     private List<Format> formatList;
     private List<Genre> genreList;
-
+  
     private Format format;
     private Genre genre;
     private List<Book> all;
@@ -81,8 +82,9 @@ public class m_booksBackingBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        all = bookJpa.findBookEntities();
-        System.out.println(">>>>>>>init");
+        all = bookJpa.findBookEntities();   
+        authorList=authorJpa.findAuthorEntitiesByBook(book);
+        //System.out.println(">>>>>>>init");
     }
 
     public String preCreateBook() {
@@ -155,13 +157,14 @@ public class m_booksBackingBean implements Serializable {
 
     public String editBook(Book b) throws IOException {
         //System.out.println("editBook>>>>>>" + b);
-
+       
+        
         book = bookJpa.findBookEntitiesById(b.getBookId());
         return "m_editBook";
     }
 
     public String bookDetails(Book b) {
-        // System.out.println("bookDetails>>>>>>" + b);
+       // System.out.println("bookDetails>>>>>>" + b);
         book = bookJpa.findBookEntitiesById(b.getBookId());
         //System.out.println("bookDetails>>>>>>book>>>>" + book);
         return "m_viewBook";
@@ -170,7 +173,7 @@ public class m_booksBackingBean implements Serializable {
     public String updateBook(Book b) {
         try {
             System.out.println(">>>>>>update");
-
+            
             book.setFormatList(getAllFormatForBook());
             //book.setAuthorList(getAllAuthorsForBook());
             book.setGenreList(getAllGenreForBook());
@@ -209,7 +212,7 @@ public class m_booksBackingBean implements Serializable {
     }
 
     public List<Author> getAllAuthorsForBook() {
-        // System.out.println(">>>>>>>>>>>>>>>book"+book);
+        System.out.println(">>>>>>>>>>>>>>>book"+authorList.size());
         return authorJpa.findAuthorEntitiesByBook(book);
     }
 
@@ -218,7 +221,7 @@ public class m_booksBackingBean implements Serializable {
     }
 
     public List<Format> getAllFormatForBook() {
-        // book = bookJpa.findBookEntitiesById(id);
+       // book = bookJpa.findBookEntitiesById(id);
         return formatJpa.findFormatEntitiesByBook(book);
     }
 
@@ -238,5 +241,5 @@ public class m_booksBackingBean implements Serializable {
     public int getBookCount() {
         return bookJpa.getBookCount();
     }
-
+    
 }

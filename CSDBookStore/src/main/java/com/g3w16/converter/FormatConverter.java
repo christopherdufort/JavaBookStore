@@ -21,7 +21,6 @@ public class FormatConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        System.out.println(">>>>>>>>>>>>format" + value);
         FormatJpaController formatJpa = CDI.current().select(FormatJpaController.class).get();
         return formatJpa.findByExtension(value);
     }
