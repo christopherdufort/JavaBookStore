@@ -56,7 +56,7 @@ public class HomeView {
      * edit by Xin Ma
      */
     public List<Book> getSuggestedBook() {
-        int limit = 3;
+        int limit = 15;
         List<Book> toBeReturnBooks;
 
         Cookie[] co = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getCookies();

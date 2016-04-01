@@ -119,37 +119,18 @@
                                 </ui:repeat>
                             </div>
                             <hr/>
-                            <div class="row">
-                                <div class="medium-4 columns">
-                                    <h4>Section 1</h4>
-                                    <ui:repeat var="item" value="#{homeView.suggestedBook}">
-                                        <bf:displayBookSmall
-                                            itemImg="resources/images/#{item.isbn}.jpg"
-                                            itemTitle="#{item.title}"
-                                            itemListPrice="#{item.listPrice}"
-                                            itemSalePrice="#{item.salePrice}"/>
-                                    </ui:repeat>
-                                </div>
-                                <div class="medium-4 columns">
-                                    <h4>Section 2</h4>
-                                    <ui:repeat var="item" value="#{homeView.suggestedBook}">
-                                        <bf:displayBookSmall
-                                            itemImg="resources/images/#{item.isbn}.jpg"
-                                            itemTitle="#{item.title}"
-                                            itemListPrice="#{item.listPrice}"
-                                            itemSalePrice="#{item.salePrice}"/>
-                                    </ui:repeat>
-                                </div>
-                                <div class="medium-4 columns">
-                                    <h4>Section 3</h4>
-                                    <ui:repeat var="item" value="#{homeView.suggestedBook}">
-                                        <bf:displayBookSmall
-                                            itemImg="resources/images/#{item.isbn}.jpg"
-                                            itemTitle="#{item.title}"
-                                            itemListPrice="#{item.listPrice}"
-                                            itemSalePrice="#{item.salePrice}"/>
-                                    </ui:repeat>
-                                </div>
+                            <div class="row column text-center">
+                                <h2>Suggested Books</h2>
+                                <hr/>
+                            </div>
+                            <div class="row small-up-2 medium-up-3 large-up-5">
+                                <ui:repeat var="item" value="#{homeView.suggestedBook}">
+                                    <bf:displayBook
+                                        itemImg="resources/images/#{item.isbn}.jpg"
+                                        itemTitle="#{item.title}"
+                                        itemListPrice="#{item.listPrice}"
+                                        itemSalePrice="#{item.salePrice}"/>
+                                </ui:repeat>
                             </div>
                         </div>
                         <!-- END OF MAIN CONTENT -->

@@ -30,6 +30,7 @@ import javax.persistence.TemporalType;
 /**
  *
  * @author Jonas Faure
+ *
  */
 @Entity
 @Table(name = "book", catalog = "g3w16", schema = "")
