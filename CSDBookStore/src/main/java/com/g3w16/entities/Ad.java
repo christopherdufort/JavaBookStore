@@ -39,6 +39,8 @@ public class Ad implements Serializable {
     private String adFilename;
     @Column(name = "active")
     private Boolean active;
+    @Column(name = "ad_type")
+    private Boolean adType;
 
     public Ad() {
     }
@@ -74,6 +76,20 @@ public class Ad implements Serializable {
 
     public void setActive(Boolean active) {
         this.active = active;
+    }
+    
+    /**
+     * @return the adType
+     */
+    public Boolean getAdType() {
+        return adType;
+    }
+
+    /**
+     * @param adType the adType to set
+     */
+    public void setAdType(Boolean adType) {
+        this.adType = adType;
     }
 
     @Override
