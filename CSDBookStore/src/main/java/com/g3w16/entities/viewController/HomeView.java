@@ -51,8 +51,9 @@ public class HomeView {
     public List<Book> getSuggestedBook(){
         int limit = 3;
         List<Book> toBeReturnBooks;
-        List<Cookie> cookies = Arrays.asList(((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getCookies());
-        if (cookies != null){
+        Cookie[] raw_cookies = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getCookies();
+        if (raw_cookies != null){
+            List<Cookie> cookies = Arrays.asList(raw_cookies);
             for (Cookie c : cookies){
                 if (c.getName().equals("lastGenreId")){
                     Logger.getLogger(this.getClass().getName()).log(Level.INFO, "Using ''lastGenreId'' cookie ( {0} )", c.getValue());
