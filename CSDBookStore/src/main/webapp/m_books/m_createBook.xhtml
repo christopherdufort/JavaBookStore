@@ -102,20 +102,12 @@
                                                 <p:inputText id="sale_price" value="#{m_books.book.salePrice}" />
                                                 <h:message for="sale_price" errorStyle="color:red; display:block"/>
 
-                                                <h:outputLabel value="#{msgs.date_entered}" for="date_entered"></h:outputLabel>
-                                                <p:calendar id="date_entered" value="#{m_books.book.dateEntered}"/>
-                                                <h:message for="date_entered" errorStyle="color:red; display:block"/>
-
                                                 <h:outputLabel value="#{msgs.available}" for="available"></h:outputLabel>
                                                 <p:selectOneRadio id="available" layout="lineDirection" value="#{m_books.book.available}">
                                                     <f:selectItem itemValue="True" itemLabel="True" />
                                                     <f:selectItem itemValue="False" itemLabel="False" />
                                                 </p:selectOneRadio>
                                                 <h:message for="available" errorStyle="color:red; display:block"/>
-
-                                                <h:outputLabel value="#{msgs.overall_rating}" for="overall_rating"></h:outputLabel>
-                                                <p:inputText id="overall_rating" value="#{m_books.book.overallRating}" />
-                                                <h:message for="overall_rating" errorStyle="color:red; display:block"/>
 
                                                 <h:outputLabel value="#{msgs.synopsis}" for="synopsis"></h:outputLabel>
                                                 <p:inputTextarea id="synopsis" value="#{m_books.book.synopsis}"/>

@@ -9,6 +9,7 @@ import com.g3w16.entities.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -59,14 +60,8 @@ public class m_reportsBackingBean {
     public void init() {
         allBooks = bookJpa.findBookEntities();
         allUsers = userJpa.findAll();
-
-    }
-
-    public m_reportsBackingBean() {
-        
-//        date1 = new Date();
-//        date2 = new Date();
-
+//        date1= new Date();
+//        date2= new Date();
     }
 
     public Date getDate1() {
@@ -186,25 +181,27 @@ public class m_reportsBackingBean {
         return total;
     }
 
-    public List<Book> getAllBooksWithDate(Date date1, Date date2) {
+    // this method does not work, but now update table works, you fix the method
+    public List<Book> getAllBooksWithDate() {
 
         if (date1 == null || date2 == null) {
             return getAllBooks();
         }
-        allBooks = null;
-        List<Invoice> in = getInvoicesWithDate(date1, date2);
 
-        for (int i = 0; i < in.size(); i++) {
-            List<InvoiceDetail> inDetail = in.get(i).getInvoiceDetailList();
-
-            for (int j = 0; j < inDetail.size(); j++) {
-//                books.add(inDetail.get(j).getBookId());
-                if (!allBooks.contains(inDetail.get(j).getBookId())) {
-                    allBooks.add(inDetail.get(j).getBookId());
-                }
-            }
-        }
-
+        allBooks = new ArrayList<Book>();
+//        List<Invoice> in = getInvoicesWithDate(date1, date2);
+//        System.out.println("in>>>>>>>>>>>>>>>>" + in.toString());
+//        for (int i = 0; i < in.size(); i++) {
+//            List<InvoiceDetail> inDetail = in.get(i).getInvoiceDetailList();
+//
+//            for (int j = 0; j < inDetail.size(); j++) {
+////                books.add(inDetail.get(j).getBookId());
+//                if (!allBooks.contains(inDetail.get(j).getBookId())) {
+//                    allBooks.add(inDetail.get(j).getBookId());
+//                }
+//            }
+//        }
+        allBooks.add(new Book(1));
         return allBooks;
     }
 

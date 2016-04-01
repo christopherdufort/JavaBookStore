@@ -38,7 +38,15 @@ ALTER TABLE approval AUTO_INCREMENT = 1;
 
 INSERT INTO `ad` (`ad_id`, `ad_filename`, `active`, `ad_type`) VALUES
 (1, 'mcdonalds.com', 1, 0),
-(2, 'facebook.com', 1, 1);
+(2, 'facebook.com', 1, 1),
+(3, 'amazon.com', 0, 1),
+(4, 'airfrance.ca', 0, 1),
+(5, 'leagueoflegends.com', 0, 1),
+(6, 'ligabbva.com', 0, 1),
+(7, 'michelin.ca', 0, 0),
+(8, 'premierleague.com', 0, 0),
+(9, 'starbucks.com', 0, 0),
+(10, 'winners.ca', 0, 0);
 
 
 INSERT INTO `approval` (`approval_id`, `approval_status`) VALUES

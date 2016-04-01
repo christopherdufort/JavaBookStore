@@ -33,15 +33,25 @@
                                                 <h:inputHidden id="ad_id" value="#{m_ads.ad.adId}"/>
                                                 
                                                 <h:outputLabel value="#{msgs.ad_filename}" for="ad_filename"></h:outputLabel>
-                                                <h:outputText rendered="m_ads.selectedAd.adFilename"></h:outputText>
+                                                <h:outputText rendered="m_ads.ad.adFilename"></h:outputText>
                                                 <h:inputText id="ad_filename" value="#{m_ads.ad.adFilename}" />
+                                                <h:message for="ad_filename" errorStyle="color:red; display:block"/>
                                                 
                                                  <h:outputLabel value="#{msgs.active}" for="as_active"></h:outputLabel>
-                                                <h:outputText rendered="m_newsfeed.newsfeed.active"></h:outputText>
+                                                <h:outputText rendered="m_ads.ad.active"></h:outputText>
                                                 <h:selectOneRadio id="as_active" layout="lineDirection" value="#{m_ads.ad.active}">
                                                     <f:selectItem itemValue="True" itemLabel="True" />
                                                     <f:selectItem itemValue="False" itemLabel="False" />
                                                 </h:selectOneRadio>
+                                                <h:message for="ad_active" errorStyle="color:red; display:block"/>
+                                                
+                                                <h:outputLabel value="#{msgs.ad_type}" for="as_type"></h:outputLabel>
+                                                <h:outputText rendered="m_ads.ad.adType"></h:outputText>
+                                                <h:selectOneRadio id="as_type" layout="lineDirection" value="#{m_ads.ad.adType}">
+                                                    <f:selectItem itemValue="True" itemLabel="True" />
+                                                    <f:selectItem itemValue="False" itemLabel="False" />
+                                                </h:selectOneRadio>
+                                                <h:message for="as_type" errorStyle="color:red; display:block"/>
                                                 
                                             </h:panelGrid>
                                             <br />
