@@ -1032,5 +1032,5 @@ INSERT INTO review (isbn, date_submitted, user_id, rating, approval_id, review_t
 INSERT INTO `news_feed` (`news_feed_id`, `news_feed_link`, `active`) VALUES
 (1, 'http://www.bookbrowse.com/rss/book_news.rss', true),
 (2, 'http://www.bookbrowse.com/rss/bookbrowse_free_newsletter.rss', false),
-(3, 'http://www.bookbrowse.com/rss/newest_reader_reviews.rss', false);
+(3, 'http://www.bookbrowse.com/rss/newest_reader_reviews.rss', false),
 (4, 'http://www.bookbrowse.com/rss/member_ezines.rss', false);
