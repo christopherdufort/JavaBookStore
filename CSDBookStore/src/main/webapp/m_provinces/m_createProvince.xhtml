@@ -29,7 +29,7 @@
                                         <h:form>
                                             <h:panelGrid columns="3">
                                                 <h:outputLabel value="#{msgs.province}" for="province"></h:outputLabel>
-                                                <h:inputText id="province" value="#{m_provinces.province.province}" />
+                                                <h:inputText id="province" value="#{m_provinces.province.province}" required="true" requiredMessage="#{msgs.required}" />
                                                 <h:message for="province" errorStyle="color:red; display:block"/>
                                             
                                             
@@ -40,7 +40,7 @@
 
                                             <h:outputText value="&#160;" />
                                             <h:commandButton value="#{msgs.cancel}"
-                                                             action="#{m_provinces.cancel()}" class="btn btn-danger btn-xs" />
+                                                             action="#{m_provinces.cancel()}" class="btn btn-danger btn-xs" immediate="true"/>
                                         </h:form>
                                     </div>
                                     <!-- /.table-responsive -->

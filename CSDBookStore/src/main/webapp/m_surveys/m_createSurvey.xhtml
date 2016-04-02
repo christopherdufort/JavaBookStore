@@ -26,42 +26,41 @@
                                 <div class="panel-body">
                                     <div class="dataTable_wrapper table-responsive">
                                         <h:form>
-                                            <h:panelGrid columns="2">
+                                            <h:panelGrid columns="3">
                                                 <h:outputLabel value="#{msgs.question}" for="question"></h:outputLabel>
-                                                <h:inputText id="question" value="#{m_surveys.survey.question}" />
-                                            </h:panelGrid>
-                                            <h:panelGrid columns="2">
+                                                <h:inputText id="question" value="#{m_surveys.survey.question}" required="true" requiredMessage="#{msgs.required}" />
+                                                <h:message for="question" errorStyle="color:red; display:block"/>
+
                                                 <h:outputLabel value="#{msgs.answerOne}" for="answerOne"></h:outputLabel>
-                                                <h:inputText id="answerOne" value="#{m_surveys.survey.answerOne}" />
-                                            </h:panelGrid>
-                                            <h:panelGrid columns="2">
+                                                <h:inputText id="answerOne" value="#{m_surveys.survey.answerOne}" required="true" requiredMessage="#{msgs.required}" />
+                                                <h:message for="answerOne" errorStyle="color:red; display:block"/>
+
                                                 <h:outputLabel value="#{msgs.answerTwo}" for="answerTwo"></h:outputLabel>
-                                                <h:inputText id="answerTwo" value="#{m_surveys.survey.answerTwo}" />
-                                            </h:panelGrid>
-                                            <h:panelGrid columns="2">
+                                                <h:inputText id="answerTwo" value="#{m_surveys.survey.answerTwo}" required="true" requiredMessage="#{msgs.required}" />
+                                                <h:message for="answerTwo" errorStyle="color:red; display:block"/>
+
                                                 <h:outputLabel value="#{msgs.answerThree}" for="answerThree"></h:outputLabel>
-                                                <h:inputText id="answerThree" value="#{m_surveys.survey.answerThree}" />
-                                            </h:panelGrid>
-                                            <h:panelGrid columns="2">
+                                                <h:inputText id="answerThree" value="#{m_surveys.survey.answerThree}" required="true" requiredMessage="#{msgs.required}" />
+                                                <h:message for="answerThree" errorStyle="color:red; display:block"/>
+
                                                 <h:outputLabel value="#{msgs.answerDefault}" for="answerDefault"></h:outputLabel>
-                                                <h:inputText id="answerDefault" value="#{m_surveys.survey.answerDefault}" />
+                                                <h:inputText id="answerDefault" value="#{m_surveys.survey.answerDefault}" required="true" requiredMessage="#{msgs.required}" />
+                                                <h:message for="answerDefault" errorStyle="color:red; display:block"/>
+
+                                                <h:outputLabel value="#{msgs.active}" for="survey_active"></h:outputLabel>
+                                                <h:outputText rendered="m_surveys.survey.active"></h:outputText>
+                                                <h:selectOneRadio id="survey_active" layout="lineDirection" value="#{m_surveys.survey.active}" required="true" requiredMessage="#{msgs.required}">
+                                                    <f:selectItem itemValue="True" itemLabel="True" />
+                                                    <f:selectItem itemValue="False" itemLabel="False" />
+                                                </h:selectOneRadio>
+                                                <h:message for="survey_active" errorStyle="color:red; display:block"/>
                                             </h:panelGrid>
-                                            
-                                             <h:panelGrid columns="2">
-                                            <h:outputLabel value="#{msgs.active}" for="survey_active"></h:outputLabel>
-                                            <h:outputText rendered="m_surveys.survey.active"></h:outputText>
-                                            <h:selectOneRadio id="survey_active" layout="lineDirection" value="#{m_surveys.survey.active}">
-                                                <f:selectItem itemValue="True" itemLabel="True" />
-                                                <f:selectItem itemValue="False" itemLabel="False" />
-                                            </h:selectOneRadio>
-                                            <h:message for="survey_active" errorStyle="color:red; display:block"/>
-                                             </h:panelGrid>
                                             <br />
                                             <h:commandButton value="#{msgs.add}"
                                                              action="#{m_surveys.createSurvey}" class="btn btn-success btn-xs" />
                                             <h:outputText value="&#160;" />
                                             <h:commandButton value="#{msgs.cancel}"
-                                                             action="#{m_surveys.cancel()}" class="btn btn-danger btn-xs" />
+                                                             action="#{m_surveys.cancel()}" class="btn btn-danger btn-xs" immediate="true"/>
                                         </h:form>
                                     </div>
                                     <!-- /.table-responsive -->
