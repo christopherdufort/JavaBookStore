@@ -30,6 +30,7 @@
                                 </h:message>
                                 <label>Title
                                     <h:selectOneMenu value="#{profileBackingBean.titleId}">
+                                        <f:converter converterId="com.g3w16.converter.TitleConverter"/>
                                         <f:selectItems value="#{profileBackingBean.availableTitles}"/>
                                     </h:selectOneMenu>
                                 </label>
@@ -97,6 +98,7 @@
                             <div class="small-12 large-6 columns">
                                 <label>Province
                                     <h:selectOneMenu value="#{profileBackingBean.provinceId}">
+                                        <f:converter converterId="com.g3w16.converter.ProvinceConverter"/>
                                         <f:selectItems value="#{profileBackingBean.availableProvinces}"/>
                                     </h:selectOneMenu>
                                 </label>
@@ -154,13 +156,12 @@
                             </div>
                             <div class="small-12 large-6 columns">
                                 <h:outputLabel for="password" value="#{msgs.password}"/>
-                                <!--make this inputSecret -->
-                                <h:inputText id="password" label="#{msgs.password}"
+                                <h:inputSecret id="password" label="#{msgs.password}"
                                                pt:placeholder="**********"
                                                value="#{profileBackingBean.password}"
                                                required="true" requiredMessage="#{msgs.required}">
                                     <f:validateLength maximum="25"/>
-                                </h:inputText>
+                                </h:inputSecret>
                                 <h:message class="error" for="password"/>
                             </div>
                             <div class="small-12 large-12 columns">

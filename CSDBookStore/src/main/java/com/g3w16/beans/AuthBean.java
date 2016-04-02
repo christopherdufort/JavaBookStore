@@ -5,18 +5,28 @@
  */
 package com.g3w16.beans;
 
-import javax.enterprise.context.RequestScoped;
+import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 /**
  *
  * @author jesuisnuageux
+ * @edited Christopher Dufort
+ * 
+ * This bean was made sessionScoped in order to support return forwarding,
+ * after a user logs in they are redirected back to where they came from.
  */
 @Named
-@RequestScoped
-public class AuthBean {
+@SessionScoped
+public class AuthBean implements Serializable{
     private String email;
     private String password;
+        
+    private String backurl;
+
 
     public String getEmail() {
         return email;
@@ -34,5 +44,12 @@ public class AuthBean {
         this.password = password;
     }
     
-    
+    public String getBackurl() {
+        return backurl;
+    }
+
+    public void setBackurl(String backurl) {
+        Logger.getLogger(this.getClass().getName()).log(Level.INFO, "The page I came from was {0}", backurl);
+        this.backurl = backurl;
+    }
 }

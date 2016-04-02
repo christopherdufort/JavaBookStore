@@ -18,28 +18,31 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
  * @author jesuisnuageux
+ * @edited Christopher Dufort
  */
 @Named
 @RequestScoped
 public class UserAuthView {
     
     @Inject
-    AuthenticatedUser authenticatedUser;
+    private AuthenticatedUser authenticatedUser;
 
     @Inject
-    UserController userController;
+    private UserController userController;
 
     @Inject
-    AuthBean authBean;
+    private AuthBean authBean;
 
     public void authenticate() throws IOException {
         
         Logger.getLogger(UserAuthView.class.getName()).log(Level.INFO, "Submitted email : {0}", authBean.getEmail());
         Logger.getLogger(UserAuthView.class.getName()).log(Level.INFO, "Submitted password : {0}", authBean.getPassword());
+        Logger.getLogger(UserAuthView.class.getName()).log(Level.INFO, "Returning to : {0}", authBean.getBackurl());
         
         RegisteredUser registeredUser;
         try {
@@ -51,11 +54,13 @@ public class UserAuthView {
                 Logger.getLogger(UserAuthView.class.getName()).log(Level.INFO, "Redirecting to manager index");
                 FacesContext.getCurrentInstance().getExternalContext().redirect("m_index.xhtml");
             }else{
-                Logger.getLogger(UserAuthView.class.getName()).log(Level.INFO, "Redirecting to home");
-                FacesContext.getCurrentInstance().getExternalContext().redirect("home.xhtml");
+                Logger.getLogger(UserAuthView.class.getName()).log(Level.INFO, "Redirecting to where ever I came from");
+                //FacesContext.getCurrentInstance().getExternalContext().redirect("home.xhtml");
+                FacesContext.getCurrentInstance().getExternalContext().redirect(authBean.getBackurl());
             }
             }catch (InvalidCredentialsException ex) {
             FacesContext.getCurrentInstance().addMessage("auth_form", new FacesMessage(ex.toString()));
         }
     }
+    
 }

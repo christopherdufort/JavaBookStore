@@ -14,13 +14,14 @@
         <link rel="stylesheet" href="http://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css"/>
         <link rel="stylesheet" href="resources/css/customized.css"/>
         <link rel="stylesheet" href="resources/foundation-icons/foundation-icons.css"/>
+        <link rel="stylesheet" href="resources/css/webicons.css"/>
         <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Comfortaa"/>
         <!-- Important Owl stylesheet -->
         <link rel="stylesheet" href="resources/css/owl.carousel.css"/>
-        
+
         <!-- Invoice style sheets -->
         <link rel='stylesheet' type='text/css' href='resources/css/invoiceStyle.css' />
-	<link rel='stylesheet' type='text/css' href='resources/css/invoicePrint.css' media="print" />
+        <link rel='stylesheet' type='text/css' href='resources/css/invoicePrint.css' media="print" />
 
         <!-- Default Theme -->
         <link rel="stylesheet" href="resources/css/owl.theme.css"/>
@@ -28,7 +29,7 @@
         <f:metadata>
             <f:event type="preRenderView" listener="#{internationalizationController.checkLocaleCookie}" />
         </f:metadata>
-       
+
 
 
         <ui:insert name="event_listener"></ui:insert>
@@ -68,7 +69,9 @@
                             <ul class="dropdown">
                                 <ui:fragment rendered="#{authenticationController.isAnonymous()}">
                                     <li>
-                                        <h:outputLink styleClass="button" value="/CSDBookStore/faces/login.xhtml">#{msgs.login}</h:outputLink>
+                                        <h:form>
+                                            <h:commandLink class ="button" value="#{msgs.login}" action="#{navigationController.boomerangLogin()}"></h:commandLink>
+                                        </h:form>
                                     </li>
                                     <li>
                                         <h:outputLink styleClass="button" value="/CSDBookStore/faces/signup.xhtml">#{msgs.signUp}</h:outputLink>

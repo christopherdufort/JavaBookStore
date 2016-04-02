@@ -16,6 +16,7 @@
             <ui:define name="event_listener">
                 <f:metadata>
                     <f:event listener="#{authenticationController.mustBeAnonymous}" type="preRenderView" />
+                    <f:viewParam name="backurl" value="#{authBean.backurl}"/>
                 </f:metadata>
             </ui:define>
 
