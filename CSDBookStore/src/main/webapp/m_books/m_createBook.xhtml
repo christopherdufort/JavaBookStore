@@ -28,11 +28,11 @@
                                         <h:form>
                                             <h:panelGrid columns="3">
                                                 <h:outputLabel value="#{msgs.isbn}" for="isbn"></h:outputLabel>
-                                                <p:inputText id="isbn" value="#{m_books.book.isbn}" required="true" requiredMessage="#{msgs.required}"/>
+                                                <p:inputText id="isbn" value="#{m_books.book.isbn}"/>
                                                 <h:message for="isbn" errorStyle="color:red; display:block"/>
 
                                                 <h:outputLabel value="#{msgs.title}" for="title"></h:outputLabel>
-                                                <p:inputText id="title" value="#{m_books.book.title}" required="true" requiredMessage="#{msgs.required}"/>
+                                                <p:inputText id="title" value="#{m_books.book.title}"/>
                                                 <h:message for="title" errorStyle="color:red; display:block"/>
 
                                                 <h:outputLabel for="author" value="#{msgs.author}" />
@@ -51,11 +51,11 @@
                                             <br />
                                             <h:panelGrid columns="3">
                                                 <h:outputLabel value="#{msgs.publisher}" for="publisher"></h:outputLabel>
-                                                <p:inputText id="publisher" value="#{m_books.book.publisher}" required="true" requiredMessage="#{msgs.required}"/>
+                                                <p:inputText id="publisher" value="#{m_books.book.publisher}"/>
                                                 <h:message for="publisher" errorStyle="color:red; display:block"/>
 
                                                 <h:outputLabel value="#{msgs.publish_date}" for="publish_date"></h:outputLabel>
-                                                <p:calendar id="publish_date" value="#{m_books.book.publishDate}" required="true" requiredMessage="#{msgs.required}"/>
+                                                <p:calendar id="publish_date" value="#{m_books.book.publishDate}"/>
                                                 <h:message for="publish_date" errorStyle="color:red; display:block"/>
 
                                                 <h:outputLabel for="format" value="#{msgs.formats}" />
@@ -73,7 +73,7 @@
                                             <br />
                                             <h:panelGrid columns="3">
                                                 <h:outputLabel value="#{msgs.page_number}" for="page_number"></h:outputLabel>
-                                                <p:inputText id="page_number" value="#{m_books.book.pageNumber}" required="true" requiredMessage="#{msgs.required}"/>
+                                                <p:inputText id="page_number" value="#{m_books.book.pageNumber}"/>
                                                 <h:message for="page_number" errorStyle="color:red; display:block"/>
 
                                                 <h:outputLabel for="genre" value="#{msgs.genre}" />
@@ -91,15 +91,15 @@
                                             <br />
                                             <h:panelGrid columns="3">
                                                 <h:outputLabel value="#{msgs.wholesale_price}" for="wholesale_price"></h:outputLabel>
-                                                <p:inputText id="whole_price" value="#{m_books.book.wholesalePrice}" required="true" requiredMessage="#{msgs.required}"/>
+                                                <p:inputText id="whole_price" value="#{m_books.book.wholesalePrice}"/>
                                                 <h:message for="wholesale_price" errorStyle="color:red; display:block"/>
 
                                                 <h:outputLabel value="#{msgs.list_price}" for="list_price"></h:outputLabel>
-                                                <p:inputText id="list_price" value="#{m_books.book.listPrice}" required="true" requiredMessage="#{msgs.required}"/>
+                                                <p:inputText id="list_price" value="#{m_books.book.listPrice}"/>
                                                 <h:message for="list_price" errorStyle="color:red; display:block"/>
 
                                                 <h:outputLabel value="#{msgs.sale_price}" for="sale_price"></h:outputLabel>
-                                                <p:inputText id="sale_price" value="#{m_books.book.salePrice}" required="true" requiredMessage="#{msgs.required}"/>
+                                                <p:inputText id="sale_price" value="#{m_books.book.salePrice}"/>
                                                 <h:message for="sale_price" errorStyle="color:red; display:block"/>
 
                                                 <h:outputLabel value="#{msgs.available}" for="available"></h:outputLabel>
@@ -110,7 +110,7 @@
                                                 <h:message for="available" errorStyle="color:red; display:block"/>
 
                                                 <h:outputLabel value="#{msgs.synopsis}" for="synopsis"></h:outputLabel>
-                                                <p:inputTextarea id="synopsis" value="#{m_books.book.synopsis}" required="true" requiredMessage="#{msgs.required}"/>
+                                                <p:inputTextarea id="synopsis" value="#{m_books.book.synopsis}"/>
                                                 <h:message for="synopsis" errorStyle="color:red; display:block"/>
                                             </h:panelGrid>
                                             <br />

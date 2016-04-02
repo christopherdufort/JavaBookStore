@@ -71,7 +71,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="m_index.xhtml">#{msgs.biblioAdminTitle}</a>
+                    <a class="navbar-brand" href="#{request.contextPath}/faces/m_index.xhtml">#{msgs.biblioAdminTitle}</a>
                 </div>
                 <!-- /.navbar-header -->
 
@@ -113,7 +113,7 @@
                         </a>
                         <ul class="dropdown-menu dropdown-user">
 
-                            <li><a href="home.xhtml"><i class="fa fa-sign-out fa-fw"></i> Back to user</a>
+                            <li><a href="#{request.contextPath}/faces/home.xhtml"><i class="fa fa-sign-out fa-fw"></i> Back to user</a>
                             </li>
                         </ul>
                         <!-- /.dropdown-user -->
@@ -127,12 +127,8 @@
                         <ul class="nav" id="side-menu">
                             <li class="sidebar-search">
                                 <div class="input-group custom-search-form">
-                                    <input type="text" class="form-control" placeholder="Search..."/>
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-default" type="button">
-                                            <i class="fa fa-search"></i>
-                                        </button>
-                                    </span>
+                                    <i class="fa fa-user fa-fw"></i>
+                                    #{msgs.welcome}   #{profileBackingBean.firstName}
                                 </div>
                                 <!-- /input-group -->
                             </li>
