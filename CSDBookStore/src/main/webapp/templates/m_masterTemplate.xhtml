@@ -8,7 +8,8 @@
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <h:head>
 
@@ -36,10 +37,10 @@
 
         <!-- Custom Fonts -->
         <link href="../resources/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"></link>
-        
+
         <!-- Morris Charts CSS -->
         <link href="../resources/bower_components/morrisjs/morris.css" rel="stylesheet"></link>
-        
+
         <!-- Timeline CSS -->
         <link href="../resources/dist/css/timeline.css" rel="stylesheet"></link>
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -70,7 +71,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="m_index.xhtml">#{msgs.biblioAdminTitle}</a>
+                    <a class="navbar-brand" href="#{request.contextPath}/faces/m_index.xhtml">#{msgs.biblioAdminTitle}</a>
                 </div>
                 <!-- /.navbar-header -->
 
@@ -79,7 +80,12 @@
                     <!-- /.dropdown -->
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                            <c:if test="#{m_reviews.pendingCount==0}">
+                                <i class="fa fa-bell-slash-o fa-fw"></i> <i class="fa fa-caret-down"></i>
+                            </c:if>
+                            <c:if test="#{m_reviews.pendingCount!=0}">
+                                <i class="fa fa-bell fa-fw"></i><i class="fa fa-caret-down"></i>
+                            </c:if>
                         </a>
                         <ul class="dropdown-menu dropdown-alerts">
                             <li>
@@ -89,12 +95,12 @@
                                         <span class="pull-right text-muted small">#{m_reviews.pendingCount}</span>
                                     </div>
                                 </a>
-                                <a href="#">
+<!--                                <a href="#">
                                     <div>
                                         <i class="fa fa-warning fa-fw"></i> Alert
                                         <span class="pull-right text-muted small">4 minutes ago</span>
                                     </div>
-                                </a>
+                                </a>-->
                             </li>
 
                         </ul>
@@ -107,7 +113,7 @@
                         </a>
                         <ul class="dropdown-menu dropdown-user">
 
-                            <li><a href="home.xhtml"><i class="fa fa-sign-out fa-fw"></i> Back to user</a>
+                            <li><a href="#{request.contextPath}/faces/home.xhtml"><i class="fa fa-sign-out fa-fw"></i> Back to user</a>
                             </li>
                         </ul>
                         <!-- /.dropdown-user -->
@@ -121,12 +127,8 @@
                         <ul class="nav" id="side-menu">
                             <li class="sidebar-search">
                                 <div class="input-group custom-search-form">
-                                    <input type="text" class="form-control" placeholder="Search..."/>
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-default" type="button">
-                                            <i class="fa fa-search"></i>
-                                        </button>
-                                    </span>
+                                    <i class="fa fa-user fa-fw"></i>
+                                    #{msgs.welcome}   #{profileBackingBean.firstName}
                                 </div>
                                 <!-- /input-group -->
                             </li>
@@ -190,7 +192,7 @@
 
     </h:body>
     <!-- jQuery -->
-<!--    <script src="../resources/bower_components/jquery/dist/jquery.min.js"></script>-->
+    <!--    <script src="../resources/bower_components/jquery/dist/jquery.min.js"></script>-->
 
     <!-- Bootstrap Core JavaScript -->
     <script src="../resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -204,7 +206,7 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="../resources/dist/js/sb-admin-2.js"></script>
-    
+
     <!-- Morris Charts JavaScript -->
     <script src="../resources/bower_components/raphael/raphael-min.js"></script>
     <script src="../resources/bower_components/morrisjs/morris.min.js"></script>

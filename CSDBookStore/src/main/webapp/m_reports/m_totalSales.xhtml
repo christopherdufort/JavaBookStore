@@ -26,21 +26,7 @@
 
                                 <div class="panel-body">
 
-                                    <!--                                    <h:form id ="dates">
-                                    
-                                                                            <h:outputLabel value="#{msgs.fromDate}" for="fromDate"></h:outputLabel>
-                                                                            <h:inputText id="fromDate" value="#{m_reports.date1}" >
-                                                                                <f:convertDateTime pattern="yyyy-MM-dd"/>
-                                                                            </h:inputText>
-                                                                            <h:message for="fromDate" errorStyle="color:red; display:block"/>
-                                    
-                                                                            <h:outputLabel value="#{msgs.toDate}" for="toDate"></h:outputLabel>
-                                                                            <h:inputText id="toDate" value="#{m_reports.date2}" >
-                                                                                <f:convertDateTime pattern="yyyy-MM-dd"/>
-                                                                            </h:inputText>
-                                                                            <h:message for="toDate" errorStyle="color:red; display:block"/>
-                                    
-                                                                        </h:form>-->
+                                                                    
                                     <div class="dataTable_wrapper table-responsive">
                                         <h:form id="table"> 
 
@@ -59,13 +45,9 @@
                                                <f:convertDateTime pattern="yyyy-MM-dd"/>
                                            </p:inputText>-->
                                             <h:message for="toDate" errorStyle="color:red; display:block"/>
-                                            <p:commandButton  process="@parent" update="dtable" value="Search" >
-
-                                            </p:commandButton>
-                                          
-                                                                                    
-                                                                                    <h:form id="table"> -->
-                                            <p:dataTable id="dtable" class="table table-striped table-bordered table-hover" value="#{m_reports.getAllBooksWithDate()}" 
+                                            <p:commandButton  process="@form" update="dtable" value="Search" actionListener="#{m_reports.getAllBooksWithDate}" />
+                            
+                                            <p:dataTable id="dtable" class="table table-striped table-bordered table-hover" value="#{m_reports.allBooks}" 
                                                          var="books" widgetVar="reportsTable" 
 
                                                          rows="10"

@@ -5,6 +5,7 @@
  */
 package com.g3w16.actionController;
 
+import com.g3w16.beans.AuthBean;
 import com.g3w16.beans.AuthenticatedUser;
 import java.io.IOException;
 import java.io.Serializable;
@@ -33,6 +34,9 @@ public class AuthenticationController implements SystemEventListener, Serializab
     
     @Inject
     AuthenticatedUser authenticatedUser;
+    
+    @Inject
+    AuthBean authBean;
     
     /**
      * created for testing
@@ -71,9 +75,19 @@ public class AuthenticationController implements SystemEventListener, Serializab
         }
     }
     
+    /**
+     * @author Jonas Faure
+     * @edited Christopher Dufort
+     * @param event
+     * @throws IOException 
+     */
     public void logout(ComponentSystemEvent event) throws IOException{
         //FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         authenticatedUser.setRegisteredUser(null);
+        authBean.setBackurl(null);
+        authBean.setEmail(null);
+        authBean.setPassword(null);  
+        
         FacesContext.getCurrentInstance().getExternalContext().redirect("home.xhtml");
     }
     

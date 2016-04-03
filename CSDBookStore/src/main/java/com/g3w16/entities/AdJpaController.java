@@ -15,6 +15,7 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 
@@ -206,12 +207,12 @@ public class AdJpaController implements Serializable {
     }
 
     public Ad findAdByActiveType(boolean type) {
-        Query query = em.createQuery("SELECT a FROM Ad a WHERE a.adType = :type");
+        Query query = em.createQuery("SELECT a FROM Ad a WHERE a.active = true AND a.adType = :type");
         query.setParameter("type", type);
-
-        //execute query returning single result
-        Ad result = (Ad) query.getSingleResult();
-        return result;
+        try {
+            return (Ad) query.getSingleResult();
+        } catch (NoResultException e) {
+            return new Ad();
+        }
     }
-
 }

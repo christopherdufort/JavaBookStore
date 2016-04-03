@@ -38,7 +38,15 @@ ALTER TABLE approval AUTO_INCREMENT = 1;
 
 INSERT INTO `ad` (`ad_id`, `ad_filename`, `active`, `ad_type`) VALUES
 (1, 'mcdonalds.com', 1, 0),
-(2, 'facebook.com', 1, 1);
+(2, 'facebook.com', 1, 1),
+(3, 'amazon.com', 0, 1),
+(4, 'airfrance.ca', 0, 1),
+(5, 'leagueoflegends.com', 0, 1),
+(6, 'ligabbva.com', 0, 1),
+(7, 'michelin.ca', 0, 0),
+(8, 'premierleague.com', 0, 0),
+(9, 'starbucks.com', 0, 0),
+(10, 'winners.ca', 0, 0);
 
 
 INSERT INTO `approval` (`approval_id`, `approval_status`) VALUES
@@ -968,7 +976,7 @@ INSERT INTO `registered_user` (`user_id`, `title_id`, `last_name`, `first_name`,
 (15, 1, 'Dufort', 'Christopher', 'Dawson College', '3040 Rue Sherbrooke O', '4001 de Maisonneuve West', 'Montreal', 1, 'Canada', 'H3Z 1A4', '514-931-8731', '514 933-1234', 'christopher.dufort@dawsoncollege.qc.ca', 'password', true, true),
 (16, 1, 'Campanelli', 'Giuseppe', 'Dawson College', '3040 Rue Sherbrooke O', '4001 de Maisonneuve West', 'Montreal', 1, 'Canada', 'H3Z 1A4', '514-931-8731', '514 933-1234', 'acmilanfanforever@gmail.com', 'password', true, true),
 (17 ,1, 'Lazaar', 'Rita', 'Dawson College', '3040 Rue Sherbrooke O', '4001 de Maisonneuve West', 'Montreal', 1, 'Canada', 'H3Z 1A4', '514-931-8731', '514 933-1234', 'rita.lazr@gmail.com', 'password', true, true),
-(18, 1, 'Dufort', 'Christopher', 'Dawson College', '3040 Rue Sherbrooke O', '4001 de Maisonneuve West', 'Montreal', 1, 'Canada', 'H3Z 1A4', '514-931-8731', '514 933-1234', 'maxin911.ca@gmail.com', 'password', true, true),
+(18, 1, 'Ma', 'Xin', 'Dawson College', '3040 Rue Sherbrooke O', '4001 de Maisonneuve West', 'Montreal', 1, 'Canada', 'H3Z 1A4', '514-931-8731', '514 933-1234', 'maxin911.ca@gmail.com', 'password', true, true),
 (19, 1, 'Xin', 'Ma', 'None', '4323, rue Sainte Catherine', NULL, 'Montreal', 1, 'Canada', 'HZ2 323', '(514) 436 4345', '+34644334455', 'jsmith@gmail.com', 'jcool', false, true),
 (20, 4, 'Lam', 'Charlotte', 'None', '634, rue Maisonneuve', NULL, 'Montreal', 1, 'Canada', 'H3Z 233', '(514) 323 4223', '+34345343445', 'clam@gmail.com', 'clam man', false, true),
 (21, 1, 'Martin', 'Pierre', 'Couette Corporation', '3234, rue Ontario E', NULL, 'Montreal', 1, 'Canada', 'H5Z 232', '(514) 323 3243', '+34545663453', 'pmartin@gmail.com', 'the martian', false, true),
@@ -1032,5 +1040,5 @@ INSERT INTO review (isbn, date_submitted, user_id, rating, approval_id, review_t
 INSERT INTO `news_feed` (`news_feed_id`, `news_feed_link`, `active`) VALUES
 (1, 'http://www.bookbrowse.com/rss/book_news.rss', true),
 (2, 'http://www.bookbrowse.com/rss/bookbrowse_free_newsletter.rss', false),
-(3, 'http://www.bookbrowse.com/rss/newest_reader_reviews.rss', false);
+(3, 'http://www.bookbrowse.com/rss/newest_reader_reviews.rss', false),
 (4, 'http://www.bookbrowse.com/rss/member_ezines.rss', false);

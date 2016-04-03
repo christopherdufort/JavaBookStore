@@ -34,37 +34,37 @@
                                              
                                                 <h:outputLabel value="#{msgs.question}" for="question"></h:outputLabel>
                                                 <h:outputText rendered="m_surveys.selectedSurvey.question"></h:outputText>
-                                                <h:inputText id="question" value="#{m_surveys.survey.question}" />
+                                                <h:inputText id="question" value="#{m_surveys.survey.question}" required="true" requiredMessage="#{msgs.required}"/>
                                                 <h:message for="question" errorStyle="color:red; display:block"/>
 
 
                                                 <h:outputLabel value="#{msgs.answerOne}" for="answerOne"></h:outputLabel>
                                                 <h:outputText rendered="m_surveys.selectedSurvey.answerOne"></h:outputText>
-                                                <h:inputText id="answerOne" value="#{m_surveys.survey.answerOne}" />
+                                                <h:inputText id="answerOne" value="#{m_surveys.survey.answerOne}" required="true" requiredMessage="#{msgs.required}"/>
                                                 <h:message for="answerOne" errorStyle="color:red; display:block"/>
 
 
                                                 <h:outputLabel value="#{msgs.answerTwo}" for="answerTwo"></h:outputLabel>
                                                 <h:outputText rendered="m_surveys.selectedSurvey.answerTwo"></h:outputText>
-                                                <h:inputText id="answerTwo" value="#{m_surveys.survey.answerTwo}" />
+                                                <h:inputText id="answerTwo" value="#{m_surveys.survey.answerTwo}" required="true" requiredMessage="#{msgs.required}"/>
                                                 <h:message for="answerTwo" errorStyle="color:red; display:block"/>
 
 
                                                 <h:outputLabel value="#{msgs.answerThree}" for="answerThree"></h:outputLabel>
                                                 <h:outputText rendered="m_surveys.selectedSurvey.answerThree"></h:outputText>
-                                                <h:inputText id="answerThree" value="#{m_surveys.survey.answerThree}" />
+                                                <h:inputText id="answerThree" value="#{m_surveys.survey.answerThree}" required="true" requiredMessage="#{msgs.required}"/>
                                                 <h:message for="answerThree" errorStyle="color:red; display:block"/>
 
 
                                                 <h:outputLabel value="#{msgs.answerDefault}" for="answerDefault"></h:outputLabel>
                                                 <h:outputText rendered="m_surveys.selectedSurvey.answerDefault"></h:outputText>
-                                                <h:inputText id="answerDefault" value="#{m_surveys.survey.answerDefault}" />
+                                                <h:inputText id="answerDefault" value="#{m_surveys.survey.answerDefault}" required="true" requiredMessage="#{msgs.required}"/>
                                                 <h:message for="answerDefault" errorStyle="color:red; display:block"/>
 
 
                                                 <h:outputLabel value="#{msgs.active}" for="survey_active"></h:outputLabel>
                                                 <h:outputText rendered="m_surveys.survey.active"></h:outputText>
-                                                <h:selectOneRadio id="survey_active" layout="lineDirection" value="#{m_surveys.survey.active}">
+                                                <h:selectOneRadio id="survey_active" layout="lineDirection" value="#{m_surveys.survey.active}" required="true" requiredMessage="#{msgs.required}">
                                                     <f:selectItem itemValue="True" itemLabel="True" />
                                                     <f:selectItem itemValue="False" itemLabel="False" />
                                                 </h:selectOneRadio>
@@ -75,7 +75,7 @@
                                                              action="#{m_surveys.updateSurvey}" class="btn btn-success btn-xs" />
                                             <h:outputText value="&#160;" />
                                             <h:commandButton value="#{msgs.cancel}"
-                                                             action="#{m_surveys.cancel()}" class="btn btn-danger btn-xs" />
+                                                             action="#{m_surveys.cancel()}" class="btn btn-danger btn-xs" immediate="true"/>
                                         </h:form>
                                     </div>
                                     <!-- /.table-responsive -->

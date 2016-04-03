@@ -8,12 +8,15 @@ import com.g3w16.entities.Format;
 import com.g3w16.entities.Genre;
 import com.g3w16.entities.Review;
 import com.g3w16.entities.ReviewJpaController;
+import com.g3w16.entities.viewController.UserAuthView;
 import java.io.IOException;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -26,6 +29,7 @@ import javax.servlet.http.HttpServletResponse;
  * Manages a books, its reviews, and similar products.
  * 
  * @author Giuseppe Campanelli
+ * @author Christopher Dufort
  */
 @Named("bookBB")
 @SessionScoped
@@ -205,10 +209,12 @@ public class BookBackingBean implements Serializable {
     
     /**
      * Sets similar products of the same genre
+     * @author Giuseppe Campanelli
+     * @edited Christopher Dufort
      */
     public void setFromSameGenre() {
         booksFromGenre = new ArrayList<>();
-        List<Book> allSimilarBooks = bookJpaController.findBookEntitiesByGenre(book.getGenreList().get(0));
+        List<Book> allSimilarBooks = bookJpaController.findBookEntitiesByGenreAsClient(book.getGenreList().get(0));
         int similarBooksAmount = allSimilarBooks.size();
         
         for (int i = 0; i < 6 && !allSimilarBooks.isEmpty(); i++) {
@@ -234,10 +240,12 @@ public class BookBackingBean implements Serializable {
     
     /**
      * Sets similar products of the from the same author
+     * @author Giuseppe Campanelli
+     * @edited Christopher Dufort
      */
     public void setFromSameAuthor() {
         booksFromAuthor = new ArrayList<>();
-        List<Book> allSimilarBooks = bookJpaController.findBookEntitiesByAuthor(book.getAuthorList().get(0));
+        List<Book> allSimilarBooks = bookJpaController.findBookEntitiesByAuthorAsClient(book.getAuthorList().get(0));
         int similarBooksAmount = allSimilarBooks.size();
         
         for (int i = 0; i < 6 && !allSimilarBooks.isEmpty(); i++) {
@@ -274,4 +282,5 @@ public class BookBackingBean implements Serializable {
         ((HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse()).addCookie(cookie);
         return "book?faces-redirect=true";
     }
+
 }

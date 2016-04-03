@@ -76,11 +76,9 @@
                             </div>
                             <div class="panel">
                                 <div class="primary">
-                                    <h:form>
-                                        <a href="#{homeView.sideAd}">
-                                            <h:graphicImage value="resources/images/#{homeView.sideAd}.png"/>
-                                        </a>
-                                    </h:form>
+                                    <a href="http://#{homeView.sideAd}" target="_blank">
+                                        <h:graphicImage value="resources/images/#{homeView.sideAd}.png"/>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -103,11 +101,13 @@
                                 </ui:repeat>
                             </div>
                             <hr/>
-                            <div class="row column">
-                                <div class=" large-centered primary">
-                                    <a href="#{homeView.mainAd}">
-                                        <h:graphicImage value="resources/images/#{homeView.mainAd}.png"/>
-                                    </a>
+                            <div class="row">
+                                <div class="panel">
+                                    <div class="primary large-6 large-centered columns">
+                                        <a href="http://#{homeView.mainAd}" target="_blank">
+                                            <h:graphicImage value="resources/images/#{homeView.mainAd}.png"/>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                             <hr/>
@@ -146,15 +146,15 @@
                 <div class="callout large secondary">
                     <div class="row">
                         <div class="large-4 columns">
-                            <h5>Vivamus Hendrerit Arcu Sed Erat Molestie</h5>
-                            <p>Curabitur vulputate, ligula lacinia scelerisque tempor, lacus lacus ornare ante, ac egestas est urna sit amet arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed molestie augue sit.</p>
+                            <h5>Follow us on Social Media</h5>
+                            <p>New products, sales, and other pertinent information released daily via our social media networks!</p>
                         </div>
                         <div class="small-6 large-3 large-offset-2 columns">
                             <ul class="menu vertical">
-                                <li><a href="#">One</a></li>
-                                <li><a href="#">Two</a></li>
-                                <li><a href="#">Three</a></li>
-                                <li><a href="#">Four</a></li>
+                                <li><a href="#" class="fc-webicon facebook">Like us on Facebook</a></li>
+                                <li><a href="#" class="fc-webicon facebook">Follow us on Twitter</a></li>
+                                <li><a href="#" class="fc-webicon facebook">+1 us on Google+</a></li>
+                                <li><a href="#" class="fc-webicon facebook">Connect with us on Linkdin</a></li>
                             </ul>
                         </div>
                         <div class="small-6 large-3 columns">

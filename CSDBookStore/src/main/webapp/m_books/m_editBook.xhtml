@@ -26,11 +26,8 @@
                                 <div class="panel-body">
                                     <div class="dataTable_wrapper table-responsive">
                                         <h:form >
-                                            <h:panelGrid columns="3" >
-                                                <h:outputLabel value="#{msgs.book_id}" for="book_id"></h:outputLabel>
-                                                <p:inputText id="book_id" value="#{m_books.book.bookId}" />
-                                                <h:message for="book_id" errorStyle="color:red; display:block"/>
-
+                                            <h:inputHidden id="book_id" value="#{m_books.book.bookId}" />
+                                            <h:panelGrid columns="3" >                                                
                                                 <h:outputLabel value="#{msgs.isbn}" for="isbn"></h:outputLabel>
                                                 <p:inputText id="isbn" value="#{m_books.book.isbn}" />
                                                 <h:message for="isbn" errorStyle="color:red; display:block"/>
@@ -132,7 +129,7 @@
                                                              action="#{m_books.updateBook}" class="btn btn-success btn-xs" />
                                             <h:outputText value="&#160;" />
                                             <p:commandButton value="#{msgs.cancel}"
-                                                             action="#{m_books.cancel}" class="btn btn-danger btn-xs" />
+                                                             action="#{m_books.cancel}" class="btn btn-danger btn-xs" immediate="true"/>
 
                                         </h:form>
                                     </div>
