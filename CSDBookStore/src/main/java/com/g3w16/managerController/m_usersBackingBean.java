@@ -14,6 +14,11 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
+import jodd.mail.Email;
+import jodd.mail.MailException;
+import jodd.mail.SendMailSession;
+import jodd.mail.SmtpServer;
+import jodd.mail.SmtpSslServer;
 
 /**
  *
@@ -30,7 +35,7 @@ public class m_usersBackingBean implements Serializable {
     RegisteredUserJpaController userJpa;
 
     private Title title;
-    
+
     private List<RegisteredUser> all;
 
     @Inject
@@ -45,9 +50,10 @@ public class m_usersBackingBean implements Serializable {
     ProvinceJpaController provinceJpa;
 
     @PostConstruct
-    public void init(){
-        all=userJpa.findAll();
+    public void init() {
+        all = userJpa.findAll();
     }
+
     public RegisteredUser getUser() {
         if (user == null) {
             user = new RegisteredUser();
@@ -98,8 +104,8 @@ public class m_usersBackingBean implements Serializable {
         } catch (Exception ex) {
             Logger.getLogger(m_usersBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-         Logger.getLogger(m_usersBackingBean.class.getName()).log(Level.INFO, null, "Does it go here?");
-        all=userJpa.findAll();
+        Logger.getLogger(m_usersBackingBean.class.getName()).log(Level.INFO, null, "Does it go here?");
+        all = userJpa.findAll();
         return "m_users";
     }
 
@@ -118,6 +124,26 @@ public class m_usersBackingBean implements Serializable {
 
     public List<Province> getAllProvince() {
         return provinceJpa.findAll();
+    }
+
+    public void sendEmail() {
+        System.out.println(">>>>>send" + user.getEmailAddress());
+        System.out.println(">>>>>>>>pass" + user.getPassword());
+
+        Email email = Email.create()
+                .from("xin.send@gmail.com")
+                .to("maxin911.ca@gmail.com")
+                .subject("password")
+                .addText("A plain text message...");
+
+        SmtpServer smtpServer = SmtpSslServer.create("smtp.gmail.com")
+                .authenticateWith("xin.send@gmail.com", "mx123456");
+
+        SendMailSession session = smtpServer.createSession();
+        session.open();
+        session.sendMail(email);
+        session.close();
+
     }
 
     public String cancel() {
