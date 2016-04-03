@@ -36,6 +36,7 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.impl.base.filter.ExcludeRegExpPaths;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Before;
 import org.junit.Test;
@@ -82,7 +83,8 @@ public class AdJpaControllerTest {
                 .addAsWebInfResource(new File("src/main/setup/glassfish-resources.xml"), "glassfish-resources.xml")
                 .addAsResource(new File("src/main/resources/META-INF/persistence.xml"), "META-INF/persistence.xml")
                 .addAsResource("seed_tables.sql")
-                .addAsLibraries(dependencies);
+                .addAsLibraries(dependencies)
+                .addPackages(true, new ExcludeRegExpPaths(".*Test.class$"), "CSDBookStore");
 
         return webArchive;
     }
