@@ -162,7 +162,8 @@ CREATE TABLE IF NOT EXISTS `survey` (
 DROP TABLE IF EXISTS `survey_answer`;
 CREATE TABLE IF NOT EXISTS `survey_answer` (
   `survey_id` int(6) NOT NULL,
-  `user_id` int(11) DEFAULT NULL,
+  `session_id` int(11) DEFAULT NULL,
+  `choice` int(3) DEFAULT 4
 ) ENGINE=InnoDB;
 
 
@@ -239,8 +240,8 @@ ALTER TABLE `title`
   ADD PRIMARY KEY (`title_id`);
 
 ALTER TABLE `survey_answer`
-  ADD PRIMARY KEY (`survey_id`,`user_id`),
-  ADD KEY `user_id_FK` (`user_id`),
+  ADD PRIMARY KEY (`survey_id`,`session_id`),
+  ADD UNIQUE KEY `session_id_UQ` (`session_id`),
   ADD KEY `survey_id_FK` (`survey_id`);
   
 --AUTO INCREMENTS
@@ -313,5 +314,4 @@ ALTER TABLE `review`
   ADD CONSTRAINT `client_id_FK` FOREIGN KEY (`user_id`) REFERENCES `registered_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE `survey_answer`
-  ADD CONSTRAINT `user_id_FK` FOREIGN KEY (`user_id`) REFERENCES `registered_user` (`user_id`),
   ADD CONSTRAINT `survey_id_FK` FOREIGN KEY (`survey_id`) REFERENCES `survey` (`survey_id`);
