@@ -38,6 +38,9 @@ public class AuthenticationController implements SystemEventListener, Serializab
     @Inject
     AuthBean authBean;
     
+    @Inject
+    NavigationController navigationController;
+    
     /**
      * created for testing
      */
@@ -45,23 +48,39 @@ public class AuthenticationController implements SystemEventListener, Serializab
         Logger.getLogger(this.getClass().getName()).log(Level.INFO, "AuthenticationController constructor is invoked!");
     }
     
+    /**
+     * @author Jonas Faure
+     * @edited Christopher Dufort
+     * Modified to use boomerang login
+     * @param event
+     * @throws IOException 
+     */
     public void mustBeClient(ComponentSystemEvent event) throws IOException{
         Logger.getLogger(AuthenticationController.class.getName()).log(Level.INFO, "AuthenticationController.isClient invoked !");
         Logger.getLogger(AuthenticationController.class.getName()).log(Level.INFO, "AuthenticatedUser.getRegisteredUser value is null ? = {0}", (authenticatedUser.getRegisteredUser()==null));
         if ( authenticatedUser.getRegisteredUser()==null){
-            FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("/CSDBookStore/faces"+navigationController.boomerangLogin());
+            //FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
         }else{
             if (!userController.isClient(authenticatedUser.getRegisteredUser())){
-                FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("/CSDBookStore/faces"+navigationController.boomerangLogin());
+                //FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
             }
         }
     }
     
+    /**
+     * @author Jonas Faure
+     * @edited Christopher dufort
+     * @param event
+     * @throws IOException 
+     */
     public void mustBeManager(ComponentSystemEvent event) throws IOException{
         Logger.getLogger(AuthenticationController.class.getName()).log(Level.INFO, "AuthenticationController.isClient invoked !");
         Logger.getLogger(AuthenticationController.class.getName()).log(Level.INFO, "AuthenticatedUser value is = {0}", (authenticatedUser.getRegisteredUser()==null));
         if ( authenticatedUser.getRegisteredUser()==null){
-            FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("/CSDBookStore/faces"+navigationController.boomerangLogin());
+            //FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
         }else{
             if (!userController.isManager(authenticatedUser.getRegisteredUser())){
                 FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
@@ -71,7 +90,8 @@ public class AuthenticationController implements SystemEventListener, Serializab
     
     public void mustBeAnonymous(ComponentSystemEvent event) throws IOException{
         if (authenticatedUser.getRegisteredUser()!=null){
-            FacesContext.getCurrentInstance().getExternalContext().redirect("home.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("/CSDBookStore/faces"+navigationController.boomerangLogin());
+            //FacesContext.getCurrentInstance().getExternalContext().redirect("home.xhtml");
         }
     }
     
