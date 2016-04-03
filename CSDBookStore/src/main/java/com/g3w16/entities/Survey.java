@@ -6,14 +6,20 @@
 package com.g3w16.entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -30,8 +36,19 @@ import javax.persistence.Table;
     @NamedQuery(name = "Survey.findByAnswerOne", query = "SELECT s FROM Survey s WHERE s.answerOne = :answerOne"),
     @NamedQuery(name = "Survey.findByAnswerTwo", query = "SELECT s FROM Survey s WHERE s.answerTwo = :answerTwo"),
     @NamedQuery(name = "Survey.findByAnswerThree", query = "SELECT s FROM Survey s WHERE s.answerThree = :answerThree"),
-    @NamedQuery(name = "Survey.findByAnswerDefault", query = "SELECT s FROM Survey s WHERE s.answerDefault = :answerDefault")})
+    @NamedQuery(name = "Survey.findByAnswerDefault", query = "SELECT s FROM Survey s WHERE s.answerDefault = :answerDefault"),
+    @NamedQuery(name = "Survey.findNotAnswered", query  = "SELECT s FROM Survey s WHERE NOT EXISTS(SELECT 1 FROM SurveyAnswer a WHERE a.surveyAnswerPK.sessionId = :sessionId AND s.surveyId = s.surveyId)")
+})
 public class Survey implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "survey")
+    private List<SurveyAnswer> surveyAnswerList;
+
+    @JoinTable(name = "survey_answer", joinColumns = {
+        @JoinColumn(name = "survey_id", referencedColumnName = "survey_id")}, inverseJoinColumns = {
+        @JoinColumn(name = "user_id", referencedColumnName = "user_id")})
+    @ManyToMany
+    private List<RegisteredUser> registeredUserList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -152,6 +169,22 @@ public class Survey implements Serializable {
     @Override
     public String toString() {
         return "com.g3w16.entities.Survey[ surveyId=" + surveyId + " ]";
+    }
+
+    public List<RegisteredUser> getRegisteredUserList() {
+        return registeredUserList;
+    }
+
+    public void setRegisteredUserList(List<RegisteredUser> registeredUserList) {
+        this.registeredUserList = registeredUserList;
+    }
+
+    public List<SurveyAnswer> getSurveyAnswerList() {
+        return surveyAnswerList;
+    }
+
+    public void setSurveyAnswerList(List<SurveyAnswer> surveyAnswerList) {
+        this.surveyAnswerList = surveyAnswerList;
     }
     
 }

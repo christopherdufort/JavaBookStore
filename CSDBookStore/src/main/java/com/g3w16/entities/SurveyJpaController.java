@@ -5,9 +5,11 @@
  */
 package com.g3w16.entities;
 
+import com.g3w16.entities.exceptions.IllegalOrphanException;
 import com.g3w16.entities.exceptions.NonexistentEntityException;
 import com.g3w16.entities.exceptions.RollbackFailureException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.enterprise.context.SessionScoped;
@@ -17,6 +19,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import javax.transaction.UserTransaction;
 
 /**
@@ -42,9 +46,27 @@ public class SurveyJpaController implements Serializable {
     }
 
     public void create(Survey survey) throws RollbackFailureException, Exception {
+        if (survey.getSurveyAnswerList() == null) {
+            survey.setSurveyAnswerList(new ArrayList<SurveyAnswer>());
+        }
         try {
             utx.begin();
+            List<SurveyAnswer> attachedSurveyAnswerList = new ArrayList<SurveyAnswer>();
+            for (SurveyAnswer surveyAnswerListSurveyAnswerToAttach : survey.getSurveyAnswerList()) {
+                surveyAnswerListSurveyAnswerToAttach = em.getReference(surveyAnswerListSurveyAnswerToAttach.getClass(), surveyAnswerListSurveyAnswerToAttach.getSurveyAnswerPK());
+                attachedSurveyAnswerList.add(surveyAnswerListSurveyAnswerToAttach);
+            }
+            survey.setSurveyAnswerList(attachedSurveyAnswerList);
             em.persist(survey);
+            for (SurveyAnswer surveyAnswerListSurveyAnswer : survey.getSurveyAnswerList()) {
+                Survey oldSurveyOfSurveyAnswerListSurveyAnswer = surveyAnswerListSurveyAnswer.getSurvey();
+                surveyAnswerListSurveyAnswer.setSurvey(survey);
+                surveyAnswerListSurveyAnswer = em.merge(surveyAnswerListSurveyAnswer);
+                if (oldSurveyOfSurveyAnswerListSurveyAnswer != null) {
+                    oldSurveyOfSurveyAnswerListSurveyAnswer.getSurveyAnswerList().remove(surveyAnswerListSurveyAnswer);
+                    oldSurveyOfSurveyAnswerListSurveyAnswer = em.merge(oldSurveyOfSurveyAnswerListSurveyAnswer);
+                }
+            }
             utx.commit();
         } catch (Exception ex) {
             try {
@@ -56,10 +78,43 @@ public class SurveyJpaController implements Serializable {
         }
     }
 
-    public void edit(Survey survey) throws NonexistentEntityException, RollbackFailureException, Exception {
+    public void edit(Survey survey) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
         try {
             utx.begin();
+            Survey persistentSurvey = em.find(Survey.class, survey.getSurveyId());
+            List<SurveyAnswer> surveyAnswerListOld = persistentSurvey.getSurveyAnswerList();
+            List<SurveyAnswer> surveyAnswerListNew = survey.getSurveyAnswerList();
+            List<String> illegalOrphanMessages = null;
+            for (SurveyAnswer surveyAnswerListOldSurveyAnswer : surveyAnswerListOld) {
+                if (!surveyAnswerListNew.contains(surveyAnswerListOldSurveyAnswer)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain SurveyAnswer " + surveyAnswerListOldSurveyAnswer + " since its survey field is not nullable.");
+                }
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            List<SurveyAnswer> attachedSurveyAnswerListNew = new ArrayList<SurveyAnswer>();
+            for (SurveyAnswer surveyAnswerListNewSurveyAnswerToAttach : surveyAnswerListNew) {
+                surveyAnswerListNewSurveyAnswerToAttach = em.getReference(surveyAnswerListNewSurveyAnswerToAttach.getClass(), surveyAnswerListNewSurveyAnswerToAttach.getSurveyAnswerPK());
+                attachedSurveyAnswerListNew.add(surveyAnswerListNewSurveyAnswerToAttach);
+            }
+            surveyAnswerListNew = attachedSurveyAnswerListNew;
+            survey.setSurveyAnswerList(surveyAnswerListNew);
             survey = em.merge(survey);
+            for (SurveyAnswer surveyAnswerListNewSurveyAnswer : surveyAnswerListNew) {
+                if (!surveyAnswerListOld.contains(surveyAnswerListNewSurveyAnswer)) {
+                    Survey oldSurveyOfSurveyAnswerListNewSurveyAnswer = surveyAnswerListNewSurveyAnswer.getSurvey();
+                    surveyAnswerListNewSurveyAnswer.setSurvey(survey);
+                    surveyAnswerListNewSurveyAnswer = em.merge(surveyAnswerListNewSurveyAnswer);
+                    if (oldSurveyOfSurveyAnswerListNewSurveyAnswer != null && !oldSurveyOfSurveyAnswerListNewSurveyAnswer.equals(survey)) {
+                        oldSurveyOfSurveyAnswerListNewSurveyAnswer.getSurveyAnswerList().remove(surveyAnswerListNewSurveyAnswer);
+                        oldSurveyOfSurveyAnswerListNewSurveyAnswer = em.merge(oldSurveyOfSurveyAnswerListNewSurveyAnswer);
+                    }
+                }
+            }
             utx.commit();
         } catch (Exception ex) {
             try {
@@ -70,7 +125,7 @@ public class SurveyJpaController implements Serializable {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
                 Integer id = survey.getSurveyId();
-                if (findSurveyById(id) == null) {
+                if (findSurvey(id) == null) {
                     throw new NonexistentEntityException("The survey with id " + id + " no longer exists.");
                 }
             }
@@ -78,11 +133,7 @@ public class SurveyJpaController implements Serializable {
         }
     }
 
-    public void destroySurvey(Survey survey) throws NonexistentEntityException, RollbackFailureException, Exception {
-        this.destroy(survey.getSurveyId());
-    }
-
-    public void destroy(Integer id) throws NonexistentEntityException, RollbackFailureException, Exception {
+    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
         try {
             utx.begin();
             Survey survey;
@@ -91,6 +142,17 @@ public class SurveyJpaController implements Serializable {
                 survey.getSurveyId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The survey with id " + id + " no longer exists.", enfe);
+            }
+            List<String> illegalOrphanMessages = null;
+            List<SurveyAnswer> surveyAnswerListOrphanCheck = survey.getSurveyAnswerList();
+            for (SurveyAnswer surveyAnswerListOrphanCheckSurveyAnswer : surveyAnswerListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Survey (" + survey + ") cannot be destroyed since the SurveyAnswer " + surveyAnswerListOrphanCheckSurveyAnswer + " in its surveyAnswerList field has a non-nullable survey field.");
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
             }
             em.remove(survey);
             utx.commit();
@@ -101,6 +163,49 @@ public class SurveyJpaController implements Serializable {
                 throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
             }
             throw ex;
+        }
+    }
+
+    public List<Survey> findSurveyEntities() {
+        return findSurveyEntities(true, -1, -1);
+    }
+
+    public List<Survey> findSurveyEntities(int maxResults, int firstResult) {
+        return findSurveyEntities(false, maxResults, firstResult);
+    }
+
+    private List<Survey> findSurveyEntities(boolean all, int maxResults, int firstResult) {
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            cq.select(cq.from(Survey.class));
+            Query q = em.createQuery(cq);
+            if (!all) {
+                q.setMaxResults(maxResults);
+                q.setFirstResult(firstResult);
+            }
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public Survey findSurvey(Integer id) {
+        try {
+            return em.find(Survey.class, id);
+        } finally {
+            em.close();
+        }
+    }
+
+    public int getSurveyCount() {
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            Root<Survey> rt = cq.from(Survey.class);
+            cq.select(em.getCriteriaBuilder().count(rt));
+            Query q = em.createQuery(cq);
+            return ((Long) q.getSingleResult()).intValue();
+        } finally {
+            em.close();
         }
     }
 
@@ -116,26 +221,8 @@ public class SurveyJpaController implements Serializable {
         return findSurveyEntities(true, -1, -1);
     }
 
-    public List<Survey> findSurveyEntities(int maxResults, int firstResult) {
-        return findSurveyEntities(false, maxResults, firstResult);
-    }
-
-    private List<Survey> findSurveyEntities(boolean all, int maxResults, int firstResult) {
-        Query q = em.createQuery("select object(o) from Survey as o order by o.surveyId ASC");
-        if (!all) {
-            q.setMaxResults(maxResults);
-            q.setFirstResult(firstResult);
-        }
-        return q.getResultList();
-    }
-
     public Survey findSurveyById(Integer id) {
         return em.find(Survey.class, id);
-    }
-
-    public int getSurveyCount() {
-        Query q = em.createQuery("select count(o) from Survey as o");
-        return ((Long) q.getSingleResult()).intValue();
     }
 
     /**
@@ -231,5 +318,11 @@ public class SurveyJpaController implements Serializable {
         //execute query returning single result
         Survey result = (Survey) query.getSingleResult();
         return result;
+    }
+    
+    public List<Survey> findRemainingSurvey(String sessionId){
+        Query query = em.createNamedQuery("Survey.findNotAnswered");
+        query.setParameter("sessionId", sessionId);
+        return query.getResultList();
     }
 }
