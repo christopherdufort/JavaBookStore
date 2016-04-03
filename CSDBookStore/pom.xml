@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.g3w16</groupId>
     <artifactId>CSDBookStore</artifactId>
-    <version>0.5.7-SNAPSHOT</version> <!-- Increment this by 0.0.1 before each push -->
+    <version>0.5.8-SNAPSHOT</version> <!-- Increment this by 0.0.1 before each push -->
     <packaging>war</packaging>
     <name>CSDBookStore</name>
     
@@ -212,7 +212,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.18.1</version>
                 <configuration>
-                    <skipTests>true</skipTests>
+                    <skipTests>false</skipTests>
                     <systemPropertyVariables>
                         <java.util.logging.config.file>
                             src/test/resources-glassfish-remote/logging.properties

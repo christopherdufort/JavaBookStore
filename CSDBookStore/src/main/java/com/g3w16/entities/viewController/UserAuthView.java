@@ -38,6 +38,7 @@ public class UserAuthView {
     @Inject
     private AuthBean authBean;
 
+    
     public void authenticate() throws IOException {
         
         Logger.getLogger(UserAuthView.class.getName()).log(Level.INFO, "Submitted email : {0}", authBean.getEmail());
