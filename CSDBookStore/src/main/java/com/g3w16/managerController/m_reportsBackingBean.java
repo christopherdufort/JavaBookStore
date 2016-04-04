@@ -64,8 +64,6 @@ public class m_reportsBackingBean {
     public void init() {
         allBooks = bookJpa.findBookEntities();
         allUsers = userJpa.findAll();
-//        date1= new Date();
-//        date2= new Date();
 
     }
 
@@ -130,6 +128,10 @@ public class m_reportsBackingBean {
         return allUsers;
     }
 
+    public List<Invoice> getAllInvoices() {
+        return invoiceJpa.findInvoiceEntities();
+    }
+
     public List<Invoice> getInvoicesWithDate(Date date1, Date date2) {
         return invoiceJpa.findInvoiceByDate(date1, date2);
     }
@@ -141,6 +143,18 @@ public class m_reportsBackingBean {
 
     public List<Invoice> getAllInvoicesByDateAndUser(Date date1, Date date2, Integer user) {
         return invoiceJpa.findInvoiceByDateAndUser(date1, date2, user);
+
+    }
+
+    /**
+     * This gets all the invoice details for a specific book.
+     *
+     * @param book
+     * @return
+     */
+    public List<InvoiceDetail> getAllBooksInvoiceDetailPerBook(Book book) {
+
+        return invoiceDetailJpa.findInvoiceDetailByBook(book);
 
     }
 
@@ -156,18 +170,6 @@ public class m_reportsBackingBean {
 
         }
         return allPublishers;
-    }
-
-    /**
-     * This gets all the invoice details for a specific book.
-     *
-     * @param book
-     * @return
-     */
-    public List<InvoiceDetail> getAllBooksInvoiceDetailPerBook(Book book) {
-
-        return invoiceDetailJpa.findInvoiceDetailByBook(book);
-
     }
 
     // ------------ REPORTS METHODS ----------------
@@ -214,7 +216,7 @@ public class m_reportsBackingBean {
         BigDecimal total = BigDecimal.valueOf(0);
         double t = 0;
 
-        List<Invoice> allInvoices = invoiceJpa.findInvoiceEntities();
+        List<Invoice> allInvoices = getAllInvoices();
 
         for (int i = 0; i < allInvoices.size(); i++) {
 
@@ -226,7 +228,7 @@ public class m_reportsBackingBean {
     }
 
     /**
-     * This method return the total of sale for a particular user in a range of
+     * This method returns all books bought by a particular user in a range of
      * time given
      *
      * @param date1
@@ -234,7 +236,7 @@ public class m_reportsBackingBean {
      * @param user
      * @return
      */
-    public List<Book> getAllSalesByClient() {
+    public List<Book> getAllBooksByClient() {
 
         List<Invoice> allInvoices = new ArrayList<Invoice>();
         //find all invoices related to user without dates
@@ -298,7 +300,7 @@ public class m_reportsBackingBean {
 
         List<Invoice> in = new ArrayList<Invoice>();
         if (date1 == null || date2 == null) {
-            return null;
+            in = getAllInvoices();
         } else {
             in = getInvoicesWithDate(date1, date2);
         }
@@ -317,14 +319,26 @@ public class m_reportsBackingBean {
         return allBooks;
     }
 
+    /**
+     * This method will returns only a list of books who have been sold, either
+     * within a date range or from the beginning.
+     *
+     * @return
+     */
     public List<Book> getAllBooksWithSalesOnly() {
 
+        List<Invoice> in = new ArrayList<Invoice>();
+
         if (date1 == null || date2 == null) {
-            return null;
+            in = getAllInvoices();
+        } else {
+            in = getInvoicesWithDate(date1, date2);
         }
+
+        //clear all the books in the var
         allBooks.clear();
-        List<Invoice> in = getInvoicesWithDate(date1, date2);
         for (int i = 0; i < in.size(); i++) {
+
             List<InvoiceDetail> inDetail = in.get(i).getInvoiceDetailList();
 
             for (int j = 0; j < inDetail.size(); j++) {
@@ -334,7 +348,6 @@ public class m_reportsBackingBean {
                     allBooks.add(b);
                 }
 
-//                books.add(inDetail.get(j).getBookId());
             }
         }
         return allBooks;
@@ -352,11 +365,11 @@ public class m_reportsBackingBean {
         double t = 0;
 
         // calling the method to get all details for this specific book
-        List<InvoiceDetail> allBooks = getAllBooksInvoiceDetailPerBook(book);
+        List<InvoiceDetail> bookInvoiceDetails = getAllBooksInvoiceDetailPerBook(book);
 
-        for (int i = 0; i < allBooks.size(); i++) {
+        for (int i = 0; i < bookInvoiceDetails.size(); i++) {
 
-            t += allBooks.get(i).getBookPrice().doubleValue();
+            t += bookInvoiceDetails.get(i).getBookPrice().doubleValue();
         }
         //calculating total
         total = BigDecimal.valueOf(t).setScale(2, RoundingMode.CEILING);
@@ -364,8 +377,30 @@ public class m_reportsBackingBean {
     }
 
     /**
-     * This gets the total per publisher given and between the dates that were
-     * given.
+     * This gets the total sales for a specific book from beginning.
+     *
+     * @param u
+     * @param book
+     * @return
+     */
+    public BigDecimal getTotalSalesByClient(RegisteredUser u) {
+
+        BigDecimal total = BigDecimal.ZERO;
+        double t = 0;
+        user = u;
+        allBooks = getAllBooksByClient();
+        for (int i = 0; i < allBooks.size(); i++) {
+
+            t += allBooks.get(i).getSalePrice().doubleValue();
+        }
+        //calculating total
+        total = BigDecimal.valueOf(t).setScale(2, RoundingMode.CEILING);
+        return total;
+    }
+
+    /**
+     * This gets the list of book sold for a certain publisher and between the
+     * dates that were given.
      *
      * @param publisher
      * @param date1
@@ -376,13 +411,17 @@ public class m_reportsBackingBean {
 
         BigDecimal total = BigDecimal.ZERO;
         double t = 0;
+
+        List<Invoice> invoices = new ArrayList<Invoice>();
+
         if (date1 == null || date2 == null) {
-            return null;
+            invoices = getAllInvoices();
+        } else {
+            invoices = getInvoicesWithDate(date1, date2);
         }
+
         //clear all elements from list
         allBooks.clear();
-
-        List<Invoice> invoices = getInvoicesWithDate(date1, date2);
 
         //running through all the invoices of this date
         for (int i = 0; i < invoices.size(); i++) {
@@ -396,7 +435,10 @@ public class m_reportsBackingBean {
                 if (b.getPublisher().equalsIgnoreCase(publisher)) {
 //                    pubInvDetail.add(id.get(j));
                     // for the moment it is only list price.
-                    allBooks.add(b);
+                    if (!allBooks.contains(b)) {
+                        allBooks.add(b);
+                    }
+
                     t += b.getListPrice().doubleValue();
                 }
 
@@ -408,8 +450,8 @@ public class m_reportsBackingBean {
     }
 
     /**
-     * This gets the total sales for a specific author and between certain
-     * dates.
+     * This gets the list of book bought by a specific author and between
+     * certain dates.
      *
      * @param author
      * @param date1
@@ -446,5 +488,25 @@ public class m_reportsBackingBean {
         }
         total = BigDecimal.valueOf(t).setScale(2, RoundingMode.CEILING);
         return allBooks;
+    }
+
+    public List<RegisteredUser> getTopClients() {
+
+        List<Invoice> in = new ArrayList<Invoice>();
+
+        if (date1 == null || date2 == null) {
+            in = getAllInvoices();
+        } else {
+            in = getInvoicesWithDate(date1, date2);
+        }
+        allUsers = new ArrayList<>();
+        for (int i = 0; i < in.size(); i++) {
+            RegisteredUser u = userJpa.findUserById(in.get(i).getUserId());
+            if (!allUsers.contains(u)) {
+                allUsers.add(u);
+            }
+        }
+
+        return allUsers;
     }
 }
