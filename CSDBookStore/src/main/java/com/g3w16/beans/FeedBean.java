@@ -5,9 +5,7 @@
  */
 package com.g3w16.beans;
 
-import com.g3w16.actionController.BookController;
-import com.g3w16.entities.Book;
-import com.g3w16.entities.BookJpaController;
+import com.g3w16.entities.NewsFeedJpaController;
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.SyndFeedInput;
@@ -21,13 +19,16 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
- * backing bean for book.xhtml
+ * backing bean for home News Feed
  *
- * @author Giuseppe Campanelli
+ * @author Christopher Dufort
  */
-@Named()
+@Named
 @RequestScoped
 public class FeedBean implements Serializable {
+    
+    @Inject
+    NewsFeedJpaController newsFeedJpaController;
 
     private String newsFeedTitle;
     private String newsFeedDescription;
@@ -49,7 +50,9 @@ public class FeedBean implements Serializable {
     }
 
     private SyndFeed getRssFeed() throws Exception {
-        URL feedUrl = new URL("http://www.bookbrowse.com/rss/book_news.rss");
+        //What happens if more then 1 news feed is active?
+        URL feedUrl = new URL(newsFeedJpaController.findNewsFeedByActive().getNewsFeedLink());
+        //URL feedUrl = new URL("http://www.bookbrowse.com/rss/book_news.rss");
         SyndFeedInput input = new SyndFeedInput();
         SyndFeed feed = input.build(new XmlReader(feedUrl));
         return feed;

@@ -5,7 +5,17 @@
  */
 package com.g3w16.entities;
 
+import com.chrisdufort.mailaction.BasicSendAndReceive;
+import com.g3w16.actionController.AuthenticationController;
+import com.g3w16.actionController.exception.AlreadyExistingUserException;
+import com.g3w16.beans.AuthBean;
+import com.g3w16.converter.ApprovalConverter;
 import com.g3w16.entities.exceptions.RollbackFailureException;
+import com.g3w16.entities.viewController.CartView;
+import com.g3w16.mail.beans.MailBean;
+import com.g3w16.managerController.m_adsBackingBean;
+import com.g3w16.validator.ConfirmPasswordValidator;
+import com.mysql.jdbc.Messages;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -26,11 +36,11 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.impl.base.filter.ExcludeRegExpPaths;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.junit.Assert.assertTrue;
 
 /**
  * @author Christopher Dufort
@@ -58,12 +68,23 @@ public class AdJpaControllerTest {
                 //.addPackage(CSDBookStoreDAOImpl.class.getPackage())
                 .addPackage(AdJpaController.class.getPackage())
                 .addPackage(Ad.class.getPackage())
+                .addPackage(AuthenticationController.class.getPackage())
+                .addPackage(AlreadyExistingUserException.class.getPackage())
+                .addPackage(AuthBean.class.getPackage())
+                .addPackage(ApprovalConverter.class.getPackage())
+                .addPackage(CartView.class.getPackage())
+                .addPackage(MailBean.class.getPackage())
+                .addPackage(BasicSendAndReceive.class.getPackage())
+                .addPackage(m_adsBackingBean.class.getPackage())
+                .addPackage(Messages.class.getPackage())
+                .addPackage(ConfirmPasswordValidator.class.getPackage())
                 .addPackage(RollbackFailureException.class.getPackage())
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addAsWebInfResource(new File("src/main/setup/glassfish-resources.xml"), "glassfish-resources.xml")
                 .addAsResource(new File("src/main/resources/META-INF/persistence.xml"), "META-INF/persistence.xml")
                 .addAsResource("seed_tables.sql")
-                .addAsLibraries(dependencies);
+                .addAsLibraries(dependencies)
+                .addPackages(true, new ExcludeRegExpPaths(".*Test.class$"), "CSDBookStore");
 
         return webArchive;
     }
