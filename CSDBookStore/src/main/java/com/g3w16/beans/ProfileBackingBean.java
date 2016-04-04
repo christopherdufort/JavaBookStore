@@ -14,6 +14,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -26,7 +27,7 @@ import javax.inject.Named;
  * @author Christopher Dufort
  */
 @Named
-@SessionScoped
+@RequestScoped
 public class ProfileBackingBean implements Serializable {
 
     @Inject
@@ -149,6 +150,7 @@ public class ProfileBackingBean implements Serializable {
      * @param firstName First name
      */
     public void setFirstName(String firstName) {
+        authenticatedUser.getRegisteredUser().setFirstName(firstName);
         this.firstName = firstName;
     }
 
@@ -349,5 +351,27 @@ public class ProfileBackingBean implements Serializable {
     public void setProvinceId(Province provinceId) {
         this.provinceId = provinceId;
     }
+    
+    
+    
+       public String editProfile() {
+        Logger.getLogger(this.getClass().getName()).log(Level.INFO, "EditProfile in profile action bean is invoked!");
+        Logger.getLogger(this.getClass().getName()).log(Level.INFO, "ProfileBackingbean:\n" + this.toString());
+           try {
+               userController.editProfile();
+           } catch (Exception ex) {
+               FacesContext.getCurrentInstance().addMessage("profileForm", new FacesMessage(ex.toString()));
+               Logger.getLogger(this.getClass().getName()).log(Level.INFO, "Exception Occured in ProfileActionBean");
+               return null; //Stay on page
+           }
+        return "home"; 
+    }
 
+    @Override
+    public String toString() {
+        return "ProfileBackingBean{" + "userController=" + userController + ", emailAddress=" + emailAddress + ", password=" + password + ", firstName=" + firstName + ", lastName=" + lastName + ", companyName=" + companyName + ", addressOne=" + addressOne + ", addressTwo=" + addressTwo + ", city=" + city + ", country=" + country + ", postalCode=" + postalCode + ", homePhone=" + homePhone + ", cellPhone=" + cellPhone + ", titleId=" + titleId + ", provinceId=" + provinceId + '}';
+    }
+
+       
+       
 }

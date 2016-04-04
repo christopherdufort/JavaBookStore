@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.Scanner;
 import javax.annotation.Resource;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import javax.sql.DataSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -28,19 +27,20 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
+import org.jboss.shrinkwrap.resolver.api.maven.Maven;
+import org.junit.Ignore;
 
 /**
  *
  * @author Rita Lazaar
  */
+@Ignore
 @RunWith(Arquillian.class)
 public class InvoiceDetailJpaControllerTest {
 

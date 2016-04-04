@@ -6,8 +6,6 @@
 package com.g3w16.entities;
 
 
-import com.g3w16.entities.Survey;
-import com.g3w16.entities.SurveyJpaController;
 import com.g3w16.entities.exceptions.RollbackFailureException;
 import java.io.BufferedReader;
 import java.io.File;
@@ -30,18 +28,16 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertTrue;
+import org.jboss.shrinkwrap.resolver.api.maven.Maven;
+import org.junit.Ignore;
 
 /**
  * @author Christopher
  */
+@Ignore
 @RunWith(Arquillian.class)
 public class SurveyJpaControllerTest {
     

@@ -5,17 +5,7 @@
  */
 package com.g3w16.entities;
 
-import com.chrisdufort.mailaction.BasicSendAndReceive;
-import com.g3w16.actionController.AuthenticationController;
-import com.g3w16.actionController.exception.AlreadyExistingUserException;
-import com.g3w16.beans.AuthBean;
-import com.g3w16.converter.ApprovalConverter;
 import com.g3w16.entities.exceptions.RollbackFailureException;
-import com.g3w16.entities.viewController.CartView;
-import com.g3w16.mail.beans.MailBean;
-import com.g3w16.managerController.m_adsBackingBean;
-import com.g3w16.validator.ConfirmPasswordValidator;
-import com.mysql.jdbc.Messages;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -36,11 +26,10 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.jboss.shrinkwrap.impl.base.filter.ExcludeRegExpPaths;
-import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 
 /**
  * @author Christopher Dufort
@@ -63,28 +52,28 @@ public class AdJpaControllerTest {
         // For testing Arquillian prefers a resources.xml file over acontext.xml
         // Actual file name is resources-mysql-ds.xml in the test/resources folder
         // The SQL script to create the database is also in this folder
-        final WebArchive webArchive = ShrinkWrap.create(WebArchive.class)
+        final WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "test.war")
                 .setWebXML(new File("src/main/webapp/WEB-INF/web.xml"))
                 //.addPackage(CSDBookStoreDAOImpl.class.getPackage())
                 .addPackage(AdJpaController.class.getPackage())
                 .addPackage(Ad.class.getPackage())
-                .addPackage(AuthenticationController.class.getPackage())
-                .addPackage(AlreadyExistingUserException.class.getPackage())
-                .addPackage(AuthBean.class.getPackage())
-                .addPackage(ApprovalConverter.class.getPackage())
-                .addPackage(CartView.class.getPackage())
-                .addPackage(MailBean.class.getPackage())
-                .addPackage(BasicSendAndReceive.class.getPackage())
-                .addPackage(m_adsBackingBean.class.getPackage())
-                .addPackage(Messages.class.getPackage())
-                .addPackage(ConfirmPasswordValidator.class.getPackage())
+//                .addPackage(AuthenticationController.class.getPackage())
+//                .addPackage(AlreadyExistingUserException.class.getPackage())
+//                .addPackage(AuthBean.class.getPackage())
+//                .addPackage(ApprovalConverter.class.getPackage())
+//                .addPackage(CartView.class.getPackage())
+//                .addPackage(MailBean.class.getPackage())
+//                .addPackage(BasicSendAndReceive.class.getPackage())
+//                .addPackage(m_adsBackingBean.class.getPackage())
+//                .addPackage(Messages.class.getPackage())
+//                .addPackage(ConfirmPasswordValidator.class.getPackage())
                 .addPackage(RollbackFailureException.class.getPackage())
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
-                .addAsWebInfResource(new File("src/main/setup/glassfish-resources.xml"), "glassfish-resources.xml")
+                .addAsWebInfResource(new File("src/main/webapp/WEB-INF/glassfish-resources.xml"), "glassfish-resources.xml")
                 .addAsResource(new File("src/main/resources/META-INF/persistence.xml"), "META-INF/persistence.xml")
                 .addAsResource("seed_tables.sql")
-                .addAsLibraries(dependencies)
-                .addPackages(true, new ExcludeRegExpPaths(".*Test.class$"), "CSDBookStore");
+                .addAsLibraries(dependencies);
+//                .addPackages(true, new ExcludeRegExpPaths(".*Test.class$"), "CSDBookStore");
 
         return webArchive;
     }
