@@ -200,7 +200,7 @@ public class m_booksBackingBean implements Serializable {
     }
     
     public void upload() throws FileNotFoundException, IOException{
-        String filename = "999";      
+        String filename = book.getIsbn();      
         System.out.println(">>>>>>>>>>>"+filename);
         if(file==null){
             System.out.println("************null");

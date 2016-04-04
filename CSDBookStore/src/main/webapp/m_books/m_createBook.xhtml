@@ -113,9 +113,9 @@
                                                 <p:inputTextarea id="synopsis" value="#{m_books.book.synopsis}"/>
                                                 <h:message for="synopsis" errorStyle="color:red; display:block"/>
 
+                                                 <p:fileUpload mode="simple" value="#{m_books.file}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>       
                                             </h:panelGrid>
-                                            <p:fileUpload mode="simple" value="#{m_books.file}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
-                                            <p:commandButton action="#{m_books.upload()}"/>
+                                                                              
                                             <br />
                                             <p:commandButton value="#{msgs.add}"
                                                              action="#{m_books.createBook}" class="btn btn-success btn-xs" />
