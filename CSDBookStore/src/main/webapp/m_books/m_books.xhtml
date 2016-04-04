@@ -39,9 +39,9 @@
                                                     </f:facet>
                                                     <h:commandLink value="#{msgs.edit}" action="#{m_books.editBook(books)}" class="btn btn-info btn-block"/>
                                                     <h:commandLink value="#{msgs.details}" action="#{m_books.bookDetails(books)}" class="btn btn-info btn-block"/>
-                                                    <h:commandLink value="#{msgs.delete}" action="#{m_books.destroyBook(books)}" class="btn btn-danger btn-block"> 
-                                                        <f:ajax render="@form"/>
-                                                    </h:commandLink>
+                                                    <p:commandLink process="@form" update="@all" value="#{msgs.delete}" action="#{m_books.destroyBook(books)}" class="btn btn-danger btn-block"> 
+                                                        
+                                                    </p:commandLink>
                                                 </p:column>
 <!--                                                <p:column filterBy="#{books.bookId}" sortBy="#{books.bookId}" headerText="#{msgs.book_id}" filterMatchMode="contains" width="100">
                                                 #{books.bookId}

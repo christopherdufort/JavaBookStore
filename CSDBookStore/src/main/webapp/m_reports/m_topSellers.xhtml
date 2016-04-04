@@ -48,7 +48,7 @@
 
 
 
-                                            <p:commandButton  process="@parent" update="dtable" value="Search" actionListener="#{m_reports.getAllBooksWithSalesOnly}" />
+                                            <p:commandButton  process="@parent" update="@form" value="Search" actionListener="#{m_reports.getAllBooksWithSalesOnly}" />
 
 
                                             <p:dataTable id="dtable" class="table table-striped table-bordered table-hover" value="#{m_reports.allBooksWithSalesOnly}" 

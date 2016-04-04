@@ -44,7 +44,7 @@
                                                <f:convertDateTime pattern="yyyy-MM-dd"/>
                                            </p:inputText>-->
                                             <h:message for="toDate" errorStyle="color:red; display:block"/>
-                                            <p:commandButton  process="@form" update="dtable" value="Search" actionListener="#{m_reports.getAllBooksWithoutSale}" />
+                                            <p:commandButton  process="@form" update="@all" value="Search" actionListener="#{m_reports.getAllBooksWithoutSale}" />
 
                                             
                                             <p:dataTable id="dtable" class="table table-striped table-bordered table-hover" value="#{m_reports.allBooksWithoutSale}" 
