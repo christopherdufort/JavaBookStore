@@ -25,7 +25,19 @@ public class CartBackingBean implements Serializable {
     @Inject
     private CheckoutBackingBean checkoutBB;
     
+    private String redirectTo;
     private List<Book> cart = new ArrayList<Book>();
+    
+    public void setRedirectTo(String redirect) {
+        redirectTo = redirect;
+    }
+    
+    public String getRedirectTo() {
+        if (redirectTo == null || redirectTo.isEmpty())
+            return "home.xhtml";
+        else
+            return redirectTo;
+    }
     
     /**
      * Adds a book to the cart
@@ -34,10 +46,10 @@ public class CartBackingBean implements Serializable {
      * 
      * @throws IOException 
      */
-    public String addToCart(Book book) throws IOException {
+    public String addToCart(Book book, String redirect) throws IOException {
         if (!cart.contains(book))
             cart.add(book);
-        
+        setRedirectTo(redirect);
         return "cart";
     }
     

@@ -67,7 +67,7 @@
                                     </div>
                                 </div>
                             </c:if>
-                            <h:commandLink styleClass="button large expanded" action="#{cartBB.addToCart(bookBB.book)}">#{msgs.addToCart} <i class="fi-shopping-cart"/></h:commandLink> <!-- not a commandButton like the submit review-->
+                            <h:commandLink styleClass="button large expanded" action="#{cartBB.addToCart(bookBB.book, 'book.xhtml')}">#{msgs.addToCart} <i class="fi-shopping-cart"/></h:commandLink> <!-- not a commandButton like the submit review-->
                         </h:form>
                     </div>
                 </div>
@@ -117,8 +117,8 @@
                             </c:if>
                             <hr/>
                             <c:if test="#{authenticationController.anonymous != true}">
-                                <h5>#{msgs.myReview}:</h5>
                                 <h:form id="createReview">
+                                    <p:growl  for="growl"/>  
                                     <p:rating cancel="false" value="#{bookBB.rating}">
                                     </p:rating>
                                     <br/>
