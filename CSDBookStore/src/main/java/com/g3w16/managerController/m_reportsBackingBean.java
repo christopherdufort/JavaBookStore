@@ -134,6 +134,11 @@ public class m_reportsBackingBean {
         return invoiceJpa.findInvoiceByDate(date1, date2);
     }
 
+    public List<Invoice> getAllInvoicesByUser(Integer user) {
+        return invoiceJpa.findInvoiceByUserId(user);
+
+    }
+
     public List<Invoice> getAllInvoicesByDateAndUser(Date date1, Date date2, Integer user) {
         return invoiceJpa.findInvoiceByDateAndUser(date1, date2, user);
 
@@ -231,13 +236,21 @@ public class m_reportsBackingBean {
      */
     public List<Book> getAllSalesByClient() {
 
-        if (date1 == null || date2 == null || user == null) {
+        List<Invoice> allInvoices = new ArrayList<Invoice>();
+        //find all invoices related to user without dates
+        if (user == null) {
             return null;
+        }
+        if (date1 == null || date2 == null) {
+            allInvoices = getAllInvoicesByUser(user.getUserId());
+        } else {
+            //find all invoices within the dates and with the specific user id
+            allInvoices = getAllInvoicesByDateAndUser(date1, date2, user.getUserId());
+
         }
 //        BigDecimal total = BigDecimal.ZERO;
 //        double t = 0;
         allBooks = new ArrayList<Book>();
-        List<Invoice> allInvoices = getAllInvoicesByDateAndUser(date1, date2, user.getUserId());
 
         for (int i = 0; i < allInvoices.size(); i++) {
 
@@ -305,7 +318,7 @@ public class m_reportsBackingBean {
     }
 
     public List<Book> getAllBooksWithSalesOnly() {
-        
+
         if (date1 == null || date2 == null) {
             return null;
         }

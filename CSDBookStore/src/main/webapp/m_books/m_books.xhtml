@@ -77,7 +77,12 @@
                                                 -->                                           
                                                 <p:column filterBy="#{books.listPrice}" sortBy="#{books.listPrice}" headerText="#{msgs.list_price}" filterMatchMode="contains" width="130">
                                                     #{books.listPrice}
-                                                </p:column><!--
+                                                </p:column>
+                                                
+                                                <p:column filterBy="#{m_reports.getTotalPerBook(books)}" sortBy="#{m_reports.getTotalPerBook(books)}" headerText="#{msgs.total}" filterMatchMode="contains" width="130">
+                                                    #{m_reports.getTotalPerBook(books)}
+                                                </p:column>
+                                                <!--
                                                 
                                                 <h:column>
                                                     <f:facet name="header">#{msgs.sale_price}</f:facet>
