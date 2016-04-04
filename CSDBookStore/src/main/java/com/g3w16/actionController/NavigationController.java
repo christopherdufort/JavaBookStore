@@ -6,6 +6,7 @@
 package com.g3w16.actionController;
 
 import com.g3w16.beans.AuthBean;
+import com.g3w16.beans.CartBackingBean;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,6 +25,9 @@ public class NavigationController implements Serializable {
     
     @Inject 
     AuthBean authBean;
+    @Inject
+    CartBackingBean cartBB;
+    
     /**
      * @author Christopher Dufort
      * @return 
@@ -37,6 +41,15 @@ public class NavigationController implements Serializable {
         authBean.setPassword(null);
         
         return "/login.xhtml?faces-redirect=true&backurl="+url;
+    }
+    
+    public String navigateToCart() {
+        String url = FacesContext.getCurrentInstance().getViewRoot().getViewId();
+        url = url.substring(1, url.length());
+        
+        cartBB.setRedirectTo(url);
+        
+        return "cart";
     }
     
 }

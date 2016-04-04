@@ -77,7 +77,7 @@
                                         <h:outputLink styleClass="button" value="/CSDBookStore/faces/signup.xhtml">#{msgs.signUp}</h:outputLink>
                                     </li>
                                     <li>
-                                        <h:outputLink styleClass="button fi-shopping-cart" value="/CSDBookStore/faces/cart.xhtml">#{msgs.myCart}</h:outputLink>
+                                        <h:form><h:commandLink styleClass="button fi-shopping-cart" action="#{navigationController.navigateToCart()}">#{msgs.myCart}</h:commandLink></h:form>
                                     </li>
                                 </ui:fragment>
                                 <ui:fragment rendered="#{authenticationController.isClient()}">
@@ -85,7 +85,7 @@
                                         <h:outputLink styleClass="button" value="http://localhost:8080/CSDBookStore/faces/profile.xhtml">#{msgs.myProfile}</h:outputLink>
                                     </li>
                                     <li>
-                                        <h:outputLink styleClass="button fi-shopping-cart" value="/CSDBookStore/faces/cart.xhtml">#{msgs.myCart}</h:outputLink>
+                                        <h:commandLink styleClass="button fi-shopping-cart" action="#{navigationController.navigateToCart()}">#{msgs.myCart}</h:commandLink>
                                     </li>
                                     <li>
                                         <h:outputLink styleClass="button" value="/CSDBookStore/faces/logout.xhtml">#{msgs.logout}</h:outputLink>
