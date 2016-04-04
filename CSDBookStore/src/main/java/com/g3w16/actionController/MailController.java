@@ -1,18 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.g3w16.actionController;
 
 import com.chrisdufort.mailaction.BasicSendAndReceive;
 import com.g3w16.beans.AuthBean;
+import com.g3w16.beans.ContactBean;
 import com.g3w16.entities.RegisteredUser;
 import com.g3w16.entities.RegisteredUserJpaController;
 import com.g3w16.mail.beans.MailBean;
 import com.g3w16.mail.beans.MailConfigBean;
-import java.util.ArrayList;
-import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -27,6 +21,8 @@ public class MailController {
     
     @Inject
     AuthBean authBean;
+    @Inject
+    ContactBean contactBean;
     
     @Inject
     RegisteredUserJpaController registeredUserJpaController;
@@ -62,5 +58,31 @@ public class MailController {
         basicSendAndReceive.sendEmail(recoveryEmail, recoveryConfig);
         
         return "login";
+    }
+    
+    /**
+     * Send the contact email from the contact page.
+     * 
+     * @return redirect to home page
+     * @author Giuseppe Campanelli
+     */
+    public String sendContactEmail() {
+        
+        MailBean recoveryEmail = new MailBean();
+        MailConfigBean recoveryConfig = new MailConfigBean();
+            
+        String from = recoveryConfig.getEmailAddress();
+        
+        String subject = contactBean.getName() + " - " + contactBean.getEmail();
+	String message = contactBean.getMessage();
+         
+        recoveryEmail.getToField().add("bibliotech.receive@gmail.com");
+        recoveryEmail.setFromField(from);
+        recoveryEmail.setSubjectField(subject);
+        recoveryEmail.setTextMessageField(message);
+        
+        basicSendAndReceive.sendEmail(recoveryEmail, recoveryConfig);
+        
+        return "home";
     }
 }

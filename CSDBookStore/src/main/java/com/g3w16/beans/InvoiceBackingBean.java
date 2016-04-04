@@ -1,15 +1,10 @@
 package com.g3w16.beans;
 
-import com.g3w16.entities.Book;
 import com.g3w16.entities.Invoice;
 import com.g3w16.entities.InvoiceDetail;
-import com.g3w16.entities.InvoiceDetailJpaController;
-import com.g3w16.entities.InvoiceJpaController;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
