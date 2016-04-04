@@ -7,14 +7,24 @@ package com.g3w16.managerController;
 
 import com.g3w16.entities.*;
 import com.g3w16.entities.exceptions.RollbackFailureException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
+import org.primefaces.model.UploadedFile;
 
 /**
  *
@@ -22,13 +32,14 @@ import javax.inject.Inject;
  * @author Rita Lazaar
  */
 @ManagedBean(name = "m_ads")
-@SessionScoped
+@RequestScoped
 public class m_adsBackingBean implements Serializable {
 
     private Ad ad;
 
     private List<Ad> allAd;
 
+    private UploadedFile file;
     @Inject
     AdJpaController adJpa;
 
@@ -50,6 +61,14 @@ public class m_adsBackingBean implements Serializable {
 
     public void setAd(Ad ad) {
         this.ad = ad;
+    }
+
+    public UploadedFile getFile() {
+        return file;
+    }
+
+    public void setFile(UploadedFile file) {
+        this.file = file;
     }
 
     public String createAd() {
@@ -110,4 +129,19 @@ public class m_adsBackingBean implements Serializable {
         return adJpa.getAdCount();
     }
 
+    public void upload() throws FileNotFoundException, IOException {
+        String filename = ad.getAdFilename();
+        InputStream input = file.getInputstream();
+        String extension = FilenameUtils.getExtension(file.getFileName());
+
+        String path = FacesContext.getCurrentInstance().getExternalContext().getRealPath("./../resources/images");
+        OutputStream output = new FileOutputStream(new File(path, filename + "." + extension));
+
+        try {
+            IOUtils.copy(input, output);
+        } finally {
+            IOUtils.closeQuietly(input);
+            IOUtils.closeQuietly(output);
+        }
+    }
 }

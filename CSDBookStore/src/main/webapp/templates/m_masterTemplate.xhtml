@@ -52,10 +52,12 @@
 
 
         <title>#{msgs.biblioAdminTitle}</title>
-
+        <f:view locale="#{localizationBean.currentLocale}"></f:view>
         <f:metadata>
             <f:event listener="#{authenticationController.mustBeManager}" type="preRenderView" />
+            <f:event type="preRenderView" listener="#{internationalizationController.checkLocaleCookie}" />
         </f:metadata>
+        
     </h:head>
 
     <h:body>
@@ -108,7 +110,7 @@
                     </li>
                     <!-- /.dropdown -->
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="">
                             <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-user">

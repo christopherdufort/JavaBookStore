@@ -47,7 +47,12 @@
                                                     <f:selectItem itemValue="False" itemLabel="False" />
                                                 </h:selectOneRadio>
                                                 <h:message for="ad_type" errorStyle="color:red; display:block"/>
+
+                                                <p:fileUpload mode="simple" value="#{m_ads.file}" />
+                                                <h:outputText value="&#160;" />
+                                                <p:commandButton value="Upload" action="#{m_ads.upload()}"/>
                                             </h:panelGrid>
+
                                             <br />
                                             <h:commandButton value="#{msgs.add}"
                                                              action="#{m_ads.createAd()}" class="btn btn-success btn-xs" />
