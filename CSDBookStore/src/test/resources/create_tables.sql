@@ -161,9 +161,9 @@ CREATE TABLE IF NOT EXISTS `survey` (
 
 DROP TABLE IF EXISTS `survey_answer`;
 CREATE TABLE IF NOT EXISTS `survey_answer` (
-  `survey_id` int(6) NOT NULL,
-  `session_id` int(11) DEFAULT NULL,
-  `choice` int(3) DEFAULT 4
+  `survey_id` INT(6) NOT NULL,
+  `session_id` VARCHAR(80) DEFAULT NULL,            -- certainly overkill, but at least enough --
+  `choice` INT(3) DEFAULT 4
 ) ENGINE=InnoDB;
 
 
