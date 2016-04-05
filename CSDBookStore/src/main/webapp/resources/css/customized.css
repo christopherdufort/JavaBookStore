@@ -46,7 +46,7 @@ li{
     .menu-text {
         display: none !important; } }
 
-@media only screen and (min-width: 40em) {
+/*@media only screen and (min-width: 40em) {
     .top-bar .menu:last-child {
         border-left: 1px solid #4e4e4e; }
 
@@ -54,7 +54,7 @@ li{
         border-left: none; }
 
     .top-bar .menu li:not(:last-child) {
-        border-right: 1px solid #4e4e4e; } }
+        border-right: 1px solid #4e4e4e; } }*/
 .dropdown.menu .submenu {
     border: none; }
 
