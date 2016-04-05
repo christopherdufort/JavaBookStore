@@ -27,7 +27,7 @@ import org.apache.commons.io.IOUtils;
 import org.primefaces.model.UploadedFile;
 
 /**
- *
+ * This class is adsBackingBean that manage all the ad pages
  * @author Xin Ma
  * @author Rita Lazaar
  */
