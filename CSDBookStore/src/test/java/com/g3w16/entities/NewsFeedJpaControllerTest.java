@@ -36,7 +36,7 @@ import org.junit.Ignore;
  * @author Christopher Dufort
  * @version 0.2.8 - Last Modified 2/24/2016
  */
-@Ignore
+
 @RunWith(Arquillian.class)
 public class NewsFeedJpaControllerTest {
     

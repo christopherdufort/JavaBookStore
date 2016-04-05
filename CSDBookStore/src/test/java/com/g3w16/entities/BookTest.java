@@ -44,7 +44,7 @@ import org.junit.Ignore;
  *
  * @author Jonas Faure
  */
-@Ignore
+
 @RunWith(Arquillian.class)
 public class BookTest {
 

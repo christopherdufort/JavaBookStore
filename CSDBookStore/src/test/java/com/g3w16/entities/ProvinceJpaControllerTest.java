@@ -39,7 +39,7 @@ import org.junit.Ignore;
  * 
  * @author Giuseppe Campanelli
  */
-@Ignore
+
 @RunWith(Arquillian.class)
 public class ProvinceJpaControllerTest {
     
