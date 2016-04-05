@@ -1,7 +1,7 @@
 USE g3w16;
 
---TABLE STRUCTURE
--- Table structure for table `ad`
+-- TABLE STRUCTURE
+--  Table structure for table `ad`
 DROP TABLE IF EXISTS `ad`;
 CREATE TABLE IF NOT EXISTS `ad` (
   `ad_id` int(6) NOT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS `ad` (
   `ad_type` tinyint(1) DEFAULT '0'
 ) ENGINE=InnoDB;
 
--- Table structure for table `approval`
+--  Table structure for table `approval`
 DROP TABLE IF EXISTS `approval`;
 CREATE TABLE IF NOT EXISTS `approval` (
   `approval_id` int(11) NOT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `province` (
   `hst` decimal(12,2) DEFAULT NULL
 ) ENGINE=InnoDB;
 
--- Table structure for table `author`
+--  Table structure for table `author`
 DROP TABLE IF EXISTS `author`;
 CREATE TABLE IF NOT EXISTS `author` (
   `author_id` int(6) NOT NULL,
@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `book_genre` (
   `genre_id` int(3) NOT NULL
 ) ENGINE=InnoDB;
 
--- Table structure for table `book`
+--  Table structure for table `book`
 DROP TABLE IF EXISTS `book`;
 CREATE TABLE IF NOT EXISTS `book` (
   `book_id` int(6) NOT NULL,
@@ -162,12 +162,12 @@ CREATE TABLE IF NOT EXISTS `survey` (
 DROP TABLE IF EXISTS `survey_answer`;
 CREATE TABLE IF NOT EXISTS `survey_answer` (
   `survey_id` INT(6) NOT NULL,
-  `session_id` VARCHAR(80) DEFAULT NULL,            -- certainly overkill, but at least enough --
+  `session_id` VARCHAR(200) DEFAULT NULL,            --  certainly overkill, but at least enough -- 
   `choice` INT(3) DEFAULT 4
 ) ENGINE=InnoDB;
 
 
--- INDEXES
+--  INDEXES
 ALTER TABLE `ad`
   ADD PRIMARY KEY (`ad_id`),
   ADD UNIQUE KEY `ad_filename` (`ad_filename`);
@@ -244,7 +244,7 @@ ALTER TABLE `survey_answer`
   ADD UNIQUE KEY `session_id_UQ` (`session_id`),
   ADD KEY `survey_id_FK` (`survey_id`);
   
---AUTO INCREMENTS
+-- AUTO INCREMENTS
 ALTER TABLE `ad`
   MODIFY `ad_id` int(6) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
   
@@ -287,7 +287,7 @@ ALTER TABLE `survey`
 ALTER TABLE `title`
   MODIFY `title_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
   
---CONSTRAINTS
+-- CONSTRAINTS
 ALTER TABLE `book_author`
   ADD CONSTRAINT `book_author_book_id_fk` FOREIGN KEY (`book_id`) REFERENCES `book` (`book_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `book_author_author_id_fk` FOREIGN KEY (`author_id`) REFERENCES `author` (`author_id`) ON DELETE CASCADE;
