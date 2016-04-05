@@ -72,7 +72,7 @@ public class BookController {
     }
 
     public List<Book> getSuggestedBook(Genre genre, int limit) {
-        return bookJpaController.findBookEntitiesByGenre(genre,0,limit);
+        return bookJpaController.findBookEntitiesByGenre(genre,limit,0);
     }
 
     public List<Book> getRandomBook(int limit) {

@@ -14,6 +14,7 @@ import javax.faces.convert.FacesConverter;
 
 /**
  *
+ * @author Xin Ma
  * @author Rita Lazaar
  */
 @FacesConverter("com.g3w16.converter.GenreConverter")

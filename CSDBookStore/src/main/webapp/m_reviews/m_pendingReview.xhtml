@@ -1,10 +1,12 @@
+<!--@author Rita Lazaar-->
 <!--@author Xin Ma-->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <body>
         <ui:composition template="./../templates/m_masterTemplate.xhtml">       
@@ -20,19 +22,20 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    Total <h:outputText value="#{m_reviews.pendingCount}"/> Pending Reviews
-                                </div>
-                                <!-- /.panel-heading -->
-                                <div class="panel-body">
-                                    <div class="dataTable_wrapper table-responsive">
-                                        <div class="row">
-                                            <div class="col-xs-1 col-sm-1 col-md-1" style="text-align: center"><h:outputLabel value="#{msgs.approval_id}"></h:outputLabel></div>
-                                            <div class="col-xs-3 col-sm-3 col-md-3" style="text-align: center"><h:outputLabel value="#{msgs.review_title}"></h:outputLabel></div>
-                                            <div class="col-xs-6 col-sm-6 col-md-6" style="text-align: center"><h:outputLabel value="#{msgs.review_text}"></h:outputLabel></div>
-                                            <div class="col-xs-2 col-sm-2 col-md-2" style="text-align: center"><h:outputLabel value="#{msgs.date_submitted}"></h:outputLabel></div>
-                                        </div>
-                                        <h:form>
+                                <h:form class="panel panel-default"> 
+                                    <div id="count" class="panel-heading">
+                                        Total <h:outputText value="#{m_reviews.pendingCount}"/> Pending Reviews
+                                    </div>
+                                    <!-- /.panel-heading -->
+                                    <div class="panel-body">
+                                        <div class="dataTable_wrapper table-responsive">
+                                            <div class="row">
+                                                <div class="col-xs-1 col-sm-1 col-md-1" style="text-align: center"><h:outputLabel value="#{msgs.approval_id}"></h:outputLabel></div>
+                                                <div class="col-xs-3 col-sm-3 col-md-3" style="text-align: center"><h:outputLabel value="#{msgs.review_title}"></h:outputLabel></div>
+                                                <div class="col-xs-6 col-sm-6 col-md-6" style="text-align: center"><h:outputLabel value="#{msgs.review_text}"></h:outputLabel></div>
+                                                <div class="col-xs-2 col-sm-2 col-md-2" style="text-align: center"><h:outputLabel value="#{msgs.date_submitted}"></h:outputLabel></div>
+                                            </div>
+
                                             <ui:repeat value="#{m_reviews.pendingReview}" var="reviews">
                                                 <hr />
 
@@ -45,7 +48,7 @@
                                                         <h:selectOneMenu id="approval" value="#{reviews.approvalId}">   
                                                             <f:converter converterId="com.g3w16.converter.ApprovalConverter"/>
                                                             <f:selectItems value="#{m_reviews.allApproval}" var="a" itemLabel="#{a.approvalStatus}" itemValue="#{a.approvalStatus}" rendered="#{currentRow.selected}"/>
-                                                            <f:ajax render="@form" listener="#{m_reviews.updateReview(reviews)}"/>
+                                                            <f:ajax render="@form" listener="#{m_reviews.updateReview(reviews)}"/>                                                            
                                                         </h:selectOneMenu>   
                                                     </div> 
                                                     <h:commandLink action="#{m_reviews.viewReview(reviews)}">
@@ -68,12 +71,12 @@
 
 
                                             </ui:repeat>
-                                        </h:form>
 
+
+                                        </div>
+                                        <!-- /.table-responsive -->
                                     </div>
-                                    <!-- /.table-responsive -->
-                                </div>
-                                <!-- /.panel-body -->
+                                </h:form>    <!-- /.panel-body -->
                             </div>
                             <!-- /.panel -->
                         </div>

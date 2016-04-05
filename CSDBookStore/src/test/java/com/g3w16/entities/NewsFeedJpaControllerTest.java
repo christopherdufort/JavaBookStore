@@ -36,7 +36,7 @@ import org.junit.Ignore;
  * @author Christopher Dufort
  * @version 0.2.8 - Last Modified 2/24/2016
  */
-@Ignore
+
 @RunWith(Arquillian.class)
 public class NewsFeedJpaControllerTest {
     
@@ -63,7 +63,7 @@ public class NewsFeedJpaControllerTest {
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addAsWebInfResource(new File("src/main/setup/glassfish-resources.xml"), "glassfish-resources.xml")
                 .addAsResource(new File("src/main/resources/META-INF/persistence.xml"), "META-INF/persistence.xml")
-                .addAsResource("seed_tables.sql")
+                .addAsResource("create_and_seed_tables.sql")
                 .addAsLibraries(dependencies);
 
         return webArchive;
@@ -214,7 +214,7 @@ public class NewsFeedJpaControllerTest {
      */
     @Before
     public void seedDatabase() {
-        final String seedDataScript = loadAsString("seed_tables.sql");
+        final String seedDataScript = loadAsString("create_and_seed_tables.sql");
         
         try (Connection connection = ds.getConnection()) {
             for (String statement : splitStatements(new StringReader(

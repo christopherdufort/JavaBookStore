@@ -27,9 +27,9 @@
 
                 <div class = "large">
                     <div id="owl-demo" class="owl-carousel owl-theme">
-                        <div class="item"> <img src="resources/images/The-Martian-original.png"></img></div>
-                        <div class="item"> <img src="resources/images/The-Martian-original.png"></img></div>
-                        <div class="item"> <img src="resources/images/The-Martian-original.png"></img></div>
+                        <div class="item"> <img src="resources/images/carousel-img-1.png"></img></div>
+                        <div class="item"> <img src="resources/images/carousel-img-2.png"></img></div>
+                        <div class="item"> <img src="resources/images/carousel-img-3.png"></img></div>
                     </div>
                 </div>
 
@@ -41,7 +41,8 @@
                         <div class="large-3 medium-4 columns">
                             <div class="panel">
                                 <h4>#{msgs.welcome}!</h4>
-                                <p>Let us know what you think about our new website! Remember it is still under construction and some things may be broken but we would still love for you to<a href=""> leave us feedback</a> about what you think of the design.</p>
+                                <p>#{msgs.feedback}</p>
+                                <a href="contact.xhtml">#{msgs.leaveUsFeedback}</a>
                             </div>
                             <div id="genreNav" class="panel">
                                 <ul class="side-nav" role="navigation">
@@ -96,7 +97,7 @@
                                 </ui:fragment>
                             </div>
                             <div id="newsFeed" class="panel">
-                                <h4>News Feed</h4>
+                                <h4>#{msgs.newsFeed}</h4>
                                 <ul class="newsfeed">
                                     <li class="divider"></li>
                                     <li><h5>#{feedBean.newsFeedTitle}</h5></li>
@@ -157,7 +158,7 @@
                             </div>
                             <hr/>
                             <div class="row column text-center">
-                                <h2>Suggested Books</h2>
+                                <h2>#{msgs.suggestedBooks}</h2>
                                 <hr/>
                             </div>
                             <div class="row small-up-2 medium-up-3 large-up-5">

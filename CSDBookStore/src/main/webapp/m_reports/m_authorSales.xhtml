@@ -1,4 +1,5 @@
 <!--@author Xin Ma-->
+<!--@author Rita Lazaar-->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
@@ -20,30 +21,21 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    Sales By Author
-                                </div>
-
+                                <div class="panel panel-info">
+                                <div class="panel-heading">Summary for Sales by Author</div>
+                                <div class="panel-body"><h1>Total Sales: <strong> <h:outputText value="#{m_reports.allTotalSales}"/></strong></h1></div>
+                            </div>
                                 <div class="panel-body">
 
 
                                     <div class="dataTable_wrapper table-responsive">
                                         <h:form id="table"> 
-
-
                                             <h:outputLabel value="#{msgs.fromDate}" for="fromDate"></h:outputLabel>
-
                                             <p:calendar id="fromDate" value="#{m_reports.date1}" />
-<!--                                                    <p:inputText id="fromDate" value="#{m_reports.date1}" >
-                                                <f:convertDateTime pattern="yyyy-MM-dd"/>
-                                            </p:inputText>-->
                                             <h:message for="fromDate" errorStyle="color:red; display:block"/>
 
                                             <h:outputLabel value="#{msgs.toDate}" for="toDate"></h:outputLabel>
                                             <p:calendar id="toDate" value="#{m_reports.date2}" />
-<!--                                                    <p:inputText id="toDate" value="#{m_reports.date2}" >
-                                               <f:convertDateTime pattern="yyyy-MM-dd"/>
-                                           </p:inputText>-->
                                             <h:message for="toDate" errorStyle="color:red; display:block"/>
 
                                             <h:outputLabel for="users" value="#{msgs.name}" />

@@ -11,10 +11,10 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-
 /**
  *
- * @author maxin
+ * @author Xin Ma
+ * @author Rita Lazaar
  */
 @FacesConverter("com.g3w16.converter.BookConverter")
 public class BookConverter implements Converter {

@@ -1,3 +1,4 @@
+<!--@author Rita Lazaar-->
 <!--@author Xin Ma-->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
@@ -48,16 +49,16 @@
                                                 </h:selectOneRadio>
                                                 <h:message for="ad_type" errorStyle="color:red; display:block"/>
 
-                                                <p:fileUpload mode="simple" value="#{m_ads.file}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>       
+                                                <!--<p:fileUpload mode="simple" value="#{m_ads.file}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>-->       
                                             </h:panelGrid>
 
                                             <br />
                                             <h:commandButton value="#{msgs.add}"
-                                                             action="#{m_ads.createAd()}" class="btn btn-success btn-xs" />
+                                                             action="#{m_ads.createAd()}" class="btn btn-success" />
 
                                             <h:outputText value="&#160;" />
                                             <h:commandButton value="#{msgs.cancel}"
-                                                             action="#{m_ads.cancel()}" class="btn btn-danger btn-xs" immediate="true"/>
+                                                             action="#{m_ads.cancel()}" class="btn btn-danger" immediate="true"/>
                                         </h:form>
                                     </div>
                                     <!-- /.table-responsive -->

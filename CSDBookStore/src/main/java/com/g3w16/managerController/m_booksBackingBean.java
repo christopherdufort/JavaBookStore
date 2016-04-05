@@ -30,8 +30,8 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.primefaces.model.UploadedFile;
 
-
 /**
+ * This class is Bookbackingbean for all the admin book page
  *
  * @author Xin Ma
  * @author Rita Lazaar
@@ -126,6 +126,11 @@ public class m_booksBackingBean implements Serializable {
         this.file = file;
     }
 
+    /**
+     * This method will create a new book
+     *
+     * @return
+     */
     public String createBook() {
         Date d = new Date(System.currentTimeMillis());
         try {
@@ -134,7 +139,7 @@ public class m_booksBackingBean implements Serializable {
             List<Review> reviewList = new ArrayList<>();
             book.setReviewList(reviewList);
             bookJpa.create(book);
-            upload();
+            //upload();
         } catch (Exception ex) {
             Logger.getLogger(m_booksBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -142,16 +147,33 @@ public class m_booksBackingBean implements Serializable {
         return "m_books";
     }
 
+    /**
+     * This method will redirect to edit page
+     *
+     * @param b
+     * @return
+     */
     public String editBook(Book b) {
         book = bookJpa.findBookEntitiesById(b.getBookId());
         return "m_editBook";
     }
 
+    /**
+     * This method will redirect to detail page
+     *
+     * @param b
+     * @return
+     */
     public String bookDetails(Book b) {
         book = bookJpa.findBookEntitiesById(b.getBookId());
         return "m_viewBook";
     }
 
+    /**
+     * This method will edit a book
+     *
+     * @return
+     */
     public String updateBook() {
         try {
             book.setReviewList(reviewJpa.findReviewByIsbn(book));
@@ -164,6 +186,11 @@ public class m_booksBackingBean implements Serializable {
         return "m_books";
     }
 
+    /**
+     * This method will delete a book
+     *
+     * @param b
+     */
     public void destroyBook(Book b) {
         try {
             bookJpa.destroy(b.getBookId());
@@ -183,34 +210,58 @@ public class m_booksBackingBean implements Serializable {
         return all;
     }
 
+    /**
+     * This method get all Author entities
+     *
+     * @return
+     */
     public List<Author> getAllAuthors() {
         return authorJpa.findAuthorEntities();
     }
 
+    /**
+     * This method will get all Format entities
+     *
+     * @return
+     */
     public List<Format> getAllFormat() {
         return formatJpa.findFormatEntities();
     }
 
+    /**
+     * This method will get all the Genre entities
+     *
+     * @return
+     */
     public List<Genre> getAllGenre() {
         return genreJpa.findGenreEntities();
     }
 
+    /**
+     * This method will get the total number of book entities
+     *
+     * @return
+     */
     public int getBookCount() {
         return bookJpa.getBookCount();
     }
-    
-    public void upload() throws FileNotFoundException, IOException{
-        String filename = book.getIsbn();      
-        System.out.println(">>>>>>>>>>>"+filename);
-        if(file==null){
-            System.out.println("************null");
-        }
+
+    /**
+     * This method will upload the image for this book
+     *
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    public void upload() throws FileNotFoundException, IOException {
+        String filename = book.getIsbn();
+        System.out.println(">>>>>>>>>>>" + filename);
+
         InputStream input = file.getInputstream();
         String extension = FilenameUtils.getExtension(file.getFileName());
-        
+
         String path = FacesContext.getCurrentInstance().getExternalContext().getRealPath("./../resources/images");
         OutputStream output = new FileOutputStream(new File(path, filename + "." + extension));
-  
+
         try {
             IOUtils.copy(input, output);
         } finally {

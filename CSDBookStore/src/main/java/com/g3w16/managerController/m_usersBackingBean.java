@@ -21,6 +21,7 @@ import jodd.mail.SmtpServer;
 import jodd.mail.SmtpSslServer;
 
 /**
+ * This class is userBackingBean that will manage all the user page
  *
  * @author Xin Ma
  * @author Rita Lazaar
@@ -97,6 +98,11 @@ public class m_usersBackingBean implements Serializable {
         return "m_viewUser";
     }
 
+    /**
+     * This method will edit the user
+     *
+     * @return
+     */
     public String updateUser() {
         try {
             user.setReviewList(reviewJpa.findReviewByUserId(user));
@@ -126,12 +132,15 @@ public class m_usersBackingBean implements Serializable {
         return provinceJpa.findAll();
     }
 
+    /**
+     * This method will send an email to notify user changed new password THIS
+     * CHUNK OF CODE IS COMMENTED OUT BECAUSE: GLASSFISH CURRENTLY DOES NOT
+     * ENABLE US TO SEND EMAILS.
+     */
     public void sendEmail() {
         System.out.println(">>>>>send" + user.getEmailAddress());
         System.out.println(">>>>>>>>pass" + user.getPassword());
 
-        //THIS CHUNK OF CODE IS COMMENTED OUT BECAUSE:
-        //GLASSFISH CURRENTLY DOES NOT ENABLE US TO SEND EMAILS.
 //        Email email = Email.create()
 //                .from("xin.send@gmail.com")
 //                .to("maxin911.ca@gmail.com")
@@ -145,7 +154,6 @@ public class m_usersBackingBean implements Serializable {
 //        session.open();
 //        session.sendMail(email);
 //        session.close();
-
     }
 
     public String cancel() {
