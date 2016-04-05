@@ -1,5 +1,5 @@
 <!--@author Xin Ma-->
-<!--@author Rita Lazaar-->
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
@@ -21,9 +21,10 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    Top Clients
-                                    
+
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">Summary for Zero Sales</div>
+                                    <div class="panel-body"><h1>Total of <strong> <h:outputText value="#{m_reports.topClients.size()}"/></strong> clients</h1></div>
                                 </div>
 
                                 <div class="panel-body">
@@ -55,7 +56,7 @@
 
                                             <p:dataTable id="dtable" class="table table-striped table-bordered table-hover" value="#{m_reports.topClients}" 
                                                          var="user" widgetVar="reportsTable" 
-
+                                                          
                                                          rows="10"
                                                          paginator="true"
                                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -68,13 +69,13 @@
 
                                                     #{user.userId}
                                                 </p:column>
-                                                
+
                                                 <p:column filterBy="#{user.emailAddress}" sortBy="#{user.emailAddress}" headerText="#{msgs.email}" filterMatchMode="contains">
 
                                                     #{user.emailAddress}
                                                 </p:column>
 
-                                                
+
                                                 <p:column  filterBy= "#{m_reports.totalSalesByClient(user)}" sortBy="#{m_reports.totalSalesByClient(user)}" headerText="#{msgs.total}" filterMatchMode="contains">
 
                                                     #{m_reports.getTotalSalesByClient(user)}
@@ -87,7 +88,7 @@
                                     </div>
                                     <!-- /.table-responsive -->  
                                 </div>
-                            
+
                             </div>
                             <!-- /.panel -->
                         </div>

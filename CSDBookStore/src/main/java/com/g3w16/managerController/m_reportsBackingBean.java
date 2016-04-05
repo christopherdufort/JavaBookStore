@@ -377,7 +377,7 @@ public class m_reportsBackingBean {
     }
 
     /**
-     * This gets the total sales for a specific book from beginning.
+     * This gets the total sales for a client 
      *
      * @param u
      * @param book
