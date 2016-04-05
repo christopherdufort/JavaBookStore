@@ -14,7 +14,7 @@
                     <h:graphicImage styleClass="thumbnail smallBook" value="#{itemImg}"/>
                 </div>
                 <div class="media-object-section">
-                    <h:form><h:commandLink value="#{item.title}" action="#{bookBB.displayBook(item)}"/></h:form>
+                    <h:form><input type="hidden" name="selectedBook" value="#{itemId}"></input><h:commandLink value="#{item.title}" action="#{bookBB.displayBook}"/></h:form>
                     <ui:fragment rendered="#{itemListPrice == itemSalePrice}">
                         <p><h:outputText value="$#{itemListPrice}"/></p>
                     </ui:fragment>

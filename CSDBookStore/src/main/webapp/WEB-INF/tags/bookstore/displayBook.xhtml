@@ -10,7 +10,7 @@
         <ui:composition>
             <div class="column ">
                 <h:graphicImage styleClass="thumbnail" value="#{itemImg}"/>
-                <h:form><h:commandLink value="#{itemTitle}" action="#{bookBB.displayBook(item)}"/></h:form>
+                <h:form><input type="hidden" name="selectedBook" value="#{itemId}"></input><h:commandLink value="#{itemTitle}" action="#{bookBB.displayBook}"/></h:form>
                 <ui:fragment rendered="#{itemListPrice == itemSalePrice}">
                     <p><h:outputText value="$#{itemListPrice}"/></p>
                 </ui:fragment>

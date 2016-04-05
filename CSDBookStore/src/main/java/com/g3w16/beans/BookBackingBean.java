@@ -15,6 +15,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -268,6 +270,22 @@ public class BookBackingBean implements Serializable {
      */
     public List<Book> getFromSameAuthor() {
         return booksFromAuthor;
+    }
+    
+    public String displayBook() throws IOException{
+        // just a wrapper to try & fix the randomness of the discounted books 
+        int id;
+        try{
+            id = Integer.parseInt(
+                    FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("selectedBook")
+            );
+        }catch(Exception e){
+            // possibly someone messing with POST params .. we shouldn't give him any indication about what is happening
+            Logger.getLogger(this.getClass().getName()).log(Level.INFO, null, e);
+            return "home";
+        }
+        Book book = bookJpaController.findBookEntitiesById(id);
+        return displayBook(book);
     }
     
     public String displayBook(Book book) throws IOException {
