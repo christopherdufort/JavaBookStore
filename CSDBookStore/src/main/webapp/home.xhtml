@@ -57,18 +57,43 @@
                             </div>
                             <div id="survey" class="panel">
                                 <h4>#{msgs.survey}</h4>
-                                <li class="divider"></li> 
-                                <h5>#{surveyBean.survey.question}</h5>
-                                <h:form>
-                                    <input type="hidden" name="surveyId" value="#{surveyBean.survey.surveyId}"></input>
-                                    <h:selectOneRadio value="#{submitSurveyBean.choice}" layout="pageDirection">
-                                        <f:selectItem itemValue="0" itemLabel="#{surveyBean.survey.answerDefault}" />
-                                        <f:selectItem itemValue="1" itemLabel="#{surveyBean.survey.answerOne}" />
-                                        <f:selectItem itemValue="2" itemLabel="#{surveyBean.survey.answerTwo}" />
-                                        <f:selectItem itemValue="3" itemLabel="#{surveyBean.survey.answerThree}" />
-                                    </h:selectOneRadio>
-                                    <h:commandButton class="green button expanded" value="Submit" action="#{homeView.submitSurvey}"></h:commandButton>
-                                </h:form>
+                                <li class="divider"></li>
+                                <ui:fragment rendered="#{surveyController.hasNotAllreadyAnsweredThisSurvey()}">
+                                    <h5>#{surveyBean.survey.question}</h5>
+                                    <h:form>
+                                        <input type="hidden" name="surveyId" value="#{surveyBean.survey.surveyId}"></input>
+                                        <h:selectOneRadio value="#{submitSurveyBean.choice}" layout="pageDirection">
+                                            <f:selectItem itemValue="0" itemLabel="#{surveyBean.survey.answerDefault}" />
+                                            <f:selectItem itemValue="1" itemLabel="#{surveyBean.survey.answerOne}" />
+                                            <f:selectItem itemValue="2" itemLabel="#{surveyBean.survey.answerTwo}" />
+                                            <f:selectItem itemValue="3" itemLabel="#{surveyBean.survey.answerThree}" />
+                                        </h:selectOneRadio>
+                                        <h:commandButton class="green button expanded" value="Submit" action="#{homeView.submitSurvey}"></h:commandButton>
+                                    </h:form>
+                                </ui:fragment>
+                                <ui:fragment rendered="#{surveyController.hasAllreadyAnsweredThisSurvey()}">
+                                    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                                    <script type="text/javascript">
+                                        google.charts.load('current', {'packages': ['corechart']});
+                                        google.charts.setOnLoadCallback(drawChart);
+                                        function drawChart() {
+
+                                            var data = google.visualization.arrayToDataTable([
+                                                ['Question', 'Votes'],
+                                                #{surveyController.surveyResultsAsJSArray}
+                                            ]);
+
+                                            var options = {
+                                                title: '#{surveyBean.survey.question}'
+                                            };
+
+                                            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+                                            chart.draw(data, options);
+                                        }
+                                    </script>
+                                    <div id="piechart" style="width: auto; height: auto;"></div>
+                                </ui:fragment>
                             </div>
                             <div id="newsFeed" class="panel">
                                 <h4>News Feed</h4>

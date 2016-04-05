@@ -300,7 +300,7 @@ public class SurveyJpaController implements Serializable {
         return result;
     }
 
-    public Survey findNewsFeedByActive() {
+    public Survey findSurveyByActive() {
         Query query = em.createQuery("SELECT s FROM Survey s WHERE s.active = true");
 
         //execute query returning single result
