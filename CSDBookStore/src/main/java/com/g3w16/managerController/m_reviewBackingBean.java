@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
 
@@ -21,7 +21,7 @@ import javax.inject.Inject;
  * @author Rita Lazaar
  */
 @ManagedBean(name = "m_reviews")
-@SessionScoped
+@RequestScoped
 public class m_reviewBackingBean implements Serializable {
 
     private Review review;

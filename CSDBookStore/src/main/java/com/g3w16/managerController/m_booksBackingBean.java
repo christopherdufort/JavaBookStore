@@ -7,7 +7,13 @@ package com.g3w16.managerController;
 
 import com.g3w16.entities.*;
 import com.g3w16.entities.exceptions.RollbackFailureException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -16,9 +22,14 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
+import org.primefaces.model.UploadedFile;
+
 
 /**
  *
@@ -26,7 +37,7 @@ import javax.inject.Inject;
  * @author Rita Lazaar
  */
 @ManagedBean(name = "m_books")
-@SessionScoped
+@RequestScoped
 public class m_booksBackingBean implements Serializable {
 
     private Book book;
@@ -34,6 +45,7 @@ public class m_booksBackingBean implements Serializable {
     private Format format;
     private Genre genre;
     private List<Book> all;
+    private UploadedFile file;
 
     @Inject
     BookJpaController bookJpa;
@@ -106,14 +118,23 @@ public class m_booksBackingBean implements Serializable {
         this.format = format;
     }
 
+    public UploadedFile getFile() {
+        return file;
+    }
+
+    public void setFile(UploadedFile file) {
+        this.file = file;
+    }
+
     public String createBook() {
         Date d = new Date(System.currentTimeMillis());
-        try {           
+        try {
             book.setOverallRating(BigDecimal.ZERO);
             book.setDateEntered(d);
             List<Review> reviewList = new ArrayList<>();
             book.setReviewList(reviewList);
             bookJpa.create(book);
+            upload();
         } catch (Exception ex) {
             Logger.getLogger(m_booksBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -121,7 +142,7 @@ public class m_booksBackingBean implements Serializable {
         return "m_books";
     }
 
-    public String editBook(Book b) throws IOException {
+    public String editBook(Book b) {
         book = bookJpa.findBookEntitiesById(b.getBookId());
         return "m_editBook";
     }
@@ -176,6 +197,26 @@ public class m_booksBackingBean implements Serializable {
 
     public int getBookCount() {
         return bookJpa.getBookCount();
+    }
+    
+    public void upload() throws FileNotFoundException, IOException{
+        String filename = book.getIsbn();      
+        System.out.println(">>>>>>>>>>>"+filename);
+        if(file==null){
+            System.out.println("************null");
+        }
+        InputStream input = file.getInputstream();
+        String extension = FilenameUtils.getExtension(file.getFileName());
+        
+        String path = FacesContext.getCurrentInstance().getExternalContext().getRealPath("./../resources/images");
+        OutputStream output = new FileOutputStream(new File(path, filename + "." + extension));
+  
+        try {
+            IOUtils.copy(input, output);
+        } finally {
+            IOUtils.closeQuietly(input);
+            IOUtils.closeQuietly(output);
+        }
     }
 
 }

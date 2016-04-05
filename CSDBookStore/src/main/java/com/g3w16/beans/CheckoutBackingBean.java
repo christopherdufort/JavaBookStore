@@ -272,9 +272,16 @@ public class CheckoutBackingBean implements Serializable {
         return "invoice?faces-redirect=true";
     }
     
+    /**
+     * Sets the fields in the invoice backing bean
+     * 
+     * @param invoice the invoice
+     * @param invoiceDetails details for the invoice
+     */
     private void setInvoiceVariables(Invoice invoice, List<InvoiceDetail> invoiceDetails) {
         invoiceBB.setInvoice(invoice);
         invoiceBB.setInvoiceDetails(invoiceDetails);
         invoiceBB.setEndingFourCardNumberDigits(cardNumber.substring(cardNumber.length()-4));
+        invoiceBB.sendEmailInvoice();
     }
 }

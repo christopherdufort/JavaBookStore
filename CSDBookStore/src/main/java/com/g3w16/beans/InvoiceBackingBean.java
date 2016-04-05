@@ -1,15 +1,11 @@
 package com.g3w16.beans;
 
-import com.g3w16.entities.Book;
+import com.g3w16.actionController.MailController;
 import com.g3w16.entities.Invoice;
 import com.g3w16.entities.InvoiceDetail;
-import com.g3w16.entities.InvoiceDetailJpaController;
-import com.g3w16.entities.InvoiceJpaController;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
@@ -32,6 +28,9 @@ public class InvoiceBackingBean implements Serializable {
 
     @Inject
     private AuthenticatedUser user;
+    
+    @Inject
+     private MailController mailController;
 
     /**
      * Gets the current invoice
@@ -142,5 +141,27 @@ public class InvoiceBackingBean implements Serializable {
     public String formatDate(Date date) {
         SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-MM-dd");
         return dt1.format(date);
+    }
+    
+    public void sendEmailInvoice() {
+        String to = user.getRegisteredUser().getEmailAddress();
+        String subject = "Bliotech.com Order | Invoice #" + invoice.getInvoiceId();
+        String message = "Items:\n";
+        
+        int size = invoiceDetails.size();
+        
+        for (int i = 0; i < size; i++)
+            message += invoiceDetails.get(i).getBookId().getTitle() + " - $" + invoiceDetails.get(i).getBookPrice() + "\n";
+        
+        message += "\nSubtotal: $" + invoice.getTotalNetValueOfSale();
+        message += "\nGST: $" + getGst();
+        message += "\nQST/PST: $" + getPst();
+        message += "\nHST: $" + getHst();
+        message += "\nTotal: $" + invoice.getTotalGrossValueOfSale();
+        
+        message += "\n\nThank you for your purchase!";
+        
+        mailController.sendEmail(to, subject, message);
+        
     }
 }

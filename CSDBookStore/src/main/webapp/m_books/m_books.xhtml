@@ -39,13 +39,13 @@
                                                     </f:facet>
                                                     <h:commandLink value="#{msgs.edit}" action="#{m_books.editBook(books)}" class="btn btn-info btn-block"/>
                                                     <h:commandLink value="#{msgs.details}" action="#{m_books.bookDetails(books)}" class="btn btn-info btn-block"/>
-                                                    <h:commandLink value="#{msgs.delete}" action="#{m_books.destroyBook(books)}" class="btn btn-danger btn-block"> 
-                                                        <f:ajax render="@form"/>
-                                                    </h:commandLink>
+                                                    <p:commandLink process="@form" update="@all" value="#{msgs.delete}" action="#{m_books.destroyBook(books)}" class="btn btn-danger btn-block"> 
+
+                                                    </p:commandLink>
                                                 </p:column>
-<!--                                                <p:column filterBy="#{books.bookId}" sortBy="#{books.bookId}" headerText="#{msgs.book_id}" filterMatchMode="contains" width="100">
-                                                #{books.bookId}
-                                            </p:column>-->
+                                                <p:column filterBy="#{books.bookId}" sortBy="#{books.bookId}" headerText="#{msgs.book_id}" filterMatchMode="contains" width="100">
+                                                    #{books.bookId}
+                                                </p:column>
 
                                                 <p:column filterBy="#{books.isbn}" sortBy="#{books.isbn}" headerText="#{msgs.isbn}" filterMatchMode="contains" width="120">
 
@@ -60,53 +60,53 @@
                                                     #{books.publisher}
                                                 </p:column>
 
-<!--                                                <p:column filterBy="#{books.publishDate}" sortBy="#{books.publishDate}" headerText="#{msgs.publish_date}" filterMatchMode="contains" width="230">
+                                                <p:column filterBy="#{books.publishDate}" sortBy="#{books.publishDate}" headerText="#{msgs.publish_date}" filterMatchMode="contains" width="230">
                                                     #{books.publishDate}
-                                                </p:column>-->
+                                                </p:column>
 
-                                                <!--                                                   <h:column>
-                                                                                                      <f:facet name="header">#{msgs.page_number}</f:facet>
-                                                #{books.pageNumber}
-                                           </h:column>
-                                           
-                                           <h:column>
-                                               <f:facet name="header">#{msgs.wholesale_price}</f:facet>
-                                                #{books.wholesalePrice}
-                                            </h:column>
-                                            
-                                                -->                                           
+                                                <h:column>
+                                                    <f:facet name="header">#{msgs.page_number}</f:facet>
+                                                        #{books.pageNumber}
+                                                </h:column>
+
+                                                <h:column>
+                                                    <f:facet name="header">#{msgs.wholesale_price}</f:facet>
+                                                        #{books.wholesalePrice}
+                                                </h:column>
+
+
                                                 <p:column filterBy="#{books.listPrice}" sortBy="#{books.listPrice}" headerText="#{msgs.list_price}" filterMatchMode="contains" width="130">
                                                     #{books.listPrice}
                                                 </p:column>
-                                                
+
                                                 <p:column filterBy="#{m_reports.getTotalPerBook(books)}" sortBy="#{m_reports.getTotalPerBook(books)}" headerText="#{msgs.total}" filterMatchMode="contains" width="130">
                                                     #{m_reports.getTotalPerBook(books)}
                                                 </p:column>
-                                                <!--
-                                                
+
+
                                                 <h:column>
                                                     <f:facet name="header">#{msgs.sale_price}</f:facet>
-                                                #{books.salePrice}
-                                            </h:column>
-                                            
-                                            <h:column>
-                                                <f:facet name="header">#{msgs.date_entered}</f:facet>
-                                                #{books.dateEntered}
-                                            </h:column>-->
+                                                        #{books.salePrice}
+                                                </h:column>
+
+                                                <h:column>
+                                                    <f:facet name="header">#{msgs.date_entered}</f:facet>
+                                                        #{books.dateEntered}
+                                                </h:column>
 
                                                 <p:column filterBy="#{books.available}" sortBy="#{books.available}" headerText="#{msgs.available}" filterMatchMode="contains" width="130">
                                                     #{books.available}
                                                 </p:column>
 
-                                                <!--                                                <h:column>
-                                                                                                    <f:facet name="header">#{msgs.overall_rating}</f:facet>
-                                                #{books.overallRating}
-                                            </h:column>
-                                            
-                                            <h:column>
-                                                <f:facet name="header">#{msgs.synopsis}</f:facet>
-                                                #{books.synopsis}
-                                            </h:column>-->
+                                                <h:column>
+                                                    <f:facet name="header">#{msgs.overall_rating}</f:facet>
+                                                        #{books.overallRating}
+                                                </h:column>
+
+                                                <h:column>
+                                                    <f:facet name="header">#{msgs.synopsis}</f:facet>
+                                                        #{books.synopsis}
+                                                </h:column>
                                             </p:dataTable>
                                         </h:form>   
 

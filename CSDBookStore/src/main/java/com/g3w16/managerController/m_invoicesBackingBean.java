@@ -11,7 +11,6 @@ import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
 
@@ -22,7 +21,7 @@ import javax.inject.Inject;
  * @author Rita Lazaar
  */
 @ManagedBean(name="m_invoices")
-@SessionScoped
+@RequestScoped
 public class m_invoicesBackingBean implements Serializable{
 
     private String searchInvoice;

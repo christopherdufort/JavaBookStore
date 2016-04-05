@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
 import jodd.mail.Email;
@@ -26,7 +26,7 @@ import jodd.mail.SmtpSslServer;
  * @author Rita Lazaar
  */
 @ManagedBean(name = "m_users")
-@SessionScoped
+@RequestScoped
 public class m_usersBackingBean implements Serializable {
 
     private RegisteredUser user;
@@ -130,19 +130,21 @@ public class m_usersBackingBean implements Serializable {
         System.out.println(">>>>>send" + user.getEmailAddress());
         System.out.println(">>>>>>>>pass" + user.getPassword());
 
-        Email email = Email.create()
-                .from("xin.send@gmail.com")
-                .to("maxin911.ca@gmail.com")
-                .subject("password")
-                .addText("A plain text message...");
-
-        SmtpServer smtpServer = SmtpSslServer.create("smtp.gmail.com")
-                .authenticateWith("xin.send@gmail.com", "mx123456");
-
-        SendMailSession session = smtpServer.createSession();
-        session.open();
-        session.sendMail(email);
-        session.close();
+        //THIS CHUNK OF CODE IS COMMENTED OUT BECAUSE:
+        //GLASSFISH CURRENTLY DOES NOT ENABLE US TO SEND EMAILS.
+//        Email email = Email.create()
+//                .from("xin.send@gmail.com")
+//                .to("maxin911.ca@gmail.com")
+//                .subject("password")
+//                .addText("A plain text message...");
+//
+//        SmtpServer smtpServer = SmtpSslServer.create("smtp.gmail.com")
+//                .authenticateWith("xin.send@gmail.com", "mx123456");
+//
+//        SendMailSession session = smtpServer.createSession();
+//        session.open();
+//        session.sendMail(email);
+//        session.close();
 
     }
 

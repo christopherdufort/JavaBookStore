@@ -8,15 +8,13 @@ import com.g3w16.entities.Format;
 import com.g3w16.entities.Genre;
 import com.g3w16.entities.Review;
 import com.g3w16.entities.ReviewJpaController;
-import com.g3w16.entities.viewController.UserAuthView;
+import com.g3w16.entities.viewController.GrowlView;
 import java.io.IOException;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -41,6 +39,8 @@ public class BookBackingBean implements Serializable {
     private List<Book> booksFromGenre;
     private List<Book> booksFromAuthor;
     
+    @Inject
+    private GrowlView growlView;
     @Inject
     private BookJpaController bookJpaController;
     @Inject
@@ -124,6 +124,7 @@ public class BookBackingBean implements Serializable {
         reviewJpaController.create(review);
         review = null;
         rating = 1;
+        growlView.notifyUserAboutReview();
     }
     
     /**

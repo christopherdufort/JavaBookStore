@@ -85,6 +85,16 @@
 
                                                     #{books.listPrice}
                                                 </p:column>
+                                                
+                                                <p:column filterBy="#{books.salePrice}" sortBy="#{books.salePrice}" headerText="#{msgs.sale_price}" filterMatchMode="contains">
+
+                                                    #{books.salePrice}
+                                                </p:column>
+                                                
+                                                <p:column filterBy=" #{m_reports.getTotalPerBook(books)}" sortBy=" #{m_reports.getTotalPerBook(books)}" headerText="#{msgs.total}" filterMatchMode="contains">
+
+                                                    #{m_reports.getTotalPerBook(books)}
+                                                </p:column>
 
                                             </p:dataTable>
                                         </h:form>   

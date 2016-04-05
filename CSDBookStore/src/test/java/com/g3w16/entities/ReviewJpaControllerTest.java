@@ -27,19 +27,20 @@ import javax.sql.DataSource;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Ignore;
 
 /**
  *
  * @author 1232046
  */
+@Ignore
 @RunWith(Arquillian.class)
 public class ReviewJpaControllerTest {
 

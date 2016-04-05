@@ -52,10 +52,12 @@
 
 
         <title>#{msgs.biblioAdminTitle}</title>
-
+        <f:view locale="#{localizationBean.currentLocale}"></f:view>
         <f:metadata>
             <f:event listener="#{authenticationController.mustBeManager}" type="preRenderView" />
+            <f:event type="preRenderView" listener="#{internationalizationController.checkLocaleCookie}" />
         </f:metadata>
+        
     </h:head>
 
     <h:body>
@@ -79,7 +81,7 @@
 
                     <!-- /.dropdown -->
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="">
                             <c:if test="#{m_reviews.pendingCount==0}">
                                 <i class="fa fa-bell-slash-o fa-fw"></i> <i class="fa fa-caret-down"></i>
                             </c:if>
@@ -108,7 +110,7 @@
                     </li>
                     <!-- /.dropdown -->
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="">
                             <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-user">
@@ -128,7 +130,7 @@
                             <li class="sidebar-search">
                                 <div class="input-group custom-search-form">
                                     <i class="fa fa-user fa-fw"></i>
-                                    #{msgs.welcome}   #{profileBackingBean.firstName}
+                                    #{msgs.welcome}   #{authenticatedUser.registeredUser.firstName}
                                 </div>
                                 <!-- /input-group -->
                             </li>

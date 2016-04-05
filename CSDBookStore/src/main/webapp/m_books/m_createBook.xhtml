@@ -25,7 +25,7 @@
                                 <!-- /.panel-heading -->
                                 <div class="panel-body">
                                     <div class="dataTable_wrapper table-responsive">
-                                        <h:form>
+                                        <h:form enctype="multipart/form-data">
                                             <h:panelGrid columns="3">
                                                 <h:outputLabel value="#{msgs.isbn}" for="isbn"></h:outputLabel>
                                                 <p:inputText id="isbn" value="#{m_books.book.isbn}"/>
@@ -112,7 +112,10 @@
                                                 <h:outputLabel value="#{msgs.synopsis}" for="synopsis"></h:outputLabel>
                                                 <p:inputTextarea id="synopsis" value="#{m_books.book.synopsis}"/>
                                                 <h:message for="synopsis" errorStyle="color:red; display:block"/>
+
+                                                 <p:fileUpload mode="simple" value="#{m_books.file}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>       
                                             </h:panelGrid>
+                                                                              
                                             <br />
                                             <p:commandButton value="#{msgs.add}"
                                                              action="#{m_books.createBook}" class="btn btn-success btn-xs" />
