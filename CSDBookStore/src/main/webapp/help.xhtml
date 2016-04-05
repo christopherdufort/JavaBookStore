@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <body>
+        <ui:composition template="./templates/masterTemplate.xhtml">
+
+            <ui:define name="title">
+                #{msgs.help}
+            </ui:define>
+
+            <ui:define name="content">
+                <div class="row panel">
+                    <div class="medium-6 medium-centered large-6 large-centered columns">
+                        <div class="row ">
+                            <h2 class="text-center">
+                                <i class="fi-megaphone large"></i>
+                                #{msgs.help}
+                            </h2>
+                            <ul>
+                                <li>
+                                    <h4>#{msgs.homePage}</h4>
+                                    <p>#{msgs.homeDesc}</p>
+                                </li>
+                                <li>
+                                    <h4>#{msgs.bookPage}</h4>
+                                    <p>#{msgs.bookDesc}</p>
+                                </li>
+                                <li>
+                                    <h4>#{msgs.signupPage}</h4>
+                                    <p>#{msgs.signupDesc}</p>
+                                </li>
+                                <li>
+                                    <h4>#{msgs.loginPage}</h4>
+                                    <p>#{msgs.loginDesc}</p>
+                                </li>
+                                <li>
+                                    <h4>#{msgs.profilePage}</h4>
+                                    <p>#{msgs.profileDesc}</p>
+                                </li>
+                                <li>
+                                    <h4>#{msgs.browseGenrePage}</h4>
+                                    <p>#{msgs.browseGenreDesc}</p>
+                                </li>
+                                <li>
+                                    <h4>#{msgs.resultsPage}</h4>
+                                    <p>#{msgs.resultsDesc}</p>
+                                </li>
+                                <li>
+                                    <h4>#{msgs.cartPage}</h4>
+                                    <p>#{msgs.cartDesc}</p>
+                                </li>
+                                <li>
+                                    <h4>#{msgs.checkoutPage}</h4>
+                                    <p>#{msgs.checkoutDesc}</p>
+                                </li>
+                                <li>
+                                    <h4>#{msgs.invoicePage}</h4>
+                                    <p>#{msgs.invoiceDesc}</p>
+                                </li>
+                                <li>
+                                    <h4>#{msgs.ordersPage}</h4>
+                                    <p>#{msgs.ordersDesc}</p>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
