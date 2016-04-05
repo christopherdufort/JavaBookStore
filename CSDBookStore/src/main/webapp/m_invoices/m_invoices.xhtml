@@ -28,13 +28,8 @@
                                     <div class="dataTable_wrapper table-responsive">
                                         <h:form>
 
-                                            <p:dataTable class="table table-striped table-bordered table-hover" widgetVar="invoicesTable" id="dataTables-example" value="#{m_invoices.allInvoices}"  var="invoice" filteredValue="#{m_invoices.searchedInvoices}" sortMode="multiple">
-                                                <f:facet name="header">
-                                                    <p:outputPanel>
-                                                        <h:outputText value="Search all fields:" />
-                                                        <p:inputText id="globalFilter" onkeyup="PF('invoicesTable').filter()" style="width:150px" placeholder="Enter keyword"/>
-                                                    </p:outputPanel>
-                                                </f:facet>
+                                            <p:dataTable class="table table-striped table-bordered table-hover" widgetVar="invoicesTable" id="dataTables-example" value="#{m_invoices.allInvoices}"  var="invoice" sortMode="multiple">
+
 
 
                                                 <p:column>
