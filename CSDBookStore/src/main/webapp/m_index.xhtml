@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <body>
         <ui:composition template="./templates/m_masterTemplate.xhtml">
@@ -26,7 +27,7 @@
                                         </div>
                                         <div class="col-xs-9 text-right">
                                             <div class="huge">Books</div>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -48,7 +49,7 @@
                                         </div>
                                         <div class="col-xs-9 text-right">
                                             <div class="huge">Users</div>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -70,7 +71,7 @@
                                         </div>
                                         <div class="col-xs-9 text-right">
                                             <div class="huge">Reviews</div>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -92,7 +93,7 @@
                                         </div>
                                         <div class="col-xs-9 text-right">
                                             <div class="huge">Invoices</div>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -114,7 +115,7 @@
                                         </div>
                                         <div class="col-xs-9 text-right">
                                             <div class="huge">Reports</div>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -136,7 +137,7 @@
                                         </div>
                                         <div class="col-xs-9 text-right">
                                             <div class="huge">News</div>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -158,7 +159,7 @@
                                         </div>
                                         <div class="col-xs-9 text-right">
                                             <div class="huge">Surveys</div>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -180,7 +181,7 @@
                                         </div>
                                         <div class="col-xs-9 text-right">
                                             <div class="huge">Ads</div>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -194,20 +195,28 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-bell fa-fw"></i> Notifications Panel
+
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div class="list-group">
-                                <a href="#{request.contextPath}/faces/m_reviews/m_pendingReview.xhtml" class="list-group-item">
-                                    <i class="fa fa-comment fa-fw"></i> Pending Reviews
-                                    <span class="pull-right text-muted ">#{m_reviews.pendingCount}
-                                    </span>
-                                </a>
-                                
+
+                                <c:if test="#{m_reviews.pendingCount==0}">
+                                    <i class="fa fa-comment-o fa-fw"></i> No New Reviews
+                                </c:if>
+                                <c:if test="#{m_reviews.pendingCount!=0}">
+                                    <a href="#{request.contextPath}/faces/m_reviews/m_pendingReview.xhtml" class="list-group-item" style="color:red">
+                                        <h4><i class="fa fa-comment fa-fw" ></i>#{m_reviews.pendingCount} Pending Reviews</h4> </a>
+                                </c:if>
+                                <!--                                    <i class="fa fa-comment-o fa-fw"></i> Pending Reviews
+                                                                    <span class="pull-right text-muted ">#{m_reviews.pendingCount}
+                                                                    </span>-->
+
+
                             </div>
                             <!-- /.list-group -->
                             <a href="#" class="btn btn-default btn-block">View All Alerts</a>
@@ -215,7 +224,7 @@
 
                     </div>
                 </div>
-                
+
             </ui:define>
         </ui:composition>
 

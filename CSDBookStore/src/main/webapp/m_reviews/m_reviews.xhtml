@@ -5,7 +5,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <body>
         <ui:composition template="./../templates/m_masterTemplate.xhtml">       
@@ -22,7 +23,10 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    Total <h:outputText value="#{m_reviews.reviewCount}"/> Reviews, <a href="m_pendingReview.xhtml"><strong>#{m_reviews.pendingCount}</strong></a> Pending Reviews
+                                    Total <h:outputText value="#{m_reviews.reviewCount}"/> Reviews, 
+                                    <c:if test="#{m_reviews.pendingCount!=0}">
+                                        <a href="m_pendingReview.xhtml" style="color:red"><strong>#{m_reviews.pendingCount}</strong> Pending Reviews</a>
+                                    </c:if>
                                 </div>
                                 <!-- /.panel-heading -->
                                 <div class="panel-body">
