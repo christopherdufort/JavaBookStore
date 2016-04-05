@@ -25,7 +25,7 @@ import org.primefaces.event.SelectEvent;
 
 /**
  *
- *
+ * @author Xin Ma
  * @author Rita Lazaar
  */
 @ManagedBean(name = "m_reports")

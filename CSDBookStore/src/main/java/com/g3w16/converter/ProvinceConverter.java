@@ -14,7 +14,8 @@ import javax.faces.convert.FacesConverter;
 
 /**
  *
- * @author maxin
+ * @author Xin Ma
+ * @author Rita Lazaar
  */
 @FacesConverter("com.g3w16.converter.ProvinceConverter")
 public class ProvinceConverter implements Converter {

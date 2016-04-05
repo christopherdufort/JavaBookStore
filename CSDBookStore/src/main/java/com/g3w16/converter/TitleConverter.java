@@ -14,7 +14,8 @@ import javax.faces.convert.FacesConverter;
 
 /**
  *
- * @author maxin
+ * @author Xin Ma
+ * @author Rita Lazaar
  */
 @FacesConverter("com.g3w16.converter.TitleConverter")
 public class TitleConverter implements Converter {
