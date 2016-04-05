@@ -35,6 +35,7 @@
                     <ui:repeat var="item" value="#{homeView.discountedBook}">
                         <bf:displayBook
                             itemImg="resources/images/#{item.isbn}.jpg"
+                            itemId="#{item.bookId}"
                             itemTitle="#{item.title}"
                             itemListPrice="#{item.listPrice}"
                             itemSalePrice="#{item.salePrice}"/>
@@ -46,17 +47,13 @@
                     <hr/>
                 </div>
                 <div class="row small-up-2 medium-up-3 large-up-5">
-                    <ui:repeat value="#{resultsBackingBean.searchResults}" var="book">
-                        <div class="column">
-                            <img class="thumbnail" src="resources/images/#{book.isbn}.jpg"></img>
-                            <h5><h:form><h:commandLink value="#{book.title}" action="#{bookBB.displayBook(book)}"/></h:form></h5>
-                            <ui:fragment rendered="#{book.listPrice == book.salePrice}">
-                                <p><h:outputText styleClass="red" value="$#{book.listPrice}"/></p>
-                            </ui:fragment>
-                            <ui:fragment rendered="#{book.listPrice != book.salePrice}">
-                                <p><strike><h:outputText value="$#{book.listPrice}"/></strike>&nbsp;<h:outputText styleClass="red" value="$#{book.salePrice}"/></p>
-                            </ui:fragment>
-                        </div>   
+                    <ui:repeat value="#{resultsBackingBean.searchResults}" var="item">
+                        <bf:displayBook
+                            itemImg="resources/images/#{item.isbn}.jpg"
+                            itemId="#{item.bookId}"
+                            itemTitle="#{item.title}"
+                            itemListPrice="#{item.listPrice}"
+                            itemSalePrice="#{item.salePrice}"/>
                     </ui:repeat>
                 </div>
                 <hr/>

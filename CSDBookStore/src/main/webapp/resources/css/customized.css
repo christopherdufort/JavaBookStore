@@ -247,3 +247,7 @@ li .js-drilldown-back .top-bar ul li {
     max-height: 150px;
     max-width: 150px;
 }
+
+.ui-growl {
+    top: 75px;
+}

@@ -27,7 +27,7 @@ import org.apache.commons.io.IOUtils;
 import org.primefaces.model.UploadedFile;
 
 /**
- *
+ * This class is adsBackingBean that manage all the ad pages
  * @author Xin Ma
  * @author Rita Lazaar
  */
@@ -129,6 +129,12 @@ public class m_adsBackingBean implements Serializable {
         return adJpa.getAdCount();
     }
 
+    /**
+     * This method will upload an image for ad
+     *
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
     public void upload() throws FileNotFoundException, IOException {
         String filename = ad.getAdFilename();
         InputStream input = file.getInputstream();
