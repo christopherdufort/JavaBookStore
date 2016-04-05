@@ -175,38 +175,26 @@ public class SurveyJpaController implements Serializable {
     }
 
     private List<Survey> findSurveyEntities(boolean all, int maxResults, int firstResult) {
-        try {
-            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Survey.class));
-            Query q = em.createQuery(cq);
-            if (!all) {
-                q.setMaxResults(maxResults);
-                q.setFirstResult(firstResult);
-            }
-            return q.getResultList();
-        } finally {
-            em.close();
+        CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+        cq.select(cq.from(Survey.class));
+        Query q = em.createQuery(cq);
+        if (!all) {
+            q.setMaxResults(maxResults);
+            q.setFirstResult(firstResult);
         }
+        return q.getResultList();
     }
 
     public Survey findSurvey(Integer id) {
-        try {
-            return em.find(Survey.class, id);
-        } finally {
-            em.close();
-        }
+        return em.find(Survey.class, id);
     }
 
     public int getSurveyCount() {
-        try {
-            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<Survey> rt = cq.from(Survey.class);
-            cq.select(em.getCriteriaBuilder().count(rt));
-            Query q = em.createQuery(cq);
-            return ((Long) q.getSingleResult()).intValue();
-        } finally {
-            em.close();
-        }
+        CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+        Root<Survey> rt = cq.from(Survey.class);
+        cq.select(em.getCriteriaBuilder().count(rt));
+        Query q = em.createQuery(cq);
+        return ((Long) q.getSingleResult()).intValue();
     }
 
     /**
@@ -319,8 +307,8 @@ public class SurveyJpaController implements Serializable {
         Survey result = (Survey) query.getSingleResult();
         return result;
     }
-    
-    public List<Survey> findRemainingSurvey(String sessionId){
+
+    public List<Survey> findRemainingSurvey(String sessionId) {
         Query query = em.createNamedQuery("Survey.findNotAnswered");
         query.setParameter("sessionId", sessionId);
         return query.getResultList();

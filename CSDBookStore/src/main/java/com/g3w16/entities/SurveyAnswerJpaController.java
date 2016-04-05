@@ -10,11 +10,14 @@ import com.g3w16.entities.exceptions.PreexistingEntityException;
 import com.g3w16.entities.exceptions.RollbackFailureException;
 import java.io.Serializable;
 import java.util.List;
+import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.transaction.UserTransaction;
@@ -25,37 +28,34 @@ import javax.transaction.UserTransaction;
  */
 public class SurveyAnswerJpaController implements Serializable {
 
-    @Inject
+    @Resource
     private UserTransaction utx;
-    @Inject
+
+    @PersistenceContext
     private EntityManager em;
 
     public void create(SurveyAnswer surveyAnswer, String sessionId) throws PreexistingEntityException, RollbackFailureException, Exception {
         // stuff under here aimed at let the create method be as easy to use as possible
-        SurveyAnswerPK pk = (SurveyAnswerPK) em.createQuery("SELECT a.surveyAnswerPK FROM SurveyAnswer a WHERE a.surveyAnswerPK.sessionId = :sessionId AND a.surveyAnswerPK.surveyId = :surveyId")
-                .setParameter("sessionId", sessionId)
-                .setParameter("surveyId", surveyAnswer.getSurvey().getSurveyId())
-                .getSingleResult();
-        if (surveyAnswer.getSurveyAnswerPK() == null) {
-            if (pk == null) {
-                surveyAnswer.setSurveyAnswerPK(new SurveyAnswerPK());
-            }else{
-                surveyAnswer.setSurveyAnswerPK(pk);
-            }
-        }
-        surveyAnswer.getSurveyAnswerPK().setSurveyId(surveyAnswer.getSurvey().getSurveyId());
-        surveyAnswer.getSurveyAnswerPK().setSessionId(sessionId);
         try {
             utx.begin();
-            Survey survey = surveyAnswer.getSurvey();
-            if (survey != null) {
-                survey = em.getReference(survey.getClass(), survey.getSurveyId());
-                surveyAnswer.setSurvey(survey);
+            try {
+                surveyAnswer.setSurveyAnswerPK(
+                        (SurveyAnswerPK) em.createQuery("SELECT a.surveyAnswerPK FROM SurveyAnswer a WHERE a.surveyAnswerPK.sessionId = :sessionId AND a.surveyAnswerPK.surveyId = :surveyId")
+                        .setParameter("sessionId", sessionId)
+                        .setParameter("surveyId", surveyAnswer.getSurvey().getSurveyId())
+                        .getSingleResult()
+                );
+            } catch (NoResultException e) {
+                surveyAnswer.setSurveyAnswerPK(new SurveyAnswerPK());
+                surveyAnswer.getSurveyAnswerPK().setSurveyId(surveyAnswer.getSurvey().getSurveyId());
+                surveyAnswer.getSurveyAnswerPK().setSessionId(sessionId);
             }
+
+            Survey survey = surveyAnswer.getSurvey();
             em.persist(surveyAnswer);
             if (survey != null) {
                 survey.getSurveyAnswerList().add(surveyAnswer);
-                survey = em.merge(survey);
+                em.merge(survey);
             }
             utx.commit();
         } catch (Exception ex) {
@@ -166,8 +166,8 @@ public class SurveyAnswerJpaController implements Serializable {
         Query q = em.createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
     }
-    
-    public List<SurveyAnswer> getSurveyAnswerBySurvey(int survey_id){
+
+    public List<SurveyAnswer> getSurveyAnswerBySurvey(int survey_id) {
         Query query = em.createNamedQuery("SurveyAnswer.findBySurveyId");
         query.setParameter("surveyId", survey_id);
         return query.getResultList();
