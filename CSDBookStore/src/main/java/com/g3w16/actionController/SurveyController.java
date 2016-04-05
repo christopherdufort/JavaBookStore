@@ -5,6 +5,8 @@
  */
 package com.g3w16.actionController;
 
+import com.g3w16.beans.SubmitSurveyBean;
+import com.g3w16.beans.SurveyBean;
 import com.g3w16.entities.Survey;
 import com.g3w16.entities.SurveyAnswer;
 import java.util.List;
@@ -33,11 +35,20 @@ public class SurveyController {
     
     @Inject
     SurveyAnswerJpaController surveyAnswerJpaController;
+
+    @Inject 
+    SurveyBean surveyBean;
+    @Inject
+    SubmitSurveyBean submitSurveyBean;
     
     String session_id;
     
     public SurveyController(){
         this.session_id = FacesContext.getCurrentInstance().getExternalContext().getSessionId(true);
+    }
+    
+    public Survey getSurvey(int surveyId){
+        return surveyJpaController.findSurvey(surveyId);
     }
     
     public Survey getSurvey(){
@@ -70,10 +81,12 @@ public class SurveyController {
     /*
         Choices goes from 0 to 3 included
     */
-    public void submitSurvey(Survey survey, int choice) throws RollbackFailureException{
+    public void submitSurvey() throws RollbackFailureException{
+        //Logger.getLogger(this.getClass().getName()).log(Level.INFO, "Survey is : {0}", surveyBean.getSurvey());
+        
         SurveyAnswer answer = new SurveyAnswer();
-        answer.setChoice(choice);
-        answer.setSurvey(survey);
+        answer.setChoice(submitSurveyBean.getChoice());
+        answer.setSurvey(surveyJpaController.findSurvey(submitSurveyBean.getSurveyId()));
         try {
             surveyAnswerJpaController.create(answer, session_id);
         } catch (Exception ex) {

@@ -7,9 +7,14 @@ package com.g3w16.entities.viewController;
 
 import com.g3w16.actionController.BookController;
 import com.g3w16.actionController.GenreController;
+import com.g3w16.actionController.SurveyController;
 import com.g3w16.beans.AuthenticatedUser;
+import com.g3w16.beans.SurveyBean;
+import com.g3w16.beans.SubmitSurveyBean;
 import com.g3w16.entities.AdJpaController;
 import com.g3w16.entities.Book;
+import com.g3w16.entities.Survey;
+import com.g3w16.entities.exceptions.RollbackFailureException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -38,6 +43,15 @@ public class HomeView {
     BookController bookController;
     @Inject
     GenreController genreController;
+    
+    @Inject
+    SurveyController surveyController;
+    
+    @Inject
+    SurveyBean surveyBean;
+    @Inject
+    SubmitSurveyBean submitsurveyBean;
+    
     @Inject
     AdJpaController adJpaController;
 
@@ -51,6 +65,30 @@ public class HomeView {
         return bookController.getDiscountedBook(limit);
     }
 
+    public void initSurvey(){
+        Logger.getLogger(this.getClass().getName()).log(Level.INFO, "Survey is not supposed to be null anymore");
+        surveyBean.setSurvey(surveyController.getSurvey());
+    }
+    
+    public String submitSurvey(){
+        try{
+        submitsurveyBean.setSurveyId(
+                Integer.parseInt(
+                        FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("surveyId")
+                )
+        );
+        }catch(Exception e){
+            // Possibly someone tried to mess with the application by removing a POST param ... we'll just don't tell him anything
+            return "home";
+        }
+        try{
+            surveyController.submitSurvey();
+        }catch(Exception e){
+            Logger.getLogger(this.getClass().getName()).log(Level.INFO, null, e);
+        }
+        return "home";
+    }
+    
     /**
      * check co whether is null otherwise run on a new computer (no cookies)
      * always nullpointerException

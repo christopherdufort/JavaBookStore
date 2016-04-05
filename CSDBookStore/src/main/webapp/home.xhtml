@@ -18,6 +18,7 @@
             <ui:define name="event_listener">
                 <f:metadata>
                     <f:event listener="#{feedBean.setNewsFeedAttributes}" type="preRenderView" /> 
+                    <f:event listener="#{homeView.initSurvey}" type="preRenderView"/>
                 </f:metadata>
             </ui:define>
 
@@ -57,14 +58,17 @@
                             <div id="survey" class="panel">
                                 <h4>#{msgs.survey}</h4>
                                 <li class="divider"></li> 
-                                <h5>What is your favorite type of book?</h5>
-                                <form action="">
-                                    <input type="radio" id="question1" name="survey" value="1">Electronic copy</input><br/>
-                                    <input type="radio" id="question2" name="survey" value="2">Hard Cover</input><br/>
-                                    <input type="radio" id="question3" name="survey" value="3">Paperback</input><br/>
-                                    <input type="radio" id="questionDefault" name="survey" value="default">Something else</input><br/>
-                                    <button type="submit" class="green button expanded">Submit</button>
-                                </form>
+                                <h5>#{surveyBean.survey.question}</h5>
+                                <h:form>
+                                    <input type="hidden" name="surveyId" value="#{surveyBean.survey.surveyId}"></input>
+                                    <h:selectOneRadio value="#{submitSurveyBean.choice}" layout="pageDirection">
+                                        <f:selectItem itemValue="0" itemLabel="#{surveyBean.survey.answerDefault}" />
+                                        <f:selectItem itemValue="1" itemLabel="#{surveyBean.survey.answerOne}" />
+                                        <f:selectItem itemValue="2" itemLabel="#{surveyBean.survey.answerTwo}" />
+                                        <f:selectItem itemValue="3" itemLabel="#{surveyBean.survey.answerThree}" />
+                                    </h:selectOneRadio>
+                                    <h:commandButton class="green button expanded" value="Submit" action="#{homeView.submitSurvey}"></h:commandButton>
+                                </h:form>
                             </div>
                             <div id="newsFeed" class="panel">
                                 <h4>News Feed</h4>
