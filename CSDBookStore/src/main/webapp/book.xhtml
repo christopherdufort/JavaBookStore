@@ -118,7 +118,7 @@
                             <hr/>
                             <c:if test="#{authenticationController.anonymous != true}">
                                 <h:form id="createReview">
-                                    <p:growl  for="growl"/>  
+                                    <p:growl for="growl"/> 
                                     <p:rating cancel="false" value="#{bookBB.rating}">
                                     </p:rating>
                                     <br/>
@@ -149,6 +149,7 @@
                                 <ui:repeat var="item" value="#{bookBB.fromSameGenre}">
                                     <bf:displayBook
                                         itemImg="resources/images/#{item.isbn}.jpg"
+                                        itemId="#{item.bookId}"
                                         itemTitle="#{item.title}"
                                         itemListPrice="#{item.listPrice}"
                                         itemSalePrice="#{item.salePrice}"/>
@@ -160,6 +161,7 @@
                                 <ui:repeat var="item" value="#{bookBB.fromSameAuthor}">
                                     <bf:displayBook
                                         itemImg="resources/images/#{item.isbn}.jpg"
+                                        itemId="#{item.bookId}"
                                         itemTitle="#{item.title}"
                                         itemListPrice="#{item.listPrice}"
                                         itemSalePrice="#{item.salePrice}"/>
