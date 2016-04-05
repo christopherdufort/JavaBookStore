@@ -85,4 +85,20 @@ public class MailController {
         
         return "home";
     }
+    
+
+    public void sendEmail(String to, String subject, String message) {
+        
+        MailBean recoveryEmail = new MailBean();
+        MailConfigBean recoveryConfig = new MailConfigBean();
+            
+        String from = recoveryConfig.getEmailAddress();
+         
+        recoveryEmail.getToField().add(to);
+        recoveryEmail.setFromField(from);
+        recoveryEmail.setSubjectField(subject);
+        recoveryEmail.setTextMessageField(message);
+        
+        basicSendAndReceive.sendEmail(recoveryEmail, recoveryConfig);
+    }
 }
