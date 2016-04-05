@@ -194,7 +194,28 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bell fa-fw"></i> Notifications Panel
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="list-group">
+                                <a href="#{request.contextPath}/faces/m_reviews/m_pendingReview.xhtml" class="list-group-item">
+                                    <i class="fa fa-comment fa-fw"></i> Pending Reviews
+                                    <span class="pull-right text-muted ">#{m_reviews.pendingCount}
+                                    </span>
+                                </a>
+                                
+                            </div>
+                            <!-- /.list-group -->
+                            <a href="#" class="btn btn-default btn-block">View All Alerts</a>
+                        </div>   
+
+                    </div>
                 </div>
+                
             </ui:define>
         </ui:composition>
 
