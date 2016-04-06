@@ -33,6 +33,18 @@ public class SurveyAnswerJpaController implements Serializable {
 
     @PersistenceContext
     private EntityManager em;
+    
+    
+    public SurveyAnswerPK getPK(String sessionId, int surveyId){
+        try{
+            return (SurveyAnswerPK) em.createQuery("SELECT a.surveyAnswerPK FROM SurveyAnswer a WHERE a.surveyAnswerPK.sessionId = :sessionId AND a.surveyAnswerPK.surveyId = :surveyId")
+                        .setParameter("sessionId", sessionId)
+                        .setParameter("surveyId", surveyId)
+                        .getSingleResult();
+        }catch(Throwable anyofthem){
+            return null;
+        }
+    }
 
     public void create(SurveyAnswer surveyAnswer, String sessionId) throws PreexistingEntityException, RollbackFailureException, Exception {
         // stuff under here aimed at let the create method be as easy to use as possible

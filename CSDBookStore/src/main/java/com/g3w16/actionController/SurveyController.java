@@ -11,6 +11,7 @@ import com.g3w16.entities.Survey;
 import com.g3w16.entities.SurveyAnswer;
 import java.util.List;
 import com.g3w16.entities.SurveyAnswerJpaController;
+import com.g3w16.entities.SurveyAnswerPK;
 import com.g3w16.entities.SurveyJpaController;
 import com.g3w16.entities.exceptions.RollbackFailureException;
 import java.util.HashMap;
@@ -21,6 +22,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.NoResultException;
 
 /**
  *
@@ -47,27 +49,37 @@ public class SurveyController {
         this.session_id = FacesContext.getCurrentInstance().getExternalContext().getSessionId(true);
     }
     
+    /*
     public Survey getSurvey(int surveyId){
         return surveyJpaController.findSurvey(surveyId);
     }
+    */
     
-    public Survey getSurvey(){
-        List<Survey> availableSurveys= surveyJpaController.findRemainingSurvey(session_id);
-        if (availableSurveys.size()==0){
-            return null;
-        }else{
-            return availableSurveys.get(
-                    (new Random()).nextInt(
-                            availableSurveys.size()
-                    )
-            );
+    public boolean hasAllreadyAnsweredThisSurvey(){
+        SurveyAnswerPK pk ;
+        try{
+            pk = surveyAnswerJpaController.getPK(session_id, getSurvey().getSurveyId());
+        }catch(NoResultException e){
+            Logger.getLogger(this.getClass().getName()).log(Level.INFO, null, e);
+            return false;
         }
+        Logger.getLogger(this.getClass().getName()).log(Level.INFO, "hasAllreadyAnsweredThisSurvey returned : {0}", pk!=null);
+        return pk!=null;
     }
     
-    public HashMap<String,Integer> getSurveyResults(int surveyId){
+    public boolean hasNotAllreadyAnsweredThisSurvey(){
+        return !hasAllreadyAnsweredThisSurvey();
+    }
+    
+    public Survey getSurvey(){
+        Survey currentSurvey = surveyJpaController.findSurveyByActive();
+        return currentSurvey;
+    }
+    
+    public String getSurveyResultsAsJSArray(){
         int[] votes = {0,0,0,0};
-        Survey survey = surveyJpaController.findSurvey(surveyId);
-        for (SurveyAnswer answer : surveyAnswerJpaController.getSurveyAnswerBySurvey(surveyId) ){
+        Survey survey = getSurvey();
+        for (SurveyAnswer answer : surveyAnswerJpaController.getSurveyAnswerBySurvey(survey.getSurveyId()) ){
             votes[answer.getChoice()]+=1;
         }
         HashMap<String, Integer> results = new HashMap<>();
@@ -75,7 +87,11 @@ public class SurveyController {
         results.put(survey.getAnswerOne(), votes[1]);
         results.put(survey.getAnswerTwo(), votes[2]);
         results.put(survey.getAnswerThree(), votes[3]);
-        return results;
+        StringBuilder sb = new StringBuilder();
+        for(String key : results.keySet()){
+            sb.append("['").append(key).append("',").append(results.get(key).toString()).append("],");
+        }
+        return sb.toString();
     }
     
     /*

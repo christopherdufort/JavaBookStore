@@ -27,22 +27,22 @@
                                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                                  rowsPerPageTemplate="5,10,15"
                                                  emptyMessage="No Ad found with given criteria">
-                                        <p:column>
+                                        <p:column width="200">
                                             <f:facet name="header">
                                                 <h:commandLink value="#{msgs.add}" action="#{m_ads.preCreateAd()}" class="btn btn-success btn-block"/>
                                             </f:facet>
-                                            <h:commandLink value="#{msgs.edit}" action="#{m_ads.editAd(ad)}" class="btn btn-info btn-sx"/>
+                                            <h:commandLink value="#{msgs.edit}" action="#{m_ads.editAd(ad)}" class="btn btn-info"/>
                                             <h:outputText value="&#160;" />
-                                            <h:commandLink value="#{msgs.delete}" action="#{m_ads.destroyAd(ad)}" class="btn btn-danger btn-sx"> 
+                                            <h:commandLink value="#{msgs.delete}" action="#{m_ads.destroyAd(ad)}" class="btn btn-danger"> 
                                                 <f:ajax render="@form"/>
                                             </h:commandLink>                                               
                                         </p:column>
-                                        <p:column  headerText="#{msgs.active}">
+                                        <p:column  headerText="#{msgs.active}" width="150">
                                             <p:selectBooleanCheckbox value="#{ad.active}">
                                                 <p:ajax update="@form" listener="#{m_ads.active(ad)}"/>
                                             </p:selectBooleanCheckbox>
                                         </p:column>
-                                        <p:column filterBy="#{ad.adId}" sortBy="#{ad.adId}" headerText="#{msgs.ad_id}" filterMatchMode="contains">
+                                        <p:column filterBy="#{ad.adId}" sortBy="#{ad.adId}" headerText="#{msgs.ad_id}" filterMatchMode="contains" width="150">
                                             #{ad.adId}
                                         </p:column>
 
@@ -50,7 +50,7 @@
                                             #{ad.adFilename}
                                         </p:column>
 
-                                        <p:column filterBy="#{ad.adType}"  headerText="#{msgs.ad_type}"  filterMatchMode="equals">
+                                        <p:column filterBy="#{ad.adType}"  headerText="#{msgs.ad_type}"  filterMatchMode="equals" width="150">
                                             <f:facet name="filter">
                                                 <p:selectOneButton onchange="PF('adTable').filter()">
                                                     <f:converter converterId="javax.faces.Boolean" />
