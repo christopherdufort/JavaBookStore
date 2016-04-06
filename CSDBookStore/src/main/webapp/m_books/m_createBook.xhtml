@@ -13,7 +13,7 @@
                 <div id="page-wrapper">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header">Book</h1>
+                            <h1 class="page-header">#{msgs.book}</h1>
                         </div>
                         <!-- /.col-lg-12 -->
                     </div>
@@ -38,7 +38,7 @@
                                                 <h:message for="title" errorStyle="color:red; display:block"/>
 
                                                 <h:outputLabel for="author" value="#{msgs.author}" />
-                                                <p:selectCheckboxMenu id="author" value="#{m_books.book.authorList}" label="#{msgs.author}" scrollHeight="150"
+                                                <p:selectCheckboxMenu id="author" value="#{m_books.book.authorList}" label="#{msgs.author}" scrollHeight="150" required="true" requiredMessage="#{msgs.required}"
                                                                       filter="true" filterMatchMode="startsWith" panelStyle="width:250px" converter="com.g3w16.converter.AuthorConverter">
                                                     <f:selectItems value="#{m_books.allAuthors}" />
                                                 </p:selectCheckboxMenu>
@@ -53,15 +53,15 @@
                                             <br />
                                             <h:panelGrid columns="3">
                                                 <h:outputLabel value="#{msgs.publisher}" for="publisher"></h:outputLabel>
-                                                <p:inputText id="publisher" value="#{m_books.book.publisher}"/>
+                                                <p:inputText id="publisher" value="#{m_books.book.publisher}" required="true" requiredMessage="#{msgs.required}"/>
                                                 <h:message for="publisher" errorStyle="color:red; display:block"/>
 
                                                 <h:outputLabel value="#{msgs.publish_date}" for="publish_date"></h:outputLabel>
-                                                <p:calendar id="publish_date" value="#{m_books.book.publishDate}"/>
+                                                <p:calendar id="publish_date" value="#{m_books.book.publishDate}" required="true" requiredMessage="#{msgs.required}"/>
                                                 <h:message for="publish_date" errorStyle="color:red; display:block"/>
 
                                                 <h:outputLabel for="format" value="#{msgs.formats}" />
-                                                <p:selectCheckboxMenu id="format" value="#{m_books.book.formatList}" label="#{msgs.format}" scrollHeight="150"
+                                                <p:selectCheckboxMenu id="format" value="#{m_books.book.formatList}" label="#{msgs.format}" scrollHeight="150" required="true" requiredMessage="#{msgs.required}"
                                                                       filter="true" filterMatchMode="startsWith" panelStyle="width:250px" converter="com.g3w16.converter.FormatConverter">
                                                     <f:selectItems value="#{m_books.allFormat}" />
                                                 </p:selectCheckboxMenu>
@@ -75,11 +75,11 @@
                                             <br />
                                             <h:panelGrid columns="3">
                                                 <h:outputLabel value="#{msgs.page_number}" for="page_number"></h:outputLabel>
-                                                <p:inputText id="page_number" value="#{m_books.book.pageNumber}"/>
+                                                <p:inputText id="page_number" value="#{m_books.book.pageNumber}" required="true" requiredMessage="#{msgs.required}"/>
                                                 <h:message for="page_number" errorStyle="color:red; display:block"/>
 
                                                 <h:outputLabel for="genre" value="#{msgs.genre}" />
-                                                <p:selectCheckboxMenu id="genre" value="#{m_books.book.genreList}" label="#{msgs.genre}" scrollHeight="150"
+                                                <p:selectCheckboxMenu id="genre" value="#{m_books.book.genreList}" label="#{msgs.genre}" scrollHeight="150" required="true" requiredMessage="#{msgs.required}"
                                                                       filter="true" filterMatchMode="startsWith" panelStyle="width:250px" converter="com.g3w16.converter.GenreConverter">
                                                     <f:selectItems value="#{m_books.allGenre}"/>
                                                 </p:selectCheckboxMenu>
@@ -93,26 +93,26 @@
                                             <br />
                                             <h:panelGrid columns="3">
                                                 <h:outputLabel value="#{msgs.wholesale_price}" for="wholesale_price"></h:outputLabel>
-                                                <p:inputText id="whole_price" value="#{m_books.book.wholesalePrice}"/>
+                                                <p:inputText id="whole_price" value="#{m_books.book.wholesalePrice}" required="true" requiredMessage="#{msgs.required}"/>
                                                 <h:message for="wholesale_price" errorStyle="color:red; display:block"/>
 
                                                 <h:outputLabel value="#{msgs.list_price}" for="list_price"></h:outputLabel>
-                                                <p:inputText id="list_price" value="#{m_books.book.listPrice}"/>
+                                                <p:inputText id="list_price" value="#{m_books.book.listPrice}" required="true" requiredMessage="#{msgs.required}"/>
                                                 <h:message for="list_price" errorStyle="color:red; display:block"/>
 
                                                 <h:outputLabel value="#{msgs.sale_price}" for="sale_price"></h:outputLabel>
-                                                <p:inputText id="sale_price" value="#{m_books.book.salePrice}"/>
+                                                <p:inputText id="sale_price" value="#{m_books.book.salePrice}" required="true" requiredMessage="#{msgs.required}"/>
                                                 <h:message for="sale_price" errorStyle="color:red; display:block"/>
 
                                                 <h:outputLabel value="#{msgs.available}" for="available"></h:outputLabel>
-                                                <p:selectOneRadio id="available" layout="lineDirection" value="#{m_books.book.available}">
+                                                <p:selectOneRadio id="available" layout="lineDirection" value="#{m_books.book.available}" required="true" requiredMessage="#{msgs.required}">
                                                     <f:selectItem itemValue="True" itemLabel="True" />
                                                     <f:selectItem itemValue="False" itemLabel="False" />
                                                 </p:selectOneRadio>
                                                 <h:message for="available" errorStyle="color:red; display:block"/>
 
                                                 <h:outputLabel value="#{msgs.synopsis}" for="synopsis"></h:outputLabel>
-                                                <p:inputTextarea id="synopsis" value="#{m_books.book.synopsis}"/>
+                                                <p:inputTextarea id="synopsis" value="#{m_books.book.synopsis}" required="true" requiredMessage="#{msgs.required}"/>
                                                 <h:message for="synopsis" errorStyle="color:red; display:block"/>
 
 <!--                                                 <p:fileUpload mode="simple" value="#{m_books.file}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>       -->
@@ -141,15 +141,8 @@
             </ui:define>
         </ui:composition>
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-        <script>
-            $(document).ready(function () {
-                $('#dataTables-example').DataTable({
-                    responsive: true
-                });
-            });
-
-
-        </script>
+    
+   
 
     </body>
 
