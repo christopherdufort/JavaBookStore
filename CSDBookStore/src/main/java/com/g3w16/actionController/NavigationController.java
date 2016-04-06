@@ -39,8 +39,20 @@ public class NavigationController implements Serializable {
         
         authBean.setEmail(null);
         authBean.setPassword(null);
-                
+        
         return "/login.xhtml?faces-redirect=true&backurl="+url;
+    }
+    
+    /**
+     * @author Christopher Dufort
+     * @return 
+     */
+    public String boomerangProfile(){
+        String url = FacesContext.getCurrentInstance().getViewRoot().getViewId();
+        url = url.substring(1, url.length());
+        Logger.getLogger(this.getClass().getName()).log(Level.INFO, "url is {0}", url);
+        
+        return "/profile.xhtml?faces-redirect=true&backurl="+url;
     }
     
     public String navigateToCart() {

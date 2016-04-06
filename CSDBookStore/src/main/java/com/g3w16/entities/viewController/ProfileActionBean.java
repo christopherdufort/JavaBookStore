@@ -43,6 +43,7 @@ public class ProfileActionBean implements Serializable{
             Logger.getLogger(this.getClass().getName()).log(Level.INFO, "Exception Occured in ProfileActionBean");
             return null; //Stay on page
         }
-        return "home"; 
+        
+        return profileBackingBean.getRedirectTo();
     }
 }

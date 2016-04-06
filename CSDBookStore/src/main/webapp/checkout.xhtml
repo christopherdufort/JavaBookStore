@@ -51,24 +51,28 @@
                                 <td>$#{checkoutBB.calculateGst(authenticatedUser.registeredUser.provinceId.gst)}</td>
                             </tr>
                             <c:if test="#{authenticatedUser.registeredUser.provinceId.pst != 0}">
-                                <c:if test="#{authenticatedUser.registeredUser.provinceId == 'Quebec'}">
-                                    <td><b>QST</b></td>
-                                </c:if>
-                                <c:if test="#{authenticatedUser.registeredUser.provinceId != 'Quebec'}">
-                                    <td><b>PST</b></td>
-                                </c:if>
-                                <td>$#{checkoutBB.calculateProvincialTax(authenticatedUser.registeredUser.provinceId.pst)}</td>
+                                <tr>
+                                    <c:if test="#{authenticatedUser.registeredUser.provinceId == 'Quebec'}">
+                                        <td><b>QST</b></td>
+                                    </c:if>
+                                    <c:if test="#{authenticatedUser.registeredUser.provinceId != 'Quebec'}">
+                                        <td><b>PST</b></td>
+                                    </c:if>
+                                    <td>$#{checkoutBB.calculateProvincialTax(authenticatedUser.registeredUser.provinceId.pst)}</td>
+                                </tr>
                             </c:if>
-                            <c:if test="#{authenticatedUser.registeredUser.provinceId.hst != null}">
-                                <td><b>HST</b></td>
-                                <td>$#{checkoutBB.calculateProvincialTax(authenticatedUser.registeredUser.provinceId.hst)}</td>
+                            <c:if test="#{authenticatedUser.registeredUser.provinceId.hst != 0}">
+                                <tr>
+                                    <td><b>HST</b></td>
+                                    <td>$#{checkoutBB.calculateProvincialTax(authenticatedUser.registeredUser.provinceId.hst)}</td>
+                                </tr>
                             </c:if>
                             <tr>
                                 <td><b>Total</b></td>
                                 <td>$#{checkoutBB.calcTotal()}</td>
                             </tr>
                         </table>
-                        <a href="profile.xhtml">#{msgs.editBillingInfo}</a>
+                        <h:form><h:commandLink action="#{navigationController.boomerangProfile()}">#{msgs.editBillingInfo}</h:commandLink></h:form>
                     </div>
                     <div class="large-5 columns">
                         <h:form id="paymentForm">
