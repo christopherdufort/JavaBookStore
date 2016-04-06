@@ -193,6 +193,7 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.5</version>
                 <configuration>
+                    <warName>g3w16</warName>
                     <webXml>src/main/webapp/WEB-INF/web.xml</webXml>
                     <!--                    <webResources>
                         <resource>
