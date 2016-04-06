@@ -54,7 +54,7 @@ public class BookController {
     }
 
     public List<Book> searchByPublisher(String publisher) {
-        return bookJpaController.findBookEntitiesByPublisherLike(publisher);
+        return bookJpaController.findBookEntitiesByPublisherLikeAsClient(publisher);
     }
     
     public List<Book> browseByGenre(Genre genre){
