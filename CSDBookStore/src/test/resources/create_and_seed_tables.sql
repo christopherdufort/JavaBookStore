@@ -179,7 +179,7 @@ CREATE TABLE IF NOT EXISTS `survey` (
 
 CREATE TABLE IF NOT EXISTS `survey_answer` (
   `survey_id` INT(6) NOT NULL,
-  `session_id` VARCHAR(200) DEFAULT NULL,            --  certainly overkill, but at least enough -- 
+  `session_id` VARCHAR(200) DEFAULT NULL,
   `choice` INT(3) DEFAULT 4
 ) ENGINE=InnoDB;
 

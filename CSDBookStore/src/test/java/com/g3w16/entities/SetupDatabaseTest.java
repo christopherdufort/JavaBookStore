@@ -17,6 +17,8 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -89,6 +91,7 @@ public class SetupDatabaseTest {
         try (Connection connection = ds.getConnection()) {
             for (String statement : splitStatements(new StringReader(
                     seedDataScript), ";")) {
+                Logger.getLogger(this.getClass().getName()).log(Level.INFO, statement.toString());
                 connection.prepareStatement(statement).execute();
             }
         } catch (SQLException e) {
