@@ -19,7 +19,7 @@
                     <nav aria-label="You are here:" role="navigation">
                         <h:form>
                             <ul class="breadcrumbs">
-                                <li><a href="home.xhtml">#{msgs.home}</a></li>
+                                <li><a href="#{request.contextPath}/faces/home.xhtml">#{msgs.home}</a></li>
                                 <li><a href="#"><h:commandLink value="#{bookBB.genreName}" action="#{searchActionBean.browseGenre(bookBB.genreName)}"/></a></li>
                                 <li>
                                     <h:outputText value="#{bookBB.book.title}"/>

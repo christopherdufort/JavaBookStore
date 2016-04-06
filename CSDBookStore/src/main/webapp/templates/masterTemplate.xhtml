@@ -30,7 +30,7 @@
             <f:event type="preRenderView" listener="#{internationalizationController.checkLocaleCookie}" />
         </f:metadata>
 
-
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
 
         <ui:insert name="event_listener"></ui:insert>
     </h:head>
@@ -46,8 +46,8 @@
             <div class="top-bar" id="main-menu">
                 <div class="top-bar-left">
                     <ul class="dropdown menu" data-dropdown-menu="">
-                        <li><a href="/CSDBookStore/faces/home.xhtml"><img src="resources/images/headerlogo.png"/></a></li>
-                        <li><a class="menu-text main-title" href="/CSDBookStore/faces/home.xhtml">bibliotech</a></li>
+                        <li><a href="#{request.contextPath}/faces/home.xhtml"><img src="resources/images/headerlogo.png"/></a></li>
+                        <li><a class="menu-text main-title" href="#{request.contextPath}/faces/home.xhtml">bibliotech</a></li>
                     </ul>
                 </div>
                 <div class="top-bar-right">
@@ -75,7 +75,7 @@
                                         </h:form>
                                     </li>
                                     <li>
-                                        <h:outputLink styleClass="button" value="/CSDBookStore/faces/signup.xhtml">#{msgs.signUp}</h:outputLink>
+                                        <h:outputLink styleClass="button" value="#{request.contextPath}/faces/signup.xhtml">#{msgs.signUp}</h:outputLink>
                                     </li>
                                     <li>
                                         <h:form><h:commandLink styleClass="button fi-shopping-cart" action="#{navigationController.navigateToCart()}">#{msgs.myCart}</h:commandLink></h:form>
@@ -91,15 +91,15 @@
                                         <h:form><h:commandLink styleClass="button fi-shopping-cart" action="#{navigationController.navigateToCart()}">#{msgs.myCart}</h:commandLink></h:form>
                                     </li>
                                     <li>
-                                        <h:outputLink styleClass="button" value="/CSDBookStore/faces/logout.xhtml">#{msgs.logout}</h:outputLink>
+                                        <h:outputLink styleClass="button" value="#{request.contextPath}/faces/logout.xhtml">#{msgs.logout}</h:outputLink>
                                     </li>
                                     <li> <!-- Make this check if you have made a purchase before displaying -->
-                                        <h:outputLink styleClass="button" value="/CSDBookStore/faces/orders.xhtml">#{msgs.myOrders}</h:outputLink>
+                                        <h:outputLink styleClass="button" value="#{request.contextPath}/faces/orders.xhtml">#{msgs.myOrders}</h:outputLink>
                                     </li>
                                 </ui:fragment>
                                 <ui:fragment rendered="#{authenticationController.isManager()}">
                                     <li>
-                                        <h:outputLink styleClass="button" value="/CSDBookStore/faces/m_index.xhtml">#{msgs.adminPanel}</h:outputLink>
+                                        <h:outputLink styleClass="button" value="#{request.contextPath}/faces/m_index.xhtml">#{msgs.adminPanel}</h:outputLink>
                                     </li>
                                 </ui:fragment>
                             </ul>
@@ -133,10 +133,10 @@
             <div class="row">
                 <div class="medium-6 columns">
                     <ul class="menu">
-                        <li><a href="/CSDBookStore/faces/about.xhtml">#{msgs.about}</a></li>
-                        <li><a href="/CSDBookStore/faces/contact.xhtml">Contact</a></li>
-                        <li><a href="/CSDBookStore/faces/faq.xhtml">FAQ</a></li>
-                        <li><a href="/CSDBookStore/faces/help.xhtml">#{msgs.help}</a></li>
+                        <li><a href="#{request.contextPath}/faces/about.xhtml">#{msgs.about}</a></li>
+                        <li><a href="#{request.contextPath}/faces/contact.xhtml">Contact</a></li>
+                        <li><a href="#{request.contextPath}/faces/faq.xhtml">FAQ</a></li>
+                        <li><a href="#{request.contextPath}/faces/help.xhtml">#{msgs.help}</a></li>
                     </ul>
                 </div>
                 <div class="medium-6 columns">
