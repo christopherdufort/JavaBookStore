@@ -22,31 +22,33 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel panel-info">
-                                <div class="panel-heading">Summary for Sales by Author</div>
-                                <div class="panel-body"><h1>Total Sales: <strong> <h:outputText value="#{m_reports.allTotalSales}"/></strong></h1></div>
-                            </div>
+                                    <div class="panel-heading">Summary for Sales by Author</div>
+                                    <div class="panel-body"><h1>Total Sales: <strong> <h:outputText value="#{m_reports.allTotalSales}"/></strong></h1></div>
+                                </div>
                                 <div class="panel-body">
 
 
                                     <div class="dataTable_wrapper table-responsive">
                                         <h:form id="table"> 
-                                            <h:outputLabel value="#{msgs.fromDate}" for="fromDate"></h:outputLabel>
-                                            <p:calendar id="fromDate" value="#{m_reports.date1}" />
-                                            <h:message for="fromDate" errorStyle="color:red; display:block"/>
+                                            <h:panelGrid columns="6">
+                                                <h:outputLabel value="#{msgs.fromDate}" for="fromDate"></h:outputLabel>
+                                                <p:calendar id="fromDate" value="#{m_reports.date1}" />
+                                                <h:message for="fromDate" errorStyle="color:red; display:block"/>
 
-                                            <h:outputLabel value="#{msgs.toDate}" for="toDate"></h:outputLabel>
-                                            <p:calendar id="toDate" value="#{m_reports.date2}" />
-                                            <h:message for="toDate" errorStyle="color:red; display:block"/>
-
-                                            <h:outputLabel for="users" value="#{msgs.name}" />
-                                            <p:selectOneMenu id="name" value="#{m_reports.author}" label="#{msgs.author}"
-                                                                  filter="true" filterMatchMode="startsWith" panelStyle="width:250px" converter="com.g3w16.converter.AuthorConverter">
-                                                <f:selectItems value="#{m_authors.allAuthor}" />
-                                            </p:selectOneMenu>
-                                            
-                                            <p:commandButton  process="@parent" update="dtable" value="Search" actionListener="#{m_reports.getTotalPerAuthor}" />
-
-                                            
+                                                <h:outputLabel value="#{msgs.toDate}" for="toDate"></h:outputLabel>
+                                                <p:calendar id="toDate" value="#{m_reports.date2}" />
+                                                <h:message for="toDate" errorStyle="color:red; display:block"/>
+                                            </h:panelGrid>
+                                            <h:outputText value="&#160;" />
+                                            <h:panelGrid columns="4">
+                                                <h:outputLabel for="users" value="#{msgs.name}" />
+                                                <p:selectOneMenu id="name" value="#{m_reports.author}" label="#{msgs.author}"
+                                                                 filter="true" filterMatchMode="startsWith" panelStyle="width:250px" converter="com.g3w16.converter.AuthorConverter">
+                                                    <f:selectItems value="#{m_authors.allAuthor}" />
+                                                </p:selectOneMenu>
+                                                <h:outputText value="&#160;" />
+                                                <p:commandButton  process="@parent" update="dtable" value="Search" actionListener="#{m_reports.getTotalPerAuthor}" />
+                                            </h:panelGrid>
                                             <p:dataTable id="dtable" class="table table-striped table-bordered table-hover" value="#{m_reports.totalPerAuthor}" 
                                                          var="books" widgetVar="reportsTable" 
 
@@ -77,12 +79,12 @@
 
                                                     #{books.listPrice}
                                                 </p:column>
-                                                
+
                                                 <p:column filterBy="#{books.salePrice}" sortBy="#{books.salePrice}" headerText="#{msgs.sale_price}" filterMatchMode="contains">
 
                                                     #{books.salePrice}
                                                 </p:column>
-                                                
+
                                                 <p:column filterBy=" #{m_reports.getTotalPerBook(books)}" sortBy=" #{m_reports.getTotalPerBook(books)}" headerText="#{msgs.total}" filterMatchMode="contains">
 
                                                     #{m_reports.getTotalPerBook(books)}
