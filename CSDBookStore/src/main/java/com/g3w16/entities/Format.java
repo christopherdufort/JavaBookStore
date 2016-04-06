@@ -25,7 +25,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "format", catalog = "g3w16", schema = "")
 @NamedQueries({
-    @NamedQuery(name = "Format.findAll", query = "SELECT f FROM Format f"),
+    @NamedQuery(name = "Format.findAll", query = "SELECT f FROM Format f order by f.formatId ASC"),
     @NamedQuery(name = "Format.findByFormatId", query = "SELECT f FROM Format f WHERE f.formatId = :formatId"),
     @NamedQuery(name = "Format.findByExtension", query = "SELECT f FROM Format f WHERE f.extension LIKE :extension"),
     @NamedQuery(name = "Format.findByBookId", query = "SELECT f FROM Format f WHERE EXISTS( SELECT 1 FROM f.bookList b WHERE b.bookId = :bookId )"),
