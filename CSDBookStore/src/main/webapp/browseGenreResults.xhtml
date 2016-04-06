@@ -11,7 +11,7 @@
         <ui:composition template="./templates/masterTemplate.xhtml">
 
             <ui:define name="title">
-                Browse Genre Results
+                #{msgs.genreResults}
             </ui:define>
 
             <ui:define name="event_listener">
@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div class="row column text-center">
-                    <h2>Top Selling Books in this Genre</h2>
+                    <h2>#{msgs.topBooks}</h2>
                     <hr/>
                 </div>
                 <div class="row small-up-2 medium-up-3 large-up-6">
@@ -43,7 +43,7 @@
                     <hr/>
                 </div>
                 <div class="row column text-center">
-                    <h2>All Books from this Genre</h2>
+                    <h2>#{msgs.allBooks}</h2>
                     <hr/>
                 </div>
                 <div class="row small-up-2 medium-up-3 large-up-5">

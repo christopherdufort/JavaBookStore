@@ -58,6 +58,8 @@ public class ProfileBackingBean implements Serializable {
     private String cellPhone;
     private Title titleId;
     private Province provinceId;
+    
+    private String redirectTo;
 
     public ProfileBackingBean() {
         super();
@@ -347,6 +349,20 @@ public class ProfileBackingBean implements Serializable {
      */
     public void setProvinceId(Province provinceId) {
         this.provinceId = provinceId;
+    }
+    
+    /**
+     * @return the redirectTo
+     */
+    public String getRedirectTo() {
+        return redirectTo;
+    }
+
+    /**
+     * @param redirectTo the redirectTo to set
+     */
+    public void setRedirectTo(String redirectTo) {
+        this.redirectTo = redirectTo;
     }
 
 
