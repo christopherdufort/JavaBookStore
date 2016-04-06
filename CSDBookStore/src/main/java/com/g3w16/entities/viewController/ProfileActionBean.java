@@ -24,26 +24,25 @@ import javax.inject.Named;
 @Named
 @SessionScoped
 public class ProfileActionBean implements Serializable{
+    @Inject
+    private UserController userController;
+
+    @Inject
+    private ProfileBackingBean profileBackingBean;
     
-//    @Inject
-//    private UserController userController;
-//
-//    @Inject
-//    private ProfileBackingBean profileBackingBean;
-//    
-//    public ProfileActionBean(){
-//        Logger.getLogger(this.getClass().getName()).log(Level.INFO, "ProfileActionBean was constructed via CDI");
-//    }
-//
-//    public String editProfile() {
-//        Logger.getLogger(this.getClass().getName()).log(Level.INFO, "EditProfile in profile action bean is invoked!");
-//        try {
-//            userController.editProfile();
-//        } catch (Exception ex) {
-//            FacesContext.getCurrentInstance().addMessage("profileForm", new FacesMessage(ex.toString()));
-//            Logger.getLogger(this.getClass().getName()).log(Level.INFO, "Exception Occured in ProfileActionBean");
-//            return null; //Stay on page
-//        }
-//        return "home"; 
-//    }
+    public ProfileActionBean(){
+        Logger.getLogger(this.getClass().getName()).log(Level.INFO, "ProfileActionBean was constructed via CDI");
+    }
+
+    public String editProfile() {
+        Logger.getLogger(this.getClass().getName()).log(Level.INFO, "EditProfile in profile action bean is invoked!");
+        try {
+            userController.editProfile();
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage("profileForm", new FacesMessage(ex.toString()));
+            Logger.getLogger(this.getClass().getName()).log(Level.INFO, "Exception Occured in ProfileActionBean");
+            return null; //Stay on page
+        }
+        return "home"; 
+    }
 }

@@ -11,6 +11,8 @@ import com.g3w16.entities.AuthorJpaController;
 import com.g3w16.entities.Book;
 import com.g3w16.entities.BookJpaController;
 import com.g3w16.entities.Genre;
+import com.g3w16.entities.InvoiceDetail;
+import com.g3w16.entities.InvoiceDetailJpaController;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -21,6 +23,7 @@ import javax.inject.Named;
 /**
  *
  * @author Christopher Dufort
+ * @author Jonas Faure
  */
 @Named
 @RequestScoped
@@ -28,6 +31,9 @@ public class BookController {
 
     @Inject
     BookJpaController bookJpaController;
+    
+    @Inject
+    InvoiceDetailJpaController invoiceDetailJpacontroller;
     
     @Inject
     AuthorJpaController authorJpaController;
@@ -77,5 +83,15 @@ public class BookController {
 
     public List<Book> getRandomBook(int limit) {
         return bookJpaController.findBookEntitiesAsClient(limit, 12);
+    }
+    
+    public List<Book> getTopSellersInGenre(Genre genre, int limit){
+        List<Book> allInGenre = bookJpaController.findBookEntitiesByGenreAsClient(genre);
+        List<InvoiceDetail> allSoldBooksInGenre = new ArrayList<>();
+        for (Book book : allInGenre) {
+           allSoldBooksInGenre.addAll(invoiceDetailJpacontroller.findInvoiceDetailByBook(book));                
+        }    
+        //TODO NOT IMPLEMENTED
+        return null;
     }
 }

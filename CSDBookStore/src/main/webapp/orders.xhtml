@@ -40,11 +40,11 @@
                                         <img class="thumbnail" src="resources/images/#{orderDetail.book.isbn}_s.jpg"></img>
                                         <ul class="menu simple">
                                             <li>Book Name:<a href="#"> #{orderDetail.book.title}</a></li><br/>
-                                            <li>isbn:<a href="#"> #{orderDetail.book.isbn}</a></li><br/>
+                                            <li>ISBN:<a href="#"> #{orderDetail.book.isbn}</a></li><br/>
                                             <li>Author:<a href="#"> #{orderDetail.book.authorList.get(0)}</a></li><br/>
                                             <h:form>
                                                 <p:commandButton value="Download" ajax="false" icon="ui-icon-arrowthick-1-s">
-                                                    <p:fileDownload value="#{fileDownloadView.file}" />
+                                                    <p:fileDownload value="#{fileDownloadView.file()}" />
                                                 </p:commandButton>
                                                 <hr/>
                                             </h:form>
