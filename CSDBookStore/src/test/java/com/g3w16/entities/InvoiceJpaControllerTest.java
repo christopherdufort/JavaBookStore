@@ -43,7 +43,7 @@ import org.junit.Ignore;
  *
  * @author Rita Lazaar
  */
-
+@Ignore
 @RunWith(Arquillian.class)
 public class InvoiceJpaControllerTest {
 

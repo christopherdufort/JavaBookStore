@@ -40,7 +40,7 @@ import org.junit.Ignore;
  *
  * @author Jonas faure
  */
-
+@Ignore
 @RunWith(Arquillian.class)
 public class FormatTest {
 

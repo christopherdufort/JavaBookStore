@@ -40,7 +40,7 @@ import org.junit.Ignore;
  *
  * @author 1232046
  */
-
+@Ignore
 @RunWith(Arquillian.class)
 public class ReviewJpaControllerTest {
 

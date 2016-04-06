@@ -14,39 +14,34 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 import javax.annotation.Resource;
-import javax.inject.Inject;
 import javax.sql.DataSource;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Test;
-import static org.junit.Assert.*;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Ignore;
 
 /**
- * Tests for the Title Entity.
- * 
- * @author Giuseppe Campanelli
+ * @author Christopher Dufort
  */
-@Ignore
+
 @RunWith(Arquillian.class)
-public class TitleJpaControllerTest {
+public class SetupDatabaseTest {
     
     @Deployment
     public static WebArchive deploy(){
         // Use an alternative to the JUnit assert library called AssertJ
-        // Need to reference MySQL driver as it is not part of either
-        // embedded or remote TomEE
+        // Need to reference MySQL driver as it is not part of either embedded or remote TomEE
         final File[] dependencies = Maven
                 .resolver()
                 .loadPomFromFile("pom.xml")
@@ -54,19 +49,17 @@ public class TitleJpaControllerTest {
                         "org.assertj:assertj-core").withoutTransitivity()
                 .asFile();
         
-        // For testing Arquillian prefers a resources.xml file over a
-        // context.xml
-        // Actual file name is resources-mysql-ds.xml in the test/resources
-        // folder
+        // For testing Arquillian prefers a resources.xml file over acontext.xml
+        // Actual file name is resources-mysql-ds.xml in the test/resources folder
         // The SQL script to create the database is also in this folder
-        final WebArchive webArchive = ShrinkWrap.create(WebArchive.class)
+        final WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "test.war")
                 .setWebXML(new File("src/main/webapp/WEB-INF/web.xml"))
                 //.addPackage(CSDBookStoreDAOImpl.class.getPackage())
-                .addPackage(TitleJpaController.class.getPackage())
-                .addPackage(Title.class.getPackage())
+                .addPackage(AdJpaController.class.getPackage())
+                .addPackage(Ad.class.getPackage())
                 .addPackage(RollbackFailureException.class.getPackage())
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
-                .addAsWebInfResource(new File("src/main/setup/glassfish-resources.xml"), "glassfish-resources.xml")
+                .addAsWebInfResource(new File("src/main/webapp/WEB-INF/glassfish-resources.xml"), "glassfish-resources.xml")
                 .addAsResource(new File("src/main/resources/META-INF/persistence.xml"), "META-INF/persistence.xml")
                 .addAsResource("create_and_seed_tables.sql")
                 .addAsLibraries(dependencies);
@@ -76,95 +69,13 @@ public class TitleJpaControllerTest {
     
     @Resource(name="java:app/jdbc/g3w16")
     private DataSource ds;
+   
+    //------------------------------------------------------TEST METHODS-----------------------------------
+    @Test
+    public void CreateAndSeedDatabase() throws Exception{
+        assertThat(true);
+    }
     
-    @Inject
-    private TitleJpaController titleJpaController;
-
-    /**
-     * Test of create method, of class TitleJpaController.
-     */
-    @Test
-    public void testCreate() throws Exception {
-        System.out.println("create");
-        Title title = new Title();
-        title.setTitle("Test");
-        titleJpaController.create(title);
-        assertEquals(title.getTitle(), titleJpaController.findTitleByName("Test").getTitle());
-    }
-
-    /**
-     * Test of edit method, of class TitleJpaController.
-     */
-    @Test
-    public void testEdit() throws Exception {
-        System.out.println("edit");
-        Title title = titleJpaController.findTitleById(1);
-        title.setTitle("Mister");
-        titleJpaController.edit(title);
-        assertEquals(title, titleJpaController.findTitleByName("Mister"));
-    }
-
-    /**
-     * Test of destroy method, of class TitleJpaController.
-     */
-    @Test
-    public void testDestroy() throws Exception {
-        System.out.println("destroy");
-        Integer id = 5;
-        titleJpaController.destroy(id);
-        assertEquals(null, titleJpaController.findTitleById(5));
-    }
-
-    /**
-     * Test of findTitleEntities method, of class TitleJpaController.
-     */
-    @Test
-    public void testFindAllTitles() {
-        System.out.println("findTitleEntities");
-        List<Title> expResult = new ArrayList<Title>();
-        expResult.add(new Title(1, "Mr."));
-        expResult.add(new Title(2, "Ms."));
-        expResult.add(new Title(3, "Mrs."));
-        expResult.add(new Title(4, "Miss."));
-        expResult.add(new Title(5, "Dr."));
-        List<Title> result = titleJpaController.findAll();
-        assertEquals(expResult, result);
-    }
-
-    /**
-     * Test of findTitle method, of class TitleJpaController.
-     */
-    @Test
-    public void testFindTitleById() {
-        System.out.println("findTitle");
-        Integer id = 1;
-        Title expResult = new Title(id, "Mr.");
-        Title result = titleJpaController.findTitleById(id);
-        assertEquals(expResult, result);
-    }
-
-    /**
-     * Test of findProvinceByName method, of class TitleJpaController.
-     */
-    @Test
-    public void testFindTitleByName() {
-        System.out.println("findProvinceByName");
-        String title = "Mr.";
-        Title expResult = new Title(1, title);
-        Title result = titleJpaController.findTitleByName(title);
-        assertEquals(expResult, result);
-    }
-
-    /**
-     * Test of getTitleCount method, of class TitleJpaController.
-     */
-    @Test
-    public void testGetTitleCount() {
-        System.out.println("getTitleCount");
-        int expResult = 5;
-        int result = titleJpaController.getTitleCount();
-        assertEquals(expResult, result);
-    }
     
     //-----------------------------------------------------END OF TEST METHODS----------------------------------
     /**
@@ -227,5 +138,4 @@ public class TitleJpaControllerTest {
         return line.startsWith("--") || line.startsWith("//")
                 || line.startsWith("/*");
     }
-    
 }

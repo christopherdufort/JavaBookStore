@@ -562,4 +562,24 @@ public class BookJpaController implements Serializable {
         return q.getResultList();
     }
 
+    /**
+     * @author Christopher Dufort
+     * @author Jonas Faure
+     * @param genreId
+     * @return 
+     */
+    public List<Book> findTopSellersByGenre(int genreId) {
+        List<Book> topSellers = new ArrayList<>();
+        Query q = em.createNativeQuery("SELECT d.book_id, COUNT(d.book_id) FROM invoice_detail d WHERE EXISTS(SELECT 1 FROM book_genre g WHERE g.book_id = d.book_id AND g.genre_id = ? )GROUP BY d.book_id ORDER BY COUNT(d.book_id) DESC;");
+        q.setParameter(1, genreId);
+        q.setFirstResult(0);
+        q.setMaxResults(5);
+        List<Object[]> results = q.getResultList();
+        for (Object[] row : results) {
+            Integer bookId = (Integer) row[0];
+            topSellers.add(findBookEntitiesById(bookId));
+        }
+        return topSellers;
+    }
+
 }

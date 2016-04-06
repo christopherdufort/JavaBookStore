@@ -6,8 +6,12 @@
 package com.g3w16.beans;
 
 import com.g3w16.entities.Book;
+import com.g3w16.entities.BookJpaController;
+import com.g3w16.entities.Genre;
+import com.g3w16.entities.GenreJpaController;
 import com.g3w16.entities.viewController.SearchActionBean;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
@@ -26,6 +30,12 @@ public class ResultsBackingBean implements Serializable {
     
     @Inject
     SearchActionBean searchActionBean;
+    
+    @Inject
+    BookJpaController bookJpaController;
+    
+    @Inject
+    GenreJpaController genreJpaController;
     
     private String searchContent;
     private List<Book> searchResults;
@@ -141,6 +151,14 @@ public class ResultsBackingBean implements Serializable {
     
     public String getGenreSearchContent(){
         return searchActionBean.getGenreSerchContent();
+    }
+    
+    public List<Book> getTopSellingBooks(){
+        System.out.println("!!!!!!!!!!!!!!!!top selling in " + searchActionBean.getGenreSerchContent() );
+        List<Book> topSellers = new ArrayList<>();
+        Genre genre = genreJpaController.findByGenreName(searchActionBean.getGenreSerchContent());
+        topSellers = bookJpaController.findTopSellersByGenre(genre.getGenreId());
+        return topSellers;
     }
    
 }

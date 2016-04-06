@@ -37,7 +37,7 @@ import org.junit.Ignore;
 /**
  * @author Christopher
  */
-
+@Ignore
 @RunWith(Arquillian.class)
 public class SurveyJpaControllerTest {
     
