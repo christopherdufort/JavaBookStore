@@ -40,7 +40,7 @@
                                             <h:outputLabel value="#{msgs.toDate}" for="toDate"></h:outputLabel>
                                             <p:calendar id="toDate" value="#{m_reports.date2}" />
                                             <h:message for="toDate" errorStyle="color:red; display:block"/>
-                                            
+                                            <h:outputText value="&#160;" />
                                             <p:commandButton  process="@form" update="dtable" value="Search" actionListener="#{m_reports.getAllBooksWithDate}" />
 
                                             <p:dataTable id="dtable" class="table table-striped table-bordered table-hover" value="#{m_reports.allBooks}" 

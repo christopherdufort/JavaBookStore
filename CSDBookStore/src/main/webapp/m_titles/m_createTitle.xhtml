@@ -30,7 +30,7 @@
                                         <h:form>
                                             <h:panelGrid columns="3">
                                                 <h:outputLabel value="#{msgs.title}" for="title"></h:outputLabel>
-                                                <h:inputText id="title" value="#{m_titles.title.title}" />
+                                                <h:inputText id="title" value="#{m_titles.title.title}" required="true" requiredMessage="#{msgs.required}"/>
                                                 <h:message for="title" errorStyle="color:red; display:block"/>
                                             
                                             

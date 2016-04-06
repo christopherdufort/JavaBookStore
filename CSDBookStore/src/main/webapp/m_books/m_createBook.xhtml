@@ -105,7 +105,7 @@
                                                 <h:message for="sale_price" errorStyle="color:red; display:block"/>
 
                                                 <h:outputLabel value="#{msgs.available}" for="available"></h:outputLabel>
-                                                <p:selectOneRadio id="available" layout="lineDirection" value="#{m_books.book.available}" required="true" requiredMessage="#{msgs.required}">
+                                                <p:selectOneRadio id="available" layout="lineDirection" value="#{m_books.book.available}">
                                                     <f:selectItem itemValue="True" itemLabel="True" />
                                                     <f:selectItem itemValue="False" itemLabel="False" />
                                                 </p:selectOneRadio>
