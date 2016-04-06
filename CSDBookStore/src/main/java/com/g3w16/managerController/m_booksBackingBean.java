@@ -29,6 +29,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
 /**
@@ -260,7 +261,7 @@ public class m_booksBackingBean implements Serializable {
         InputStream input = file.getInputstream();
         String extension = FilenameUtils.getExtension(file.getFileName());
 
-        String path = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/images");
+        String path = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/images/");
         OutputStream output = new FileOutputStream(new File(path, filename + "." + extension));
 
         try {
