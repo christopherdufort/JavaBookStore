@@ -145,10 +145,12 @@ public class UserController implements Serializable {
         }
     }
     
-    public void validateAccountInfo() throws IOException {
+    public String validateAccountInfo() throws IOException {
         if (authenticatedUser.getRegisteredUser().getAddressOne() == null) {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("profile.xhtml");
+            //FacesContext.getCurrentInstance().getExternalContext().redirect("profile.xhtml");
+            return "/profile.xhtml?faces-redirect=true&backurl=checkout.xhtml";
         }
+        return null;
     }
         
 }
