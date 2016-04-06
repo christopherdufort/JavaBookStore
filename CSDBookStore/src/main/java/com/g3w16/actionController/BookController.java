@@ -85,13 +85,4 @@ public class BookController {
         return bookJpaController.findBookEntitiesAsClient(limit, 12);
     }
     
-    public List<Book> getTopSellersInGenre(Genre genre, int limit){
-        List<Book> allInGenre = bookJpaController.findBookEntitiesByGenreAsClient(genre);
-        List<InvoiceDetail> allSoldBooksInGenre = new ArrayList<>();
-        for (Book book : allInGenre) {
-           allSoldBooksInGenre.addAll(invoiceDetailJpacontroller.findInvoiceDetailByBook(book));                
-        }    
-        //TODO NOT IMPLEMENTED
-        return null;
-    }
 }

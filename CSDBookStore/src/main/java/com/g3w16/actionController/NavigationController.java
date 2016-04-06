@@ -39,7 +39,7 @@ public class NavigationController implements Serializable {
         
         authBean.setEmail(null);
         authBean.setPassword(null);
-        
+                
         return "/login.xhtml?faces-redirect=true&backurl="+url;
     }
     
