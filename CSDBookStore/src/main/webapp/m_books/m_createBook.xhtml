@@ -34,7 +34,7 @@
                                                 <h:message for="isbn" errorStyle="color:red; display:block"/>
 
                                                 <h:outputLabel value="#{msgs.title}" for="title"></h:outputLabel>
-                                                <p:inputText id="title" value="#{m_books.book.title}"/>
+                                                <p:inputText id="title" value="#{m_books.book.title}" required="true" requiredMessage="#{msgs.required}"/>
                                                 <h:message for="title" errorStyle="color:red; display:block"/>
 
                                                 <h:outputLabel for="author" value="#{msgs.author}" />
