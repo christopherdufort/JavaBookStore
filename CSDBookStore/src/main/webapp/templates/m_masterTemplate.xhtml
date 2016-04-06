@@ -50,13 +50,13 @@
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
 
-
-        <title>#{msgs.biblioAdminTitle}</title>
         <f:view locale="#{localizationBean.currentLocale}"></f:view>
         <f:metadata>
             <f:event listener="#{authenticationController.mustBeManager}" type="preRenderView" />
             <f:event type="preRenderView" listener="#{internationalizationController.checkLocaleCookie}" />
         </f:metadata>
+        <title>#{msgs.biblioAdminTitle}</title>
+
 
     </h:head>
 
@@ -80,42 +80,49 @@
                 <ul class="nav navbar-top-links navbar-right">
 
                     <!-- /.dropdown -->
-<!--                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="">
-                            <c:if test="#{m_reviews.pendingCount==0}">
-                                <i class="fa fa-bell-slash-o fa-fw"></i> <i class="fa fa-caret-down"></i>
-                            </c:if>
-                            <c:if test="#{m_reviews.pendingCount!=0}">
-                                <i class="fa fa-bell fa-fw"></i><i class="fa fa-caret-down"></i>
-                            </c:if>
-                        </a>
-                        <ul class="dropdown-menu dropdown-alerts">
-                            <li>
-                                <a href="#{request.contextPath}/faces/m_reviews/m_pendingReview.xhtml">
-                                    <div>
-                                        <i class="fa fa-comment fa-fw"></i> New Comments
-                                        <span class="pull-right text-muted small">#{m_reviews.pendingCount}</span>
-                                    </div>
-                                </a>
-                                                                <a href="#">
-                                                                    <div>
-                                                                        <i class="fa fa-warning fa-fw"></i> Alert
-                                                                        <span class="pull-right text-muted small">4 minutes ago</span>
-                                                                    </div>
-                                                                </a>
-                            </li>
-
-                        </ul>
-                         /.dropdown-alerts 
-                    </li>-->
+                    <!--                    <li class="dropdown">
+                                            <a class="dropdown-toggle" data-toggle="dropdown" href="">
+                                                <c:if test="#{m_reviews.pendingCount==0}">
+                                                    <i class="fa fa-bell-slash-o fa-fw"></i> <i class="fa fa-caret-down"></i>
+                                                </c:if>
+                                                <c:if test="#{m_reviews.pendingCount!=0}">
+                                                    <i class="fa fa-bell fa-fw"></i><i class="fa fa-caret-down"></i>
+                                                </c:if>
+                                            </a>
+                                            <ul class="dropdown-menu dropdown-alerts">
+                                                <li>
+                                                    <a href="#{request.contextPath}/faces/m_reviews/m_pendingReview.xhtml">
+                                                        <div>
+                                                            <i class="fa fa-comment fa-fw"></i> New Comments
+                                                            <span class="pull-right text-muted small">#{m_reviews.pendingCount}</span>
+                                                        </div>
+                                                    </a>
+                                                                                    <a href="#">
+                                                                                        <div>
+                                                                                            <i class="fa fa-warning fa-fw"></i> Alert
+                                                                                            <span class="pull-right text-muted small">4 minutes ago</span>
+                                                                                        </div>
+                                                                                    </a>
+                                                </li>
+                    
+                                            </ul>
+                                             /.dropdown-alerts 
+                                        </li>-->
                     <!-- /.dropdown -->
                     <li class="dropdown">
-                        
-                       
 
-                            <li><a href="#{request.contextPath}/faces/home.xhtml"><i class="fa fa-sign-out fa-fw"></i> Back to user</a>
-                            </li>
-                       
+
+
+                        <li><a href="#{request.contextPath}/faces/home.xhtml"><i class="fa fa-sign-out fa-fw"></i> Back to user</a>
+                        </li>
+                        <li>  <h:form>
+                                <h:selectOneMenu value="#{localizationBean.currentLanguage}" onchange="submit()">
+                                    <f:selectItem itemValue="en" itemLabel="English" />
+                                    <f:selectItem itemValue="fr" itemLabel="Français" />
+                                </h:selectOneMenu>
+                            </h:form>
+                        </li>
+
                         <!-- /.dropdown-user -->
                     </li>
                     <!-- /.dropdown -->
@@ -133,28 +140,28 @@
                                 <!-- /input-group -->
                             </li>
                             <li>
-                                <a href="#{request.contextPath}/faces/m_index.xhtml"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                                <a href="#{request.contextPath}/faces/m_index.xhtml"><i class="fa fa-dashboard fa-fw"></i> #{msgs.dashboard}</a>
                             </li>
                             <li>
-                                <a href="#{request.contextPath}/faces/m_books/m_books.xhtml"><i class="fa fa-table fa-fw"></i> Books</a>
+                                <a href="#{request.contextPath}/faces/m_books/m_books.xhtml"><i class="fa fa-table fa-fw"></i> #{msgs.books}</a>
                             </li>
                             <li>
-                                <a href="#{request.contextPath}/faces/m_users/m_users.xhtml"><i class="fa fa-table fa-fw"></i> Users</a>
+                                <a href="#{request.contextPath}/faces/m_users/m_users.xhtml"><i class="fa fa-table fa-fw"></i> #{msgs.users}</a>
                             </li>
                             <li>
-                                <a href="#{request.contextPath}/faces/m_reviews/m_reviews.xhtml"><i class="fa fa-table fa-fw"></i> Reviews</a>
+                                <a href="#{request.contextPath}/faces/m_reviews/m_reviews.xhtml"><i class="fa fa-table fa-fw"></i> #{msgs.reviews}</a>
                             </li>
                             <li>
-                                <a href="#{request.contextPath}/faces/m_invoices/m_invoices.xhtml"><i class="fa fa-table fa-fw"></i> Invoices</a>
+                                <a href="#{request.contextPath}/faces/m_invoices/m_invoices.xhtml"><i class="fa fa-table fa-fw"></i> #{msgs.invoices}</a>
                             </li>
                             <li>
-                                <a href="#{request.contextPath}/faces/m_news/m_news.xhtml"><i class="fa fa-table fa-fw"></i> News</a>
+                                <a href="#{request.contextPath}/faces/m_news/m_news.xhtml"><i class="fa fa-table fa-fw"></i> #{msgs.newsFeed}</a>
                             </li>
                             <li>
-                                <a href="#{request.contextPath}/faces/m_surveys/m_surveys.xhtml"><i class="fa fa-table fa-fw"></i> Surveys</a>
+                                <a href="#{request.contextPath}/faces/m_surveys/m_surveys.xhtml"><i class="fa fa-table fa-fw"></i> #{msgs.surveys}</a>
                             </li>
                             <li>
-                                <a href="#{request.contextPath}/faces/m_ads/m_ads.xhtml"><i class="fa fa-table fa-fw"></i> Ads</a>
+                                <a href="#{request.contextPath}/faces/m_ads/m_ads.xhtml"><i class="fa fa-table fa-fw"></i> #{msgs.ads}</a>
                             </li>
                             <li>
                                 <a href="#{request.contextPath}/faces/m_reports/m_reports.xhtml"><i class="fa fa-table fa-fw"></i> Reports</a>
@@ -165,9 +172,9 @@
                                     <li>
                                         <a href="#{request.contextPath}/faces/m_reports/m_authorSales.xhtml">Sales by Author</a>
                                     </li>
-<!--                                    <li>
-                                        <a href="m_bookReports.xhtml">Book Reports</a>
-                                    </li>-->
+                                    <!--                                    <li>
+                                                                            <a href="m_bookReports.xhtml">Book Reports</a>
+                                                                        </li>-->
                                     <li>
                                         <a href="#{request.contextPath}/faces/m_reports/m_clientSales.xhtml">Sales by Client</a>
                                     </li>
