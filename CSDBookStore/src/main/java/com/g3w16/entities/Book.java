@@ -55,8 +55,8 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Book.findByFormatAvailable", query = "SELECT b FROM Book b WHERE EXISTS( SELECT 1 FROM b.formatList f WHERE f.formatId = :formatId ) AND b.available = 1"),
     @NamedQuery(name = "Book.findByGenreAvailable", query = "SELECT b FROM Book b WHERE EXISTS( SELECT 1 FROM b.genreList g WHERE g.genreId = :genreId ) AND b.available = 1"),
     @NamedQuery(name = "Book.findByAuthorAvailable", query = "SELECT b FROM Book b WHERE EXISTS( SELECT 1 FROM b.authorList a WHERE a.authorId = :authorId ) AND b.available = 1"),
-    @NamedQuery(name = "Book.findNewBooks", query = "SELECT b FROM Book b ORDER BY b.publishDate DESC"),
-    @NamedQuery(name = "Book.findDiscountedBook", query = "SELECT b FROM Book b WHERE b.listPrice>b.salePrice")
+    @NamedQuery(name = "Book.findNewBooks", query = "SELECT b FROM Book b WHERE b.available = 1 ORDER BY b.publishDate DESC"),
+    @NamedQuery(name = "Book.findDiscountedBook", query = "SELECT b FROM Book b WHERE b.listPrice>b.salePrice AND b.available = 1")
     
     // All function before this should be re-implemented with order ( price, date pub, date enter, rating, pages ) 
     //      + with some care about availability ( in case of client's functions vs manager's functions )

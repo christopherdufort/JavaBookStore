@@ -50,7 +50,7 @@ public class CartBackingBean implements Serializable {
         if (!cart.contains(book))
             cart.add(book);
         setRedirectTo(redirect);
-        return "cart";
+        return "cart?faces-redirect=true";
     }
     
     /**
@@ -117,6 +117,6 @@ public class CartBackingBean implements Serializable {
         checkoutBB.setOrder(cart);
         checkoutBB.setSubtotal(getTotal());
         
-        return "checkout";
+        return "checkout?faces-redirect=true";
     }
 }

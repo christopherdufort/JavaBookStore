@@ -23,6 +23,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -37,7 +38,7 @@ import org.primefaces.model.UploadedFile;
  * @author Rita Lazaar
  */
 @ManagedBean(name = "m_books")
-@RequestScoped
+@SessionScoped
 public class m_booksBackingBean implements Serializable {
 
     private Book book;
@@ -259,7 +260,7 @@ public class m_booksBackingBean implements Serializable {
         InputStream input = file.getInputstream();
         String extension = FilenameUtils.getExtension(file.getFileName());
 
-        String path = FacesContext.getCurrentInstance().getExternalContext().getRealPath("./../resources/images");
+        String path = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/images");
         OutputStream output = new FileOutputStream(new File(path, filename + "." + extension));
 
         try {

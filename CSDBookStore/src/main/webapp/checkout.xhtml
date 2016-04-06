@@ -16,7 +16,7 @@
             <ui:define name="event_listener">
                 <f:metadata>
                     <f:event listener="#{authenticationController.mustBeClient}" type="preRenderView" />
-                    <!-- validate account info -->
+                    <f:event listener="#{userController.validateAccountInfo}" type="preRenderView" />
                 </f:metadata>
             </ui:define>
 
@@ -71,10 +71,10 @@
                         <a href="profile.xhtml">#{msgs.editBillingInfo}</a>
                     </div>
                     <div class="large-5 columns">
-                        <h:form id="auth_form">
+                        <h:form id="paymentForm">
                             <div class="row column">
                                 <h4 class="text-center">#{msgs.paymentInfo}</h4>
-                                <h:message for="auth_form" style="color:red">
+                                <h:message for="paymentForm" style="color:red">
                                 </h:message>
                                 <label>#{msgs.creditCardNumber}:</label>
                                 <h:inputText id="cardNumber" value="#{checkoutBB.cardNumber}" required="true" autocomplete="off" requiredMessage="#{msgs.required}"
