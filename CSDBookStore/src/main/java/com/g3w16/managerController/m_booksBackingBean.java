@@ -134,6 +134,7 @@ public class m_booksBackingBean implements Serializable {
      * @return
      */
     public String createBook() {
+        Logger.getLogger(m_booksBackingBean.class.getName()).log(Level.SEVERE, "I'm trying to create a book !");
         Date d = new Date(System.currentTimeMillis());
         try {
             book.setOverallRating(BigDecimal.ZERO);

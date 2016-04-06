@@ -46,7 +46,7 @@
             <div class="top-bar" id="main-menu">
                 <div class="top-bar-left">
                     <ul class="dropdown menu" data-dropdown-menu="">
-                        <li><img src="resources/images/headerlogo.png"/></li>
+                        <li><a href="/CSDBookStore/faces/home.xhtml"><img src="resources/images/headerlogo.png"/></a></li>
                         <li><a class="menu-text main-title" href="/CSDBookStore/faces/home.xhtml">bibliotech</a></li>
                     </ul>
                 </div>
@@ -83,7 +83,9 @@
                                 </ui:fragment>
                                 <ui:fragment rendered="#{authenticationController.isClient()}">
                                     <li>
-                                        <h:outputLink styleClass="button" value="http://localhost:8080/CSDBookStore/faces/profile.xhtml">#{msgs.myProfile}</h:outputLink>
+                                        <h:form>
+                                            <h:commandLink styleClass="button" value="#{msgs.myProfile}" action="#{navigationController.boomerangProfile()}"/>
+                                        </h:form>
                                     </li>
                                     <li>
                                         <h:form><h:commandLink styleClass="button fi-shopping-cart" action="#{navigationController.navigateToCart()}">#{msgs.myCart}</h:commandLink></h:form>

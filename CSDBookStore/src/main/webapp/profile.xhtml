@@ -18,6 +18,7 @@
                 <f:metadata>
                     <f:event listener="#{profileBackingBean.init}" type="preRenderView" /> 
                     <f:event listener="#{authenticationController.mustBeClient}" type="preRenderView" />
+                    <f:viewParam name="backurl" value="#{profileBackingBean.redirectTo}"/>
                 </f:metadata>
             </ui:define>
 
@@ -28,7 +29,7 @@
                             <div class="small-12 large-6 columns">
                                 <h:message for="profileForm" style="color:red">
                                 </h:message>
-                                <label>Title
+                                <label>#{msgs.title}
                                     <h:selectOneMenu value="#{profileBackingBean.titleId}">
                                         <f:converter converterId="com.g3w16.converter.TitleConverter"/>
                                         <f:selectItems value="#{profileBackingBean.availableTitles}"/>
@@ -42,8 +43,9 @@
                                              value="#{profileBackingBean.lastName}"
                                              required="true" requiredMessage="#{msgs.required}">
                                     <f:validateLength maximum="25"/>
+                                    <f:ajax event="blur" render="lastNameError" />
                                 </h:inputText>
-                                <h:message class="error" for="lastName"/>
+                                <h:message id="lastNameError" class="error" for="lastName"/>
                             </div>
                             <div class="small-12 large-6 columns">
                                 <h:outputLabel for="firstName" value="#{msgs.firstName}"/>
@@ -52,18 +54,19 @@
                                              value="#{profileBackingBean.firstName}"
                                              required="true" requiredMessage="#{msgs.required}">
                                     <f:validateLength maximum="25"/>
+                                    <f:ajax event="blur" render="firstNameError" />
                                 </h:inputText>
-                                <h:message class="error" for="firstName"/>
+                                <h:message id="firstNameError" class="error" for="firstName"/>
                             </div>
                             <div class="small-12 large-6 columns">
                                 <h:outputLabel for="companyName" value="#{msgs.companyName}"/>
                                 <h:inputText id="companyName" label="#{msgs.companyName}"
                                              pt:placeholder="Enter Text"
-                                             value="#{profileBackingBean.companyName}"
-                                             required="true" requiredMessage="#{msgs.required}">
+                                             value="#{profileBackingBean.companyName}">
                                     <f:validateLength maximum="50"/>
+                                    <f:ajax event="blur" render="companyNameError" />
                                 </h:inputText>
-                                <h:message class="error" for="companyName"/>
+                                <h:message id="companyNameError" class="error" for="companyName"/>
                             </div>
                             <div class="small-12 large-6 columns">
                                 <h:outputLabel for="addressOne" value="#{msgs.addressOne}"/>
@@ -72,18 +75,19 @@
                                              value="#{profileBackingBean.addressOne}"
                                              required="true" requiredMessage="#{msgs.required}">
                                     <f:validateLength maximum="50"/>
+                                    <f:ajax event="blur" render="addressOneError" />
                                 </h:inputText>
-                                <h:message class="error" for="addressOne"/>
+                                <h:message id="addressOneError" class="error" for="addressOne"/>
                             </div>
                             <div class="small-12 large-6 columns">
                                 <h:outputLabel for="addressTwo" value="#{msgs.addressTwo}"/>
                                 <h:inputText id="addressTwo" label="#{msgs.addressTwo}"
                                              pt:placeholder="Enter Text"
-                                             value="#{profileBackingBean.addressTwo}"
-                                             required="false" requiredMessage="#{msgs.required}">
+                                             value="#{profileBackingBean.addressTwo}">
                                     <f:validateLength maximum="50"/>
+                                    <f:ajax event="blur" render="addressTwoError" />
                                 </h:inputText>
-                                <h:message class="error" for="addressTwo"/>
+                                <h:message id="addressTwoError" class="error" for="addressTwo"/>
                             </div>
                             <div class="small-12 large-6 columns">
                                 <h:outputLabel for="city" value="#{msgs.city}"/>
@@ -92,8 +96,9 @@
                                              value="#{profileBackingBean.city}"
                                              required="true" requiredMessage="#{msgs.required}">
                                     <f:validateLength maximum="25"/>
+                                    <f:ajax event="blur" render="cityError" />
                                 </h:inputText>
-                                <h:message class="error" for="city"/>
+                                <h:message id="cityError" class="error" for="city"/>
                             </div>
                             <div class="small-12 large-6 columns">
                                 <label>Province
@@ -120,28 +125,31 @@
                                              value="#{profileBackingBean.postalCode}"
                                              required="true" requiredMessage="#{msgs.required}">
                                     <f:validateLength maximum="10"/>
+                                    <f:ajax event="blur" render="postalCodeError" />
                                 </h:inputText>
-                                <h:message class="error" for="postalCode"/>
+                                <h:message id="postalCodeError" class="error" for="postalCode"/>
                             </div>
                             <div class="small-12 large-6 columns">
-                                <h:outputLabel for="homeNum" value="#{msgs.homeNum}"/>
-                                <h:inputText id="homeNum" label="#{msgs.homeNum}"
+                                <h:outputLabel for="homeNum" value="#{msgs.phone}"/>
+                                <h:inputText id="homeNum" label="#{msgs.phone}"
                                              pt:placeholder="Enter Text"
                                              value="#{profileBackingBean.homePhone}"
                                              required="true" requiredMessage="#{msgs.required}">
                                     <f:validateLength maximum="25"/>
+                                    <f:ajax event="blur" render="homeNumError" />
                                 </h:inputText>
-                                <h:message class="error" for="homeNum"/>
+                                <h:message id="homeNumError" class="error" for="homeNum"/>
                             </div>
                             <div class="small-12 large-6 columns">
-                                <h:outputLabel for="cellNum" value="#{msgs.cellNum}"/>
-                                <h:inputText id="cellNum" label="#{msgs.cellNum}"
+                                <h:outputLabel for="cellNum" value="#{msgs.cell}"/>
+                                <h:inputText id="cellNum" label="#{msgs.cell}"
                                              pt:placeholder="Enter Text"
                                              value="#{profileBackingBean.cellPhone}"
                                              required="true" requiredMessage="#{msgs.required}">
                                     <f:validateLength maximum="25"/>
+                                    <f:ajax event="blur" render="cellNumError" />
                                 </h:inputText>
-                                <h:message class="error" for="cellNum"/>
+                                <h:message id="cellNumError" class="error" for="cellNum"/>
                             </div>
                             <div class="small-12 large-6 columns">
                                 <h:outputLabel for="email" value="#{msgs.email}"/>
@@ -151,21 +159,23 @@
                                              required="true" requiredMessage="#{msgs.required}">
                                     <f:validateLength maximum="50"/>
                                     <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                    <f:ajax event="blur" render="emailError" />
                                 </h:inputText>
-                                <h:message class="error" for="email"/>
+                                <h:message id="emailError" class="error" for="email"/>
                             </div>
                             <div class="small-12 large-6 columns">
-                                <h:outputLabel for="password" value="#{msgs.password}"/>
-                                <h:inputSecret id="password" label="#{msgs.password}"
+                                <h:outputLabel for="password" value="#{msgs.password} (#{msgs.required})"/>
+                                <h:inputSecret id="password" label="#{msgs.password} (#{msgs.required})"
                                                pt:placeholder="**********"
                                                value="#{profileBackingBean.password}"
                                                required="true" requiredMessage="#{msgs.required}">
                                     <f:validateLength maximum="25"/>
+                                    <f:ajax event="blur" render="passwordError" />
                                 </h:inputSecret>
-                                <h:message class="error" for="password"/>
+                                <h:message id="passwordError" class="error" for="password"/>
                             </div>
                             <div class="small-12 large-12 columns">
-                                <h:commandLink value="Update your profile!" class="button" action="#{profileActionBean.editProfile}"></h:commandLink>
+                                <h:commandLink value="#{msgs.submit}" class="button" action="#{profileActionBean.editProfile}"></h:commandLink>
                             </div>
                         </div>
                     </h:form>

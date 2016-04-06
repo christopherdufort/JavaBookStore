@@ -335,11 +335,11 @@ ALTER TABLE `survey_answer`
 
 INSERT INTO `ad` (`ad_id`, `ad_filename`, `active`, `ad_type`) VALUES
 (1, 'mcdonalds.com', 1, 0),
-(2, 'facebook.com', 1, 1),
+(2, 'facebook.com', 0, 1),
 (3, 'amazon.com', 0, 1),
 (4, 'airfrance.ca', 0, 1),
 (5, 'leagueoflegends.com', 0, 1),
-(6, 'ligabbva.com', 0, 1),
+(6, 'ligabbva.com', 1, 1),
 (7, 'michelin.ca', 0, 0),
 (8, 'premierleague.com', 0, 0),
 (9, 'starbucks.com', 0, 0),
@@ -1225,19 +1225,19 @@ INSERT INTO `invoice_detail` (`invoice_detail_id`, `invoice_id`, `book_id`, `pst
 
 
 INSERT INTO `province` (`province_id`, `province`, `pst`, `gst`, `hst`) VALUES
-(1, 'Quebec', '9.98', '5.00', NULL),
-(2, 'Ontario', NULL, '5.00', '8.00'),
-(3, 'New Brunswick', NULL, '5.00', '8.00'),
-(4, 'Nova Scotia', NULL, '5.00', '10.00'),
-(5, 'Prince Edward Island', NULL, '5.00', '9.00'),
-(6, 'Newfoundland and Labrador', NULL, '5.00', '8.00'),
-(7, 'Manitoba', '8.00', '5.00', NULL),
-(8, 'Saskatchewan', '5.00', '5.00', NULL),
-(9, 'Alberta', NULL, '5.00', NULL),
-(10, 'British Columbia', '7.00', '5.00', NULL),
-(11, 'Yukon', NULL, '5.00', NULL),
-(12, 'Northwest Territories', NULL, '5.00', NULL),
-(13, 'Nunavut', NULL, '5.00', NULL);
+(1, 'Quebec', '9.98', '5.00', '0.00'),
+(2, 'Ontario', '0.00', '5.00', '8.00'),
+(3, 'New Brunswick', '0.00', '5.00', '8.00'),
+(4, 'Nova Scotia', '0.00', '5.00', '10.00'),
+(5, 'Prince Edward Island', '0.00', '5.00', '9.00'),
+(6, 'Newfoundland and Labrador', '0.00', '5.00', '8.00'),
+(7, 'Manitoba', '8.00', '5.00', '0.00'),
+(8, 'Saskatchewan', '5.00', '5.00', '0.00'),
+(9, 'Alberta', '0.00', '5.00', '0.00'),
+(10, 'British Columbia', '7.00', '5.00', '0.00'),
+(11, 'Yukon', '0.00', '5.00', '0.00'),
+(12, 'Northwest Territories', '0.00', '5.00', '0.00'),
+(13, 'Nunavut', '0.00', '5.00', '0.00');
 
 INSERT INTO `survey` (`survey_id`, `question`, `answer_one`, `answer_two`, `answer_three`, `answer_default`, `active`) VALUES
 (1, 'What is your favorite type of book?', 'Electronic copy', 'Hard Cover', 'Paperback', 'Something else', true),

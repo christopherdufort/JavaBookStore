@@ -90,8 +90,8 @@ public class AuthenticationController implements SystemEventListener, Serializab
     
     public void mustBeAnonymous(ComponentSystemEvent event) throws IOException{
         if (authenticatedUser.getRegisteredUser()!=null){
-            FacesContext.getCurrentInstance().getExternalContext().redirect("/CSDBookStore/faces"+navigationController.boomerangLogin());
-            //FacesContext.getCurrentInstance().getExternalContext().redirect("home.xhtml");
+            //FacesContext.getCurrentInstance().getExternalContext().redirect("/CSDBookStore/faces"+navigationController.boomerangLogin());
+            FacesContext.getCurrentInstance().getExternalContext().redirect("home.xhtml");
         }
     }
     
