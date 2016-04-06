@@ -25,6 +25,8 @@
                                 <h:form class="panel panel-default"> 
                                     <div id="count" class="panel-heading">
                                         Total <h:outputText value="#{m_reviews.pendingCount}"/> Pending Reviews
+                                        <h:commandLink value="#{msgs.back}"
+                                                       action="#{m_reviews.cancel()}" class="pull-right" style="color:red" />
                                     </div>
                                     <!-- /.panel-heading -->
                                     <div class="panel-body">
