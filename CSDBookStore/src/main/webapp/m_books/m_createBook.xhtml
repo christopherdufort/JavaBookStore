@@ -30,7 +30,7 @@
                                         <h:form enctype="multipart/form-data">
                                             <h:panelGrid columns="3">
                                                 <h:outputLabel value="#{msgs.isbn}" for="isbn"></h:outputLabel>
-                                                <p:inputText id="isbn" value="#{m_books.book.isbn}"/>
+                                                <p:inputText id="isbn" value="#{m_books.book.isbn}" required="true" requiredMessage="#{msgs.required}"/>
                                                 <h:message for="isbn" errorStyle="color:red; display:block"/>
 
                                                 <h:outputLabel value="#{msgs.title}" for="title"></h:outputLabel>
@@ -42,7 +42,7 @@
                                                                       filter="true" filterMatchMode="startsWith" panelStyle="width:250px" converter="com.g3w16.converter.AuthorConverter">
                                                     <f:selectItems value="#{m_books.allAuthors}" />
                                                 </p:selectCheckboxMenu>
-                                                <p:commandLink value="Submit" update="authorDisplay" />
+                                                <p:commandLink partialSubmit="true" value="Submit" update="authorDisplay" process="author"/>
                                             </h:panelGrid>
 
                                             <p:outputPanel id="authorDisplay" style="width:250px;padding-left:5px;margin-top:10px">
@@ -65,7 +65,7 @@
                                                                       filter="true" filterMatchMode="startsWith" panelStyle="width:250px" converter="com.g3w16.converter.FormatConverter">
                                                     <f:selectItems value="#{m_books.allFormat}" />
                                                 </p:selectCheckboxMenu>
-                                                <p:commandLink value="Submit" update="formatDisplay" />
+                                                <p:commandLink value="Submit" update="formatDisplay" partialSubmit="true" process="format" />
                                             </h:panelGrid>
                                             <p:outputPanel id="formatDisplay" style="width:250px;padding-left:5px;margin-top:10px">
                                                 <p:dataList value="#{m_books.book.formatList}" var="format">
@@ -83,7 +83,7 @@
                                                                       filter="true" filterMatchMode="startsWith" panelStyle="width:250px" converter="com.g3w16.converter.GenreConverter">
                                                     <f:selectItems value="#{m_books.allGenre}"/>
                                                 </p:selectCheckboxMenu>
-                                                <p:commandLink value="Submit" update="genreDisplay" />
+                                                <p:commandLink value="Submit" update="genreDisplay" partialSubmit="true" process="genre " />
                                             </h:panelGrid>
                                             <p:outputPanel id="genreDisplay" style="width:250px;padding-left:5px;margin-top:10px">
                                                 <p:dataList value="#{m_books.book.genreList}" var="genre">
