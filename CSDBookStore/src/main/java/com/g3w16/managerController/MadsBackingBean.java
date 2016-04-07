@@ -33,7 +33,7 @@ import org.primefaces.model.UploadedFile;
  */
 @ManagedBean(name = "m_ads")
 @RequestScoped
-public class m_adsBackingBean implements Serializable {
+public class MadsBackingBean implements Serializable {
 
     private Ad ad;
 
@@ -75,7 +75,7 @@ public class m_adsBackingBean implements Serializable {
         try {
             adJpa.create(ad);
         } catch (Exception ex) {
-            Logger.getLogger(m_adsBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MadsBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         allAd = adJpa.findAllAds();
         return "m_ads";
@@ -90,7 +90,7 @@ public class m_adsBackingBean implements Serializable {
         try {
             adJpa.edit(ad);
         } catch (Exception ex) {
-            Logger.getLogger(m_adsBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MadsBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         allAd = adJpa.findAllAds();
         return "m_ads";
@@ -102,7 +102,7 @@ public class m_adsBackingBean implements Serializable {
         try {
             adJpa.edit(ad);
         } catch (Exception ex) {
-            Logger.getLogger(m_adsBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MadsBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -110,9 +110,9 @@ public class m_adsBackingBean implements Serializable {
         try {
             adJpa.destroy(a.getAdId());
         } catch (RollbackFailureException ex) {
-            Logger.getLogger(m_adsBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MadsBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(m_adsBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MadsBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         allAd = adJpa.findAllAds();
     }

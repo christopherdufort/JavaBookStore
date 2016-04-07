@@ -22,7 +22,7 @@ import javax.inject.Inject;
  */
 @ManagedBean(name="m_invoices")
 @RequestScoped
-public class m_invoicesBackingBean implements Serializable{
+public class MinvoicesBackingBean implements Serializable{
 
     private String searchInvoice;
 

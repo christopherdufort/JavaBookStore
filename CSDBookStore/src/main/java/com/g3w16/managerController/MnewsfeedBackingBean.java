@@ -23,7 +23,7 @@ import javax.inject.Inject;
  */
 @ManagedBean(name = "m_newsfeed")
 @RequestScoped
-public class m_newsfeedBackingBean implements Serializable {
+public class MnewsfeedBackingBean implements Serializable {
 
     private List<NewsFeed> allNews;
 
@@ -56,7 +56,7 @@ public class m_newsfeedBackingBean implements Serializable {
         try {
             newsJpa.create(newsFeed);
         } catch (Exception ex) {
-            Logger.getLogger(m_newsfeedBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MnewsfeedBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         allNews = newsJpa.findAllNewsFeeds();
         return "m_news";
@@ -71,7 +71,7 @@ public class m_newsfeedBackingBean implements Serializable {
         try {
             newsJpa.edit(newsFeed);
         } catch (Exception ex) {
-            Logger.getLogger(m_newsfeedBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MnewsfeedBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         allNews = newsJpa.findAllNewsFeeds();
         return "m_news";
@@ -83,7 +83,7 @@ public class m_newsfeedBackingBean implements Serializable {
         try {
             newsJpa.edit(newsFeed);
         } catch (Exception ex) {
-            Logger.getLogger(m_newsfeedBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MnewsfeedBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -92,9 +92,9 @@ public class m_newsfeedBackingBean implements Serializable {
         try {
             newsJpa.destroy(newsfeed.getNewsFeedId());
         } catch (RollbackFailureException ex) {
-            Logger.getLogger(m_newsfeedBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MnewsfeedBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(m_newsfeedBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MnewsfeedBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         allNews = newsJpa.findAllNewsFeeds();
     }

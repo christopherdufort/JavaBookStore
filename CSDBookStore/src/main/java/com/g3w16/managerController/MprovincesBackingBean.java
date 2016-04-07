@@ -23,7 +23,7 @@ import javax.inject.Inject;
  */
 @ManagedBean(name="m_provinces")
 @RequestScoped
-public class m_provincesBackingBean implements Serializable {
+public class MprovincesBackingBean implements Serializable {
 
     private Province province;
     
@@ -55,7 +55,7 @@ public class m_provincesBackingBean implements Serializable {
         try{
             provinceJpa.create(province);
         } catch (Exception ex) {
-            Logger.getLogger(m_provincesBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MprovincesBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         allprovince = provinceJpa.findAll();
         return "m_provinces";
@@ -66,9 +66,9 @@ public class m_provincesBackingBean implements Serializable {
         try {
             provinceJpa.destroy(p.getProvinceId());
         } catch (RollbackFailureException ex) {
-            Logger.getLogger(m_provincesBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MprovincesBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(m_provincesBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MprovincesBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         allprovince = provinceJpa.findAll();
     }

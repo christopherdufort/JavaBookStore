@@ -40,7 +40,7 @@ import org.primefaces.model.UploadedFile;
  */
 @ManagedBean(name = "m_books")
 @SessionScoped
-public class m_booksBackingBean implements Serializable {
+public class MbooksBackingBean implements Serializable {
 
     private Book book;
     private Author author;
@@ -134,7 +134,7 @@ public class m_booksBackingBean implements Serializable {
      * @return
      */
     public String createBook() {
-        Logger.getLogger(m_booksBackingBean.class.getName()).log(Level.SEVERE, "I'm trying to create a book !");
+        Logger.getLogger(MbooksBackingBean.class.getName()).log(Level.SEVERE, "I'm trying to create a book !");
         Date d = new Date(System.currentTimeMillis());
         try {
             book.setOverallRating(BigDecimal.ZERO);
@@ -144,7 +144,7 @@ public class m_booksBackingBean implements Serializable {
             bookJpa.create(book);
             //upload();
         } catch (Exception ex) {
-            Logger.getLogger(m_booksBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MbooksBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         all = bookJpa.findBookEntities();
         return "m_books";
@@ -183,7 +183,7 @@ public class m_booksBackingBean implements Serializable {
             bookJpa.edit(book);
 
         } catch (Exception ex) {
-            Logger.getLogger(m_booksBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MbooksBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         all = bookJpa.findBookEntities();
         return "m_books";
@@ -198,9 +198,9 @@ public class m_booksBackingBean implements Serializable {
         try {
             bookJpa.destroy(b.getBookId());
         } catch (RollbackFailureException ex) {
-            Logger.getLogger(m_booksBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MbooksBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(m_booksBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MbooksBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         all = bookJpa.findBookEntities();
     }

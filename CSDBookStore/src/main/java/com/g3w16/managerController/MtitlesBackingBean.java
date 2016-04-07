@@ -23,7 +23,7 @@ import javax.inject.Inject;
  */
 @ManagedBean(name = "m_titles")
 @RequestScoped
-public class m_titlesBackingBean implements Serializable {
+public class MtitlesBackingBean implements Serializable {
 
     private Title title;
 
@@ -56,7 +56,7 @@ public class m_titlesBackingBean implements Serializable {
         try {
             titleJpa.create(title);
         } catch (Exception ex) {
-            Logger.getLogger(m_titlesBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MtitlesBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         allTitle = titleJpa.findAll();
         return "m_titles";
@@ -66,9 +66,9 @@ public class m_titlesBackingBean implements Serializable {
         try {
             titleJpa.destroy(t.getTitleId());
         } catch (RollbackFailureException ex) {
-            Logger.getLogger(m_titlesBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MtitlesBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(m_titlesBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MtitlesBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         allTitle = titleJpa.findAll();
     }

@@ -23,7 +23,7 @@ import javax.inject.Inject;
  */
 @ManagedBean(name = "m_formats")
 @RequestScoped
-public class m_formatsBackingBean implements Serializable {
+public class MformatsBackingBean implements Serializable {
 
     private Format format;
 
@@ -57,7 +57,7 @@ public class m_formatsBackingBean implements Serializable {
         try {
             formatJpa.create(format);
         } catch (Exception ex) {
-            Logger.getLogger(m_formatsBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MformatsBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         allFormat = formatJpa.findFormatEntities();
         return "m_formats";
@@ -67,9 +67,9 @@ public class m_formatsBackingBean implements Serializable {
         try {
             formatJpa.destroy(f.getFormatId());
         } catch (RollbackFailureException ex) {
-            Logger.getLogger(m_formatsBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MformatsBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(m_formatsBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MformatsBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         allFormat = formatJpa.findFormatEntities();
     }

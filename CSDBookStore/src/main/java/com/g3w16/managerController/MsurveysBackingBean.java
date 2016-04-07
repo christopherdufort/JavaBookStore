@@ -24,7 +24,7 @@ import javax.inject.Inject;
  */
 @ManagedBean(name = "m_surveys")
 @RequestScoped
-public class m_surveysBackingBean implements Serializable {
+public class MsurveysBackingBean implements Serializable {
 
     private Survey survey;
     private List<Survey> allSurvey;
@@ -57,7 +57,7 @@ public class m_surveysBackingBean implements Serializable {
         try {
             surveyJpa.create(survey);
         } catch (Exception ex) {
-            Logger.getLogger(m_surveysBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MsurveysBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         allSurvey = surveyJpa.findAllSurveys();
         return "m_surveys";
@@ -72,7 +72,7 @@ public class m_surveysBackingBean implements Serializable {
         try {
             surveyJpa.edit(survey);
         } catch (Exception ex) {
-            Logger.getLogger(m_surveysBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MsurveysBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         allSurvey = surveyJpa.findAllSurveys();
         return "m_surveys";
@@ -84,7 +84,7 @@ public class m_surveysBackingBean implements Serializable {
         try {
             surveyJpa.edit(survey);
         } catch (Exception ex) {
-            Logger.getLogger(m_surveysBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MsurveysBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -93,9 +93,9 @@ public class m_surveysBackingBean implements Serializable {
         try {
             surveyJpa.destroy(s.getSurveyId());
         } catch (RollbackFailureException ex) {
-            Logger.getLogger(m_surveysBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MsurveysBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(m_surveysBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MsurveysBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         allSurvey = surveyJpa.findAllSurveys();
     }

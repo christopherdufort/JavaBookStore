@@ -23,7 +23,7 @@ import javax.inject.Inject;
  */
 @ManagedBean(name = "m_reviews")
 @RequestScoped
-public class m_reviewBackingBean implements Serializable {
+public class MreviewBackingBean implements Serializable {
 
     private Review review;
 
@@ -105,7 +105,7 @@ public class m_reviewBackingBean implements Serializable {
         try {
             reviewJpa.edit(review);
         } catch (Exception ex) {
-            Logger.getLogger(m_reviewBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MreviewBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         allReview = reviewJpa.findReviewEntities();
         return "m_reviews";
@@ -116,7 +116,7 @@ public class m_reviewBackingBean implements Serializable {
             reviewJpa.edit(r);
 
         } catch (Exception ex) {
-            Logger.getLogger(m_reviewBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MreviewBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

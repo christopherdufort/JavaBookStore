@@ -23,7 +23,7 @@ import javax.inject.Inject;
  */
 @ManagedBean(name = "m_genres")
 @RequestScoped
-public class m_genresBackingBean implements Serializable {
+public class MgenresBackingBean implements Serializable {
 
     private Genre genre;
 
@@ -56,7 +56,7 @@ public class m_genresBackingBean implements Serializable {
         try {
             genreJpa.create(genre);
         } catch (Exception ex) {
-            Logger.getLogger(m_genresBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MgenresBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         allGenre = genreJpa.findGenreEntities();
         return "m_genres";
@@ -66,9 +66,9 @@ public class m_genresBackingBean implements Serializable {
         try {
             genreJpa.destroy(g.getGenreId());
         } catch (RollbackFailureException ex) {
-            Logger.getLogger(m_genresBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MgenresBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(m_genresBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MgenresBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         allGenre = genreJpa.findGenreEntities();
     }

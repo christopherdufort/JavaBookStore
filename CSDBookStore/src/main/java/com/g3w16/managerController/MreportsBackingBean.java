@@ -30,7 +30,7 @@ import org.primefaces.event.SelectEvent;
  */
 @ManagedBean(name = "m_reports")
 @RequestScoped
-public class m_reportsBackingBean {
+public class MreportsBackingBean {
 
     private InvoiceDetail invoiceDetail;
 
@@ -46,7 +46,7 @@ public class m_reportsBackingBean {
     private List<String> allPublishers;
 
     @Inject
-    m_invoicesBackingBean m_invoicesBackingBean;
+    MinvoicesBackingBean m_invoicesBackingBean;
 
     @Inject
     InvoiceDetailJpaController invoiceDetailJpa;

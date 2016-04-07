@@ -28,7 +28,7 @@ import jodd.mail.SmtpSslServer;
  */
 @ManagedBean(name = "m_users")
 @RequestScoped
-public class m_usersBackingBean implements Serializable {
+public class MusersBackingBean implements Serializable {
 
     private RegisteredUser user;
 
@@ -108,9 +108,9 @@ public class m_usersBackingBean implements Serializable {
             user.setReviewList(reviewJpa.findReviewByUserId(user));
             userJpa.edit(user);
         } catch (Exception ex) {
-            Logger.getLogger(m_usersBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MusersBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Logger.getLogger(m_usersBackingBean.class.getName()).log(Level.INFO, null, "Does it go here?");
+        Logger.getLogger(MusersBackingBean.class.getName()).log(Level.INFO, null, "Does it go here?");
         all = userJpa.findAll();
         return "m_users";
     }

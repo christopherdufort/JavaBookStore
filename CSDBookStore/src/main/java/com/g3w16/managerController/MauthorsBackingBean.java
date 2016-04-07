@@ -23,7 +23,7 @@ import javax.inject.Inject;
  */
 @ManagedBean(name = "m_authors")
 @RequestScoped
-public class m_authorsBackingBean implements Serializable {
+public class MauthorsBackingBean implements Serializable {
 
     private Author author;
 
@@ -56,7 +56,7 @@ public class m_authorsBackingBean implements Serializable {
         try {
             authorJpa.create(author);
         } catch (Exception ex) {
-            Logger.getLogger(m_authorsBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MauthorsBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         allAuthor = authorJpa.findAuthorEntities();
         return "m_authors";
@@ -66,9 +66,9 @@ public class m_authorsBackingBean implements Serializable {
         try {
             authorJpa.destroy(a.getAuthorId());
         } catch (RollbackFailureException ex) {
-            Logger.getLogger(m_authorsBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MauthorsBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(m_authorsBackingBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MauthorsBackingBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         allAuthor = authorJpa.findAuthorEntities();
     }
