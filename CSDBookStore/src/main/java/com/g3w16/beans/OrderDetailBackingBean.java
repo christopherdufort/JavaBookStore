@@ -1,16 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.g3w16.beans;
 
 import com.g3w16.entities.Book;
 import java.math.BigDecimal;
 
 /**
- *
- * @author Christopher
+ * Backing bean used for the details of each order.
+ * this bean is used in tandem with the order backing bean.
+ * 
+ * @author Christopher Dufort
  */
 public class OrderDetailBackingBean {
     

@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<!-- Author: Christopher Duffort
+<!-- Author: Christopher Dufort
      Author: Giuseppe Campanelli -->
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
@@ -83,7 +83,7 @@
                                 <td><span class="price">$#{item.bookPrice}</span></td>
                             </tr>
                         </ui:repeat>
-                        
+
                         <tr id="hiderow">
                             <td colspan="5">#{msgs.paymentInfo}</td>
                         </tr>
@@ -115,12 +115,12 @@
                             <td class="total-value balance"><div class="due">$#{invoiceBB.invoice.totalGrossValueOfSale}</div></td>
                         </tr>
                     </table>
-                    
+
                     <script>
                         //works if JS is enabled
                         document.write("<a href='#' onclick='javascript:window.print();'>Print this page for your records.</a>");
                     </script>
-                    
+
                     <a href="#" onclick="javascript:window.print();">#{msgs.printPage}</a>
                     <div id="terms">
                         <h5>#{msgs.terms}</h5>

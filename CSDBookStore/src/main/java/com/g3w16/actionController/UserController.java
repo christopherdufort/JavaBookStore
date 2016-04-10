@@ -115,6 +115,12 @@ public class UserController implements Serializable {
         return registeredUser;
     }
     
+    /**
+     * This method is called to modify the currently logged in registered user.
+     * It retrieves values from the profile backing bean and replaces the values in the registered user bean.
+     * The registered user bean is then persisted back into the database.
+     * @throws Exception 
+     */
     public void editProfile() throws Exception{
         
         Logger.getLogger(this.getClass().getName()).log(Level.INFO, "EditProfile in user controller is invoked!");
@@ -145,6 +151,12 @@ public class UserController implements Serializable {
         }
     }
     
+    /**
+     * Redirects to  the checkout after the user adds the information needed.
+     * @editied Christopher Dufort
+     * @return
+     * @throws IOException 
+     */
     public String validateAccountInfo() throws IOException {
         if (authenticatedUser.getRegisteredUser().getAddressOne() == null) {
             //FacesContext.getCurrentInstance().getExternalContext().redirect("profile.xhtml");

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.g3w16.entities.viewController;
 
 import com.g3w16.actionController.UserController;
@@ -18,7 +13,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -39,6 +33,10 @@ public class UserAuthView {
     private AuthBean authBean;
 
     
+    /**
+     * 
+     * @throws IOException 
+     */
     public void authenticate() throws IOException {
         
         Logger.getLogger(UserAuthView.class.getName()).log(Level.INFO, "Submitted email : {0}", authBean.getEmail());

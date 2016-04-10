@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.g3w16.beans;
 
 import com.g3w16.entities.Genre;
@@ -14,33 +9,49 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
+ * This backing bean is used for the results page of a genre selection. This
+ * class is used to retrieve all the books in a specific genre. This bean
+ * interacts with genre JPA controller and browseGenreResults.xhtml
  *
- * @author Christopher
+ * @author Christopher Dufort
  */
 @Named
 @RequestScoped
 public class BrowseGenreBackingBean {
-    
+
     @Inject
     private GenreJpaController genreJpaController;
-    
+
     private List<Genre> availableGenres;
- 
-    public BrowseGenreBackingBean(){
+
+    public BrowseGenreBackingBean() {
         super();
     }
-    
+
+    /**
+     * Fill the list of genres from the database after the class is constructed.
+     */
     @PostConstruct
-    public void init(){
+    public void init() {
         this.availableGenres = genreJpaController.findGenreEntitiesAsClient();
     }
 
+    /**
+     * get for private field.
+     *
+     * @return
+     */
     public List<Genre> getAvailableGenres() {
         return availableGenres;
     }
 
+    /**
+     * set for private field.
+     *
+     * @param availableGenres
+     */
     public void setAvailableGenres(List<Genre> availableGenres) {
         this.availableGenres = availableGenres;
     }
-    
+
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.g3w16.actionController;
 
 import com.g3w16.beans.AuthBean;
@@ -24,6 +19,9 @@ import javax.inject.Named;
  *
  * @author jesuisnuageux
  * @author Christopher Dufort
+ * This Class is used during pre renders of various pages, if a user is not logged in
+ * or if a user is not a manager they are redirected to a login page.
+ * This class also contains methods for logging out a user.
  */
 @Named
 @RequestScoped
@@ -51,7 +49,11 @@ public class AuthenticationController implements SystemEventListener, Serializab
     /**
      * @author Jonas Faure
      * @edited Christopher Dufort
-     * Modified to use boomerang login
+     * 
+     * This method is used to check if a user is logged in if not redirects to a login page.
+     * This method checks the authenticated user bean if the current session has a logged in user.
+     * Modified to use boomerang login, so any page you came from when attempting to log in you will return to.
+     * 
      * @param event
      * @throws IOException 
      */
@@ -71,7 +73,11 @@ public class AuthenticationController implements SystemEventListener, Serializab
     
     /**
      * @author Jonas Faure
-     * @edited Christopher dufort
+     * @edited Christopher Dufort
+     * 
+     * This method checks the authenticated user bean to see if the current session contains a manager account.
+     * If not you are redirected to a login page.
+     * 
      * @param event
      * @throws IOException 
      */
@@ -98,6 +104,10 @@ public class AuthenticationController implements SystemEventListener, Serializab
     /**
      * @author Jonas Faure
      * @edited Christopher Dufort
+     * 
+     * This logout method is used to nullify the logged in user as well as reset all the authentication bean fields.
+     * A user who is logged out is simply nulled in various session locations.
+     * 
      * @param event
      * @throws IOException 
      */

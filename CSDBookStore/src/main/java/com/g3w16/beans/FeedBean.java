@@ -19,45 +19,83 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
- * backing bean for home News Feed
+ * backing bean for home News Feed This bean is responsible for all the
+ * retrieving and displaying of rss feeds. This class make used of ROME and the
+ * sun syndication libraries.
  *
  * @author Christopher Dufort
  */
 @Named
 @RequestScoped
 public class FeedBean implements Serializable {
-    
+
     @Inject
     NewsFeedJpaController newsFeedJpaController;
 
     private String newsFeedTitle;
     private String newsFeedDescription;
 
+    /**
+     * Getter
+     *
+     * @return
+     */
     public String getNewsFeedTitle() {
         return newsFeedTitle;
     }
 
+    /**
+     * setter
+     *
+     * @param newsFeedTitle
+     */
     public void setNewsFeedTitle(String newsFeedTitle) {
         this.newsFeedTitle = newsFeedTitle;
     }
 
+    /**
+     * getter
+     *
+     * @return
+     */
     public String getNewsFeedDescription() {
         return newsFeedDescription;
     }
 
+    /**
+     * setter
+     *
+     * @param newsFeedDescription
+     */
     public void setNewsFeedDescription(String newsFeedDescription) {
         this.newsFeedDescription = newsFeedDescription;
     }
 
+    /**
+     * This method returns a url from the database and uses it to build an xml
+     * parsable SyndFeed object.
+     *
+     * @author Christopher Dufort
+     * @return
+     * @throws Exception
+     */
     private SyndFeed getRssFeed() throws Exception {
-        //What happens if more then 1 news feed is active?
+        //ONLY ONE FEED CAN BE ACTIVE AT A TIME..
         URL feedUrl = new URL(newsFeedJpaController.findNewsFeedByActive().getNewsFeedLink());
-        //URL feedUrl = new URL("http://www.bookbrowse.com/rss/book_news.rss");
+
         SyndFeedInput input = new SyndFeedInput();
         SyndFeed feed = input.build(new XmlReader(feedUrl));
         return feed;
     }
 
+    /**
+     * This method sets the news feed on the home page to the one selected from
+     * the manager side. This method sets the title and description that is
+     * parsed from the SyndFeed object and puts them in the beans fields.
+     *
+     * @author Christopher Dufort
+     * @throws Exception
+     */
     @SuppressWarnings("unchecked")
     public void setNewsFeedAttributes() throws Exception {
 
@@ -83,6 +121,5 @@ public class FeedBean implements Serializable {
                 setNewsFeedDescription("NO TITLE AVAILABLE for FEED");
             }
         }
-//        }
     }
 }

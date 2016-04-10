@@ -22,8 +22,11 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
+ * Controller used to manage the orders of a specific user. Retrieves all the
+ * orders and order details from the database and created lists to be displayed
+ * on the orders.xhtml page.
  *
- * @author Christopher
+ * @author Christopher Dufort
  */
 @Named
 @RequestScoped
@@ -60,14 +63,14 @@ public class OrderController {
         OrderBackingBean newOrderBean = new OrderBackingBean();
         for (int i = 0; i < countOfInvoices; i++) {
             newOrderBean = new OrderBackingBean();
-            newOrderBean.setClientName(authenticatedUser.getRegisteredUser().getFirstName() +" " + authenticatedUser.getRegisteredUser().getLastName());
-            
+            newOrderBean.setClientName(authenticatedUser.getRegisteredUser().getFirstName() + " " + authenticatedUser.getRegisteredUser().getLastName());
+
             BigDecimal totalNet = new BigDecimal(0.0);
             BigDecimal totalPst = new BigDecimal(0.0);
             BigDecimal totalGst = new BigDecimal(0.0);
             BigDecimal totalHst = new BigDecimal(0.0);
             BigDecimal totalGross = new BigDecimal(0.0);
-            
+
             List<OrderDetailBackingBean> detailsOfCurrentOrder = new ArrayList<OrderDetailBackingBean>();
             List<InvoiceDetail> detailsOfCurrentInvoice = invoiceDetailJpaController.findInvoiceDetailByInvoice(userInvoices.get(i));
             for (int j = 0; j < detailsOfCurrentInvoice.size(); j++) {
@@ -78,20 +81,20 @@ public class OrderController {
                 totalHst = totalHst.add(detailsOfCurrentInvoice.get(j).getHst());
             }
             newOrderBean.setDetailsForThisOrder(detailsOfCurrentOrder);
-            
+
             LocalDate saleDate = userInvoices.get(i).getSaleDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             newOrderBean.setSaleDate(saleDate);
             newOrderBean.setOrderNumber(userInvoices.get(i).getInvoiceId());
-            
+
             totalGross = totalNet.add(totalPst).add(totalPst).add(totalGst).add(totalHst);
-            
+
             newOrderBean.setNetTotal(totalNet);
             newOrderBean.setTotalGst(totalGst);
             newOrderBean.setTotalHst(totalHst);
             newOrderBean.setGrossTotal(totalGross);
-            
+
             ordersForCurrentUser.add(newOrderBean);
         }
         return ordersForCurrentUser;
-    }   
+    }
 }

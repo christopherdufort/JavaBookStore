@@ -25,22 +25,22 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * backing bean for book.xhtml
- * Manages a books, its reviews, and similar products.
- * 
+ * backing bean for book.xhtml Manages a books, its reviews, and similar
+ * products.
+ *
  * @author Giuseppe Campanelli
  * @author Christopher Dufort
  */
 @Named("bookBB")
 @SessionScoped
 public class BookBackingBean implements Serializable {
-    
+
     private Book book;
     private Review review;
     private int rating = 1;
     private List<Book> booksFromGenre;
     private List<Book> booksFromAuthor;
-    
+
     @Inject
     private GrowlView growlView;
     @Inject
@@ -51,21 +51,22 @@ public class BookBackingBean implements Serializable {
     private ApprovalJpaController approvalJpaController;
     @Inject
     private AuthenticatedUser authenticatedUser;
-    
+
     /**
      * Gets the current book.
-     * 
+     *
      * @return current book
      */
     public Book getBook() {
-        if (book == null)
+        if (book == null) {
             book = new Book();
+        }
         return book;
     }
-    
+
     /**
      * Sets the current book.
-     * 
+     *
      * @param book book to set
      */
     public void setBook(Book book) {
@@ -73,49 +74,50 @@ public class BookBackingBean implements Serializable {
         setFromSameGenre();
         setFromSameAuthor();
     }
-    
+
     /**
      * Gets the current review.
-     * 
+     *
      * @return current review
      */
     public Review getReview() {
-        if (review == null)
+        if (review == null) {
             review = new Review();
+        }
         return review;
     }
-    
+
     /**
      * Sets the current review.
-     * 
+     *
      * @param review review to set
      */
     public void setReview(Review review) {
         this.review = review;
     }
-    
+
     /**
      * Gets the rating
-     * 
+     *
      * @return rating
      */
     public int getRating() {
         return rating;
     }
-    
+
     /**
      * Sets the rating
-     * 
+     *
      * @param rating rating to set
      */
-    public void setRating (int rating) {
+    public void setRating(int rating) {
         this.rating = rating;
     }
-    
+
     /**
      * Creates the review by adding it to the database
-     * 
-     * @throws Exception 
+     *
+     * @throws Exception
      */
     public void createReview() throws Exception {
         review.setApprovalId(approvalJpaController.findApproval(2));
@@ -128,28 +130,28 @@ public class BookBackingBean implements Serializable {
         rating = 1;
         growlView.notifyUserAboutReview();
     }
-    
+
     /**
      * Gets the overall star rating for a book
-     * 
+     *
      * @return overall rating
      */
     public int getStarsForOverallRating() {
         return book.getOverallRating().intValue();
     }
-    
+
     /**
      * Gets the amount of reviews for a book
-     * 
+     *
      * @return amount of reviews
      */
     public int getReviewsAmount() {
         return book.getReviewList().size();
     }
-    
+
     /**
      * Gets the authors of a book
-     * 
+     *
      * @return comma separated string of authors
      */
     public String getAuthors() {
@@ -160,10 +162,10 @@ public class BookBackingBean implements Serializable {
         }
         return authors;
     }
-    
+
     /**
      * Gets the genres of a book
-     * 
+     *
      * @return comma separated string of genres
      */
     public String getGenres() {
@@ -174,10 +176,10 @@ public class BookBackingBean implements Serializable {
         }
         return genres;
     }
-    
+
     /**
      * Gets the formats of a book
-     * 
+     *
      * @return comma separated string of formats
      */
     public String getFormats() {
@@ -188,30 +190,32 @@ public class BookBackingBean implements Serializable {
         }
         return formats;
     }
-    
+
     /**
      * Formats a date to yyyy-MM-dd
-     * 
+     *
      * @param date date for format
-     * 
+     *
      * @return formatted date
      */
     public String formatDate(Date date) {
         SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-MM-dd");
         return dt1.format(date);
     }
-    
+
     /**
      * Get the genre name of the current book
-     * 
+     *
      * @return genre name of current book
      */
     public String getGenreName() {
         return book.getGenreList().get(0).getGenreName();
     }
-    
+
     /**
-     * Sets similar products of the same genre
+     * Sets similar products of the same genre All client side methods use the
+     * client version of the jpa methods.
+     *
      * @author Giuseppe Campanelli
      * @edited Christopher Dufort
      */
@@ -219,9 +223,9 @@ public class BookBackingBean implements Serializable {
         booksFromGenre = new ArrayList<>();
         List<Book> allSimilarBooks = bookJpaController.findBookEntitiesByGenreAsClient(book.getGenreList().get(0));
         int similarBooksAmount = allSimilarBooks.size();
-        
+
         for (int i = 0; i < 6 && !allSimilarBooks.isEmpty(); i++) {
-            int random = (int)(Math.random()* similarBooksAmount);
+            int random = (int) (Math.random() * similarBooksAmount);
             if (allSimilarBooks.get(random).getBookId() != book.getBookId()) {
                 booksFromGenre.add(allSimilarBooks.get(random));
             } else {
@@ -231,18 +235,20 @@ public class BookBackingBean implements Serializable {
             similarBooksAmount--;
         }
     }
-    
+
     /**
      * Gets similar products from the same genre
-     * 
+     *
      * @return products from same genre
      */
     public List<Book> getFromSameGenre() {
         return booksFromGenre;
     }
-    
+
     /**
-     * Sets similar products of the from the same author
+     * Sets similar products of the from the same author All client side methods
+     * use the client version of the jpa methods.
+     *
      * @author Giuseppe Campanelli
      * @edited Christopher Dufort
      */
@@ -250,9 +256,9 @@ public class BookBackingBean implements Serializable {
         booksFromAuthor = new ArrayList<>();
         List<Book> allSimilarBooks = bookJpaController.findBookEntitiesByAuthorAsClient(book.getAuthorList().get(0));
         int similarBooksAmount = allSimilarBooks.size();
-        
+
         for (int i = 0; i < 6 && !allSimilarBooks.isEmpty(); i++) {
-            int random = (int)(Math.random()* similarBooksAmount);
+            int random = (int) (Math.random() * similarBooksAmount);
             if (allSimilarBooks.get(random).getBookId() != book.getBookId()) {
                 booksFromAuthor.add(allSimilarBooks.get(random));
             } else {
@@ -262,24 +268,24 @@ public class BookBackingBean implements Serializable {
             similarBooksAmount--;
         }
     }
-    
+
     /**
      * Gets products by the same author
-     * 
+     *
      * @return products of same author
      */
     public List<Book> getFromSameAuthor() {
         return booksFromAuthor;
     }
-    
-    public String displayBook() throws IOException{
+
+    public String displayBook() throws IOException {
         // just a wrapper to try & fix the randomness of the discounted books 
         int id;
-        try{
+        try {
             id = Integer.parseInt(
                     FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("selectedBook")
             );
-        }catch(Exception e){
+        } catch (Exception e) {
             // possibly someone messing with POST params .. we shouldn't give him any indication about what is happening
             Logger.getLogger(this.getClass().getName()).log(Level.INFO, null, e);
             return "home";
@@ -287,7 +293,7 @@ public class BookBackingBean implements Serializable {
         Book book = bookJpaController.findBookEntitiesById(id);
         return displayBook(book);
     }
-    
+
     public String displayBook(Book book) throws IOException {
         setBook(book);
         review = new Review();

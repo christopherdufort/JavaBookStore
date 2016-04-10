@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.g3w16.entities.viewController;
 
 import com.g3w16.actionController.BookController;
@@ -19,7 +14,7 @@ import javax.inject.Named;
 
 /**
  *
- * @author Christopher
+ * @author Christopher Dufort
  */
 @Named
 @SessionScoped
@@ -30,13 +25,20 @@ public class SearchActionBean implements Serializable {
 
     @Inject
     SearchBackingBean searchBackingBean;
-    
+
     @Inject
     BookBackingBean bookBackingBean;
-    
+
     private List<Book> searchResults;
     private String genreSearchContent;
-    
+
+    /**
+     * Perform a basic search based on a specific search choice.
+     *
+     * @param searchBackingBean
+     * @return
+     * @throws IOException
+     */
     public String performSearch(SearchBackingBean searchBackingBean) throws IOException {
         switch (searchBackingBean.getSearchChoice()) {
             case "Title":
@@ -57,23 +59,31 @@ public class SearchActionBean implements Serializable {
                 break;
             default:     //need a default     
         }
-        
-        if (searchResults.size()==1){
+
+        if (searchResults.size() == 1) {
             return bookBackingBean.displayBook(searchResults.get(0));
         }
-        
+
         return "results";
     }
-    //NEED TO FIGURE OUT HOW TO PASS THE GENRE HERE
-    public String browseGenre(String genre) throws IOException{
+
+    /**
+     * Currently hard coded per genre, need to modify. Store results of all the
+     * books in a specific genre.
+     *
+     * @param genre
+     * @return
+     * @throws IOException
+     */
+    public String browseGenre(String genre) throws IOException {
         genreSearchContent = genre;
-        switch (genre){
+        switch (genre) {
             case "Computers & Technology":
                 searchResults = bookController.browseByGenre(new Genre(1));
                 break;
             case "Travel":
                 searchResults = bookController.browseByGenre(new Genre(2));
-                break;                
+                break;
             case "Comics & Graphic Novels":
                 searchResults = bookController.browseByGenre(new Genre(3));
                 break;
@@ -82,18 +92,18 @@ public class SearchActionBean implements Serializable {
                 break;
             case "Mystery, Thriller & Suspense":
                 searchResults = bookController.browseByGenre(new Genre(5));
-                break;  
+                break;
             default:     //need a default  
         }
-        
+
         return "browseGenreResults";
     }
-    
-    public List<Book> getSearchResults(){
+
+    public List<Book> getSearchResults() {
         return searchResults;
     }
-    
-    public String getGenreSerchContent(){
+
+    public String getGenreSerchContent() {
         return genreSearchContent;
     }
 

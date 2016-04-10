@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<!-- Author: Christopher Duffort
+<!-- Author: Christopher Dufort
      Author: Jonas Faure
      Author: Giuseppe Campanelli -->
 <html xmlns="http://www.w3.org/1999/xhtml"
@@ -50,7 +50,6 @@
                                     <li class="divider"></li>
                                     <h:form>
                                         <ui:repeat value="#{browseGenreBackingBean.availableGenres}" var="genre">
-                                            <!--How do i update the browse genre backing bean with my value-->
                                             <li><h:commandLink value="#{genre.genreName}" action="#{searchActionBean.browseGenre(genre.genreName)}"></h:commandLink></li>
                                         </ui:repeat>
                                     </h:form>
@@ -81,7 +80,7 @@
 
                                             var data = google.visualization.arrayToDataTable([
                                                 ['Question', 'Votes'],
-                                                #{surveyController.surveyResultsAsJSArray}
+                                        #{surveyController.surveyResultsAsJSArray}
                                             ]);
 
                                             var options = {

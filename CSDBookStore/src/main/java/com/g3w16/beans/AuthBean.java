@@ -45,10 +45,14 @@ public class AuthBean implements Serializable {
     }
 
     /**
+     * This method retrieves the previous page from the url. This method also
+     * checks that no page outside the current domain was forced into the url.
+     *
      * @author Christopher Dufort
      * @return
      */
     public String getBackurl() {
+        //Prevent attacks by modification to the url.
         if (backurl != null) {
             boolean rejected = backurl.contains("//") || backurl.contains("%2F/") || backurl.contains("/%2F") || backurl.contains("%2F%2F");
             System.out.println("url is " + backurl);
@@ -62,6 +66,9 @@ public class AuthBean implements Serializable {
     }
 
     /**
+     * This method sets the backurl from the pre render event that occurs once
+     * you reach a boomerang page such as login or profile.
+     *
      * @author Christopher Dufort
      * @param backurl
      */

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.g3w16.beans;
 
 import com.g3w16.entities.Book;
@@ -18,25 +13,28 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
+ * This bean is used to store and retrieve the search results of the users query
+ * against the database. Books found to match the search results are stored
+ * here.
  *
- * @author Christopher
+ * @author Christopher Dufort
  */
 @Named
 @SessionScoped
 public class ResultsBackingBean implements Serializable {
-    
+
     @Inject
     SearchBackingBean searchBackingBean;
-    
+
     @Inject
     SearchActionBean searchActionBean;
-    
+
     @Inject
     BookJpaController bookJpaController;
-    
+
     @Inject
     GenreJpaController genreJpaController;
-    
+
     private String searchContent;
     private List<Book> searchResults;
     private String title;
@@ -47,12 +45,12 @@ public class ResultsBackingBean implements Serializable {
     private String available;
     private String rating;
     private String count;
-    
+
     private String ratingLimit;
 
-    public ResultsBackingBean(){
+    public ResultsBackingBean() {
     }
-    
+
     public String getCount() {
         return count;
     }
@@ -60,9 +58,9 @@ public class ResultsBackingBean implements Serializable {
     public void setCount(String count) {
         this.count = count;
     }
-    
-    //@PostConstruct
-    public void init(){
+
+    //Retrieve values from the search action bean.
+    public void init() {
         searchResults = searchActionBean.getSearchResults();
         searchContent = searchBackingBean.getSearchContent();
         count = String.valueOf(searchResults.size());
@@ -148,17 +146,23 @@ public class ResultsBackingBean implements Serializable {
     public void setRatingLimit(String ratingLimit) {
         this.ratingLimit = ratingLimit;
     }
-    
-    public String getGenreSearchContent(){
+
+    public String getGenreSearchContent() {
         return searchActionBean.getGenreSerchContent();
     }
-    
-    public List<Book> getTopSellingBooks(){
-        System.out.println("!!!!!!!!!!!!!!!!top selling in " + searchActionBean.getGenreSerchContent() );
+
+    /**
+     * Return the books of a select genre based on descending sales counts.
+     *
+     * @author Christopher Dufort
+     * @return
+     */
+    public List<Book> getTopSellingBooks() {
+        System.out.println("!!!!!!!!!!!!!!!!top selling in " + searchActionBean.getGenreSerchContent());
         List<Book> topSellers = new ArrayList<>();
         Genre genre = genreJpaController.findByGenreName(searchActionBean.getGenreSerchContent());
         topSellers = bookJpaController.findTopSellersByGenre(genre.getGenreId());
         return topSellers;
     }
-   
+
 }

@@ -12,8 +12,9 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 /**
- *
- * @author Christopher
+ * Search backing bean used to store the criteria and type of search.
+ * 
+ * @author Christopher Dufort
  */
 @Named
 @SessionScoped
@@ -25,6 +26,7 @@ public class SearchBackingBean implements Serializable {
 
     public SearchBackingBean() {
         super();
+        //Currently hardcoded, may need to expand this later.
         availableChoices = new ArrayList<String>();
         availableChoices.add("Title");
         availableChoices.add("Isbn");

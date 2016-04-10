@@ -19,7 +19,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
- * backing bean for profile.xhtml
+ * backing bean for profile.xhtml This bean is used in tandem with a profile
+ * form to modify the value of the registered user backing bean.
  *
  * @author Christopher Dufort
  */
@@ -58,7 +59,7 @@ public class ProfileBackingBean implements Serializable {
     private String cellPhone;
     private Title titleId;
     private Province provinceId;
-    
+
     private String redirectTo;
 
     public ProfileBackingBean() {
@@ -350,7 +351,7 @@ public class ProfileBackingBean implements Serializable {
     public void setProvinceId(Province provinceId) {
         this.provinceId = provinceId;
     }
-    
+
     /**
      * @return the redirectTo
      */
@@ -364,7 +365,6 @@ public class ProfileBackingBean implements Serializable {
     public void setRedirectTo(String redirectTo) {
         this.redirectTo = redirectTo;
     }
-
 
     @Override
     public String toString() {

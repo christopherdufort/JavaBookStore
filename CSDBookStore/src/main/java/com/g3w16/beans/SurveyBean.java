@@ -5,11 +5,8 @@
  */
 package com.g3w16.beans;
 
-import com.g3w16.actionController.SurveyController;
 import com.g3w16.entities.Survey;
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
