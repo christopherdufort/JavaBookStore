@@ -27,15 +27,19 @@
                                 <!-- /.panel-heading -->
                                 <div class="panel-body">
                                     <div class="dataTable_wrapper table-responsive">
-                                        <h:form enctype="multipart/form-data">
+                                        <h:form>
                                             <h:panelGrid columns="3">
                                                 <h:outputLabel value="#{msgs.isbn}" for="isbn"></h:outputLabel>
-                                                <p:inputText id="isbn" value="#{m_books.book.isbn}" required="true" requiredMessage="#{msgs.required}"/>
-                                                <h:message for="isbn" errorStyle="color:red; display:block"/>
+                                                <p:inputText id="isbn" value="#{m_books.book.isbn}" required="true" requiredMessage="#{msgs.required}">
+                                                    <f:ajax event="blur" render="isbnError" />   
+                                                </p:inputText>
+                                                <h:message id="isbnError" for="isbn" errorStyle="color:red;"/>
 
                                                 <h:outputLabel value="#{msgs.title}" for="title"></h:outputLabel>
-                                                <p:inputText id="title" value="#{m_books.book.title}" required="true" requiredMessage="#{msgs.required}"/>
-                                                <h:message for="title" errorStyle="color:red; display:block"/>
+                                                <p:inputText id="title" value="#{m_books.book.title}" required="true" requiredMessage="#{msgs.required}">
+                                                    <f:ajax event="blur" render="titleError" />   
+                                                </p:inputText>
+                                                <h:message id="titleError" for="title" errorStyle="color:red;" />
 
                                                 <h:outputLabel for="author" value="#{msgs.author}" />
                                                 <p:selectCheckboxMenu id="author" value="#{m_books.book.authorList}" label="#{msgs.author}" scrollHeight="150" required="true" requiredMessage="#{msgs.required}"
@@ -53,12 +57,16 @@
                                             <br />
                                             <h:panelGrid columns="3">
                                                 <h:outputLabel value="#{msgs.publisher}" for="publisher"></h:outputLabel>
-                                                <p:inputText id="publisher" value="#{m_books.book.publisher}" required="true" requiredMessage="#{msgs.required}"/>
-                                                <h:message for="publisher" errorStyle="color:red; display:block"/>
+                                                <p:inputText id="publisher" value="#{m_books.book.publisher}" required="true" requiredMessage="#{msgs.required}">
+                                                    <f:ajax event="blur" render="publisherError" />   
+                                                </p:inputText>
+                                                <h:message id="publisherError" for="publisher" errorStyle="color:red;"/>
 
                                                 <h:outputLabel value="#{msgs.publish_date}" for="publish_date"></h:outputLabel>
-                                                <p:calendar id="publish_date" value="#{m_books.book.publishDate}" required="true" requiredMessage="#{msgs.required}"/>
-                                                <h:message for="publish_date" errorStyle="color:red; display:block"/>
+                                                <p:calendar id="publish_date" value="#{m_books.book.publishDate}" required="true" requiredMessage="#{msgs.required}">
+                                                    <f:ajax event="blur" render="publish_dateError" /> 
+                                                </p:calendar>
+                                                <h:message id="publish_dateError" for="publish_date" errorStyle="color:red;"/>
 
                                                 <h:outputLabel for="format" value="#{msgs.formats}" />
                                                 <p:selectCheckboxMenu id="format" value="#{m_books.book.formatList}" label="#{msgs.format}" scrollHeight="150" required="true" requiredMessage="#{msgs.required}"
@@ -75,8 +83,10 @@
                                             <br />
                                             <h:panelGrid columns="3">
                                                 <h:outputLabel value="#{msgs.page_number}" for="page_number"></h:outputLabel>
-                                                <p:inputText id="page_number" value="#{m_books.book.pageNumber}" required="true" requiredMessage="#{msgs.required}"/>
-                                                <h:message for="page_number" errorStyle="color:red; display:block"/>
+                                                <p:inputText id="page_number" value="#{m_books.book.pageNumber}" required="true" requiredMessage="#{msgs.required}">
+                                                    <f:ajax event="blur" render="page_numberError" />   
+                                                </p:inputText>
+                                                <h:message id="page_numberError" for="page_number" errorStyle="color:red; display:block"/>
 
                                                 <h:outputLabel for="genre" value="#{msgs.genre}" />
                                                 <p:selectCheckboxMenu id="genre" value="#{m_books.book.genreList}" label="#{msgs.genre}" scrollHeight="150" required="true" requiredMessage="#{msgs.required}"
@@ -93,31 +103,40 @@
                                             <br />
                                             <h:panelGrid columns="3">
                                                 <h:outputLabel value="#{msgs.wholesale_price}" for="wholesale_price"></h:outputLabel>
-                                                <p:inputText id="whole_price" value="#{m_books.book.wholesalePrice}" required="true" requiredMessage="#{msgs.required}"/>
-                                                <h:message for="wholesale_price" errorStyle="color:red; display:block"/>
+                                                <p:inputText id="wholesale_price" value="#{m_books.book.wholesalePrice}" required="true" requiredMessage="#{msgs.required}">
+
+                                                    <f:ajax event="blur" render="wholesale_priceError" />   
+                                                </p:inputText>
+                                                <h:message id="wholesale_priceError" for="wholesale_price" errorStyle="color:red; display:block"/>
 
                                                 <h:outputLabel value="#{msgs.list_price}" for="list_price"></h:outputLabel>
-                                                <p:inputText id="list_price" value="#{m_books.book.listPrice}" required="true" requiredMessage="#{msgs.required}"/>
-                                                <h:message for="list_price" errorStyle="color:red; display:block"/>
+                                                <p:inputText id="list_price" value="#{m_books.book.listPrice}" required="true" requiredMessage="#{msgs.required}">
+                                                    <f:ajax event="blur" render="list_priceError" />   
+                                                </p:inputText>
+                                                <h:message id="list_priceError" for="list_price" errorStyle="color:red; display:block"/>
 
                                                 <h:outputLabel value="#{msgs.sale_price}" for="sale_price"></h:outputLabel>
-                                                <p:inputText id="sale_price" value="#{m_books.book.salePrice}" required="true" requiredMessage="#{msgs.required}"/>
-                                                <h:message for="sale_price" errorStyle="color:red; display:block"/>
+                                                <p:inputText id="sale_price" value="#{m_books.book.salePrice}" required="true" requiredMessage="#{msgs.required}">
+                                                    <f:ajax event="blur" render="sale_priceError" />   
+                                                </p:inputText> 
+                                                <h:message id="sale_priceError" for="sale_price" errorStyle="color:red; display:block"/>
 
                                                 <h:outputLabel value="#{msgs.available}" for="available"></h:outputLabel>
                                                 <p:selectOneRadio id="available" layout="lineDirection" value="#{m_books.book.available}" required="true" requiredMessage="#{msgs.required}">
                                                     <f:selectItem itemValue="True" itemLabel="True" />
                                                     <f:selectItem itemValue="False" itemLabel="False" />
                                                 </p:selectOneRadio>
-                                                <h:message for="available" errorStyle="color:red; display:block"/>
+                                                <h:message id="availableError" for="available" errorStyle="color:red; display:block"/>
 
                                                 <h:outputLabel value="#{msgs.synopsis}" for="synopsis"></h:outputLabel>
-                                                <p:inputTextarea id="synopsis" value="#{m_books.book.synopsis}" required="true" requiredMessage="#{msgs.required}"/>
-                                                <h:message for="synopsis" errorStyle="color:red; display:block"/>
+                                                <p:inputTextarea id="synopsis" value="#{m_books.book.synopsis}" required="true" requiredMessage="#{msgs.required}">
+                                                    <f:ajax event="blur" render="synopsisError" />   
+                                                </p:inputTextarea>
+                                                <h:message id="synopsisError" for="synopsis" errorStyle="color:red; display:block"/>
 
 <!--                                                 <p:fileUpload mode="simple" value="#{m_books.file}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>       -->
                                             </h:panelGrid>
-                                                                              
+
                                             <br />
                                             <p:commandButton value="#{msgs.add}"
                                                              action="#{m_books.createBook}" class="btn btn-success" />
@@ -141,8 +160,8 @@
             </ui:define>
         </ui:composition>
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-    
-   
+
+
 
     </body>
 
