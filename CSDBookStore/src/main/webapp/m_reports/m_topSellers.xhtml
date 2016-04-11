@@ -64,12 +64,12 @@
                                                          resizableColumns="true" liveResize="true" >
 
 
-                                                <p:column filterBy="#{books.bookId}" sortBy="#{books.bookId}" headerText="#{msgs.book_id}" filterMatchMode="contains">
+                                                <p:column filterBy="#{books.bookId}" sortBy="#{books.bookId}" headerText="#{msgs.book_id}" filterMatchMode="contains" width="150">
 
                                                     #{books.bookId}
                                                 </p:column>
 
-                                                <p:column filterBy="#{books.isbn}" sortBy="#{books.isbn}" headerText="#{msgs.isbn}" filterMatchMode="contains">
+                                                <p:column filterBy="#{books.isbn}" sortBy="#{books.isbn}" headerText="#{msgs.isbn}" filterMatchMode="contains" width="150">
 
                                                     #{books.isbn}
                                                 </p:column>
@@ -79,17 +79,17 @@
                                                     #{books.title}
                                                 </p:column>
 
-                                                <p:column filterBy="#{books.listPrice}" sortBy="#{books.listPrice}" headerText="#{msgs.list_price}" filterMatchMode="contains">
+                                                <p:column filterBy="#{books.listPrice}" sortBy="#{books.listPrice}" headerText="#{msgs.list_price}" filterMatchMode="contains" width="150">
 
                                                     #{books.listPrice}
                                                 </p:column>
 
-                                                <p:column filterBy="#{books.salePrice}" sortBy="#{books.salePrice}" headerText="#{msgs.sale_price}" filterMatchMode="contains">
+                                                <p:column filterBy="#{books.salePrice}" sortBy="#{books.salePrice}" headerText="#{msgs.sale_price}" filterMatchMode="contains" width="150">
 
                                                     #{books.salePrice}
                                                 </p:column>
 
-                                                <p:column  filterBy= "#{m_reports.getTotalPerBook(books)}" sortBy="#{m_reports.getTotalPerBook(books)}" headerText="#{msgs.total}" filterMatchMode="contains">
+                                                <p:column  filterBy= "#{m_reports.getTotalPerBook(books)}" sortBy="#{m_reports.getTotalPerBook(books)}" headerText="#{msgs.total}" filterMatchMode="contains" width="150">
 
                                                     #{m_reports.getTotalPerBook(books)}
                                                 </p:column>
@@ -101,38 +101,7 @@
                                     </div>
                                     <!-- /.table-responsive -->  
                                 </div>
-                                <!--                                 /.panel-heading 
-                                                                <div class="panel-body">
-                                                                    <div class="dataTable_wrapper table-responsive">
-                                                                        <div class="row">
-                                                                            <div class="col-xs-1 col-sm-1 col-md-1" style="text-align: center"><h:outputLabel value="#{msgs.isbn}"></h:outputLabel></div>
-                                                                            <div class="col-xs-3 col-sm-3 col-md-3" style="text-align: center"><h:outputLabel value="#{msgs.title}"></h:outputLabel></div>
-                                                                            <div class="col-xs-6 col-sm-6 col-md-6" style="text-align: center"><h:outputLabel value="#{msgs.price}"></h:outputLabel></div>
-                                                                            <div class="col-xs-2 col-sm-2 col-md-2" style="text-align: center"><h:outputLabel value="#{msgs.total}"></h:outputLabel></div>
-                                                                        </div>
-                                                                        <h:form>
-                                                                            <ui:repeat value="#{m_reports.allBooks}" var="book">
-                                                                                <hr />
                                 
-                                                                                <div class="row">
-                                
-                                                                                    <h:outputText value="#{book.title}" ></h:outputText>
-                                                                                    <h:outputText value="#{book.listPrice}"></h:outputText>
-                                                                                    <h:outputText value="#{m_reports.getTotalPerBook(book)}"></h:outputText>
-                                
-                                                                                    <hr />
-                                                                                </div>
-                                                                                <div class="clearfix col-xs-3 col-sm-3 col-md-3"><h:outputText value="#{book.isbn}"></h:outputText></div>
-                                                                                <div class="clearfix col-xs-3 col-sm-3 col-md-3"><h:outputText value="#{book.title}"></h:outputText></div>
-                                                                                <div class="clearfix col-xs-3 col-sm-3 col-md-3"><h:outputText value="#{book.listPrice}"></h:outputText></div>
-                                                                                <div class="clearfix col-xs-3 col-sm-3 col-md-3"><h:outputText value="#{m_reports.getTotalPerBook(book)}"></h:outputText></div>
-                                                                            </ui:repeat>
-                                                                        </h:form>
-                                
-                                                                    </div>
-                                                                     /.table-responsive 
-                                                                </div>
-                                                                 /.panel-body -->
                             </div>
                             <!-- /.panel -->
                         </div>

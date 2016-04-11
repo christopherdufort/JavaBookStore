@@ -18,24 +18,28 @@ import javax.inject.Inject;
 
 /**
  *
+ * This class is the backing bean used for handling all the provinces in the
+ * management side.
+ *
  * @author Xin Ma
  * @author Rita Lazaar
  */
-@ManagedBean(name="m_provinces")
+@ManagedBean(name = "m_provinces")
 @RequestScoped
 public class MprovincesBackingBean implements Serializable {
 
     private Province province;
-    
+
     private List<Province> allprovince;
-    
+
     @Inject
     ProvinceJpaController provinceJpa;
 
     @PostConstruct
-    public void init(){
+    public void init() {
         allprovince = provinceJpa.findAll();
     }
+
     public String preCreateProvince() {
         return "m_createProvince";
     }
@@ -52,7 +56,7 @@ public class MprovincesBackingBean implements Serializable {
     }
 
     public String createProvince() {
-        try{
+        try {
             provinceJpa.create(province);
         } catch (Exception ex) {
             Logger.getLogger(MprovincesBackingBean.class.getName()).log(Level.SEVERE, null, ex);
@@ -61,7 +65,6 @@ public class MprovincesBackingBean implements Serializable {
         return "m_provinces";
     }
 
-   
     public void destroyProvince(Province p) {
         try {
             provinceJpa.destroy(p.getProvinceId());

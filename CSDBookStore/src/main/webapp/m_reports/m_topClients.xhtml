@@ -66,18 +66,18 @@
                                                          resizableColumns="true" liveResize="true" >
 
 
-                                                <p:column filterBy="#{user.userId}" sortBy="#{user.userId}" headerText="#{msgs.user_id}" filterMatchMode="contains">
+                                                <p:column filterBy="#{user.userId}" sortBy="#{user.userId}" headerText="#{msgs.user_id}" filterMatchMode="contains" width="150">
 
                                                     #{user.userId}
                                                 </p:column>
 
-                                                <p:column filterBy="#{user.emailAddress}" sortBy="#{user.emailAddress}" headerText="#{msgs.email}" filterMatchMode="contains">
+                                                <p:column filterBy="#{user.emailAddress}" sortBy="#{user.emailAddress}" headerText="#{msgs.email}" filterMatchMode="contains" width="150">
 
                                                     #{user.emailAddress}
                                                 </p:column>
 
 
-                                                <p:column  filterBy= "#{m_reports.totalSalesByClient(user)}" sortBy="#{m_reports.totalSalesByClient(user)}" headerText="#{msgs.total}" filterMatchMode="contains">
+                                                <p:column  filterBy= "#{m_reports.totalSalesByClient(user)}" sortBy="#{m_reports.totalSalesByClient(user)}" headerText="#{msgs.total}" filterMatchMode="contains" width="150">
 
                                                     #{m_reports.getTotalSalesByClient(user)}
                                                 </p:column>

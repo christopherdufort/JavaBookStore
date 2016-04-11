@@ -62,12 +62,12 @@
                                                          resizableColumns="true" liveResize="true" >
 
 
-                                                <p:column filterBy="#{books.bookId}" sortBy="#{books.bookId}" headerText="#{msgs.book_id}" filterMatchMode="contains">
+                                                <p:column filterBy="#{books.bookId}" sortBy="#{books.bookId}" headerText="#{msgs.book_id}" filterMatchMode="contains" width="150">
 
                                                     #{books.bookId}
                                                 </p:column>
 
-                                                <p:column filterBy="#{books.isbn}" sortBy="#{books.isbn}" headerText="#{msgs.isbn}" filterMatchMode="contains">
+                                                <p:column filterBy="#{books.isbn}" sortBy="#{books.isbn}" headerText="#{msgs.isbn}" filterMatchMode="contains" width="150">
 
                                                     #{books.isbn}
                                                 </p:column>
@@ -77,17 +77,17 @@
                                                     #{books.title}
                                                 </p:column>
 
-                                                <p:column filterBy="#{books.listPrice}" sortBy="#{books.listPrice}" headerText="#{msgs.list_price}" filterMatchMode="contains">
+                                                <p:column filterBy="#{books.listPrice}" sortBy="#{books.listPrice}" headerText="#{msgs.list_price}" filterMatchMode="contains" width="150">
 
                                                     #{books.listPrice}
                                                 </p:column>
 
-                                                <p:column filterBy="#{books.salePrice}" sortBy="#{books.salePrice}" headerText="#{msgs.sale_price}" filterMatchMode="contains">
+                                                <p:column filterBy="#{books.salePrice}" sortBy="#{books.salePrice}" headerText="#{msgs.sale_price}" filterMatchMode="contains" width="150">
 
                                                     #{books.salePrice}
                                                 </p:column>
 
-                                                <p:column filterBy=" #{m_reports.getTotalPerBook(books)}" sortBy=" #{m_reports.getTotalPerBook(books)}" headerText="#{msgs.total}" filterMatchMode="contains">
+                                                <p:column filterBy=" #{m_reports.getTotalPerBook(books)}" sortBy=" #{m_reports.getTotalPerBook(books)}" headerText="#{msgs.total}" filterMatchMode="contains" width="150">
 
                                                     #{m_reports.getTotalPerBook(books)}
                                                 </p:column>

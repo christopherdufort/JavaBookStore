@@ -25,6 +25,8 @@ import org.primefaces.event.SelectEvent;
 
 /**
  *
+ * This class is used to manage and calculate the reports for the manager side
+ *
  * @author Xin Ma
  * @author Rita Lazaar
  */
@@ -158,6 +160,12 @@ public class MreportsBackingBean {
 
     }
 
+    /**
+     * This gets all the publishers in the database
+     *
+     * @return
+     * @author Rita Lazaar
+     */
     public List<String> getAllPublishers() {
         allPublishers = new ArrayList<String>();
         List<Book> books = bookJpa.findBookEntities();
@@ -182,14 +190,14 @@ public class MreportsBackingBean {
      * It returns it as a big decimal
      *
      * @author Rita Lazaar
-     * @version 0.0.1 - testing
+     * @version 0.0.1
      * @param id
      * @return
      */
     public BigDecimal getTotalSalesForOneInvoice(int id) {
 
         Invoice invoice = new Invoice(id);
-        //this is a test value
+
         // originally it should come from the invoice that we send it
         BigDecimal detailTotal = BigDecimal.valueOf(0);
         double total = 0;
@@ -209,6 +217,7 @@ public class MreportsBackingBean {
     /**
      * This method returns the total gross value of all sales in the databases.
      *
+     * @author Rita Lazaar
      * @return
      */
     public BigDecimal getAllTotalSales() {
@@ -250,27 +259,26 @@ public class MreportsBackingBean {
             allInvoices = getAllInvoicesByDateAndUser(date1, date2, user.getUserId());
 
         }
-//        BigDecimal total = BigDecimal.ZERO;
-//        double t = 0;
         allBooks = new ArrayList<Book>();
 
         for (int i = 0; i < allInvoices.size(); i++) {
 
-//            Invoice in = allInvoices.get(i);
-//            t += in.getTotalGrossValueOfSale().doubleValue();
             List<InvoiceDetail> inDetail = allInvoices.get(i).getInvoiceDetailList();
 
             for (int j = 0; j < inDetail.size(); j++) {
-//                books.add(inDetail.get(j).getBookId());
                 if (!allBooks.contains(inDetail.get(j).getBookId())) {
                     allBooks.add(inDetail.get(j).getBookId());
                 }
             }
         }
-//        total = BigDecimal.valueOf(t).setScale(2, RoundingMode.CEILING);
         return allBooks;
     }
 
+    /**
+     * This will get all the books bought withing the given dates.
+     *
+     * @return
+     */
     public List<Book> getAllBooksWithDate() {
 
         if (date1 == null || date2 == null) {
@@ -294,6 +302,13 @@ public class MreportsBackingBean {
         return allBooks;
     }
 
+    /**
+     * This method gets all the books that have never been bought within the
+     * date range, if the dates are provided.
+     *
+     * @return
+     * @author Rita Lazaar
+     */
     public List<Book> getAllBooksWithoutSale() {
 
         allBooks = bookJpa.findBookEntities();
@@ -323,6 +338,7 @@ public class MreportsBackingBean {
      * This method will returns only a list of books who have been sold, either
      * within a date range or from the beginning.
      *
+     * @author Rita Lazaar
      * @return
      */
     public List<Book> getAllBooksWithSalesOnly() {
@@ -356,6 +372,7 @@ public class MreportsBackingBean {
     /**
      * This gets the total sales for a specific book from beginning.
      *
+     * @author Rita Lazaar
      * @param book
      * @return
      */
@@ -377,7 +394,7 @@ public class MreportsBackingBean {
     }
 
     /**
-     * This gets the total sales for a client 
+     * This gets the total sales for a client
      *
      * @param u
      * @param book
@@ -490,6 +507,12 @@ public class MreportsBackingBean {
         return allBooks;
     }
 
+    /**
+     * This method is used to get all the top clients in the database, within a
+     * given date if needed.
+     *
+     * @return
+     */
     public List<RegisteredUser> getTopClients() {
 
         List<Invoice> in = new ArrayList<Invoice>();

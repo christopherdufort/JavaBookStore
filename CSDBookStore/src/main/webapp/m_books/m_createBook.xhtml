@@ -27,7 +27,7 @@
                                 <!-- /.panel-heading -->
                                 <div class="panel-body">
                                     <div class="dataTable_wrapper table-responsive">
-                                        <h:form>
+                                        <h:form enctype="multipart/form-data">
                                             <h:panelGrid columns="3">
                                                 <h:outputLabel value="#{msgs.isbn}" for="isbn"></h:outputLabel>
                                                 <p:inputText id="isbn" value="#{m_books.book.isbn}" required="true" requiredMessage="#{msgs.required}">
@@ -134,7 +134,7 @@
                                                 </p:inputTextarea>
                                                 <h:message id="synopsisError" for="synopsis" errorStyle="color:red; display:block"/>
 
-<!--                                                 <p:fileUpload mode="simple" value="#{m_books.file}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>       -->
+                                                 <p:fileUpload mode="simple" value="#{m_books.file}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>       
                                             </h:panelGrid>
 
                                             <br />

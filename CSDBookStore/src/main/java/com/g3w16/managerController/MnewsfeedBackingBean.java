@@ -17,6 +17,7 @@ import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
 
 /**
+ * This class is used to handle all the news feed on the management side.
  *
  * @author Xin Ma
  * @author Rita Lazaar

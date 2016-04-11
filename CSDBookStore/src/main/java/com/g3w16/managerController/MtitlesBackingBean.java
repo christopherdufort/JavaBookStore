@@ -17,7 +17,7 @@ import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
 
 /**
- *
+ * This class manages all the titles for the manager side.
  * @author Xin Ma
  * @author Rita Lazaar
  */

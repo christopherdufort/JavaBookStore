@@ -39,7 +39,7 @@ import org.primefaces.model.UploadedFile;
  * @author Rita Lazaar
  */
 @ManagedBean(name = "m_books")
-@SessionScoped
+@RequestScoped
 public class MbooksBackingBean implements Serializable {
 
     private Book book;
@@ -262,7 +262,7 @@ public class MbooksBackingBean implements Serializable {
         InputStream input = file.getInputstream();
         String extension = FilenameUtils.getExtension(file.getFileName());
 
-        String path = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/resources/images/");
+        String path = FacesContext.getCurrentInstance().getExternalContext().getRealPath("./../resources/images/");
         OutputStream output = new FileOutputStream(new File(path, filename + "." + extension));
 
         try {

@@ -18,6 +18,8 @@ import javax.inject.Inject;
 
 /**
  *
+ * This class manages the authors in the manager side and the reports.
+ *
  * @author Xin Ma
  * @author Rita Lazaar
  */
@@ -80,5 +82,5 @@ public class MauthorsBackingBean implements Serializable {
     public List<Author> getAllAuthor() {
         return allAuthor;
     }
- 
+
 }

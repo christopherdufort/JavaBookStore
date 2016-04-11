@@ -26,7 +26,7 @@ import javax.transaction.UserTransaction;
  */
 @Named
 @RequestScoped
-public class InvoiceJpaController implements Serializable{
+public class InvoiceJpaController implements Serializable {
 
     @Resource
     private UserTransaction utx;
@@ -37,6 +37,7 @@ public class InvoiceJpaController implements Serializable{
      * This method allows to create an invoice in the database. We send it an
      * invoice object and it adds it to the database.
      *
+     * @author Rita Lazaar
      * @param invoice
      * @throws RollbackFailureException
      * @throws Exception
@@ -77,6 +78,7 @@ public class InvoiceJpaController implements Serializable{
     /**
      * This returns a list of all invoices.
      *
+     * @author Rita Lazaar
      * @return
      */
     public List<Invoice> findInvoiceEntities() {
@@ -87,6 +89,7 @@ public class InvoiceJpaController implements Serializable{
      * This method will return a list of invoices based on the bounds we have
      * given to it.
      *
+     * @author Rita Lazaar
      * @param maxResults
      * @param firstResult
      * @return
@@ -99,6 +102,7 @@ public class InvoiceJpaController implements Serializable{
      * This method will return all invoices if all is true , else it will return
      * the appropriate list of invoice between maxResults and firstResult.
      *
+     * @author Rita Lazaar
      * @param all
      * @param maxResults
      * @param firstResult
@@ -117,6 +121,7 @@ public class InvoiceJpaController implements Serializable{
      * This will return one particular invoice based on the id given to the
      * method.
      *
+     * @author Rita Lazaar
      * @param id
      * @return
      */
@@ -127,11 +132,12 @@ public class InvoiceJpaController implements Serializable{
     /**
      * This will return a list of invoices belonging to the user given to it.
      *
+     * @author Rita Lazaar
      * @param userId
      * @return
      */
-    
     public List<Invoice> findInvoiceByUserId(Integer userId) {
+
         Query q = em.createNamedQuery("Invoice.findByUserId", Invoice.class);
         q.setParameter("userId", userId);
         return q.getResultList();
@@ -140,6 +146,7 @@ public class InvoiceJpaController implements Serializable{
     /**
      * This will return a list of invoices belonging to the user given to it.
      *
+     * @author Rita Lazaar
      * @param userId
      * @return
      */
@@ -154,10 +161,10 @@ public class InvoiceJpaController implements Serializable{
     /**
      * This will return a list of invoices belonging to the user given to it.
      *
+     * @author Rita Lazaar
      * @param userId
      * @return
      */
-
     public List<Invoice> findInvoiceByDateAndUser(Date date1, Date date2, Integer userId) {
 
         Query q = em.createNamedQuery("Invoice.findAllInvoicesByDateAndUser", Invoice.class);

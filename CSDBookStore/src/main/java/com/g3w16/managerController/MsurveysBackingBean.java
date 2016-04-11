@@ -19,6 +19,7 @@ import javax.inject.Inject;
 
 /**
  *
+ * This class handles and manages all the surveys for the manager side.
  * @author Xin Ma
  * @author Rita Lazaar
  */

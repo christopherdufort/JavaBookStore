@@ -14,15 +14,15 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
 
-
 /**
+ * This class is used to handle all the invoices in the management side.
  *
  * @author Xin Ma
  * @author Rita Lazaar
  */
-@ManagedBean(name="m_invoices")
+@ManagedBean(name = "m_invoices")
 @RequestScoped
-public class MinvoicesBackingBean implements Serializable{
+public class MinvoicesBackingBean implements Serializable {
 
     private String searchInvoice;
 
@@ -32,7 +32,6 @@ public class MinvoicesBackingBean implements Serializable{
     private List<Invoice> all;
     private List<Invoice> searched;
 
-
     @Inject
     InvoiceJpaController invoiceJpa;
 
@@ -40,14 +39,13 @@ public class MinvoicesBackingBean implements Serializable{
     InvoiceDetailJpaController invoiceDetailJpa;
 
     @PostConstruct
-    public void init(){
-        all=invoiceJpa.findInvoiceEntities();
+    public void init() {
+        all = invoiceJpa.findInvoiceEntities();
     }
-    
+
     public String getText() {
         return searchInvoice;
     }
-   
 
     public void setText(String searchInvoice) {
         this.searchInvoice = searchInvoice;
@@ -76,15 +74,14 @@ public class MinvoicesBackingBean implements Serializable{
     public String getInvoiceDetailPage() {
         return "m_invoiceDetails";
     }
-    
+
     public List<Invoice> getSearchedInvoices() {
         return searched;
     }
- 
+
     public void setSearchedInvoices(List<Invoice> searched) {
         this.searched = searched;
     }
-
 
     /**
      * Returning all invoices

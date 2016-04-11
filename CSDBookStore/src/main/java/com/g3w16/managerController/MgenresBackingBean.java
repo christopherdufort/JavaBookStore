@@ -17,7 +17,7 @@ import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
 
 /**
- *
+ * This class is the backing bean used to handle all the genres in the management side. 
  * @author Xin Ma
  * @author Rita Lazaar
  */
