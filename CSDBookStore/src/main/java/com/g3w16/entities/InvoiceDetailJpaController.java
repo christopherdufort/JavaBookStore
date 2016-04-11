@@ -178,5 +178,4 @@ public class InvoiceDetailJpaController implements Serializable {
 
     }
 
-    // missing method for the total sales, sales by client , sales by author, sales by publisher
 }
